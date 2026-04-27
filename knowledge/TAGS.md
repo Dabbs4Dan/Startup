@@ -3,7 +3,7 @@
 > Every tag in the controlled vocab, mapped to every note that carries it. Fast retrieval when the founder asks "what do we know about X?" — and a one-glance read on sourcing diversity.
 
 **Last updated:** 2026-04-27
-**Tags in use:** 32 · **Publishers represented:** 4 (3 external + Internal)
+**Tags in use:** 33 · **Publishers represented:** 5 (4 external + Internal)
 
 ---
 
@@ -45,10 +45,13 @@
 ### `personal-blog` — independent practitioners (1 external note)
 - 2026-04-27 · [Rob Snyder — The Path to PMF (Harvard iLabs)](knowledge/articles/rob-snyder-path-to-pmf.md)
 
+### `reddit` — Reddit threads (1 external note)
+- 2026-04-27 · [r/SaaS — u/jottrled: How I find startup ideas](knowledge/reddit/r-saas-jottrled-find-startup-ideas.md)
+
 ### `internal` — agent + founder sessions (1 note)
 - 2026-04-27 · [Agent architecture decision](knowledge/sessions/2026-04-27_agent-architecture.md)
 
-**Current external publisher distribution:** Techstars 13 · YC 3 · Personal-blog (Rob Snyder) 1 · Total 17 external. Techstars-dominant (~76%) → 🟡 **flag in SELF_ASSESSMENT** — first non-accelerator source added. Diversity nudged but still accelerator-heavy; need more indie hacker / bootstrapper / failure-archive voices.
+**Current external publisher distribution:** Techstars 13 · YC 3 · Personal-blog (Rob Snyder) 1 · Reddit 1 · Total 18 external. Techstars-dominant (~72%) → 🟡 **flag in SELF_ASSESSMENT** — diversity climbing (4 distinct external publisher types now). Still accelerator-heavy; need more bootstrapper / failure-archive voices.
 
 ---
 
@@ -65,15 +68,16 @@
 ## `positioning` (4)
 - Category Design · Position Your Product · Brand Your Business (all techstars) · Rob Snyder — Path to PMF (personal-blog) · *case-study determines positioning*
 
-## `distribution` (4)
+## `distribution` (5)
 - YC Lightcone — counter-positioning, brand mote
 - Techstars: Category Design, Position, Brand
+- r/SaaS jottrled (reddit) — keyword/SEO-rank as distribution opening
 
-## `pmf` (5)
-- Sam Altman, YC Lightcone (yc) · Lean Canvas, Customer Development (techstars) · Rob Snyder — Path to PMF (personal-blog) · *the most direct PMF treatment in the corpus*
+## `pmf` (6)
+- Sam Altman, YC Lightcone (yc) · Lean Canvas, Customer Development (techstars) · Rob Snyder — Path to PMF (personal-blog) · r/SaaS jottrled (reddit) · *the most direct PMF treatments cluster around tension on discovery method*
 
-## `ideation` (4)
-- Sam Altman (yc) · Lean Canvas, Customer Development, Shorter Frameworks (techstars)
+## `ideation` (5)
+- Sam Altman (yc) · Lean Canvas, Customer Development, Shorter Frameworks (techstars) · r/SaaS jottrled — Idea mining (reddit)
 
 ## `hiring` (4)
 - Diana Hu (yc) · Cofounder Relationships, EQ for Entrepreneurs, Diverse Workforce (techstars)
@@ -96,8 +100,8 @@
 ## `lean-canvas` (1)
 - Lean Canvas (techstars)
 
-## `customer-development` (2)
-- Customer Development (techstars) · Rob Snyder — Path to PMF (personal-blog) · *direct tension on whether interviews are sufficient (see TENSIONS.md)*
+## `customer-development` (3)
+- Customer Development (techstars) · Rob Snyder — Path to PMF (personal-blog) · r/SaaS jottrled — Idea mining (reddit) · *3-way tension on demand discovery method (see TENSIONS.md)*
 
 ## `category-design` (1)
 - Category Design (techstars)
@@ -126,8 +130,8 @@
 ## `retention` (1)
 - Diverse Workforce (techstars)
 
-## `growth` (1)
-- Brand Your Business (techstars)
+## `growth` (2)
+- Brand Your Business (techstars) · r/SaaS jottrled (reddit) — keyword-rank as growth lever
 
 ## `b2b` (2)
 - YC Lightcone (yc) · Rob Snyder — Path to PMF (personal-blog)

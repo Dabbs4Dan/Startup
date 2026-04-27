@@ -73,11 +73,11 @@ Stay in persona until the founder explicitly switches back: "back to Claude Code
 *Updated by `/end-session`. Also updated proactively whenever it drifts (see Proactive saves).*
 
 **Knowledge base**
-- YouTube: 3 · Reddit: 0 · Articles: 14 · Sessions: 2
-- Latest extraction: 2026-04-27 · Rob Snyder — Path to PMF (91-slide Harvard iLabs deck, first non-accelerator source)
-- Last ideation session: 2026-04-27 · Agent calibration + project mission articulation
-- Themes tracked: 6 · Active tensions: 3 · Tags in use: 32
-- Publishers represented: Techstars (13), YC (3), Personal-blog/Rob Snyder (1), Internal (2) — accelerator-heavy but cracked open; need more indie/bootstrapper/failure sources
+- YouTube: 3 · Reddit: 1 · Articles: 14 · Sessions: 2
+- Latest extraction: 2026-04-27 · r/SaaS u/jottrled — How I find startup ideas (first Reddit source, 4th external publisher type)
+- Last ideation session: 2026-04-27 · First active thread: B2B SaaS sales-org tooling (in progress)
+- Themes tracked: 6 · Active tensions: 3 · Tags in use: 33
+- Publishers represented: Techstars (13), YC (3), Personal-blog/Rob Snyder (1), Reddit (1), Internal (2) — diversity climbing; still accelerator-heavy on volume
 
 **Knowledge architecture (the compounding loop files)**
 - `knowledge/INDEX.md` — reverse-chrono list of every note

@@ -56,23 +56,26 @@
 
 ---
 
-### How do you find demand? Empathy interviews vs sell-to-learn (Techstars vs Rob Snyder)
+### How do you find demand? — A 3-pole tension on discovery method
 
-**Techstars Customer Development position** ([source](knowledge/articles/techstars-customer-development.md)): Find demand through **empathy interviews + Jobs To Be Done analysis**. Get out of the building. Ask non-leading questions. Capture the functional + social + emotional dimensions of the customer's job. Then use that to design the solution. Implicit assumption: **customers can articulate (or be guided to articulate) what they want, and that's a reliable input.**
+**Pole 1 — Empathy interviews** ([Techstars Customer Development](knowledge/articles/techstars-customer-development.md)): Find demand through **empathy interviews + Jobs To Be Done analysis**. Get out of the building. Capture the functional + social + emotional dimensions of the customer's job. Then design the solution. **Implicit assumption:** customers can articulate (or be guided to articulate) what they want, and that's a reliable input. **Strength:** systematic, teachable, low-cost. **Weakness:** social-transaction bias (per Rob); customers say what they think you want to hear.
 
-**Rob Snyder's position** ([source](knowledge/articles/rob-snyder-path-to-pmf.md)): **Customer interviews are insufficient.** Despite "doing a bunch of customer research, interviews, discovery, etc." → founders still build things people don't want. The mechanism Rob argues (citing Parker Ence): interviews are **social transactions** — humans are generous, encouraging, less discerning when no money is at stake. Only the **economic transaction** of being asked for money lights up the evaluative part of the brain. So: draft a *theoretical* case study, **try to sell it**, debug what causes "hell yes" vs drop-off, unfold from there. Real demand only surfaces under economic pressure.
+**Pole 2 — Sell to learn** ([Rob Snyder — Path to PMF](knowledge/articles/rob-snyder-path-to-pmf.md)): **Customer interviews are insufficient.** Despite "doing a bunch of customer research, interviews, discovery" → founders still build things people don't want. The mechanism (citing Parker Ence): interviews are **social transactions** — humans are generous, encouraging, less discerning when no money is at stake. Only the **economic transaction** of being asked for money lights up the evaluative part of the brain. So: draft a *theoretical* case study, **try to sell it**, debug what causes "hell yes" vs drop-off, unfold from there. **Strength:** real-money signal can't lie; forces founder to a real ICP fast. **Weakness:** assumes you have a *plausible* case study to start with — doesn't help the founder who has zero starting point.
 
-**Why this matters:** This is the most load-bearing methodology choice in early-stage work. If Techstars is right, the founder spends weeks on interviews + JTBD synthesis before pitching. If Rob is right, that's the pain cave — the same weeks spent making sales calls would teach 10× more. The two paths cost the same time but produce wildly different outcomes.
+**Pole 3 — Mine existing dissatisfaction signals** ([r/SaaS — u/jottrled](knowledge/reddit/r-saas-jottrled-find-startup-ideas.md)): **Don't wait for inspiration; systematically mine where dissatisfaction is already articulated.** Trustpilot 2–3 star reviews (people describing what's broken). Acquire.com $100k+ listings (find missing features in already-monetizing categories). Ahrefs low-KD keywords (search demand with winnable distribution). Then build, then market via SEO. **Strength:** breaks the "I have no idea what to start on" blank-page problem; real-revenue and real-search-traffic are real signal. **Weakness:** all three methods point at supply-side categories more than at demand-pulls; "build it in 1 month max" assumes indie-scale economics; build-then-market is exactly the sequencing Rob says causes the pain cave. Also: jottrled's keyword-rank tactic is materially weaker post-AI-overview-Google (2026 reality vs 2024 advice).
 
-**Reconciliation (working hypothesis):** They're partially complementary, partially opposed.
-- **Compatible:** Both reject internal theorizing; both demand contact with real people; both treat "what the customer is trying to accomplish" as primary.
-- **Genuinely opposed:** On whether *interviews alone* surface real demand. Rob says no, Techstars says yes-with-skill.
-- **The practical sequence Rob would endorse:** ~20–30 light interviews to "get the lay of the land" (Parker Ence's wording, quoted by Rob) → then start selling a theoretical case study. So a *small* dose of interviewing is fine; **months of it before selling is the trap.**
-- **The Techstars curriculum doesn't tell you when to stop interviewing and start selling.** That's the gap Rob fills. A founder running pure-Techstars without a "now go sell" forcing function may overstay in interviews.
+**Why this matters:** A founder picking among the three gets very different first-90-days behavior. Techstars: weeks of interviews + canvas work. Rob: theoretical case study + sales calls. jottrled: hours on Trustpilot/Acquire/Ahrefs + a 1-month build sprint. **The methodology you choose is upstream of everything else.**
 
-**Founder's current posture:** Not yet defined — founder is pre-ideation.
+**Reconciliation (working hypothesis):**
+- **Use jottrled-style mining to *populate* a list of candidate problem spaces** — especially if you have no starting hypothesis. Mining is a candidate-generator, not a decider.
+- **Use Techstars-style empathy interviews on a SMALL scale** (~20–30 light conversations per Parker Ence's framing quoted in Rob's deck) — to ground the candidate in real human language and confirm the problem is articulated.
+- **Then switch to Rob's sell-to-learn** — draft the theoretical case study, take it to sales calls, debug toward "hell yes." This is where real demand surfaces.
 
-**What would resolve this:** Either (a) the founder running both sequences on a real idea and reporting which produced "hell yes" faster, or (b) a third source (indie-hacker / failure-archive) explicitly comparing the two approaches.
+The integrated sequence: **Mine → Interview lightly → Sell to learn.** Each pole is right for one phase; the trap is treating any single pole as the whole game.
+
+**Founder's current posture:** Founder has domain (B2B SaaS sales-org tooling, mid-market+) but has pulled back from his personal-pain candidate (Candidate A) for buyer-segment reasons. Currently leaning toward jottrled-style research-first to find a more approachable segment. **This is the live decision in [IDEATION_LOG.md](knowledge/IDEATION_LOG.md).**
+
+**What would resolve this:** A 4th source from a known PMF-found founder (e.g. failure-archive post-mortem or successful indie-hacker memoir) describing which sequence they actually ran. Or the founder running the integrated sequence above on a real idea and reporting back.
 
 ---
 
