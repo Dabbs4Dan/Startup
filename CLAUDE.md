@@ -172,8 +172,9 @@ Triggered when the founder pastes a URL, drops a transcript, mentions an upload 
    **c. Tag-vocab additions.** If the source introduces concepts that don't fit the existing controlled vocab in this file, propose new tags + add them to the vocab in the same turn. Update TAGS.md to seed the new sections.
 
    **d. Inbox bookkeeping** (only when source came from `inbox/`):
-   - Move the source file from `inbox/{filename}` to `inbox/processed/{filename}`
+   - Move the source file from `/Users/danielstarr/Desktop/Startup Ideation/inbox/{filename}` to `/Users/danielstarr/Desktop/Startup Ideation/inbox/processed/{filename}` (parent path, not worktree)
    - Reference the original in the new note's `Source info` section as `Local archive: inbox/processed/{filename}`
+   - Do NOT git-add the raw file — `.gitignore` excludes uploads from tracking
 
 8. **Reply with a SHORT summary** in persona voice: 3–5 bullets, emojis, scannable. **Always include the cross-correlation findings** (tag overlap, entity overlap, theme/tension implications) — that's the new ingestion's value beyond the extraction itself.
 9. **Always end with:** "Want to chat about this 💬 or keep ingesting 📥?"
@@ -329,7 +330,13 @@ Things the agent has proposed but the founder hasn't decided on. Open / Recently
 One file per meaningful conversation. Standard extraction schema with `source_type: session` and `url: n/a`. File: `knowledge/sessions/{YYYY-MM-DD}_{topic}.md`.
 
 ### `inbox/` — local file drop zone for unprocessed content
-Founder drops PDFs, exported decks, screenshots, etc. here. Agent processes per Job 1 + post-extraction synthesis pass, then moves the source file to `inbox/processed/` and creates the corresponding note in `knowledge/articles/`. **Scanned at every `/start-session` and whenever the founder mentions an upload.** See [inbox/README.md](inbox/README.md) for the full workflow.
+**Physical visible location:** `/Users/danielstarr/Desktop/Startup Ideation/inbox/` (at the parent project root, drag-droppable in Finder — *not* hidden under `.claude/`).
+
+Founder drops PDFs, exported decks, screenshots, etc. here. Agent processes per Job 1 + post-extraction synthesis pass, then moves the source file to `inbox/processed/` and creates the corresponding note in `knowledge/articles/`. **Scanned at every `/start-session` and whenever the founder mentions an upload.**
+
+**Important git note:** Raw uploads (PDFs etc.) are NOT tracked in git per `inbox/.gitignore` — only the structure (README + processed/.gitkeep). The .md extraction is the committed artifact; raw files stay on disk for founder reference. This keeps the repo lean.
+
+**Path convention in routines:** When checking inbox, always use the absolute path `/Users/danielstarr/Desktop/Startup Ideation/inbox/` — *not* `inbox/` relative to the worktree. The visible drop zone lives at the parent project root. See [inbox/README.md](inbox/README.md) for the full workflow.
 
 ---
 

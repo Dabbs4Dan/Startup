@@ -1,0 +1,16 @@
+# Drop-zone gitignore — track structure, not raw uploads.
+# Raw PDFs / decks / screenshots stay on disk for the founder's reference
+# but aren't pushed to remote (would bloat the repo, and the .md extraction
+# is what carries the value).
+
+# Ignore everything in this directory by default
+*
+
+# Except these tracked files:
+!.gitignore
+!README.md
+!processed/
+
+# Inside processed/, also ignore raw uploads — only keep the placeholder
+processed/*
+!processed/.gitkeep

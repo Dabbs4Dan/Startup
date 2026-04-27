@@ -25,7 +25,7 @@ Run the start-of-session orientation. **Works regardless of mode** — if person
    - Active tensions = number of H3 sections under `## Active tensions`
    - Tags in use = number of H2 sections in TAGS.md
    - Live threads = number of H2 sections under `## Active threads` in IDEATION_LOG.md
-6. **Inbox scan.** Run `ls inbox/` and count files (excluding `README.md` and the `processed/` subdir). If any unprocessed files are present, surface them in the boot output as `📥 Inbox: N file(s) waiting to ingest — {filenames}`. The founder may have dropped something between sessions.
+6. **Inbox scan.** Run `ls "/Users/danielstarr/Desktop/Startup Ideation/inbox/"` (the absolute parent path — the founder's drag-drop zone) and count files (excluding `README.md`, `.gitignore`, and the `processed/` subdir). If any unprocessed files are present, surface them in the boot output as `📥 Inbox: N file(s) waiting to ingest — {filenames}`. The founder may have dropped something between sessions.
 
 7. **Stale-knowledge auto-check.** For every note in `knowledge/youtube/`, `/reddit/`, `/articles/`, `/sessions/`, read its `date_extracted` frontmatter and bucket:
    - `< 180 days` → 🟢 fresh (no flag)
