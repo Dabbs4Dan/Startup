@@ -26,6 +26,26 @@ If meaningful ideation happened this session and no file was written to `knowled
 
 If a knowledge extraction was started but not finalized (e.g., the founder paused mid-fetch), ask whether to finalize it or skip — don't silently drop it.
 
+## STEP 2.5 — Pattern sweep (mandatory if any ideation happened)
+
+Before the commit, run the **30-second sweep** documented in CLAUDE.md → Proactive saves → "End-of-session pattern sweep":
+
+1. What did I learn this session about how this founder thinks?
+2. What hooked them, made them defensive, energized them?
+3. What did they push back on or silently validate?
+4. What language did they use repeatedly?
+
+Save 0–3 salient observations to auto-memory at `~/.claude/projects/-Users-danielstarr-Desktop-Startup-Ideation/memory/` — by type:
+- **user-type** for background, role, what they're building
+- **feedback-type** for pushback patterns, communication preferences
+- **project-type** for current idea-specific context
+
+**Triage rule:** if nothing would change my next-session behavior, save nothing. Noise is worse than silence.
+
+Also sweep `knowledge/IDEATION_LOG.md`:
+- For each active thread, refresh "Last touched" + "Where we left off" so next session picks up cleanly
+- Promote any thread that reached a decision into THESIS.md (Decided / Ruled out) and remove from IDEATION_LOG
+
 ## STEP 3 — Commit (if git repo)
 
 Run `git rev-parse --git-dir 2>/dev/null`:
@@ -39,6 +59,7 @@ Run `git rev-parse --git-dir 2>/dev/null`:
    - `knowledge/TENSIONS.md`
    - `knowledge/TAGS.md`
    - `knowledge/THESIS.md`
+   - `knowledge/IDEATION_LOG.md`
    - `knowledge/CHANGELOG.md`
    - `knowledge/SUGGESTIONS.md`
    - Any new/modified files under `knowledge/youtube/`, `/reddit/`, `/articles/`, `/sessions/`

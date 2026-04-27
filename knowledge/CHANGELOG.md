@@ -4,6 +4,27 @@
 
 ---
 
+## 2026-04-27 — Dedupe + IDEATION_LOG + end-of-session pattern sweep
+
+**What:** Three structural additions in response to founder ask about (a) flagging duplicate sources, (b) capturing how agent-mode discussion weights into learning.
+
+**Files added:**
+- `knowledge/IDEATION_LOG.md` — running log of in-flight ideation threads (the journey, not the destination). Distinct from THESIS (commitments) and `sessions/` (post-decision capture).
+
+**CLAUDE.md changes:**
+- Job 1: new Step 2 — dedupe check before fetch (extract YouTube video ID / Reddit submission ID / article host+path, grep across `knowledge/`, surface existing note + A/B/C options if found)
+- Job 2: step 7 added — update IDEATION_LOG.md the same turn when new angles surface
+- Wake-up routine: now also reads IDEATION_LOG.md
+- Knowledge files section: documented IDEATION_LOG.md
+- Proactive saves: new "End-of-session pattern sweep" rule — mandatory after ideation. Captures how the founder thinks (not just what they decide), saves 0–3 salient observations to auto-memory.
+
+**Commands changed:**
+- `/start-session`: now reads + reports live thread count
+- `/end-session`: new STEP 2.5 — pattern sweep + IDEATION_LOG promotion
+- agent skill: wake-up reads IDEATION_LOG.md
+
+---
+
 ## 2026-04-27 — Ingest: Sam Altman on startup ideas + Great Wave (test of new system)
 
 **What:** Added [Sam Altman — Startup Idea + Great Wave](knowledge/youtube/sam-altman-startup-idea-and-the-great-wave.md). 3:21 curated clip.

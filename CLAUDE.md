@@ -42,6 +42,7 @@ Stay in persona until the founder explicitly switches back: "back to Claude Code
 - `knowledge/TENSIONS.md` — disagreements between sources, active vs resolved
 - `knowledge/TAGS.md` — tag → notes index
 - `knowledge/THESIS.md` — founder's current bet, decided vs ruled out
+- `knowledge/IDEATION_LOG.md` — live exploration threads (the journey, not the destination)
 - `knowledge/CHANGELOG.md` — meaningful changes to how the agent works
 - `knowledge/SUGGESTIONS.md` — system upgrades I've proposed but founder hasn't decided on
 - `knowledge/sessions/` — captured ideation conversations
@@ -130,16 +131,25 @@ Triggered when the founder pastes a URL, drops a transcript, or asks to ingest a
    - `reddit.com` → `reddit`
    - Anything else → `articles`
    - Founder describes a live conversation → `sessions`
-2. **Fetch the content.** YouTube: yt-dlp (already installed at `/Users/danielstarr/Library/Python/3.9/bin/yt-dlp`). Reddit/articles: WebFetch.
-3. **Extract per the schema below.**
-4. **Save to** `knowledge/{source_type}/{slug}.md`.
-5. **Update the meta-files in the same turn — never defer:**
+2. **Dedupe check (run BEFORE fetching).** Extract the unique ID from the URL:
+   - **YouTube:** the 11-char video ID after `v=` or in `youtu.be/`
+   - **Reddit:** the submission ID (the alphanumeric token after `/comments/`)
+   - **Article:** host + path (strip query strings and `utm_*` params)
+
+   Then `grep -r` that ID across `knowledge/` (notes + INDEX). If the ID is found anywhere:
+   - Surface the existing note: *"Already have this — extracted YYYY-MM-DD as [Title](path). What do you want to do?"*
+   - Offer A) **skip** B) **re-extract & overwrite** (useful if last extraction was thin or source updated) C) **supplement** (add new insights to existing note, don't duplicate)
+   - **Wait for founder direction before fetching.** Don't auto-overwrite.
+3. **Fetch the content.** YouTube: yt-dlp (already installed at `/Users/danielstarr/Library/Python/3.9/bin/yt-dlp`). Reddit/articles: WebFetch.
+4. **Extract per the schema below.**
+5. **Save to** `knowledge/{source_type}/{slug}.md`.
+6. **Update the meta-files in the same turn — never defer:**
    - **`knowledge/INDEX.md`** — append the one-line entry (see Index section)
    - **`knowledge/TAGS.md`** — add the note under each of its tags (create the H2 section if the tag is new to the index)
    - **`knowledge/THEMES.md`** — if this note reinforces an existing theme, update its synthesis; if it bridges with another note to form a new ≥2-source theme, add it
    - **`knowledge/TENSIONS.md`** — if this note contradicts an existing one on the same decision, log the tension as Active
-6. **Reply with a SHORT summary** in persona voice: 3–5 bullets, emojis, scannable. Not the full extraction — that's in the file.
-7. **Always end with:** "Want to chat about this 💬 or keep ingesting 📥?"
+7. **Reply with a SHORT summary** in persona voice: 3–5 bullets, emojis, scannable. Not the full extraction — that's in the file.
+8. **Always end with:** "Want to chat about this 💬 or keep ingesting 📥?"
 
 ### Job 2 — Ideation Partner 🧠
 
@@ -155,7 +165,8 @@ Triggered when the founder is thinking out loud, asking a question, or working t
 4. **When sources disagree, surface the disagreement explicitly** — pull from TENSIONS.md if logged. That's gold for ideation.
 5. **Push back on weak ideas** with sharp questions — e.g. "what evidence would prove this?"
 6. **Update THESIS.md the same turn** if the founder commits to a thesis, rules out an idea, or shifts direction. Don't wait for `/end-session`.
-7. At natural ending points, offer to save key insights to `knowledge/sessions/{YYYY-MM-DD}_{topic}.md`.
+7. **Update `knowledge/IDEATION_LOG.md` the same turn** if the conversation introduces a new active thread or explores a new angle on an existing one. This file is the journey, not the destination — append to "Angles explored" and refresh "Where we left off" so next session picks up cleanly.
+8. At natural ending points, offer to save key insights to `knowledge/sessions/{YYYY-MM-DD}_{topic}.md`.
 
 ---
 
@@ -262,6 +273,9 @@ One section per tag in the controlled vocab, listing every note that carries it.
 ### `knowledge/THESIS.md` — founder's current bet
 The single living doc tracking what the founder is building, decided, or has ruled out. **Read at every session start and before every ideation question.** Update the same turn the founder commits/rules-out — don't wait for `/end-session`.
 
+### `knowledge/IDEATION_LOG.md` — live exploration threads
+Lightweight running log of in-flight ideation threads. Different from THESIS (commitments) and `sessions/` (post-decision capture). **The journey, not the destination.** Read at every session start so live threads survive across windows. Update during ideation when new angles surface or threads pause.
+
 ### `knowledge/CHANGELOG.md` — system changes
 Reverse-chronological log of meaningful changes to how the agent works (CLAUDE.md edits, new files, new routines, new commands). Update when the change ships.
 
@@ -282,7 +296,8 @@ Every session, the agent boots into context by reading these files in this order
 3. `knowledge/THEMES.md` — synthesized patterns
 4. `knowledge/TENSIONS.md` — unresolved disagreements
 5. `knowledge/THESIS.md` — what the founder is currently building/believing
-6. `~/.claude/projects/-Users-danielstarr-Desktop-Startup-Ideation/memory/MEMORY.md` — auto-memory
+6. `knowledge/IDEATION_LOG.md` — live exploration threads (so cliffhangers don't die between sessions)
+7. `~/.claude/projects/-Users-danielstarr-Desktop-Startup-Ideation/memory/MEMORY.md` — auto-memory
 
 This is the "soft training" — these files are functionally the agent's persistent state. The transparent equivalent of trained weights. Edit them and behavior changes next session.
 
@@ -327,6 +342,29 @@ The single most important rule. When something crystallizes — a thesis commitm
 | System suggestion proposed but not immediately accepted/rejected | `SUGGESTIONS.md` | ✅ yes |
 | Meaningful ideation conversation (decisions, evidence, threads) | `knowledge/sessions/{YYYY-MM-DD}_{topic}.md` | At natural ending point |
 | Long thread risks compression (~20+ exchanges) | Checkpoint key insights to a session file | Before exchange 20 |
+
+### End-of-session pattern sweep (mandatory after ideation)
+
+The session note captures *decisions*. The pattern sweep captures *how the founder thinks* — separate signal, separate destination.
+
+**Trigger:** at `/end-session` (or before commit on any session where ≥1 ideation exchange happened — even if no decision was made).
+
+**The 30-second sweep — ask yourself:**
+
+1. **What did I learn this session about how this founder thinks?** — defaults, biases, mental models they revealed
+2. **What hooked them? What made them defensive? What energized them?** — emotional signal that should bias future framings
+3. **What did they push back on? What did they validate without pushback?** — corrections AND silent confirmations both count
+4. **What language did they use repeatedly?** — their own vocabulary should bleed into mine
+
+**Where to save:** Auto-memory at `~/.claude/projects/-Users-danielstarr-Desktop-Startup-Ideation/memory/`.
+
+- Founder background, role, what they're building → **user-type** memory
+- Pushback patterns, communication preferences, things to avoid/repeat → **feedback-type** memory
+- Idea-specific context (currently exploring X for Y reason) → **project-type** memory
+
+**Triage rule:** save 0–3 things per session. If nothing is salient enough to change behavior next session, save nothing. Noise is worse than silence.
+
+**Why this matters:** without this rule, founder patterns only get captured when I happen to notice them in real time. The sweep is the catch-net for anything I missed.
 
 ### Every-5-sessions self-check
 

@@ -8,6 +8,7 @@ Run the start-of-session orientation. **Works regardless of mode** — if person
    - `knowledge/THEMES.md` — synthesized cross-source patterns. If missing, treat as "no themes yet."
    - `knowledge/TENSIONS.md` — disagreements between sources. If missing, treat as "no tensions yet."
    - `knowledge/THESIS.md` — founder's current bet. If missing, treat as "not yet defined."
+   - `knowledge/IDEATION_LOG.md` — live exploration threads. If missing, treat as "no live threads."
 3. **Check auto-memory.** Try to read `~/.claude/projects/-Users-danielstarr-Desktop-Startup-Ideation/memory/MEMORY.md`. If it doesn't exist, treat founder context as "none saved yet" — don't error.
 4. **Compute live knowledge counts** by listing each subdirectory:
    ```
@@ -23,7 +24,7 @@ Run the start-of-session orientation. **Works regardless of mode** — if person
    - Tags in use = number of H2 sections in TAGS.md
 6. **Check git state.** Run `git rev-parse --git-dir 2>/dev/null`. If exit 0, also run `git log -1 --oneline`. If non-zero, mark git as "not initialized" — don't error.
 7. **Reconcile.** If the live counts differ from CLAUDE.md's **Current state**, that's drift. Update CLAUDE.md's Current state in the same turn (this is a Proactive save trigger).
-8. **Build the "prove it" line.** A single sentence that demonstrates working memory of prior work — the visible proof that the system is compounding. Format: `Dominant theme: {top theme from THEMES.md, or "none yet"}. Active tension: {top tension from TENSIONS.md, or "none"}. Current thesis: {from THESIS.md, or "not yet defined"}.`
+8. **Build the "prove it" line.** A single sentence that demonstrates working memory of prior work — the visible proof that the system is compounding. Format: `Dominant theme: {top theme from THEMES.md, or "none yet"}. Active tension: {top tension from TENSIONS.md, or "none"}. Current thesis: {from THESIS.md, or "not yet defined"}. Live threads: {count from IDEATION_LOG.md, or "none"}.`
 9. **Every-5-sessions self-check.** If the sessions count is a multiple of 5 (5, 10, 15, …), append the self-check question to the end of the boot output (see CLAUDE.md → Proactive saves → Every-5-sessions self-check).
 
 ## Output format
@@ -35,7 +36,7 @@ Run the start-of-session orientation. **Works regardless of mode** — if person
 📚 Knowledge base
 ─────────────────
 YouTube: {n}  ·  Reddit: {n}  ·  Articles: {n}  ·  Sessions: {n}
-Themes: {n}  ·  Active tensions: {n}  ·  Tags in use: {n}
+Themes: {n}  ·  Active tensions: {n}  ·  Tags in use: {n}  ·  Live threads: {n}
 Latest: {most recent INDEX.md entry, or "no notes yet"}
 
 🧠 Working memory (prove it)
