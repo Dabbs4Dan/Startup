@@ -26,6 +26,18 @@ If meaningful ideation happened this session and no file was written to `knowled
 
 If a knowledge extraction was started but not finalized (e.g., the founder paused mid-fetch), ask whether to finalize it or skip — don't silently drop it.
 
+## STEP 2.4 — Refresh STATE_OF_THE_AGENT.md (always)
+
+Regenerate `knowledge/STATE_OF_THE_AGENT.md` from current state — this is the founder's plain-English spot-check view. Update:
+- Source counts + bias flags (e.g. "all current sources are YC")
+- Founder-profile observations (sanitized 1-line summaries from auto-memory + this session)
+- Theme / tension / thread / commitment counts
+- Persona maturity tier
+- Latest 3 self-critique flags from SELF_ASSESSMENT.md
+- "What I'd love next" — concrete asks for the founder
+
+If the file feels self-flattering or off, that's a signal — log it as a feedback memory the next turn the founder mentions it.
+
 ## STEP 2.5 — Pattern sweep (mandatory if any ideation happened)
 
 Before the commit, run the **30-second sweep** documented in CLAUDE.md → Proactive saves → "End-of-session pattern sweep":
@@ -46,6 +58,14 @@ Also sweep `knowledge/IDEATION_LOG.md`:
 - For each active thread, refresh "Last touched" + "Where we left off" so next session picks up cleanly
 - Promote any thread that reached a decision into THESIS.md (Decided / Ruled out) and remove from IDEATION_LOG
 
+Also update `knowledge/PERSONA.md` if anything earned its stripes this session:
+- New observation about what works for THIS founder → add to "What works for THIS founder"
+- Line that landed twice across sessions → promote to "Wisdom one-liners"
+- Stance with 3+ sourced supports → promote to "Defended stances"
+- Anti-pattern caught in real-time → log it under "Anti-patterns"
+
+If sessions count just hit a multiple of 5, also add a new checkpoint entry to `knowledge/SELF_ASSESSMENT.md` per the schema in that file.
+
 ## STEP 3 — Commit (if git repo)
 
 Run `git rev-parse --git-dir 2>/dev/null`:
@@ -60,6 +80,9 @@ Run `git rev-parse --git-dir 2>/dev/null`:
    - `knowledge/TAGS.md`
    - `knowledge/THESIS.md`
    - `knowledge/IDEATION_LOG.md`
+   - `knowledge/PERSONA.md`
+   - `knowledge/STATE_OF_THE_AGENT.md`
+   - `knowledge/SELF_ASSESSMENT.md`
    - `knowledge/CHANGELOG.md`
    - `knowledge/SUGGESTIONS.md`
    - Any new/modified files under `knowledge/youtube/`, `/reddit/`, `/articles/`, `/sessions/`

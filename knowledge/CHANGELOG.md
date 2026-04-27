@@ -4,6 +4,34 @@
 
 ---
 
+## 2026-04-27 — Self-developing dimensions: PERSONA + STATE_OF_THE_AGENT + SELF_ASSESSMENT + stale-check + opposing-case + anecdote framing
+
+**What:** Five new mechanisms responding to founder ask about (a) persona scaling automatically with corpus, (b) non-engineer founder-legibility, (c) auto stale-knowledge check, (d) verifying conversation-learning loop, (e) tracking self-critique over time.
+
+**Files added:**
+- `knowledge/PERSONA.md` — evolving voice + earned aesthetic, with three maturity tiers (🌱 Apprentice / 🌿 Developing / 🌳 Mature) that scale with note + ideation-session counts. Updates during pattern sweep + when stances earn validation.
+- `knowledge/STATE_OF_THE_AGENT.md` — plain-English snapshot of what the agent knows/tracks/is uncertain about. Auto-updated at every `/end-session`. Founder reads in 2 minutes to spot drift.
+- `knowledge/SELF_ASSESSMENT.md` — recurring honest critique on 8 mission-critical dimensions (sourcing diversity, anecdote framing, persona depth, founder legibility, discourse capture, knowledge freshness, opposing-case discipline, use-vs-build ratio). Trend table over time. First checkpoint seeded today.
+
+**CLAUDE.md changes:**
+- New rule: stale-knowledge auto-check at session start (180/365-day buckets, surfaced in boot output, parenthetical caveats when citing stale notes).
+- New rule: persona-tier behavior scaling (counted from notes + sessions, governs how strongly to push earned stances).
+- New rule: anecdote-vs-evidence framing discipline ("tends to" / "in this corpus" defaults; flag sourcing monoculture explicitly).
+- New rule: opposing-case discipline (every recommendation includes "Counter-case:" or "I don't see a strong counter — here's why:").
+- New rule: founder-legibility update at every `/end-session` refreshes STATE_OF_THE_AGENT.md.
+- New rule: recurring self-assessment cadence (every 5 sessions or major milestone or on request).
+- Wake-up routine: now reads PERSONA.md + SELF_ASSESSMENT.md.
+- Knowledge files section: documented PERSONA, STATE_OF_THE_AGENT, SELF_ASSESSMENT.
+
+**Commands changed:**
+- `/start-session`: stale-check, persona tier, lowest-3 self-critique flags surfaced in boot output. Self-assessment cadence prompt fires at 5/10/15/...
+- `/end-session`: STEP 2.4 added (refresh STATE_OF_THE_AGENT.md); STEP 2.5 expanded (PERSONA.md updates + SELF_ASSESSMENT checkpoint at 5-session intervals).
+- agent skill: wake-up reads PERSONA + SELF_ASSESSMENT.
+
+**Honest answer to founder's "did I add learning from our conversations":** Yes for capture (pattern sweep, auto-memory, IDEATION_LOG, PERSONA earned-aesthetic updates). Verification: still aspirational — none of these have actually fired in production yet. Auto-memory remains empty. The proof comes from running a real ideation session and watching the loops fire end-to-end.
+
+---
+
 ## 2026-04-27 — Dedupe + IDEATION_LOG + end-of-session pattern sweep
 
 **What:** Three structural additions in response to founder ask about (a) flagging duplicate sources, (b) capturing how agent-mode discussion weights into learning.

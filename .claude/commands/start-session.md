@@ -9,6 +9,8 @@ Run the start-of-session orientation. **Works regardless of mode** — if person
    - `knowledge/TENSIONS.md` — disagreements between sources. If missing, treat as "no tensions yet."
    - `knowledge/THESIS.md` — founder's current bet. If missing, treat as "not yet defined."
    - `knowledge/IDEATION_LOG.md` — live exploration threads. If missing, treat as "no live threads."
+   - `knowledge/PERSONA.md` — evolving voice + earned aesthetic + maturity tier. If missing, treat as "🌱 Apprentice tier, default archetype only."
+   - `knowledge/SELF_ASSESSMENT.md` — known weaknesses (so they aren't silently repeated). If missing, treat as "no critique baseline yet."
 3. **Check auto-memory.** Try to read `~/.claude/projects/-Users-danielstarr-Desktop-Startup-Ideation/memory/MEMORY.md`. If it doesn't exist, treat founder context as "none saved yet" — don't error.
 4. **Compute live knowledge counts** by listing each subdirectory:
    ```
@@ -18,14 +20,24 @@ Run the start-of-session orientation. **Works regardless of mode** — if person
    ls knowledge/sessions/ | grep -c '\.md$'
    ```
    Use the real counts, not numbers from CLAUDE.md (they may be stale).
-5. **Count themes, tensions, and tags.** From the files just read:
+5. **Count themes, tensions, tags, and live threads.** From the files just read:
    - Themes = number of H2 sections under "## " in THEMES.md (excluding the "How this file works" header)
    - Active tensions = number of H3 sections under `## Active tensions`
    - Tags in use = number of H2 sections in TAGS.md
-6. **Check git state.** Run `git rev-parse --git-dir 2>/dev/null`. If exit 0, also run `git log -1 --oneline`. If non-zero, mark git as "not initialized" — don't error.
-7. **Reconcile.** If the live counts differ from CLAUDE.md's **Current state**, that's drift. Update CLAUDE.md's Current state in the same turn (this is a Proactive save trigger).
-8. **Build the "prove it" line.** A single sentence that demonstrates working memory of prior work — the visible proof that the system is compounding. Format: `Dominant theme: {top theme from THEMES.md, or "none yet"}. Active tension: {top tension from TENSIONS.md, or "none"}. Current thesis: {from THESIS.md, or "not yet defined"}. Live threads: {count from IDEATION_LOG.md, or "none"}.`
-9. **Every-5-sessions self-check.** If the sessions count is a multiple of 5 (5, 10, 15, …), append the self-check question to the end of the boot output (see CLAUDE.md → Proactive saves → Every-5-sessions self-check).
+   - Live threads = number of H2 sections under `## Active threads` in IDEATION_LOG.md
+6. **Stale-knowledge auto-check.** For every note in `knowledge/youtube/`, `/reddit/`, `/articles/`, `/sessions/`, read its `date_extracted` frontmatter and bucket:
+   - `< 180 days` → 🟢 fresh (no flag)
+   - `180–365 days` → 🟡 freshness check
+   - `> 365 days` → 🔴 likely stale (also list filenames)
+
+   Compute counts per bucket. Surface in boot output.
+7. **Determine persona maturity tier** from PERSONA.md's counters + the live counts. Surface in boot output: `🌱 Apprentice` / `🌿 Developing` / `🌳 Mature`.
+8. **Check git state.** Run `git rev-parse --git-dir 2>/dev/null`. If exit 0, also run `git log -1 --oneline`. If non-zero, mark git as "not initialized" — don't error.
+9. **Reconcile.** If the live counts differ from CLAUDE.md's **Current state**, that's drift. Update CLAUDE.md's Current state in the same turn (this is a Proactive save trigger).
+10. **Build the "prove it" line.** A single sentence that demonstrates working memory of prior work — the visible proof that the system is compounding. Format: `Dominant theme: {top theme from THEMES.md, or "none yet"}. Active tension: {top tension from TENSIONS.md, or "none"}. Current thesis: {from THESIS.md, or "not yet defined"}. Live threads: {count from IDEATION_LOG.md, or "none"}. Persona tier: {tier emoji + name}.`
+11. **Surface latest 3 self-critique flags.** From SELF_ASSESSMENT.md most recent checkpoint, surface the 3 lowest-scoring (or most concerning) dimensions in boot output as `⚠️ Known weaknesses` so they're top-of-mind for the session.
+12. **Self-assessment cadence check.** If sessions count is a multiple of 5 (5, 10, 15, …) AND no checkpoint has been added today, surface a recommendation in boot output: *"📊 Time for a SELF_ASSESSMENT.md checkpoint — type `/check-session` or just ask."*
+13. **Every-5-sessions self-check** (founder pruning question). Same trigger as above; append the question to the end of the boot output.
 
 ## Output format
 
@@ -37,11 +49,16 @@ Run the start-of-session orientation. **Works regardless of mode** — if person
 ─────────────────
 YouTube: {n}  ·  Reddit: {n}  ·  Articles: {n}  ·  Sessions: {n}
 Themes: {n}  ·  Active tensions: {n}  ·  Tags in use: {n}  ·  Live threads: {n}
+Freshness: 🟢 {n} fresh  ·  🟡 {n} check  ·  🔴 {n} likely stale {list filenames if any 🔴}
 Latest: {most recent INDEX.md entry, or "no notes yet"}
 
 🧠 Working memory (prove it)
 ────────────────────────────
-{the "prove it" line built in Step 8}
+{the "prove it" line built in Step 10}
+
+⚠️ Known weaknesses (from latest self-assessment)
+─────────────────────────────────────────────────
+{top 3 lowest-scoring or most-concerning dimensions from SELF_ASSESSMENT.md, with score + 1-line note}
 
 👤 Founder context
 ─────────────────
