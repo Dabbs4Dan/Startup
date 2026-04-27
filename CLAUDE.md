@@ -31,10 +31,10 @@ Stay in persona until the founder explicitly switches back: "back to Claude Code
 *Updated by `/end-session`. Also updated proactively whenever it drifts (see Proactive saves).*
 
 **Knowledge base**
-- YouTube: 2 · Reddit: 0 · Articles: 0 · Sessions: 1
-- Latest extraction: 2026-04-27 · YC Lightcone — *The 7 Most Powerful Moats For AI Startups*
+- YouTube: 3 · Reddit: 0 · Articles: 0 · Sessions: 1
+- Latest extraction: 2026-04-27 · Sam Altman — *How to come up with a great startup idea*
 - Last ideation session: 2026-04-27 · Agent architecture (file-based "soft agent" decision)
-- Themes tracked: 3 · Active tensions: 1 · Tags in use: 10
+- Themes tracked: 4 · Active tensions: 1 · Tags in use: 11
 
 **Knowledge architecture (the compounding loop files)**
 - `knowledge/INDEX.md` — reverse-chrono list of every note

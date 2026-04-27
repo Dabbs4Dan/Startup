@@ -3,7 +3,7 @@
 > Every tag in the controlled vocab, mapped to every note that carries it. Fast retrieval when the founder asks "what do we know about X?"
 
 **Last updated:** 2026-04-27
-**Tags in use:** 10
+**Tags in use:** 11
 
 ---
 
@@ -16,13 +16,14 @@
 
 ---
 
+## `founder-mindset` (3)
+- 2026-04-27 · [Diana Hu — How To Build A Company With AI](knowledge/youtube/diana-hu-ai-native-company.md) — Founders cannot delegate AI conviction.
+- 2026-04-27 · [Sam Altman — Startup Idea + Great Wave](knowledge/youtube/sam-altman-startup-idea-and-the-great-wave.md) — Wait to have a real idea; passionate conviction is load-bearing.
+- 2026-04-27 · [YC Lightcone — 7 Most Powerful Moats](knowledge/youtube/yc-lightcone-seven-powers-ai-moats.md) — Don't pick ideas based on long-term moats.
+
 ## `ai-native` (2)
 - 2026-04-27 · [Diana Hu — How To Build A Company With AI](knowledge/youtube/diana-hu-ai-native-company.md) — AI as the OS the company runs on.
 - 2026-04-27 · [YC Lightcone — 7 Most Powerful Moats](knowledge/youtube/yc-lightcone-seven-powers-ai-moats.md) — Helmer's seven powers reapplied to AI startups.
-
-## `founder-mindset` (2)
-- 2026-04-27 · [Diana Hu — How To Build A Company With AI](knowledge/youtube/diana-hu-ai-native-company.md) — Founders cannot delegate AI conviction.
-- 2026-04-27 · [YC Lightcone — 7 Most Powerful Moats](knowledge/youtube/yc-lightcone-seven-powers-ai-moats.md) — Don't pick ideas based on long-term moats.
 
 ## `b2b` (1)
 - 2026-04-27 · [YC Lightcone — 7 Most Powerful Moats](knowledge/youtube/yc-lightcone-seven-powers-ai-moats.md) — FDE pilot model, switching costs via deep workflow lock-in.
@@ -42,8 +43,12 @@
 ## `ops` (1)
 - 2026-04-27 · [Diana Hu — How To Build A Company With AI](knowledge/youtube/diana-hu-ai-native-company.md) — Closed-loop processes with self-improving agents in the middle.
 
-## `pmf` (1)
+## `pmf` (2)
+- 2026-04-27 · [Sam Altman — Startup Idea + Great Wave](knowledge/youtube/sam-altman-startup-idea-and-the-great-wave.md) — Solve your own problem; clones lose to originals.
 - 2026-04-27 · [YC Lightcone — 7 Most Powerful Moats](knowledge/youtube/yc-lightcone-seven-powers-ai-moats.md) — Find existential pain first; moats are a one-to-a-billion problem.
+
+## `ideation` (1)
+- 2026-04-27 · [Sam Altman — Startup Idea + Great Wave](knowledge/youtube/sam-altman-startup-idea-and-the-great-wave.md) — Two reliable origin patterns: solve your own problem, or surf a wave others still call a toy.
 
 ## `pricing` (1)
 - 2026-04-27 · [YC Lightcone — 7 Most Powerful Moats](knowledge/youtube/yc-lightcone-seven-powers-ai-moats.md) — Per-seat vs per-task; vertical AI SaaS wallet share.

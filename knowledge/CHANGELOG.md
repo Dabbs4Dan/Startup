@@ -4,6 +4,22 @@
 
 ---
 
+## 2026-04-27 — Ingest: Sam Altman on startup ideas + Great Wave (test of new system)
+
+**What:** Added [Sam Altman — Startup Idea + Great Wave](knowledge/youtube/sam-altman-startup-idea-and-the-great-wave.md). 3:21 curated clip.
+
+**Cascading updates done in same turn (per new auto-write policy):**
+- INDEX.md — top entry
+- TAGS.md — added under `founder-mindset` (now 3), `pmf` (now 2), `ideation` (new section, 1)
+- THEMES.md — added new theme **"Origins matter — real problems, not crowded markets"** (Altman + Lightcone). Total themes now 4.
+- TENSIONS.md — no new tension (Altman doesn't contradict existing notes).
+- CLAUDE.md — bumped YouTube count, latest extraction, theme/tag counts.
+- THESIS.md — no change (founder still pre-ideation).
+
+**Test result:** First end-to-end run of the auto-write + auto-push routine. Everything cascaded in the same turn. The new theme bridge between Altman and Lightcone happened automatically because Job 1 step 5 now requires it.
+
+---
+
 ## 2026-04-27 — Auto-push + auto-refresh policy (durable authorization)
 
 **Founder authorized:** auto-commit + auto-push on every assistant turn that touches tracked files. No more waiting for `/end-session`. No more user having to remember to push.

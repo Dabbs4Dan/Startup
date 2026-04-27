@@ -3,7 +3,7 @@
 > Concepts that appear in 2+ notes. The agent reads this **before answering any ideation question**, so themes here become first-class memory across sessions.
 
 **Last updated:** 2026-04-27
-**Active themes:** 3
+**Active themes:** 4
 
 ---
 
@@ -15,6 +15,18 @@
 - **Implication for the founder:** how this should bias advice when the topic comes up.
 - **Update trigger:** when a new extraction reinforces or extends a theme, edit the section in the same turn — don't defer.
 - **New themes** require ≥2 sources. A claim from a single note is not a theme yet.
+
+---
+
+## Origins matter — real problems, not crowded markets
+
+**Sources:**
+- [Sam Altman — Startup Idea + Great Wave](knowledge/youtube/sam-altman-startup-idea-and-the-great-wave.md)
+- [YC Lightcone — 7 Most Powerful Moats](knowledge/youtube/yc-lightcone-seven-powers-ai-moats.md)
+
+**Synthesis:** Both notes converge on the same warning about *where ideas come from*. Altman: don't start a startup without a real idea you believe in — the best ideas come from **solving your own problem** or **surfing a wave others still think is a toy**. Lightcone: find a person with **existential pain** and solve their problem first — moats are a one-to-a-billion concern, but reaching one requires a real problem to solve. Both reject manufactured ideas (picking a market because it's hot, copying a winner, optimizing for defensibility before validation). The clone trap is empirically lethal: 1000+ Facebook copies, 1000+ Instagram copies, 10,000 photo startups in a single year — the original wins, the clones die.
+
+**Implication for the founder:** Don't start with *"what market should I enter?"* Start with *"what problem have I personally seen, or what wave is forming that nobody believes in yet?"* If you're tempted to enter a category because others are succeeding there, that's exactly the wrong signal. When evaluating an idea, the litmus test is: **does this come from real life, or did I reverse-engineer it from a market opportunity?** The first wins. The second is the clone trap dressed up.
 
 ---
 
