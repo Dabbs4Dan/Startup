@@ -38,22 +38,35 @@ When a thread reaches a decision, it leaves this file:
 
 ### Finding the problem space (the meta-thread)
 
-- **Status:** 🟢 exploring
+- **Status:** 🟡 leaning toward — *B2B SaaS sales-org tooling*, mid-market+, sub-candidate TBD
 - **Last touched:** 2026-04-27
-- **The honest framing:** Founder doesn't have a personal problem he's pulled toward yet. First real ideation session is about *how to find* a problem space, not *which* one.
+- **The honest framing:** Founder is an enterprise AE at a slower-growth B2B SaaS — has domain expertise, network access via CRM, and personal pain. Domain is locked in; specific problem within domain is being narrowed.
 
 **Angles explored:**
-- 🔴 *AI agents for GTM orgs → SMB cascading-campaign re-engagement agent* — proposed by founder; agent stress-tested with Rob Snyder's 6-part case study lens. Verdict: supply-side idea, demand cells hollow (esp. Context — *why this project, why now?*). Reverse-engineered from a hot category, not from personal pain. Lightcone "clone trap" risk; SMB tar-pit risk. Did NOT rule out — flagged as 🔴 *leaning against without much harder grounding.*
-- 🔴 *SEO / Reddit search-monitoring tool to find unaddressed problems* — proposed by founder as a way to discover problem spaces. Agent flagged this as the **second-order tool-over-customer anti-pattern**: building a tool to find problems instead of going to find them. Counter-case acknowledged: indie hackers (Levels et al.) do scan trends — but as a research input *after* founder-led conviction, not as a substitute. Did NOT rule out — flagged as 🔴 *not the move yet.*
-- 🟢 *Founder-network-first approach* — agent's recommended pivot per corpus consensus (Altman + Lightcone + Rob Snyder + Techstars Customer Dev). Four questions queued for founder to answer next: (1) Who in network has a painful-sounding job, (2) last time he watched someone struggle with something dumb, (3) what does he google in repeating loops, (4) last job/industry — what did he see break. **This is where we left off.**
+- 🔴 *AI agents for GTM orgs → SMB cascading-campaign re-engagement agent* — original proposed framing. Stress-tested with Rob Snyder's 6-part lens; demand cells hollow. Reverse-engineered from a hot category. **Founder reframed away from this** when asked about his actual life — SMB target was chosen because AI-agent selling is easier there, not because that's where his pain or expertise lives. **Effectively superseded** by the domain-grounded reframe below.
+- 🔴 *SEO / Reddit search-monitoring tool to find unaddressed problems* — flagged as second-order tool-over-customer anti-pattern (build a system to find problems vs go find them). Founder did not push back; deprioritized.
+- 🟢 *Domain-grounded reframe: B2B SaaS sales-org tooling at mid-market+* — surfaced when founder answered the 4 founder-network questions. He IS a B2B SaaS enterprise AE, sees the pain daily, has CRM-based prospect access. Four sub-candidate problems within this domain (see below).
+
+**Sub-candidates (B2B SaaS sales-org tooling, mid-market+):**
+
+- **Candidate A — Outbound seller pain at slower-growth SaaS.** Founder IS this customer. Project: "hit my number this quarter despite a low-demand product." Strong daily forcing function. Buyer (sales leader / VP / CRO) is hard but proven (Outreach, Apollo, Clay). Highest founder conviction. **Currently leaning toward this.**
+- **Candidate B — Sales leader CRM grip.** Founder observes second-hand. Crowded (Gong, Clari, Salesforce). Periodic pain (board cycle).
+- **Candidate C — Sellers using web Claude bots, not integrated AI in motion.** Founder lives this. Pull rising. Crowded (100+ funded AI-sales startups).
+- **Candidate D — Procurement timing + forecasting.** Founder talks to them; doesn't live their pain. Different lane (selling to procurement vs to sellers).
+
+**Important counter-case (acknowledged):** Selling to sales leaders / sales orgs is the most NPS-hostile, most legacy-contract-laden, most crowded buyer category in B2B SaaS. Companies in the most pain (older SaaS) are slowest to buy. Not a layup — known difficulty mode.
+
+**Founder's pushback that landed:**
+- He has more grounding than the agent initially credited — domain expertise + CRM access + personal pain.
+- Rob Snyder's sell-to-learn IS the problem-discovery method, not just demand-validation. SendBlue (YC) cited as proof — they found PMF only after working with clients, honing on the one valued feature.
 
 **Open questions:**
-- Does the founder have *any* prior work / industry / personal-life pain that gives a natural starting point? (Most important question right now.)
-- What's the founder's actual network density and who could he call this week if we landed on a person?
-- If the GTM-agent direction were *correct* but the founder doesn't yet know it, what evidence would prove it? (Currently: he'd need to name 3 specific SMBs he can call to test the case study.)
+- Of Candidates A–D, which does the founder feel the *deepest* gut pull toward? (Asked, awaiting answer.)
+- For the chosen candidate: who's the most painful version of "Melissa" the founder can name from his CRM/network this week?
+- Does the slow-buyer / hostile-buyer counter-case change the calculus, or is the personal-conviction edge enough to overcome it?
 
 **Where we left off:**
-Agent pushed back hard on both proposed paths (GTM-agent reverse-engineering + SEO-tool building). Asked the founder to answer 4 questions sourcing problem-space candidates from his own life/network/observations rather than from buzzy categories. Awaiting founder's response.
+Agent applied Rob's case-study lens to the 4 sub-candidates. Recommended Candidate A (outbound seller pain) as strongest by Rob/Altman/Lightcone tests. Asked founder to commit to one of: (A) start with Candidate A and draft the theoretical case study with him as Melissa, (B) 10-min comparative pass across all 4, (C) push back with the candidate he actually feels deepest pull toward.
 
 
 
