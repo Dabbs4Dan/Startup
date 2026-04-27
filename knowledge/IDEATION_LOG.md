@@ -66,7 +66,23 @@ When a thread reaches a decision, it leaves this file:
 - Does the slow-buyer / hostile-buyer counter-case change the calculus, or is the personal-conviction edge enough to overcome it?
 
 **Where we left off:**
-Agent applied Rob's case-study lens to the 4 sub-candidates. Recommended Candidate A (outbound seller pain) as strongest by Rob/Altman/Lightcone tests. Asked founder to commit to one of: (A) start with Candidate A and draft the theoretical case study with him as Melissa, (B) 10-min comparative pass across all 4, (C) push back with the candidate he actually feels deepest pull toward.
+Founder pulled back from Candidate A (and the "AE rabbit hole" generally) — *"I wanna focus a bit more on an approachable sales segment vs. enterprise reps at similar sized companies. At profitable companies, a lot of the stuff I'm raising goes out of the window methodology-wise."* Real read: companies in the most pain are the worst buyers; companies that'd be good buyers don't have this pain. Domain still B2B SaaS sales-org tooling, but pivoting to a more accessible *who*.
+
+Founder proposed a methodology variant: **use Rob Snyder's framework but run paid Instagram/LinkedIn ads for first-pass case-study testing instead of cold outbound.** Said *"otherwise I might be still most interested in Rob's methodology."* → 🟡 **methodology near-commit** to Rob's sell-to-learn engine.
+
+Agent ingested the r/SaaS jottrled idea-mining post (founder request) and upgraded the demand-discovery TENSION to 3-pole (Empathy interviews / Sell to learn / Mine signals). Reconciliation drafted: **Mine → Interview lightly → Sell to learn.**
+
+Agent's response on the paid-ads variant: partially consistent with Rob (Rob requires 5-10 1:1 conversations/wk, doesn't mandate cold outbound specifically), partially a deviation (inbound surfaces different signal than outbound; channel-before-case-study is cart-before-horse; ad infrastructure is a tooling-project-in-disguise). Counter-case acknowledged: ad creative IS the case-study pitch; capped spend can work.
+
+**Synthesis proposed:** test BOTH channels for 2 weeks at tiny scale ($200–500 ad cap + 5 LinkedIn DMs/week). Compare what each surfaces. Whichever sharpens the case-study debugging wins.
+
+**The actually-load-bearing gap surfaced:** founder still hasn't picked a *who* (Melissa) or a *what* (draft case study). Without those, the channel question is premature. Agent surfaced 4 "approachable segment" candidates within the domain:
+- Solo AEs at growing startups (1–3 reps)
+- Sales consultancies / fractional VP-Sales
+- Sales-first founders (technical founders who hate selling)
+- Specific job-titles inside sales orgs that aren't VP-Sales (RevOps, sales engineers, sales enablement)
+
+Awaiting founder's pick.
 
 
 
