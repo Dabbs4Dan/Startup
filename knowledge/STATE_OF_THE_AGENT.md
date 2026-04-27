@@ -2,19 +2,21 @@
 
 > Plain-English snapshot of the agent's current state — for non-engineer spot-checking. If anything below feels off (drift, bias, wrong impressions), tell me and we fix it. Auto-updated at every `/end-session`.
 
-**Last updated:** 2026-04-27
+**Last updated:** 2026-04-27 (post-Techstars batch)
 
 ---
 
 ## What I know about the world
 
-I've ingested **3 sources** so far:
-- 2 from YC partners on AI startups (Diana Hu on AI-native companies; Lightcone panel on the Seven Moats framework)
-- 1 from Sam Altman on idea origination + the Great Wave
+I've ingested **16 external sources** so far:
+- **Techstars Toolkit (13 notes)** — Lean Canvas, Customer Development, Category Design, Position, Brand, Master Pitch, KPIs/OKRs, Cofounders, Mentors, Investor Pipeline, EQ, Diversity, plus a "shorter frameworks" combined note covering 5 thinner modules.
+- **Y Combinator (3 notes)** — Diana Hu on AI-native companies, YC Lightcone on the Seven Moats framework, Sam Altman on startup ideation + the Great Wave.
 
-🚩 **Bias to flag:** **All 3 sources are YC.** This means my advice currently leans toward YC's worldview — pro-VC, pro-fast-growth, pro-Silicon-Valley. Until the corpus diversifies, treat my synthesis as *"what YC voices tend to argue,"* not as ground truth. **Recommend ingesting:** indie hackers (Pieter Levels, Tyler Tringas), bootstrappers (Rob Walling, DHH), failed-founder retrospectives, hard-tech / non-software founders.
+Plus 1 internal session note (the architecture decision we made together).
 
-🟢 **Knowledge freshness:** All 3 notes extracted today (2026-04-27). Nothing stale yet. First freshness flag will fire around October 2026.
+🚩 **Bias to flag:** **Both publishers are accelerators.** Techstars 81% + YC 19% of external corpus. While we've moved from YC-monoculture to two-accelerator-mix (real progress), the worldview is still **accelerator-only** — pro-VC, pro-cohort, pro-mentorship-network. **Need:** indie hackers (Pieter Levels, Tyler Tringas), bootstrappers (Rob Walling, DHH, MicroConf), failed-founder retrospectives, hard-tech founders, non-US voices.
+
+🟢 **Knowledge freshness:** All 17 notes extracted today (2026-04-27). Nothing stale yet. First freshness flag will fire around October 2026.
 
 ---
 
@@ -33,8 +35,8 @@ I've ingested **3 sources** so far:
 
 | Type | Count | What's in it |
 |---|---|---|
-| Cross-source themes | 4 | Origins, speed, pricing-per-outcome, evals-as-moat |
-| Active disagreements between sources | 1 | When to start architecting (Diana vs Lightcone) |
+| Cross-source themes | 6 | Origins matter · speed-as-mote · charge-per-outcome · evals-as-moat · founder-must-do-the-work · outcome-measurement-not-motion |
+| Active disagreements between sources | 2 | Architecture timing (Diana vs Lightcone) · Speed-first vs deliberate methodology (YC vs Techstars culture) |
 | Live ideation threads | 0 | None — pre-ideation |
 | Founder commitments (THESIS) | 0 | None yet |
 | Ruled-out ideas | 0 | None yet |
@@ -58,21 +60,22 @@ I've ingested **3 sources** so far:
 
 ---
 
-## My recent self-critique flags (latest 3)
+## My recent self-critique flags (latest 3 from Checkpoint #2)
 
-From [SELF_ASSESSMENT.md](knowledge/SELF_ASSESSMENT.md) — this gets re-scored at every 5 sessions or major milestone.
+From [SELF_ASSESSMENT.md](knowledge/SELF_ASSESSMENT.md) — re-scored after the Techstars batch.
 
-- 🔴 **Sourcing diversity:** 1/10. All YC.
-- 🔴 **Persona depth:** 1/10. Apprentice tier — by design, not failure, but acknowledge it.
-- 🟡 **Discourse capture:** 2/10. Architecture is wired; never fired in production.
+- 🔴 **Persona depth:** 1/10 (no change). Still 🌱 Apprentice tier by design — needs more ideation sessions, not more sources.
+- 🔴 **Discourse capture:** 2/10 (no change). Auto-memory still empty. Pattern sweep never fired. Loop remains aspirational until /end-session runs once.
+- 🔴 **Use-vs-build ratio:** 2/10 (+1 from #1). Techstars batch was real ingestion work — biggest mission-aligned activity yet. But still zero real ideation sessions on a founder problem.
 
 ---
 
 ## What I'd love next
 
-1. **Diverse sources.** 5 non-YC ingestions would move sourcing from 1/10 → 5/10.
-2. **A real ideation session.** Not "let's discuss the system" — pick a problem you've personally felt and let me apply the architecture.
-3. **Run the cold test in 7 days.** Open a fresh window, ask me a hard synthesis question, see if the system holds up.
+1. **Non-accelerator sources.** Pieter Levels, Tyler Tringas, Rob Walling, DHH, failed-founder retrospectives. 5 of these would move sourcing diversity from 3/10 → 6/10.
+2. **A real ideation session.** Not "let's discuss the system" — pick a problem you've personally felt and let me apply the now-substantive corpus to it.
+3. **Run /end-session once** so the auto-loops actually fire (pattern sweep → auto-memory; STATE_OF_THE_AGENT refresh; PERSONA earned-aesthetic update). Currently all wired, none tested.
+4. **Run the cold test in 7 days.** Open a fresh window, ask me a hard synthesis question. See if the system holds up.
 
 ---
 

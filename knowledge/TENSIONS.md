@@ -3,7 +3,7 @@
 > Disagreements between sources are gold for ideation. The agent reads this **before answering any ideation question** so it can surface the right fork in the road instead of presenting false consensus.
 
 **Last updated:** 2026-04-27
-**Active tensions:** 1 · **Resolved:** 0
+**Active tensions:** 2 · **Resolved:** 0
 
 ---
 
@@ -34,6 +34,25 @@
 **Founder's current posture:** Not yet defined — founder is pre-ideation.
 
 **What would resolve this:** Either (a) a counter-example of an early-stage startup that was killed by *not* having queryable infrastructure, or (b) a clear statement from the founder about which side of the trade-off feels right for what they're building.
+
+---
+
+### Speed-first vs deliberate methodology (YC vs Techstars accelerator culture)
+
+**YC's posture** (across [Diana](knowledge/youtube/diana-hu-ai-native-company.md), [Lightcone](knowledge/youtube/yc-lightcone-seven-powers-ai-moats.md), [Altman](knowledge/youtube/sam-altman-startup-idea-and-the-great-wave.md)): **Ship, iterate, ship faster.** Speed is the only mote that matters early. Cursor's 1-day sprint cycles are the model. Pre-PMF, don't build infrastructure — find existential pain and run at it. Diana frames the WHY (architecture-driven speed); Lightcone frames the WHAT (don't pre-optimize for moats); Altman frames the WHEN (jump on a wave others miss).
+
+**Techstars' posture** (across the toolkit): **Prepare deliberately, build methodically.** Lean Canvas before solution. Empathy interviews before product. Mise en Place (full investor materials) before fundraising. Master Pitch with 75% of prep on the intro alone. The implicit message: **methodology compounds; rushed fundamentals don't.**
+
+**Why this matters:** A founder reading both gets whiplash. *"Should I ship daily like Cursor or run empathy interviews and complete the canvas first?"* Both are right at different moments — but the framing collision is real and worth surfacing.
+
+**Reconciliation (working hypothesis):** The two are about **different stages and different objects**:
+- **Pre-PMF discovery work** → Techstars-style deliberate methodology. Empathy interviews, Lean Canvas, JTBD analysis. Speed of *learning*, not speed of *shipping*.
+- **Post-PMF execution** → YC-style velocity. Once you have a real problem and a real customer, ship daily. Speed of *shipping*, not speed of *deciding what to ship*.
+- **The trap:** treating either as universal. Pure-Techstars at the post-PMF stage = over-planning theater. Pure-YC at the pre-ideation stage = building the wrong thing very fast.
+
+**Founder's current posture:** Pre-ideation as of 2026-04-27. Default toward Techstars-style customer-development methodology until you have a problem to ship against; then flip to YC-style velocity.
+
+**What would resolve this:** A specific worked example of a founder who tried both sequences and reported what worked when. Or a clear statement from the founder about which stage they're optimizing for.
 
 ---
 

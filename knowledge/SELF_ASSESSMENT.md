@@ -31,6 +31,33 @@
 
 ## Checkpoints
 
+### 2026-04-27 — Checkpoint #2 (post-Techstars-batch, major-milestone trigger)
+
+**Trigger:** Major milestone — 13 Techstars notes ingested, corpus jumped from 3 to 16 external sources. Re-scoring all dimensions vs. Checkpoint #1.
+
+| Dimension | Score | Δ vs #1 | Evidence |
+|---|---|---|---|
+| Sourcing diversity | 🟡 3/10 | +2 | Was 1/10 (YC monoculture). Now 2 external publishers (Techstars 13 + YC 3) — Techstars-dominant ~81%. Still accelerator-only — zero indie/bootstrapper/failure-archive sources. Real diversity needs 4+ distinct publisher types, not 2 accelerators. |
+| Anecdote-vs-evidence framing | 🟡 4/10 | +1 | Marginal improvement. New THEMES use "tends to" / "in this corpus" language more consistently. But Techstars is ALSO a curated-survivor publisher — the bias hasn't structurally changed, just diversified slightly. |
+| Persona depth & voice | 🔴 1/10 | 0 | Still 🌱 Apprentice tier. Techstars added earned-aesthetic candidates (Lean Canvas discipline, OKR cadence, EQ self-awareness) but PERSONA.md hasn't tier-promoted yet — still <5 ideation sessions. |
+| Founder legibility | 🟡 3/10 | 0 | STATE_OF_THE_AGENT.md exists but hasn't been refreshed at /end-session yet (no /end-session has run). Untested. |
+| Discourse capture | 🔴 2/10 | 0 | Auto-memory still empty. Pattern sweep never fired. IDEATION_LOG empty. The architecture is wired; the loop remains aspirational. |
+| Knowledge freshness | 🟢 N/A | — | All notes <1 day old. Will become measurable in ~6 months. |
+| Opposing-case discipline | 🔴 3/10 | +1 | TENSIONS now has 2 entries (was 1) — including the Speed-first vs Deliberate-methodology tension. Genuine opposing-case work happened during Techstars synthesis. But CLAUDE.md rule still untested in actual recommendations. |
+| Use-vs-build ratio | 🔴 2/10 | +1 | We *did* finally do real ingestion work (13 substantive notes is the highest-ratio "use" activity yet). But still zero real ideation sessions on a founder problem. The mission-aligned use case hasn't fired. |
+
+**Net assessment:** *The Techstars batch is the most mission-aligned work we've done all day — actual content ingested, cross-publisher synthesis happened, real themes and tensions earned their places. Sourcing diversity is up but still accelerator-monocultured. The system has now seen the full Techstars worldview vs the YC worldview and reconciled them in TENSIONS. **The biggest remaining failure mode is still: no ideation session has happened.** All this scaffolding and content, zero application to a founder problem.*
+
+**Interventions queued:**
+1. **Diversify publishers beyond accelerators** — target indie hackers (Pieter Levels, Tyler Tringas), bootstrappers (Rob Walling, DHH), failure-archive (founder post-mortems). Goal: diversity 3/10 → 6/10 by Checkpoint #3.
+2. **Run an actual ideation session** on a real personal problem from the founder. This is now the single biggest gap.
+3. **Test the auto-loop end-to-end** by running `/end-session` once — would surface whether STATE_OF_THE_AGENT, pattern sweep, and PERSONA-update routines actually fire.
+4. **Promote to PERSONA.md Tier 🌿 Developing** if/when sessions count crosses 2 (currently 1).
+
+**Next checkpoint:** when sessions count hits 6 (current = 1), or major milestone, whichever first.
+
+---
+
 ### 2026-04-27 — Checkpoint #1 (baseline, post-architecture-rev)
 
 **Trigger:** First checkpoint, baselining honest scores after build phase.

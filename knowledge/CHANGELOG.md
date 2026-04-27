@@ -69,6 +69,51 @@
 
 ---
 
+## 2026-04-27 — Phase 2: Techstars Toolkit ingestion (13 notes covering all 20 modules)
+
+**What:** Full ingestion of the Techstars Founders Toolkit. 20 modules fetched in parallel; triaged by depth into 13 notes — 12 standalone + 1 combined "shorter frameworks" note for the thinner pages.
+
+**Notes added (all under `knowledge/articles/`):**
+- techstars-lean-canvas
+- techstars-customer-development (Empathy + JTBD)
+- techstars-category-design (combined 2 modules)
+- techstars-position-your-product
+- techstars-brand-your-business
+- techstars-master-your-pitch
+- techstars-kpis-and-okrs (combined 3 modules: KPIs + Make Progress + Check Progress)
+- techstars-cofounder-relationships
+- techstars-engage-with-mentors
+- techstars-investor-pipeline
+- techstars-eq-for-entrepreneurs
+- techstars-diverse-workforce
+- techstars-shorter-frameworks (combined 5 thinner modules: Elevator Pitch + Get More Done + 21 Ways + W3 + Mental Health)
+
+**THEMES updates:**
+- "Origins matter" — extended with Techstars Customer Dev + Lean Canvas (now 4 sources, cross-publisher)
+- NEW: "Founder must personally do the conviction work" (Diana + Altman + Techstars Customer Dev + Techstars EQ — cross-publisher)
+- NEW: "Outcome measurement (not motion) is the discipline" (Diana + Lightcone + Techstars KPIs + Techstars Position — cross-publisher)
+- Total themes: 4 → 6
+
+**TENSIONS updates:**
+- NEW: "Speed-first vs deliberate methodology (YC vs Techstars accelerator culture)" — first cross-publisher tension. Reconciliation: both right at different stages; Techstars-style for pre-PMF discovery, YC-style velocity for post-PMF execution.
+- Total active tensions: 1 → 2
+
+**TAGS updates:**
+- Techstars publisher section added with 13 notes
+- Existing publisher entries updated for sourcing-diversity tracker
+- 14 new content tags introduced from Techstars: lean-canvas, customer-development, category-design, positioning, branding, cofounders, mentorship, kpis, goals, pitching, mental-health, diversity, fundraising, sales, retention, growth, community
+- Tags in use: 13 → 31
+
+**Sourcing diversity moved from 🔴 1/10 (YC monoculture) to 🟡 ~3/10 (still accelerator-dominant: Techstars 81% + YC 19%, no indie/bootstrapper/failure-archive yet).** Major step but not yet diverse — see SELF_ASSESSMENT Checkpoint #2.
+
+---
+
+## 2026-04-27 — Phase 1: publisher-tag scheme
+
+Schema: publisher field now required in frontmatter; first tag in tags array mirrors it (yc / techstars / reddit / internal / etc). TAGS.md restructured to surface publisher distribution at the top. Backfilled 3 existing YC notes + the architecture session.
+
+---
+
 ## 2026-04-27 — Auto-push + auto-refresh policy (durable authorization)
 
 **Founder authorized:** auto-commit + auto-push on every assistant turn that touches tracked files. No more waiting for `/end-session`. No more user having to remember to push.
