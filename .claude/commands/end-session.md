@@ -86,6 +86,7 @@ Run `git rev-parse --git-dir 2>/dev/null`:
    - `knowledge/CHANGELOG.md`
    - `knowledge/SUGGESTIONS.md`
    - Any new/modified files under `knowledge/youtube/`, `/reddit/`, `/articles/`, `/sessions/`
+   - Any new/modified files under `inbox/` and `inbox/processed/` (raw archives have provenance value)
    - Any new/modified files under `.claude/commands/` or `.claude/skills/`
 3. Commit with a short plain-English message describing what shipped this session (e.g. `"Add Diana Hu extraction; update themes + tags"`).
 4. **Auto-push to origin/main.** Run `git push`. The remote is `git@github.com:Dabbs4Dan/Startup.git` (SSH, no prompts). If push fails for any reason (network, auth, conflict), surface the error in the summary — don't retry blindly and don't force-push.

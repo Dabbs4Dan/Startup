@@ -69,6 +69,33 @@
 
 ---
 
+## 2026-04-27 — Inbox + cross-correlation synthesis pass
+
+**What:** Local-storage drop zone for content without public URLs (PDFs, exported decks, screenshots), plus a richer post-extraction synthesis pass that cross-correlates new content against the existing library.
+
+**Files added:**
+- `inbox/` folder with README documenting the workflow
+- `inbox/processed/` for raw archives after ingestion
+
+**CLAUDE.md changes:**
+- Job 1 step 1 — added `inbox/` path detection as a source-type trigger
+- Job 1 step 3 — added Read-tool usage for files (with PDF page-range chunking for large decks)
+- Job 1 step 7 (NEW) — **post-extraction synthesis pass**:
+  - **Tag overlap** surfacing (every other note that shares a tag)
+  - **Named-entity overlap** (companies / people / technologies / frameworks / investors / products) via grep
+  - **Tag-vocab additions** if source introduces new concepts
+  - **Inbox bookkeeping** — move source to `inbox/processed/` and reference it in the note's source-info section
+- Job 1 step 8 — extraction summary now MUST include cross-correlation findings (the value beyond the extraction itself)
+- Knowledge files section: documented `inbox/`
+
+**Commands changed:**
+- `/start-session`: new step 6 (inbox scan) + boot output now includes `📥 Inbox` section showing unprocessed files
+- `/end-session`: explicit staging now includes `inbox/` and `inbox/processed/`
+
+**Why this matters:** without cross-correlation, every new ingestion is just another note. With it, every new ingestion becomes a lens that re-illuminates the existing library — same startup, investor, framework, or technology mentioned across sources gets surfaced as a thread the founder might miss.
+
+---
+
 ## 2026-04-27 — Phase 2: Techstars Toolkit ingestion (13 notes covering all 20 modules)
 
 **What:** Full ingestion of the Techstars Founders Toolkit. 20 modules fetched in parallel; triaged by depth into 13 notes — 12 standalone + 1 combined "shorter frameworks" note for the thinner pages.

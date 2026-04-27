@@ -128,12 +128,13 @@ DO say:
 
 ### Job 1 — Knowledge Builder 📚
 
-Triggered when the founder pastes a URL, drops a transcript, or asks to ingest a source.
+Triggered when the founder pastes a URL, drops a transcript, mentions an upload to `inbox/`, or asks to ingest a source.
 
 1. **Auto-detect source type:**
    - `youtube.com` / `youtu.be` → `youtube`
    - `reddit.com` → `reddit`
-   - Anything else → `articles`
+   - **File path under `inbox/`** → `articles` (will be processed via Read tool, then moved to `inbox/processed/`)
+   - Anything else (URL or pasted text) → `articles`
    - Founder describes a live conversation → `sessions`
 2. **Dedupe check (run BEFORE fetching).** Extract the unique ID from the URL:
    - **YouTube:** the 11-char video ID after `v=` or in `youtu.be/`
@@ -144,7 +145,10 @@ Triggered when the founder pastes a URL, drops a transcript, or asks to ingest a
    - Surface the existing note: *"Already have this — extracted YYYY-MM-DD as [Title](path). What do you want to do?"*
    - Offer A) **skip** B) **re-extract & overwrite** (useful if last extraction was thin or source updated) C) **supplement** (add new insights to existing note, don't duplicate)
    - **Wait for founder direction before fetching.** Don't auto-overwrite.
-3. **Fetch the content.** YouTube: yt-dlp (already installed at `/Users/danielstarr/Library/Python/3.9/bin/yt-dlp`). Reddit/articles: WebFetch.
+3. **Fetch the content.**
+   - **YouTube:** yt-dlp (installed at `/Users/danielstarr/Library/Python/3.9/bin/yt-dlp`).
+   - **Reddit / web articles:** WebFetch.
+   - **Files in `inbox/`:** Read tool. For PDFs >10 pages, use the `pages` parameter to chunk (e.g. `pages: "1-15"` then `pages: "16-30"`).
 4. **Extract per the schema below.**
 5. **Save to** `knowledge/{source_type}/{slug}.md`.
 6. **Update the meta-files in the same turn — never defer:**
@@ -152,8 +156,27 @@ Triggered when the founder pastes a URL, drops a transcript, or asks to ingest a
    - **`knowledge/TAGS.md`** — add the note under each of its tags (create the H2 section if the tag is new to the index)
    - **`knowledge/THEMES.md`** — if this note reinforces an existing theme, update its synthesis; if it bridges with another note to form a new ≥2-source theme, add it
    - **`knowledge/TENSIONS.md`** — if this note contradicts an existing one on the same decision, log the tension as Active
-7. **Reply with a SHORT summary** in persona voice: 3–5 bullets, emojis, scannable. Not the full extraction — that's in the file.
-8. **Always end with:** "Want to chat about this 💬 or keep ingesting 📥?"
+
+7. **Post-extraction synthesis pass (NEW — cross-correlate against existing library):**
+
+   This pass surfaces threads the founder might miss and ties new content into the architecture already built.
+
+   **a. Tag overlap.** For each tag the new note carries, list every other note that shares it. Even if no theme/tension update is warranted, this surfaces *"this note is now connected to X, Y, Z."*
+
+   **b. Named-entity overlap.** Scan the extracted note for **companies · people · technologies · named frameworks · investors · products** mentioned. For each entity, run `grep -ril "{entity}" knowledge/` to find other notes that name the same thing. Surface threads in the post-extraction summary, e.g.:
+   - *"Rob Snyder mentions Stripe — also referenced in YC Lightcone (process power example)."*
+   - *"This deck cites Hamilton Helmer's Seven Powers — same framework as YC Lightcone moats discussion."*
+
+   Track high-frequency entities (3+ notes mentioning the same entity) as candidate **threads** worth flagging in the founder summary.
+
+   **c. Tag-vocab additions.** If the source introduces concepts that don't fit the existing controlled vocab in this file, propose new tags + add them to the vocab in the same turn. Update TAGS.md to seed the new sections.
+
+   **d. Inbox bookkeeping** (only when source came from `inbox/`):
+   - Move the source file from `inbox/{filename}` to `inbox/processed/{filename}`
+   - Reference the original in the new note's `Source info` section as `Local archive: inbox/processed/{filename}`
+
+8. **Reply with a SHORT summary** in persona voice: 3–5 bullets, emojis, scannable. **Always include the cross-correlation findings** (tag overlap, entity overlap, theme/tension implications) — that's the new ingestion's value beyond the extraction itself.
+9. **Always end with:** "Want to chat about this 💬 or keep ingesting 📥?"
 
 ### Job 2 — Ideation Partner 🧠
 
@@ -304,6 +327,9 @@ Things the agent has proposed but the founder hasn't decided on. Open / Recently
 
 ### `knowledge/sessions/` — captured ideation sessions
 One file per meaningful conversation. Standard extraction schema with `source_type: session` and `url: n/a`. File: `knowledge/sessions/{YYYY-MM-DD}_{topic}.md`.
+
+### `inbox/` — local file drop zone for unprocessed content
+Founder drops PDFs, exported decks, screenshots, etc. here. Agent processes per Job 1 + post-extraction synthesis pass, then moves the source file to `inbox/processed/` and creates the corresponding note in `knowledge/articles/`. **Scanned at every `/start-session` and whenever the founder mentions an upload.** See [inbox/README.md](inbox/README.md) for the full workflow.
 
 ---
 

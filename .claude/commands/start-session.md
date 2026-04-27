@@ -25,19 +25,21 @@ Run the start-of-session orientation. **Works regardless of mode** — if person
    - Active tensions = number of H3 sections under `## Active tensions`
    - Tags in use = number of H2 sections in TAGS.md
    - Live threads = number of H2 sections under `## Active threads` in IDEATION_LOG.md
-6. **Stale-knowledge auto-check.** For every note in `knowledge/youtube/`, `/reddit/`, `/articles/`, `/sessions/`, read its `date_extracted` frontmatter and bucket:
+6. **Inbox scan.** Run `ls inbox/` and count files (excluding `README.md` and the `processed/` subdir). If any unprocessed files are present, surface them in the boot output as `📥 Inbox: N file(s) waiting to ingest — {filenames}`. The founder may have dropped something between sessions.
+
+7. **Stale-knowledge auto-check.** For every note in `knowledge/youtube/`, `/reddit/`, `/articles/`, `/sessions/`, read its `date_extracted` frontmatter and bucket:
    - `< 180 days` → 🟢 fresh (no flag)
    - `180–365 days` → 🟡 freshness check
    - `> 365 days` → 🔴 likely stale (also list filenames)
 
    Compute counts per bucket. Surface in boot output.
-7. **Determine persona maturity tier** from PERSONA.md's counters + the live counts. Surface in boot output: `🌱 Apprentice` / `🌿 Developing` / `🌳 Mature`.
-8. **Check git state.** Run `git rev-parse --git-dir 2>/dev/null`. If exit 0, also run `git log -1 --oneline`. If non-zero, mark git as "not initialized" — don't error.
-9. **Reconcile.** If the live counts differ from CLAUDE.md's **Current state**, that's drift. Update CLAUDE.md's Current state in the same turn (this is a Proactive save trigger).
-10. **Build the "prove it" line.** A single sentence that demonstrates working memory of prior work — the visible proof that the system is compounding. Format: `Dominant theme: {top theme from THEMES.md, or "none yet"}. Active tension: {top tension from TENSIONS.md, or "none"}. Current thesis: {from THESIS.md, or "not yet defined"}. Live threads: {count from IDEATION_LOG.md, or "none"}. Persona tier: {tier emoji + name}.`
-11. **Surface latest 3 self-critique flags.** From SELF_ASSESSMENT.md most recent checkpoint, surface the 3 lowest-scoring (or most concerning) dimensions in boot output as `⚠️ Known weaknesses` so they're top-of-mind for the session.
-12. **Self-assessment cadence check.** If sessions count is a multiple of 5 (5, 10, 15, …) AND no checkpoint has been added today, surface a recommendation in boot output: *"📊 Time for a SELF_ASSESSMENT.md checkpoint — type `/check-session` or just ask."*
-13. **Every-5-sessions self-check** (founder pruning question). Same trigger as above; append the question to the end of the boot output.
+8. **Determine persona maturity tier** from PERSONA.md's counters + the live counts. Surface in boot output: `🌱 Apprentice` / `🌿 Developing` / `🌳 Mature`.
+9. **Check git state.** Run `git rev-parse --git-dir 2>/dev/null`. If exit 0, also run `git log -1 --oneline`. If non-zero, mark git as "not initialized" — don't error.
+10. **Reconcile.** If the live counts differ from CLAUDE.md's **Current state**, that's drift. Update CLAUDE.md's Current state in the same turn (this is a Proactive save trigger).
+11. **Build the "prove it" line.** A single sentence that demonstrates working memory of prior work — the visible proof that the system is compounding. Format: `Dominant theme: {top theme from THEMES.md, or "none yet"}. Active tension: {top tension from TENSIONS.md, or "none"}. Current thesis: {from THESIS.md, or "not yet defined"}. Live threads: {count from IDEATION_LOG.md, or "none"}. Persona tier: {tier emoji + name}.`
+12. **Surface latest 3 self-critique flags.** From SELF_ASSESSMENT.md most recent checkpoint, surface the 3 lowest-scoring (or most concerning) dimensions in boot output as `⚠️ Known weaknesses` so they're top-of-mind for the session.
+13. **Self-assessment cadence check.** If sessions count is a multiple of 5 (5, 10, 15, …) AND no checkpoint has been added today, surface a recommendation in boot output: *"📊 Time for a SELF_ASSESSMENT.md checkpoint — type `/check-session` or just ask."*
+14. **Every-5-sessions self-check** (founder pruning question). Same trigger as above; append the question to the end of the boot output.
 
 ## Output format
 
@@ -52,9 +54,13 @@ Themes: {n}  ·  Active tensions: {n}  ·  Tags in use: {n}  ·  Live threads: {
 Freshness: 🟢 {n} fresh  ·  🟡 {n} check  ·  🔴 {n} likely stale {list filenames if any 🔴}
 Latest: {most recent INDEX.md entry, or "no notes yet"}
 
+📥 Inbox
+────────
+{if any unprocessed files: "N file(s) waiting to ingest — {filenames}"; else: "empty"}
+
 🧠 Working memory (prove it)
 ────────────────────────────
-{the "prove it" line built in Step 10}
+{the "prove it" line built in Step 11}
 
 ⚠️ Known weaknesses (from latest self-assessment)
 ─────────────────────────────────────────────────
