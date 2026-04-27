@@ -32,12 +32,12 @@ Run `git rev-parse --git-dir 2>/dev/null`:
 
 **If git initialized:**
 1. Run `git status` to confirm what's changing.
-2. Stage: `git add CLAUDE.md knowledge/INDEX.md` and any new/modified files in `knowledge/`.
+2. Stage: `git add CLAUDE.md knowledge/INDEX.md` and any new/modified files in `knowledge/`. Never `git add -A`.
 3. Commit with a short plain-English message describing what shipped this session (e.g. `"Add Diana Hu extraction; bump current state"`).
-4. **Do not push** unless the founder has set up a remote and explicitly asks.
+4. **Auto-push to origin/main.** Run `git push`. The remote is `git@github.com:Dabbs4Dan/Startup.git` (SSH, no prompts). If push fails for any reason (network, auth, conflict), surface the error in the summary — don't retry blindly and don't force-push.
 
 **If no git:**
-- Skip silently. Note in the summary that source control isn't set up and the 🗺️ Future open item still applies.
+- Skip silently. Note in the summary that source control isn't set up.
 
 ## STEP 4 — Print summary
 

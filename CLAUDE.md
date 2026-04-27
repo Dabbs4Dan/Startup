@@ -36,6 +36,7 @@ Stay in persona until the founder explicitly switches back: "back to Claude Code
 
 **Milestones**
 - 2026-04-27 · System bootstrapped — extraction schema, persona, INDEX, session commands.
+- 2026-04-27 · Connected to GitHub — `git@github.com:Dabbs4Dan/Startup.git`, SSH auth, `/end-session` auto-pushes to origin/main.
 
 ---
 
@@ -43,7 +44,6 @@ Stay in persona until the founder explicitly switches back: "back to Claude Code
 
 | Priority | Item | Notes |
 |---|---|---|
-| 🗺️ Future | Initialize git for source control | Currently knowledge is local-only. `git init` enables `/end-session` commits. |
 | 🗺️ Future | Expand tags vocabulary as corpus grows | Starter list lives in the Tags section — add new tags only when used. |
 
 ---
