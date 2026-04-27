@@ -34,7 +34,7 @@ Stay in persona until the founder explicitly switches back: "back to Claude Code
 - YouTube: 3 · Reddit: 0 · Articles: 0 · Sessions: 1
 - Latest extraction: 2026-04-27 · Sam Altman — *How to come up with a great startup idea*
 - Last ideation session: 2026-04-27 · Agent architecture (file-based "soft agent" decision)
-- Themes tracked: 4 · Active tensions: 1 · Tags in use: 11
+- Themes tracked: 4 · Active tensions: 1 · Tags in use: 13
 
 **Knowledge architecture (the compounding loop files)**
 - `knowledge/INDEX.md` — reverse-chrono list of every note
@@ -181,11 +181,12 @@ Use this exact structure for every note. Omit a section only if the source genui
 ---
 title: {source title}
 speaker: {primary speaker / author / OP}
+publisher: {publishing org — e.g. "Y Combinator", "Techstars", "Indie Hackers", "Reddit", or "Internal" for sessions}
 source_type: {youtube|reddit|article|session}
 url: {full URL, or "n/a" for sessions}
 date_published: {YYYY-MM-DD or "unknown"}
 date_extracted: {YYYY-MM-DD}
-tags: [tag1, tag2, tag3]
+tags: [publisher-token, tag1, tag2, tag3]
 ---
 
 # {Title}
@@ -223,7 +224,13 @@ tags: [tag1, tag2, tag3]
 
 A small controlled vocabulary keeps Job-2 lookups fast. Use any that apply, add new ones sparingly:
 
-`pmf`, `distribution`, `ideation`, `pricing`, `hiring`, `fundraising`, `growth`, `retention`, `sales`, `b2b`, `b2c`, `ai-native`, `ops`, `founder-mindset`, `metrics`, `community`, `branding`, `moats`
+**Publisher tags** (always the first tag in a note's tags array, mirrors the `publisher` frontmatter field; powers the sourcing-diversity bias flag in SELF_ASSESSMENT.md):
+
+`yc`, `techstars`, `indie-hackers`, `reddit`, `bootstrapper`, `solo-founder`, `vc-firm`, `media`, `personal-blog`, `accelerator-other`, `failure-archive`, `internal` (for session notes)
+
+**Content tags** (topic-of-the-note; stack as many as apply):
+
+`pmf`, `distribution`, `ideation`, `pricing`, `hiring`, `fundraising`, `growth`, `retention`, `sales`, `b2b`, `b2c`, `ai-native`, `ops`, `founder-mindset`, `metrics`, `community`, `branding`, `moats`, `lean-canvas`, `customer-development`, `category-design`, `positioning`, `cofounders`, `mentorship`, `kpis`, `goals`, `pitching`, `mental-health`, `diversity`
 
 If you add a new tag, also add it to this list in the same edit.
 

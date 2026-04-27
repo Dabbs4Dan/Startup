@@ -1,11 +1,12 @@
 ---
 title: How To Build A Company With AI From The Ground Up
 speaker: Diana Hu (Partner, Y Combinator)
+publisher: Y Combinator
 source_type: youtube
 url: https://www.youtube.com/watch?v=EN7frwQIbKc
 date_published: 2026-04-24
 date_extracted: 2026-04-27
-tags: [ai-native, ops, founder-mindset, hiring, metrics]
+tags: [yc, ai-native, ops, founder-mindset, hiring, metrics]
 ---
 
 # How To Build A Company With AI From The Ground Up

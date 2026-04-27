@@ -1,18 +1,40 @@
 # Tags Index
 
-> Every tag in the controlled vocab, mapped to every note that carries it. Fast retrieval when the founder asks "what do we know about X?"
+> Every tag in the controlled vocab, mapped to every note that carries it. Fast retrieval when the founder asks "what do we know about X?" — and a one-glance read on sourcing diversity.
 
 **Last updated:** 2026-04-27
-**Tags in use:** 11
+**Tags in use:** 13 · **Publishers represented:** 2 (1 external + Internal)
 
 ---
 
 ## How this file works
 
-- **One H2 section per tag** carrying ≥1 note.
-- **Order:** alphabetical within sections; section order = "most-loaded first" (the tag with the most notes is at the top).
-- **Update trigger:** every new extraction must add the note under each of its tags in the same turn. Tags not yet used live in the controlled vocab in [CLAUDE.md](CLAUDE.md) but don't get a section here until at least one note carries them.
-- **New tag rule:** if a new tag is added to the controlled vocab, also add an empty H2 here (or hold off until first use — both fine).
+- Two layers of tags:
+  - **📡 Publisher tags** (top section) — one per note, mirrors the `publisher` frontmatter field. Powers the sourcing-diversity bias flag.
+  - **🏷️ Content tags** (second section) — topic-of-the-note, stack as many as apply.
+- **Section order within each layer:** most-loaded first.
+- **Update trigger:** every new extraction must add the note under its publisher tag AND each content tag in the same turn.
+- **New tag rule:** if a new tag is added to the controlled vocab in [CLAUDE.md](CLAUDE.md), no need to pre-populate here — wait for first use.
+
+---
+
+## 📡 By publisher (sourcing diversity tracker)
+
+> 🚩 **Heuristic:** if any single publisher exceeds 60% of the corpus, flag in SELF_ASSESSMENT.md as a sourcing-monoculture risk. Sessions (`internal`) don't count toward external corpus.
+
+### `yc` — Y Combinator (3 external notes)
+- 2026-04-27 · [Diana Hu — How To Build A Company With AI](knowledge/youtube/diana-hu-ai-native-company.md)
+- 2026-04-27 · [Sam Altman — Startup Idea + Great Wave](knowledge/youtube/sam-altman-startup-idea-and-the-great-wave.md)
+- 2026-04-27 · [YC Lightcone — 7 Most Powerful Moats](knowledge/youtube/yc-lightcone-seven-powers-ai-moats.md)
+
+### `internal` — agent + founder sessions (1 note)
+- 2026-04-27 · [Agent architecture decision](knowledge/sessions/2026-04-27_agent-architecture.md)
+
+**Current external diversity:** 🔴 1/1 publishers — **monoculture**. Will improve once Techstars batch lands.
+
+---
+
+## 🏷️ By content topic
 
 ---
 

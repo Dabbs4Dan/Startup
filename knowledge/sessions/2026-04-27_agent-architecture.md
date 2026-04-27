@@ -1,11 +1,12 @@
 ---
 title: Agent architecture decision — file-based "soft agent" over fine-tuning
 speaker: Founder + YC Mentor agent
+publisher: Internal
 source_type: session
 url: n/a
 date_published: 2026-04-27
 date_extracted: 2026-04-27
-tags: [founder-mindset, ops, ai-native]
+tags: [internal, founder-mindset, ops, ai-native]
 ---
 
 # Agent architecture — the decision and the build

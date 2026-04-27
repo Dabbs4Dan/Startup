@@ -1,11 +1,12 @@
 ---
 title: Sam Altman explains how to come up with a great startup idea
 speaker: Sam Altman
+publisher: Y Combinator
 source_type: youtube
 url: https://www.youtube.com/watch?v=DGU0wXMKqf4
 date_published: 2024-03-23
 date_extracted: 2026-04-27
-tags: [ideation, founder-mindset, pmf]
+tags: [yc, ideation, founder-mindset, pmf]
 ---
 
 # Sam Altman — How to come up with a great startup idea

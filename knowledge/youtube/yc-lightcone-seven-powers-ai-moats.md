@@ -1,11 +1,12 @@
 ---
 title: The 7 Most Powerful Moats For AI Startups
 speaker: Gary Tan, Jared Friedman, Diana Hu, Harj Taggar (YC Lightcone)
+publisher: Y Combinator
 source_type: youtube
 url: https://www.youtube.com/watch?v=bxBzsSsqQAM
 date_published: 2025-10-03
 date_extracted: 2026-04-27
-tags: [moats, ai-native, founder-mindset, pmf, pricing, distribution, b2b]
+tags: [yc, moats, ai-native, founder-mindset, pmf, pricing, distribution, b2b]
 ---
 
 # The 7 Most Powerful Moats For AI Startups
