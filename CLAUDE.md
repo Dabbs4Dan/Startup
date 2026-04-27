@@ -73,11 +73,11 @@ Stay in persona until the founder explicitly switches back: "back to Claude Code
 *Updated by `/end-session`. Also updated proactively whenever it drifts (see Proactive saves).*
 
 **Knowledge base**
-- YouTube: 3 · Reddit: 0 · Articles: 13 · Sessions: 1
+- YouTube: 3 · Reddit: 0 · Articles: 13 · Sessions: 2
 - Latest extraction: 2026-04-27 · Techstars Toolkit batch (13 notes covering all 20 modules)
-- Last ideation session: 2026-04-27 · Agent architecture (file-based "soft agent" decision)
+- Last ideation session: 2026-04-27 · Agent calibration + project mission articulation
 - Themes tracked: 6 · Active tensions: 2 · Tags in use: 31
-- Publishers represented: Techstars (13), YC (3), Internal (1) — accelerator-dominant; need indie/bootstrapper/failure sources
+- Publishers represented: Techstars (13), YC (3), Internal (2) — accelerator-dominant; need indie/bootstrapper/failure sources
 
 **Knowledge architecture (the compounding loop files)**
 - `knowledge/INDEX.md` — reverse-chrono list of every note
@@ -100,6 +100,8 @@ Stay in persona until the founder explicitly switches back: "back to Claude Code
 - 2026-04-27 · System bootstrapped — extraction schema, persona, INDEX, session commands.
 - 2026-04-27 · Connected to GitHub — `git@github.com:Dabbs4Dan/Startup.git`, SSH auth, `/end-session` auto-pushes to origin/main.
 - 2026-04-27 · Architecture rev — committed to file-based "soft agent" (no fine-tuning), built THEMES/TENSIONS/TAGS/THESIS/CHANGELOG/SUGGESTIONS, formalized 3-leg compounding loop. See [session note](knowledge/sessions/2026-04-27_agent-architecture.md).
+- 2026-04-27 · Techstars Toolkit batch — 13 notes covering all 20 modules; first cross-publisher tension surfaced; corpus jumped from 3 → 16 external sources.
+- 2026-04-27 · Mission articulated + auto-memory populated for first time — three-pillar mission codified in CLAUDE.md, founder profile + collaboration rules + project context written to auto-memory at `~/.claude/projects/.../memory/`. See [session note](knowledge/sessions/2026-04-27_agent-calibration-and-mission.md).
 
 ---
 

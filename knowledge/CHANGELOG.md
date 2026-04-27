@@ -69,6 +69,28 @@
 
 ---
 
+## 2026-04-27 — End-of-day `/end-session` (pattern sweep fires for first time)
+
+**What:** First successful execution of the `/end-session` routine end-to-end. Pattern sweep finally fired and populated auto-memory with 5 typed entries. The "discourse capture" loop transitioned from wired-but-aspirational to wired-and-firing.
+
+**Files added:**
+- `knowledge/sessions/2026-04-27_agent-calibration-and-mission.md` — captures the 5 founder calibration answers + 3-pillar mission articulation
+- Auto-memory at `~/.claude/projects/-Users-danielstarr-Desktop-Startup-Ideation/memory/`:
+  - `MEMORY.md` (index — auto-loaded into context next session)
+  - `user_profile.md` — non-technical founder, daily-weekly cadence, pre-ideation
+  - `feedback_collaboration.md` — push-back rules + tool-over-customer policing + comm style
+  - `project_context.md` — three-pillar mission + scope + current state snapshot
+  - `proactive_sourcing.md` — fetch authorization with approval workflow
+  - `knowledge_architecture.md` — file-based "soft agent" decision pointer + corpus location
+
+**Meta-file refreshes:**
+- `STATE_OF_THE_AGENT.md` — refreshed with auto-memory population marked complete; "what I'd love next" now points at Rob Snyder + real ideation
+- `CLAUDE.md` Current state — sessions count 1 → 2; Last ideation session → calibration; new milestones logged
+
+**Significance:** This is the validation gate the system has been waiting for. Architecture works end-to-end. Next session boots with full founder profile loaded automatically.
+
+---
+
 ## 2026-04-27 — Inbox + cross-correlation synthesis pass
 
 **What:** Local-storage drop zone for content without public URLs (PDFs, exported decks, screenshots), plus a richer post-extraction synthesis pass that cross-correlates new content against the existing library.

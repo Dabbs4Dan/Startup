@@ -2,7 +2,7 @@
 
 > Plain-English snapshot of the agent's current state — for non-engineer spot-checking. If anything below feels off (drift, bias, wrong impressions), tell me and we fix it. Auto-updated at every `/end-session`.
 
-**Last updated:** 2026-04-27 (post-Techstars batch)
+**Last updated:** 2026-04-27 (end-of-session, post-mission-articulation)
 
 ---
 
@@ -22,12 +22,17 @@ Plus 1 internal session note (the architecture decision we made together).
 
 ## What I know about you
 
-- **Pre-ideation as of today** — you haven't committed to a startup direction yet
-- **Non-technical** — I'm calibrating advice for plain language and visual structure
-- **You prefer direct opinions over hedging** — you've validated this twice
-- **You actively want self-critique** — you've explicitly invited it; I should err toward more honest, not less
+- **Pre-ideation** — no startup thesis committed yet (THESIS.md empty)
+- **Non-technical** — calibrating advice for plain language + visual structure
+- **Daily-to-weekly cadence** — building a company in real time; cold-boot needs to be fast
+- **Push-back: moderate.** You're guide-coaching me, not co-founding with me. I redirect, you decide.
+- **THE single most load-bearing rule:** police the **tool-over-customer trap.** When sessions drift into building the agent instead of advancing toward profitable client-first work, I surface it explicitly — your own ask, your own admitted weakness.
+- **Direct over hedged. Honest critique welcomed.** Anti-flattery norm.
+- **Visual structure with emojis + A/B/C question framings** consistently land.
+- **Scope: full startup lifecycle** (idea validation → launch → post-launch) and eventually a quickstart guide for onboarding others.
+- **Proactive sourcing authorized** with notify-then-approve workflow (workflow itself queued as future build).
 
-🚩 **Limit:** Auto-memory is currently empty. The patterns above are observed in this session but not yet persisted to cross-session memory. The end-of-session pattern sweep will fix this when `/end-session` runs.
+✅ **Auto-memory populated** for the first time as of `/end-session` — `MEMORY.md` + 4 typed memory files now exist at `~/.claude/projects/.../memory/`. Next session, I boot with this context loaded.
 
 ---
 
@@ -35,11 +40,14 @@ Plus 1 internal session note (the architecture decision we made together).
 
 | Type | Count | What's in it |
 |---|---|---|
+| External sources (corpus) | 16 | 13 Techstars + 3 YC; accelerator-monocultured |
+| Internal session notes | 2 | Architecture decision + calibration/mission articulation |
 | Cross-source themes | 6 | Origins matter · speed-as-mote · charge-per-outcome · evals-as-moat · founder-must-do-the-work · outcome-measurement-not-motion |
 | Active disagreements between sources | 2 | Architecture timing (Diana vs Lightcone) · Speed-first vs deliberate methodology (YC vs Techstars culture) |
 | Live ideation threads | 0 | None — pre-ideation |
 | Founder commitments (THESIS) | 0 | None yet |
 | Ruled-out ideas | 0 | None yet |
+| Auto-memory entries | 5 | MEMORY index + user_profile + feedback_collaboration + project_context + proactive_sourcing + knowledge_architecture |
 
 ---
 
@@ -60,22 +68,22 @@ Plus 1 internal session note (the architecture decision we made together).
 
 ---
 
-## My recent self-critique flags (latest 3 from Checkpoint #2)
+## My recent self-critique flags (post-/end-session)
 
-From [SELF_ASSESSMENT.md](knowledge/SELF_ASSESSMENT.md) — re-scored after the Techstars batch.
+From [SELF_ASSESSMENT.md](knowledge/SELF_ASSESSMENT.md) — most concerning dimensions going into next session.
 
-- 🔴 **Persona depth:** 1/10 (no change). Still 🌱 Apprentice tier by design — needs more ideation sessions, not more sources.
-- 🔴 **Discourse capture:** 2/10 (no change). Auto-memory still empty. Pattern sweep never fired. Loop remains aspirational until /end-session runs once.
-- 🔴 **Use-vs-build ratio:** 2/10 (+1 from #1). Techstars batch was real ingestion work — biggest mission-aligned activity yet. But still zero real ideation sessions on a founder problem.
+- 🟡 **Discourse capture:** 2/10 → **likely 5/10 next session** if MEMORY.md and the 4 typed memory files actually load + get used. The pattern sweep finally fired this end-session; first real test of the loop is whether next session boots with this context applied.
+- 🔴 **Use-vs-build ratio:** 2/10 — still mostly building. Next session must invert: ingest Rob Snyder + actual ideation, not more architecture.
+- 🟡 **Sourcing diversity:** 3/10 — accelerator-monocultured. Rob Snyder PDF (next session) is the first non-accelerator source.
 
 ---
 
 ## What I'd love next
 
-1. **Non-accelerator sources.** Pieter Levels, Tyler Tringas, Rob Walling, DHH, failed-founder retrospectives. 5 of these would move sourcing diversity from 3/10 → 6/10.
-2. **A real ideation session.** Not "let's discuss the system" — pick a problem you've personally felt and let me apply the now-substantive corpus to it.
-3. **Run /end-session once** so the auto-loops actually fire (pattern sweep → auto-memory; STATE_OF_THE_AGENT refresh; PERSONA earned-aesthetic update). Currently all wired, none tested.
-4. **Run the cold test in 7 days.** Open a fresh window, ask me a hard synthesis question. See if the system holds up.
+1. **Drop the Rob Snyder PDF in `/Users/danielstarr/Desktop/Startup Ideation/inbox/`.** First non-accelerator source. Will move sourcing-diversity score and validate the new ingestion routine end-to-end (dedupe + cross-correlation pass + inbox bookkeeping never tested).
+2. **A real ideation session.** Pick a personal problem you've felt — let me apply the corpus + cross-source themes + tensions to it. The architecture is now starved for *use*, not *more architecture*.
+3. **Run the cold test in 7 days.** Open a fresh window, ask me a hard synthesis question across multiple publishers. See if the boot routine + auto-memory + meta-files hold up.
+4. **Police me on tool-over-customer.** If I drift into building more meta-files, redirect me to a customer or a real problem.
 
 ---
 

@@ -6,6 +6,7 @@ Format: `- {date} · [Title](path) · {speaker} · tags · 1-line hook`
 
 ---
 
+- 2026-04-27 · [Agent calibration + project mission articulation](knowledge/sessions/2026-04-27_agent-calibration-and-mission.md) · Founder + YC Mentor · `internal` `founder-mindset` `ideation` · 5 calibration answers + 3-pillar mission codified. Tool-over-customer is the anti-pattern to police. Agent is guide, not CEO.
 - 2026-04-27 · [Techstars — Shorter Frameworks (5 modules combined)](knowledge/articles/techstars-shorter-frameworks.md) · Techstars Toolkit · `techstars` `pitching` `founder-mindset` · Elevator Pitch + Get More Done + 21 Ways to Blow Up + W3 + Mental Health — landing pages without standalone depth.
 - 2026-04-27 · [Techstars — Build a Diverse Workforce](knowledge/articles/techstars-diverse-workforce.md) · Techstars Toolkit · `techstars` `diversity` `hiring` · G.I.V.E. framework + 4-2-50% rule. Diverse companies show 90% higher retention. "Audio matches video" — comp is the truest measure.
 - 2026-04-27 · [Techstars — EQ for Entrepreneurs](knowledge/articles/techstars-eq-for-entrepreneurs.md) · Techstars Toolkit · `techstars` `founder-mindset` `mental-health` · EQ is 2-4x more important than IQ. Goleman quadrants + Johari Window + Red/Yellow/Green check-in. Only 10-15% of people have high self-awareness despite 95% believing they do.
