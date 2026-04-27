@@ -73,11 +73,11 @@ Stay in persona until the founder explicitly switches back: "back to Claude Code
 *Updated by `/end-session`. Also updated proactively whenever it drifts (see Proactive saves).*
 
 **Knowledge base**
-- YouTube: 3 · Reddit: 1 · Articles: 14 · Sessions: 2
-- Latest extraction: 2026-04-27 · r/SaaS u/jottrled — How I find startup ideas (first Reddit source, 4th external publisher type)
-- Last ideation session: 2026-04-27 · First active thread: B2B SaaS sales-org tooling (in progress)
-- Themes tracked: 6 · Active tensions: 3 · Tags in use: 33
-- Publishers represented: Techstars (13), YC (3), Personal-blog/Rob Snyder (1), Reddit (1), Internal (2) — diversity climbing; still accelerator-heavy on volume
+- YouTube: 4 · Reddit: 1 · Articles: 14 · Sessions: 3
+- Latest extraction: 2026-04-27 · Rob Snyder on Physics of Startups #5 — Where to Find Ideas (5th external publisher type: media)
+- Last ideation session: 2026-04-27 · [First ideation session — Rob Snyder ingest + problem-space search](knowledge/sessions/2026-04-27_first-ideation-rob-snyder-and-segment-search.md)
+- Themes tracked: 6 · Active tensions: 3 · Tags in use: 34
+- Publishers represented: Techstars (13), YC (3), Personal-blog/Rob Snyder (1), Reddit (1), Media/Physics-of-Startups (1), Internal (3) — 5 distinct external publisher types; speaker diversity lags (2 of the new sources are Rob Snyder); still need bootstrapper / failure-archive voices
 
 **Knowledge architecture (the compounding loop files)**
 - `knowledge/INDEX.md` — reverse-chrono list of every note

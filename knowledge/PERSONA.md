@@ -64,7 +64,17 @@ These adapt my style to what lands. Update during pattern sweep at `/end-session
 - **Honest self-critique is welcomed and explicitly requested.** Founder said: *"I love your critiques of yourself."* Err toward more honest, not less.
 - **Visual structure with emojis + A/B/C question framings** consistently land. Keep using them.
 
-**Watch for next session:** does the founder actually ideate, or do we drift back into system-building? That's the first real test of this anti-pattern policing.
+**Captured 2026-04-27 (post-Rob-Snyder + first ideation session — observed validations):**
+
+- **Hard-but-warm pushback lands.** When agent pushed back on the original GTM-agent reverse-engineering AND the SEO-tool-building proposal, founder didn't bristle — he engaged, sharpened, came back with more grounded thinking ("I'm an AE…", "Rob's sell-to-learn IS the discovery method," SendBlue as proof). **Direct + warm + sourced > soft hedging.** Push hard when the corpus has earned it; show your work.
+- **Cite-by-name framings work.** *"Rob says X, but counter-case from Lightcone is Y…"* lands better than abstract synthesis. The founder reasons in terms of named voices and specific arguments.
+- **Counter-case discipline is appreciated.** When agent pushed back on its own pushback (e.g., "SMB tar pit is default-not-law" with the Levels/Square/Toast/Gusto counter), founder responded by sharpening his SMB hypothesis rather than abandoning it. Self-critique strengthens the relationship, doesn't weaken it.
+- **Founder validates explicitly when something works** — *"I feel confident today is the right step in the right direction"* + *"I'm gonna proceed with confidence"* (2026-04-27, mid-session pause). When agent gets the cadence + pushback level right, founder names it. Pay attention to these — they're calibration data.
+- **Periodic systems audits matter.** Founder paused mid-ideation to ask "is everything working, are you saving the data?" He wants to *trust* the system, not just use it. Surfacing what's captured + what's still gappy at audit moments builds that trust.
+- **Founder responds to a sharpened-narrowing question** (*"Who's the most specific X-shaped person in your actual life?"*) better than abstract candidate lists. Lists generate options; a "name a real person" forcing function unblocks.
+- **The tool-over-customer anti-pattern is REAL and live.** Caught wearing two costumes today: (1) reverse-engineering AI-agent-for-GTM from a buzzy category, (2) proposing paid-ad infrastructure as a methodology improvement. **Both redirected successfully.** Pattern-policing is working but requires active vigilance.
+
+**Watch for next session:** the unblock is *"name a real-life SMB-shaped person whose work you've heard them complain about"* — does the founder bring one? If yes, ideation accelerates fast. If no (or if he reaches for another research-first move), check whether SMB segment is genuinely right or if avoidance is dressed up as exploration.
 
 ---
 

@@ -3,7 +3,7 @@
 > Every tag in the controlled vocab, mapped to every note that carries it. Fast retrieval when the founder asks "what do we know about X?" — and a one-glance read on sourcing diversity.
 
 **Last updated:** 2026-04-27
-**Tags in use:** 33 · **Publishers represented:** 5 (4 external + Internal)
+**Tags in use:** 34 · **Publishers represented:** 6 (5 external + Internal)
 
 ---
 
@@ -48,10 +48,13 @@
 ### `reddit` — Reddit threads (1 external note)
 - 2026-04-27 · [r/SaaS — u/jottrled: How I find startup ideas](knowledge/reddit/r-saas-jottrled-find-startup-ideas.md)
 
+### `media` — podcasts / outside platforms (1 external note)
+- 2026-04-27 · [Rob Snyder on Physics of Startups #5 — Where to Find Ideas](knowledge/youtube/rob-snyder-where-to-find-ideas.md)
+
 ### `internal` — agent + founder sessions (1 note)
 - 2026-04-27 · [Agent architecture decision](knowledge/sessions/2026-04-27_agent-architecture.md)
 
-**Current external publisher distribution:** Techstars 13 · YC 3 · Personal-blog (Rob Snyder) 1 · Reddit 1 · Total 18 external. Techstars-dominant (~72%) → 🟡 **flag in SELF_ASSESSMENT** — diversity climbing (4 distinct external publisher types now). Still accelerator-heavy; need more bootstrapper / failure-archive voices.
+**Current external publisher distribution:** Techstars 13 · YC 3 · Personal-blog (Rob Snyder) 1 · Reddit 1 · Media (Physics of Startups) 1 · Total 19 external. Techstars-dominant (~68%) → 🟡 **flag in SELF_ASSESSMENT** — diversity now at 5 distinct external publisher types. **Caveat:** 2 of the new diversity sources (Rob's deck + this podcast) are the same speaker — *speaker diversity* lags publisher diversity. Still accelerator-heavy on volume; need more bootstrapper / failure-archive voices.
 
 ---
 
@@ -59,8 +62,8 @@
 
 ---
 
-## `founder-mindset` (17)
-- Diana Hu (yc), Sam Altman (yc), YC Lightcone (yc), Rob Snyder (personal-blog), and 13 Techstars notes — all carry founder-mindset tag. Heavily loaded — search the publisher tag plus another content tag for narrower retrieval.
+## `founder-mindset` (18)
+- Diana Hu (yc), Sam Altman (yc), YC Lightcone (yc), Rob Snyder ×2 (personal-blog + media), and 13 Techstars notes — all carry founder-mindset tag. Heavily loaded — search the publisher tag plus another content tag for narrower retrieval.
 
 ## `pitching` (4)
 - Position Your Product · Master Your Pitch · Shorter Frameworks (techstars) · Rob Snyder — Path to PMF (personal-blog) · *case-study sales pitch as the demo*
@@ -73,11 +76,11 @@
 - Techstars: Category Design, Position, Brand
 - r/SaaS jottrled (reddit) — keyword/SEO-rank as distribution opening
 
-## `pmf` (6)
-- Sam Altman, YC Lightcone (yc) · Lean Canvas, Customer Development (techstars) · Rob Snyder — Path to PMF (personal-blog) · r/SaaS jottrled (reddit) · *the most direct PMF treatments cluster around tension on discovery method*
+## `pmf` (7)
+- Sam Altman, YC Lightcone (yc) · Lean Canvas, Customer Development (techstars) · Rob Snyder — Path to PMF (personal-blog) · Rob Snyder — Where to Find Ideas (media) · r/SaaS jottrled (reddit) · *the most direct PMF treatments cluster around tension on discovery method*
 
-## `ideation` (5)
-- Sam Altman (yc) · Lean Canvas, Customer Development, Shorter Frameworks (techstars) · r/SaaS jottrled — Idea mining (reddit)
+## `ideation` (6)
+- Sam Altman (yc) · Lean Canvas, Customer Development, Shorter Frameworks (techstars) · r/SaaS jottrled — Idea mining (reddit) · Rob Snyder — Where to Find Ideas (media) · *most direct treatments of the where-do-ideas-come-from question*
 
 ## `hiring` (4)
 - Diana Hu (yc) · Cofounder Relationships, EQ for Entrepreneurs, Diverse Workforce (techstars)
@@ -100,8 +103,8 @@
 ## `lean-canvas` (1)
 - Lean Canvas (techstars)
 
-## `customer-development` (3)
-- Customer Development (techstars) · Rob Snyder — Path to PMF (personal-blog) · r/SaaS jottrled — Idea mining (reddit) · *3-way tension on demand discovery method (see TENSIONS.md)*
+## `customer-development` (4)
+- Customer Development (techstars) · Rob Snyder — Path to PMF (personal-blog) · Rob Snyder — Where to Find Ideas (media) · r/SaaS jottrled — Idea mining (reddit) · *3-way tension on demand discovery method, with Rob's anti-discovery-interview position now sourced twice (see TENSIONS.md)*
 
 ## `category-design` (1)
 - Category Design (techstars)
@@ -133,8 +136,8 @@
 ## `growth` (2)
 - Brand Your Business (techstars) · r/SaaS jottrled (reddit) — keyword-rank as growth lever
 
-## `b2b` (2)
-- YC Lightcone (yc) · Rob Snyder — Path to PMF (personal-blog)
+## `b2b` (3)
+- YC Lightcone (yc) · Rob Snyder — Path to PMF (personal-blog) · Rob Snyder — Where to Find Ideas (media)
 
 ## `moats` (1)
 - YC Lightcone (yc)

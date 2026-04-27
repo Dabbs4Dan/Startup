@@ -2,7 +2,7 @@
 
 > Concepts that appear in 2+ notes. The agent reads this **before answering any ideation question**, so themes here become first-class memory across sessions.
 
-**Last updated:** 2026-04-27 (post-Rob Snyder)
+**Last updated:** 2026-04-27 (post-Rob-Snyder-podcast — "real problems" theme strengthens to 6 cross-publisher sources)
 **Active themes:** 6
 
 ---
@@ -20,16 +20,17 @@
 
 ## Origins matter — real problems, not crowded markets
 
-**Sources (3 publishers):**
+**Sources (4 publishers, 6 notes):**
 - [Sam Altman — Startup Idea + Great Wave](knowledge/youtube/sam-altman-startup-idea-and-the-great-wave.md) (yc)
 - [YC Lightcone — 7 Most Powerful Moats](knowledge/youtube/yc-lightcone-seven-powers-ai-moats.md) (yc)
 - [Techstars — Customer Development](knowledge/articles/techstars-customer-development.md) (techstars)
 - [Techstars — Lean Canvas](knowledge/articles/techstars-lean-canvas.md) (techstars)
 - [Rob Snyder — Path to PMF](knowledge/articles/rob-snyder-path-to-pmf.md) (personal-blog)
+- [Rob Snyder — Where to Find Ideas](knowledge/youtube/rob-snyder-where-to-find-ideas.md) (media — Physics of Startups podcast)
 
-**Synthesis:** YC, Techstars, and now Rob Snyder converge on the same warning from different angles. Altman: don't start without a real idea; **solve your own problem** or **surf a wave others still call a toy**. Lightcone: find a person with **existential pain**; moats come later. Techstars Customer Development: don't theorize internally — *get out of the building*, conduct empathy interviews. Techstars Lean Canvas: start with **customer understanding** before solution or revenue. Rob Snyder *sharpens* the message: even pain points + interviews aren't enough — *demand is action, not pain*; *life is a series of pain points you do nothing about*. **All five reject manufactured ideas** — picking markets because they're hot, copying winners, optimizing for defensibility before validation. The clone trap is empirically lethal (1000+ Facebook copies, 10,000 photo startups in one year — originals win, clones die).
+**Synthesis:** Four publishers — YC, Techstars, Rob Snyder's blog, and the Physics of Startups podcast — converge on the same warning. Altman: don't start without a real idea; **solve your own problem** or **surf a wave others still call a toy**. Lightcone: find a person with **existential pain**; moats come later. Techstars Customer Development: don't theorize internally — *get out of the building*, conduct empathy interviews. Techstars Lean Canvas: start with **customer understanding** before solution or revenue. Rob Snyder *sharpens* the message in two registers: (1) Path-to-PMF deck — *demand is action, not pain*; *"life is a series of pain points you do nothing about."* (2) Physics-of-Startups podcast — operationalizes "demand" as the **Pull Framework** (a project + unavoidability + options-considered + limits-of-options), and gives the gut-check: *"it would be weird if they DIDN'T buy this."* Rob also pushes the source-of-ideas one step earlier: *"Don't go to the whiteboard. Go to where your customers are. Spend a week there."* (HBS grad → EMT; greenhouse designer → bought a greenhouse.) **All sources reject manufactured ideas** — picking markets because they're hot, copying winners, optimizing for defensibility before validation. The clone trap is empirically lethal (1000+ Facebook copies, 10,000 photo startups in one year — originals win, clones die).
 
-**Implication for the founder:** Don't start with *"what market should I enter?"* Start with *"whose Asana project does my product fit into, and when do they prioritize it?"* (Rob's framing). The litmus test: **does this come from real life, or did I reverse-engineer it from a market opportunity?** First wins. Second is the clone trap dressed up. **HOW you discover demand is itself contested** — Techstars says empathy interviews + JTBD; Rob says interviews are insufficient and only *selling* exposes real demand. See [TENSIONS — How do you find demand?](knowledge/TENSIONS.md).
+**Implication for the founder:** Don't start with *"what market should I enter?"* Start with *"whose Asana project does my product fit into, and when do they prioritize it?"* (Rob's framing). The litmus test: **does this come from real life, or did I reverse-engineer it from a market opportunity?** First wins. Second is the clone trap dressed up. The sharpest gut-check question is **"would it be weird if this person *didn't* buy?"** If you can't answer yes, the pull isn't there yet. **HOW you discover demand is itself contested** — Techstars says empathy interviews + JTBD; Rob says interviews are insufficient and only *selling + going-where-the-work-is* expose real demand. See [TENSIONS — How do you find demand?](knowledge/TENSIONS.md).
 
 ---
 
