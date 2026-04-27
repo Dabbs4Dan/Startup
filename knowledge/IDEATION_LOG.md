@@ -82,7 +82,19 @@ Agent's response on the paid-ads variant: partially consistent with Rob (Rob req
 - Sales-first founders (technical founders who hate selling)
 - Specific job-titles inside sales orgs that aren't VP-Sales (RevOps, sales engineers, sales enablement)
 
-Awaiting founder's pick.
+**Update — founder pivoted segment hypothesis to SMBs:** Cited "ripe segment" (decision-maker = user, AI democratization, fast yeses). Agent's earlier "SMB tar pit" pushback acknowledged as default-not-law; counter-case stands (indie hackers like Levels + Square/Toast/Gusto). Real bottleneck named by founder: *"struggling to find a worthy Melissa expanding beyond what I immediately know."*
+
+**Founder's research-method use is now correctly shaped:** asking how to use search-backwards (Google autocomplete, Ahrefs, Reddit, G2 reviews, Acquire.com) to *back-validate* a Melissa hypothesis, not to substitute for talking to people. Promotion: this is candidate-refinement, not avoidance pattern.
+
+**Search-backwards toolkit surfaced** (for refining a Melissa once hypothesized):
+- Search-data: Google autocomplete, "People also ask," Ahrefs free keyword generator
+- Community: Reddit niche subs, Indie Hackers, FB/LinkedIn groups, YouTube comments
+- Incumbent-review: G2/Capterra 2-3⭐ reviews, Acquire.com $100k+ listings
+- **Discipline:** don't let search data PICK the Melissa (reverse-engineering trap); let it REFINE her Project + Context cells and surface her vocabulary
+
+**Sharpened narrowing question:** *"Who's the most specific SMB-shaped person in your actual life — friend, family, past customer — whose work you've heard them complain about?"* Even thin first-person contact gives a starting Melissa; toolkit deepens her.
+
+Awaiting founder's named real-life SMB candidate (or alternative direction).
 
 
 
