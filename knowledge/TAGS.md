@@ -3,7 +3,7 @@
 > Every tag in the controlled vocab, mapped to every note that carries it. Fast retrieval when the founder asks "what do we know about X?" — and a one-glance read on sourcing diversity.
 
 **Last updated:** 2026-04-27
-**Tags in use:** 27 · **Publishers represented:** 3 (2 external + Internal)
+**Tags in use:** 32 · **Publishers represented:** 4 (3 external + Internal)
 
 ---
 
@@ -42,10 +42,13 @@
 - 2026-04-27 · [Sam Altman — Startup Idea + Great Wave](knowledge/youtube/sam-altman-startup-idea-and-the-great-wave.md)
 - 2026-04-27 · [YC Lightcone — 7 Most Powerful Moats](knowledge/youtube/yc-lightcone-seven-powers-ai-moats.md)
 
+### `personal-blog` — independent practitioners (1 external note)
+- 2026-04-27 · [Rob Snyder — The Path to PMF (Harvard iLabs)](knowledge/articles/rob-snyder-path-to-pmf.md)
+
 ### `internal` — agent + founder sessions (1 note)
 - 2026-04-27 · [Agent architecture decision](knowledge/sessions/2026-04-27_agent-architecture.md)
 
-**Current external publisher distribution:** Techstars 13 · YC 3 · Total 16 external. Techstars-dominant (~81%) → 🟡 **flag in SELF_ASSESSMENT** — flipped from YC monoculture to Techstars-dominant. Both still accelerator-publisher; need indie hacker / bootstrapper / failure-archive sources to balance.
+**Current external publisher distribution:** Techstars 13 · YC 3 · Personal-blog (Rob Snyder) 1 · Total 17 external. Techstars-dominant (~76%) → 🟡 **flag in SELF_ASSESSMENT** — first non-accelerator source added. Diversity nudged but still accelerator-heavy; need more indie hacker / bootstrapper / failure-archive voices.
 
 ---
 
@@ -53,21 +56,21 @@
 
 ---
 
-## `founder-mindset` (16)
-- Diana Hu (yc), Sam Altman (yc), YC Lightcone (yc), and 13 Techstars notes — all carry founder-mindset tag. Heavily loaded — search the publisher tag plus another content tag for narrower retrieval.
+## `founder-mindset` (17)
+- Diana Hu (yc), Sam Altman (yc), YC Lightcone (yc), Rob Snyder (personal-blog), and 13 Techstars notes — all carry founder-mindset tag. Heavily loaded — search the publisher tag plus another content tag for narrower retrieval.
 
-## `pitching` (3)
-- Position Your Product · Master Your Pitch · Shorter Frameworks (techstars)
+## `pitching` (4)
+- Position Your Product · Master Your Pitch · Shorter Frameworks (techstars) · Rob Snyder — Path to PMF (personal-blog) · *case-study sales pitch as the demo*
 
-## `positioning` (3)
-- Category Design · Position Your Product · Brand Your Business (all techstars)
+## `positioning` (4)
+- Category Design · Position Your Product · Brand Your Business (all techstars) · Rob Snyder — Path to PMF (personal-blog) · *case-study determines positioning*
 
 ## `distribution` (4)
 - YC Lightcone — counter-positioning, brand mote
 - Techstars: Category Design, Position, Brand
 
-## `pmf` (4)
-- Sam Altman, YC Lightcone (yc) · Lean Canvas, Customer Development (techstars)
+## `pmf` (5)
+- Sam Altman, YC Lightcone (yc) · Lean Canvas, Customer Development (techstars) · Rob Snyder — Path to PMF (personal-blog) · *the most direct PMF treatment in the corpus*
 
 ## `ideation` (4)
 - Sam Altman (yc) · Lean Canvas, Customer Development, Shorter Frameworks (techstars)
@@ -93,8 +96,8 @@
 ## `lean-canvas` (1)
 - Lean Canvas (techstars)
 
-## `customer-development` (1)
-- Customer Development (techstars)
+## `customer-development` (2)
+- Customer Development (techstars) · Rob Snyder — Path to PMF (personal-blog) · *direct tension on whether interviews are sufficient (see TENSIONS.md)*
 
 ## `category-design` (1)
 - Category Design (techstars)
@@ -114,8 +117,8 @@
 ## `community` (1)
 - Engage with Mentors (techstars)
 
-## `sales` (1)
-- Investor Pipeline (techstars)
+## `sales` (2)
+- Investor Pipeline (techstars) · Rob Snyder — Path to PMF (personal-blog) · *sell-to-learn as the core PMF mechanism*
 
 ## `diversity` (1)
 - Diverse Workforce (techstars)
@@ -126,8 +129,8 @@
 ## `growth` (1)
 - Brand Your Business (techstars)
 
-## `b2b` (1)
-- YC Lightcone (yc)
+## `b2b` (2)
+- YC Lightcone (yc) · Rob Snyder — Path to PMF (personal-blog)
 
 ## `moats` (1)
 - YC Lightcone (yc)
@@ -135,5 +138,5 @@
 ## `ops` (1)
 - Diana Hu (yc) — and the architecture session (internal) carries it too
 
-## `pricing` (1)
-- YC Lightcone (yc)
+## `pricing` (2)
+- YC Lightcone (yc) · Rob Snyder — Path to PMF (personal-blog)

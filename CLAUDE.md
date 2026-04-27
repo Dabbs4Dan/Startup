@@ -73,11 +73,11 @@ Stay in persona until the founder explicitly switches back: "back to Claude Code
 *Updated by `/end-session`. Also updated proactively whenever it drifts (see Proactive saves).*
 
 **Knowledge base**
-- YouTube: 3 · Reddit: 0 · Articles: 13 · Sessions: 2
-- Latest extraction: 2026-04-27 · Techstars Toolkit batch (13 notes covering all 20 modules)
+- YouTube: 3 · Reddit: 0 · Articles: 14 · Sessions: 2
+- Latest extraction: 2026-04-27 · Rob Snyder — Path to PMF (91-slide Harvard iLabs deck, first non-accelerator source)
 - Last ideation session: 2026-04-27 · Agent calibration + project mission articulation
-- Themes tracked: 6 · Active tensions: 2 · Tags in use: 31
-- Publishers represented: Techstars (13), YC (3), Internal (2) — accelerator-dominant; need indie/bootstrapper/failure sources
+- Themes tracked: 6 · Active tensions: 3 · Tags in use: 32
+- Publishers represented: Techstars (13), YC (3), Personal-blog/Rob Snyder (1), Internal (2) — accelerator-heavy but cracked open; need more indie/bootstrapper/failure sources
 
 **Knowledge architecture (the compounding loop files)**
 - `knowledge/INDEX.md` — reverse-chrono list of every note
@@ -102,6 +102,7 @@ Stay in persona until the founder explicitly switches back: "back to Claude Code
 - 2026-04-27 · Architecture rev — committed to file-based "soft agent" (no fine-tuning), built THEMES/TENSIONS/TAGS/THESIS/CHANGELOG/SUGGESTIONS, formalized 3-leg compounding loop. See [session note](knowledge/sessions/2026-04-27_agent-architecture.md).
 - 2026-04-27 · Techstars Toolkit batch — 13 notes covering all 20 modules; first cross-publisher tension surfaced; corpus jumped from 3 → 16 external sources.
 - 2026-04-27 · Mission articulated + auto-memory populated for first time — three-pillar mission codified in CLAUDE.md, founder profile + collaboration rules + project context written to auto-memory at `~/.claude/projects/.../memory/`. See [session note](knowledge/sessions/2026-04-27_agent-calibration-and-mission.md).
+- 2026-04-27 · Rob Snyder Path-to-PMF deck ingested — first non-accelerator source. 91 slides, dense original frameworks (case study as unit of business, demand vs supply, unfold-don't-pivot, sell-to-learn). New cross-publisher tension surfaced: empathy interviews (Techstars) vs sell-to-learn (Rob). Three themes upgraded to ≥3-publisher.
 
 ---
 

@@ -6,6 +6,7 @@ Format: `- {date} · [Title](path) · {speaker} · tags · 1-line hook`
 
 ---
 
+- 2026-04-27 · [Rob Snyder — The Path to PMF (Harvard iLabs)](knowledge/articles/rob-snyder-path-to-pmf.md) · Rob Snyder · `personal-blog` `pmf` `sales` `customer-development` · Demand rules everything. Business = system to replicate ONE case study. Sell to learn (theoretical case study first). Unfold, don't pivot. Retention, not growth, is the PMF marker.
 - 2026-04-27 · [Agent calibration + project mission articulation](knowledge/sessions/2026-04-27_agent-calibration-and-mission.md) · Founder + YC Mentor · `internal` `founder-mindset` `ideation` · 5 calibration answers + 3-pillar mission codified. Tool-over-customer is the anti-pattern to police. Agent is guide, not CEO.
 - 2026-04-27 · [Techstars — Shorter Frameworks (5 modules combined)](knowledge/articles/techstars-shorter-frameworks.md) · Techstars Toolkit · `techstars` `pitching` `founder-mindset` · Elevator Pitch + Get More Done + 21 Ways to Blow Up + W3 + Mental Health — landing pages without standalone depth.
 - 2026-04-27 · [Techstars — Build a Diverse Workforce](knowledge/articles/techstars-diverse-workforce.md) · Techstars Toolkit · `techstars` `diversity` `hiring` · G.I.V.E. framework + 4-2-50% rule. Diverse companies show 90% higher retention. "Audio matches video" — comp is the truest measure.

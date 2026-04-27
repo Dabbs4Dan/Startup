@@ -2,8 +2,8 @@
 
 > Disagreements between sources are gold for ideation. The agent reads this **before answering any ideation question** so it can surface the right fork in the road instead of presenting false consensus.
 
-**Last updated:** 2026-04-27
-**Active tensions:** 2 · **Resolved:** 0
+**Last updated:** 2026-04-27 (post-Rob Snyder)
+**Active tensions:** 3 · **Resolved:** 0
 
 ---
 
@@ -53,6 +53,26 @@
 **Founder's current posture:** Pre-ideation as of 2026-04-27. Default toward Techstars-style customer-development methodology until you have a problem to ship against; then flip to YC-style velocity.
 
 **What would resolve this:** A specific worked example of a founder who tried both sequences and reported what worked when. Or a clear statement from the founder about which stage they're optimizing for.
+
+---
+
+### How do you find demand? Empathy interviews vs sell-to-learn (Techstars vs Rob Snyder)
+
+**Techstars Customer Development position** ([source](knowledge/articles/techstars-customer-development.md)): Find demand through **empathy interviews + Jobs To Be Done analysis**. Get out of the building. Ask non-leading questions. Capture the functional + social + emotional dimensions of the customer's job. Then use that to design the solution. Implicit assumption: **customers can articulate (or be guided to articulate) what they want, and that's a reliable input.**
+
+**Rob Snyder's position** ([source](knowledge/articles/rob-snyder-path-to-pmf.md)): **Customer interviews are insufficient.** Despite "doing a bunch of customer research, interviews, discovery, etc." → founders still build things people don't want. The mechanism Rob argues (citing Parker Ence): interviews are **social transactions** — humans are generous, encouraging, less discerning when no money is at stake. Only the **economic transaction** of being asked for money lights up the evaluative part of the brain. So: draft a *theoretical* case study, **try to sell it**, debug what causes "hell yes" vs drop-off, unfold from there. Real demand only surfaces under economic pressure.
+
+**Why this matters:** This is the most load-bearing methodology choice in early-stage work. If Techstars is right, the founder spends weeks on interviews + JTBD synthesis before pitching. If Rob is right, that's the pain cave — the same weeks spent making sales calls would teach 10× more. The two paths cost the same time but produce wildly different outcomes.
+
+**Reconciliation (working hypothesis):** They're partially complementary, partially opposed.
+- **Compatible:** Both reject internal theorizing; both demand contact with real people; both treat "what the customer is trying to accomplish" as primary.
+- **Genuinely opposed:** On whether *interviews alone* surface real demand. Rob says no, Techstars says yes-with-skill.
+- **The practical sequence Rob would endorse:** ~20–30 light interviews to "get the lay of the land" (Parker Ence's wording, quoted by Rob) → then start selling a theoretical case study. So a *small* dose of interviewing is fine; **months of it before selling is the trap.**
+- **The Techstars curriculum doesn't tell you when to stop interviewing and start selling.** That's the gap Rob fills. A founder running pure-Techstars without a "now go sell" forcing function may overstay in interviews.
+
+**Founder's current posture:** Not yet defined — founder is pre-ideation.
+
+**What would resolve this:** Either (a) the founder running both sequences on a real idea and reporting which produced "hell yes" faster, or (b) a third source (indie-hacker / failure-archive) explicitly comparing the two approaches.
 
 ---
 
