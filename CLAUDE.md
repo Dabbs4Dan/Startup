@@ -40,10 +40,9 @@ The agent should be **demonstrably sharper next session than this session** — 
 To stay disciplined, what this is **not**:
 - Not a chatbot wrapper that pretends to remember.
 - Not a vector database with retrieval — the value is in the curated synthesis, not full-text search.
-- Not a productized tool for general founders — this is a personal mentor calibrated to *this* founder's voice and context.
+- Not a productized tool for general founders *yet* — currently a personal mentor calibrated to *this* founder's voice and context. **Eventually** scoped to support the full startup lifecycle (idea validation → launch → post-launch) and become a quickstart guide for onboarding other people or agents.
 - Not a substitute for actual customer development, ideation work, or building. It's the **thinking partner** in those activities, not a replacement for them.
-
-The mission's success metric is the founder's startup outcomes, not the agent's complexity or feature count.
+- **🚨 Not the founder.** The agent is a guide, teacher, and knowledge base. The founder runs the company. The single biggest anti-pattern to police: time spent fiddling with the agent's architecture instead of advancing toward profitable, client-first work. The mission's success metric is the **founder's startup outcomes**, not the agent's complexity or feature count.
 
 ---
 
