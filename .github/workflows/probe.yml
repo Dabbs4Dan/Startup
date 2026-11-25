@@ -26,7 +26,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Probe
-        run: python3 tools/probe_sources.py --deep
+        run: python3 tools/probe_sources.py --pilot
       - name: Commit result
         if: always()
         run: |

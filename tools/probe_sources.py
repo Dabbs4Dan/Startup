@@ -154,7 +154,42 @@ def deep(name, page, extra_urls=()):
     return out
 
 
+def pilot_chunks():
+    """SvelteKit loads code via inline import('/_app/immutable/...') - no <script src>. Follow every chunk, grep for price feeds."""
+    page = "https://www.pilotflyingj.com/fuel-prices"
+    st, html, _ = get(page)
+    todo = set(re.findall(r'["\'](/_app/immutable/[^"\']+\.js)["\']', html or ""))
+    seen, hits = set(), []
+    while todo and len(seen) < 120:
+        path = todo.pop()
+        if path in seen:
+            continue
+        seen.add(path)
+        bst, js, _ = get(urllib.parse.urljoin(page, path), timeout=20)
+        if bst != 200 or not js:
+            continue
+        todo |= {urllib.parse.urljoin(path, m) if m.startswith(".") else m
+                 for m in re.findall(r'["\']((?:\.{1,2}/|/_app/immutable/)[^"\']+\.js)["\']', js)}
+        for m in re.finditer(r'(?i)(https?://[a-z0-9.-]+/[a-z0-9/_.{}$?=&-]*|/api/[a-z0-9/_.{}$?=&-]+|fuelprice|fuel_price|dieselprice|graphql)', js):
+            ctx = js[max(0, m.start() - 200): m.start() + 250]
+            if re.search(r"(?i)fuel|price|diesel|location|store", ctx):
+                hits.append({"chunk": path[-50:], "match": m.group(0)[:150], "ctx": ctx})
+    uniq = {}
+    for h in hits:
+        uniq.setdefault(h["match"], h)
+    return {"chunks_read": len(seen), "hits": list(uniq.values())[:60]}
+
+
 def main():
+    if "--pilot" in sys.argv:
+        t0 = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%MZ")
+        res = pilot_chunks()
+        OUT.mkdir(parents=True, exist_ok=True)
+        (OUT / f"probe_pilot_{t0}.json").write_text(json.dumps(res, indent=1))
+        print("chunks read:", res["chunks_read"])
+        for h in res["hits"]:
+            print("HIT", h["chunk"], "::", h["match"], "::", h["ctx"][:300].replace("\n", " "))
+        return
     if "--deep" in sys.argv:
         t0 = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%MZ")
         res = {
