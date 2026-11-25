@@ -25,6 +25,13 @@ AAA diesel number and find gaps vs. Kalshi's odds. Demo money only until a strat
 - Medium length. Organize around **decisions and next steps**. End with one clear next step.
 - Dan does as little hands-on work as possible (no Finder/Terminal). Claude builds, runs, commits, and pushes.
 
+## 3b. North star (Dan, 2026-11-25) — do not re-argue this
+
+- We compete on the **same vantage point as the market maker**. Never frame their model as "private, so we play a different game."
+- Market makers price the diesel ladder from inputs that are mostly knowable: AAA, OPIS-style sub-components (truckstop / rack prices), HO futures, timing. **Our job is to rebuild their model**: ladder at every minute = f(inputs known at that minute) + spread/inventory layer.
+- Any ladder move our inputs don't explain = a **missing input** the market maker sees and we don't. That gap list is the shopping list for data.
+- Edge = knowing **why** tomorrow's AAA moves with more certainty than AAA's own history tells (e.g. day X−1 truckstop prices → day X AAA), and earlier/better than the market maker's model.
+
 ---
 
 ## 4. Where everything lives (the map)
