@@ -1,0 +1,35 @@
+test_id,layer,origin,parent,name,rule,unit,n,wins,losses,win_rate,avg_price,edge,profit_per_100,worst_streak,sample_flag,sticks_out,note
+T1.1,1,Core,,Favorite win vs lose (one bet a day),"Goldilocks 10 AM favorite, 75–85¢, closest to 80¢",DAY,11,10,1,0.909,0.814,0.085,10.3,1,⚠️ small (<15),too few losses to compare (1),
+T1.2,1,Core,,Baseline: always bet every favorite line,Every line/side 60–97¢ at 10 AM that passes the liquidity filter,LINE,85,78,7,0.918,0.841,0.068,8.1,1,✅,price paid (¢): wins 85.3 vs losses 70.9 · distance from crowd (σ): wins 1.25 vs losses 0.52 · HO 1-day change (¢): wins -4.22 vs losses 5.99,Every other test must beat this edge.
+T1.3-60,1,Core,T1.2,Calibration: 60–70¢ lines,Does a 60–70¢ line win that often?,LINE,12,8,4,0.667,0.633,0.018,2.8,2,⚠️ small (<15),"volume by 10 AM: wins 13,035 vs losses 8,370 · crowd uncertainty (σ): wins 1.27 vs losses 1.61 · HO 5-day change (¢): wins -10.2 vs losses 16.7",Edge > 0 = crowd underprices these lines.
+T1.3-70,1,Core,T1.2,Calibration: 70–80¢ lines,Does a 70–80¢ line win that often?,LINE,15,14,1,0.933,0.739,0.181,24.0,1,✅,too few losses to compare (1),Edge > 0 = crowd underprices these lines.
+T1.3-80,1,Core,T1.2,Calibration: 80–90¢ lines,Does a 80–90¢ line win that often?,LINE,19,18,1,0.947,0.847,0.091,10.6,1,✅,too few losses to compare (1),Edge > 0 = crowd underprices these lines.
+T1.3-90,1,Core,T1.2,Calibration: 90–97¢ lines,Does a 90–97¢ line win that often?,LINE,39,38,1,0.974,0.941,0.03,3.2,1,✅,too few losses to compare (1),Edge > 0 = crowd underprices these lines.
+T1.4-Aug,1,Core,T1.2,Stability: Aug,Baseline bets in Aug,LINE,21,20,1,0.952,0.852,0.093,10.8,1,✅,too few losses to compare (1),
+T1.4-Sep,1,Core,T1.2,Stability: Sep,Baseline bets in Sep,LINE,64,58,6,0.906,0.837,0.061,7.2,1,✅,"volume by 10 AM: wins 14,186 vs losses 8,801 · price paid (¢): wins 84.8 vs losses 72.7 · active lines: wins 7.90 vs losses 5.33",
+T1.5,1,Core,T1.1,Costs + streaks,Same as T1.1; read the fee drag and worst losing streak,DAY,11,10,1,0.909,0.814,0.085,10.3,1,⚠️ small (<15),too few losses to compare (1),Fees ≈ 1.3% of each stake.
+T1.6,1,Core,,Fake-pattern guard (holdout rule),"From the next phase, the last 3 weeks of any window stay hidden until a brick is proposed, then are checked once.",RULE,,,,,,,,,,,Bones phase: tests below use all 54 days (2026-08-03 → 2026-09-25).
+T2.1-YES,2,Core,T1.1,Favorite on the YES side,T1.1 bets where the favorite was YES,DAY,7,7,0,1.0,0.82,0.17,20.4,0,⚠️ small (<15),too few losses to compare (0),
+T2.2-YES,2,Core,T1.2,"All favorite lines, YES side",T1.2 bets on the YES side,LINE,42,39,3,0.929,0.841,0.079,9.3,1,✅,price paid (¢): wins 85.6 vs losses 65.0 · weekend: wins 0.13 vs losses 0.67 · distance from crowd (σ): wins 1.20 vs losses 0.29,
+T2.1-NO,2,Core,T1.1,Favorite on the NO side,T1.1 bets where the favorite was NO,DAY,4,3,1,0.75,0.802,-0.064,-7.8,1,⚠️ small (<15),too few losses to compare (1),
+T2.2-NO,2,Core,T1.2,"All favorite lines, NO side",T1.2 bets on the NO side,LINE,43,39,4,0.907,0.84,0.059,6.9,1,✅,delivery slice gap (¢): wins 0.33 vs losses -27.3 · HO 5-day change (¢): wins -12.5 vs losses 28.2 · HO 3-day change (¢): wins -19.8 vs losses 3.29,
+T2.3-Weekend,2,Core,T1.2,Weekend bet day,T1.2 bets placed on a weekend,LINE,16,14,2,0.875,0.787,0.077,9.7,1,✅,too few losses to compare (2),
+T2.3-Weekday,2,Core,T1.2,Weekday bet day,T1.2 bets placed on a weekday,LINE,69,64,5,0.928,0.853,0.066,7.7,1,✅,HO 1-day change (¢): wins -4.77 vs losses 7.89 · price paid (¢): wins 86.1 vs losses 75.0 · active lines: wins 7.55 vs losses 5.20,
+T2.4-feathers,2,Core,T1.2,Regime: feathers (falling),10-day AAA change < −5¢,LINE,0,0,0,,,,,,⚠️ no bets,,
+T2.4-flat,2,Core,T1.2,Regime: flat,10-day AAA change within ±5¢,LINE,6,5,1,0.833,0.805,0.018,2.2,1,⚠️ small (<15),too few losses to compare (1),
+T2.4-rockets,2,Core,T1.2,Regime: rockets (rising),10-day AAA change > +5¢,LINE,67,61,6,0.91,0.83,0.071,8.5,1,✅,"price paid (¢): wins 84.6 vs losses 67.0 · volume by 10 AM: wins 14,111 vs losses 9,391 · distance from crowd (σ): wins 1.14 vs losses 0.44",
+T2.5-agree,2,Core,T1.2,Model F agrees with the bet,Model F (no peek) lands on the same side as the bet,LINE,74,68,6,0.919,0.846,0.065,7.6,1,✅,price paid (¢): wins 85.8 vs losses 70.3 · active lines: wins 7.76 vs losses 4.83 · distance from crowd (σ): wins 1.30 vs losses 0.50,
+T2.5-disagree,2,Core,T1.2,Model F disagrees,Model F lands on the other side,LINE,11,10,1,0.909,0.807,0.092,11.3,1,⚠️ small (<15),too few losses to compare (1),
+T2.6-far,2,Core,T1.2,Line ≥ 1σ from crowd forecast,Strike at least one crowd-wiggle away from the forecast,LINE,44,42,2,0.955,0.927,0.023,2.4,1,✅,too few losses to compare (2),
+T2.6-near,2,Core,T1.2,Line < 1σ from crowd forecast,Strike close to the crowd forecast,LINE,40,35,5,0.875,0.744,0.118,15.7,2,✅,"price paid (¢): wins 75.8 vs losses 64.2 · distance from crowd (σ): wins 0.63 vs losses 0.32 · volume by 10 AM: wins 12,506 vs losses 8,768",
+T2.7-HOdown,2,Core,T1.2,Wholesale fell ≥ 5¢ last day,HO 1-day change ≤ −5¢ (last close known at 10 AM),LINE,50,48,2,0.96,0.861,0.091,10.5,1,✅,too few losses to compare (2),
+T2.7-HOup,2,Core,T1.2,Wholesale rose ≥ 5¢ last day,HO 1-day change ≥ +5¢,LINE,20,16,4,0.8,0.782,0.007,0.8,2,✅,line volume by 10 AM: wins 194.8 vs losses 63.3 · yesterday's AAA move (¢): wins 1.12 vs losses 2.19 · model vs crowd gap (¢): wins 0.53 vs losses -0.21,
+T2.8-tight,2,Core,T1.2,Tight spread (≤ 2¢),Liquid lines only,LINE,36,34,2,0.944,0.853,0.083,9.7,2,✅,too few losses to compare (2),
+T3.1-YES-fall,3,Core,T2.2-YES,YES side × falling regime,Yes bets when 10-day AAA change < −5¢,LINE,0,0,0,,,,,,⚠️ no bets,,
+T3.1-NO-fall,3,Core,T2.2-NO,NO side × falling regime,No bets when 10-day AAA change < −5¢,LINE,0,0,0,,,,,,⚠️ no bets,,
+T3.2-far-agree,3,Core,T2.6-far,≥ 1σ away × model agrees,Far from crowd forecast AND model agrees,LINE,40,38,2,0.95,0.927,0.018,2.0,1,✅,too few losses to compare (2),
+T3.3-weekend-7585,3,Core,T2.3-Weekend,Weekend × 75–85¢,Weekend bet day AND price 75–85¢,LINE,2,2,0,1.0,0.795,0.194,24.0,0,⚠️ small (<15),too few losses to compare (0),
+C2.1,2,Computer,T1.2,Tree split: volume by 10 AM ≤ 1.26e+04,volume by 10 AM ≤ 1.26e+04,LINE,22,16,6,0.727,0.795,-0.078,-9.7,2,✅,price paid (¢): wins 82.1 vs losses 72.7 · distance from crowd (σ): wins 0.98 vs losses 0.58 · line volume by 10 AM: wins 203.2 vs losses 68.6,
+C2.2,2,Computer,T1.2,Tree split: volume by 10 AM > 1.26e+04,volume by 10 AM > 1.26e+04,LINE,50,49,1,0.98,0.841,0.13,15.3,1,✅,too few losses to compare (1),
+C3.3,3,Computer,C2.2,Tree split: volume by 10 AM > 1.26e+04 AND line volume by 10 AM ≤ 105,volume by 10 AM > 1.26e+04 AND line volume by 10 AM ≤ 105,LINE,15,14,1,0.933,0.818,0.106,12.8,1,✅,too few losses to compare (1),
+C3.4,3,Computer,C2.2,Tree split: volume by 10 AM > 1.26e+04 AND line volume by 10 AM > 105,volume by 10 AM > 1.26e+04 AND line volume by 10 AM > 105,LINE,35,35,0,1.0,0.851,0.14,16.3,0,✅,too few losses to compare (0),
