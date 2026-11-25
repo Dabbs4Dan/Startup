@@ -97,6 +97,8 @@ Losses come from the intraday info gap (market forecast moves 0.73¢ on losing d
 - Morning crowd over-extrapolates momentum (0.89 vs 0.73) = first candidate edge.
 - ⚠️ Update 2026-11-25: momentum-only fails after big wholesale moves (Nov 25: said 5.7804). Base F formula = fundamentals version: AAA_today − 6.72%×(Delivery − $0.90) + 1.83¢/$ HO today − 1.30¢/$ HO prior 5d → 5.7626 vs crowd 5.7625.
 
+**Risk formula (2026-11-25, `tools/risk_calc.py`):** c = price + fee. P&L = (B/n)·[(n−L)(1−c)/c − L]. Max losses L* = n(1−c). Win rate needed = c. Wins per loss = c/(1−c). Chance negative = P(Binomial(n,1−q) > L*).
+
 **Free AAA history hack:** Kalshi's settled KXDIESELD markets carry `expiration_value` = the exact AAA number (verified 5.7982 = AAA site).
 
 ---
@@ -127,6 +129,12 @@ Template:
 - **Decided:** …
 - **Next:** …
 ```
+
+### 2026-11-25 (1:00 AM) · Risk threshold formula + driver-chain approach
+- **Did:** Built `tools/risk_calc.py` + interactive calculator; notes `research/2026-11-25_risk-threshold.md`.
+- **Learned:** $400 over 30 real favorite bets (avg cost 75.8¢): +$128 with 0 losses, +$75 with 3, break-even ≈7 losses, −$48 with 10. Each loss needs ~3–4 wins to erase. At 79% win rate: ~28–30% chance of finishing negative; Monte Carlo median +$21.
+- **Decided (approach):** Build a driver chain, each link with a measured pass-through rate: news/sources → wholesale & rack → truckstop prices → AAA → Kalshi crowd. Prove each rate across all diesel days; keep only drivers that hold up.
+- **Next:** Link test #1: wholesale (HO) move → next-day AAA move (lags 0–5 days, up vs down) → crowd reaction speed.
 
 ### 2026-11-25 (12:50 AM) · Clarified: AAA does not move intraday
 - **Learned:** AAA posts once per day (morning), so between a 10 AM bet and close the AAA number is constant; only the crowd's guess of TOMORROW's AAA moves. Example event 2026-11-24 (bet day 11/23): AAA known 5.8182 all day; crowd forecast 10 AM 5.7996 → close 5.7977; actual 5.7982 (−2.00¢). Line "above 5.800": 47% (10 AM) → 28% (noon) → 32.5% (4 PM) → 7.5% (11 PM) → settled NO. Wholesale HO fell 22.4¢ that day.
