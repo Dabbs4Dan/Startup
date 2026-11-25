@@ -77,3 +77,33 @@ SELECT
     ROUND(aaa_diesel - LAG(aaa_diesel) OVER (ORDER BY date), 4)           AS aaa_change_1d
 FROM diesel_daily
 ORDER BY date;
+
+-- Hour-by-hour price history for every Kalshi diesel market (from the candlesticks API).
+CREATE TABLE IF NOT EXISTS kalshi_candles (
+    ticker            TEXT,               -- market, e.g. KXDIESELD-26NOV24-T5.795
+    event_date        TEXT,               -- AAA date the market settles on
+    strike            REAL,
+    period_min        INTEGER,            -- 60 = hourly, 1 = minute
+    end_ts            INTEGER,            -- unix seconds, end of the candle
+    end_et            TEXT,               -- same, as US Eastern "YYYY-MM-DD HH:MM"
+    hours_to_close    REAL,               -- how long before the market closed
+    yes_bid           REAL,               -- close of the candle, $ (0-1)
+    yes_ask           REAL,
+    mid               REAL,               -- (bid+ask)/2 = the market's probability
+    spread            REAL,               -- ask - bid
+    last_price        REAL,
+    volume            REAL,
+    open_interest     REAL,
+    raw_json          TEXT,
+    PRIMARY KEY (ticker, period_min, end_ts)
+);
+
+-- For each event and hour: the market's whole ladder in one place + how sure it was of the real answer.
+DROP VIEW IF EXISTS v_event_hourly;
+CREATE VIEW v_event_hourly AS
+SELECT c.event_date, c.end_et, c.hours_to_close, c.strike, c.yes_bid, c.yes_ask, c.mid, c.spread, c.volume,
+       m.expiration_value AS final_aaa,
+       CASE WHEN m.expiration_value > c.strike THEN 1 ELSE 0 END AS settled_yes
+FROM kalshi_candles c JOIN kalshi_markets m ON m.ticker = c.ticker
+WHERE c.period_min = 60
+ORDER BY c.event_date, c.end_ts, c.strike;

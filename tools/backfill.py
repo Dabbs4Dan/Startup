@@ -4,7 +4,8 @@
 1. Kalshi: every KXDIESELD market (settled + open) -> kalshi_markets,
    and each settled day's expiration_value -> diesel_daily.aaa_diesel (= AAA number).
 2. Yahoo futures: Brent (BZ=F), NY Harbor ULSD (HO=F). FRED (often blocks cloud runners) as backup + EIA weekly diesel (GASDESW).
-3. Export every table/view to data/exports/*.csv (GitHub renders these as tables).
+3. Kalshi candlesticks: hour-by-hour bid/ask/volume for every market -> kalshi_candles.
+4. Export every table/view to data/exports/*.csv (GitHub renders these as tables).
 
 Never overwrites a filled value (fills NULLs only). Safe to re-run.
 Usage:  python3 tools/backfill.py            (all steps)
@@ -123,6 +124,54 @@ def pull_yahoo(con):
         print(f"yahoo {sym}: {n} rows")
 
 
+def dollars(x):
+    """Candle fields come as dollar strings (*_dollars) or cents ints; return $ float."""
+    if isinstance(x, dict):
+        x = x.get("close_dollars", x.get("close"))
+    v = num(x)
+    if v is None:
+        return None
+    return v / 100 if v > 1.0001 else v
+
+
+def pull_candles(con, period=60, only_missing=True):
+    """Hour-by-hour bid/ask/price/volume for every diesel market we know about."""
+    rows = con.execute("""SELECT ticker, series_ticker, event_date, strike, open_time, close_time
+                          FROM kalshi_markets WHERE open_time IS NOT NULL""").fetchall()
+    done = {r[0] for r in con.execute("SELECT DISTINCT ticker FROM kalshi_candles WHERE period_min=?", (period,))}
+    n_mk = n_c = 0
+    for ticker, series, edate, strike, ot, ct in rows:
+        if only_missing and ticker in done:
+            continue
+        to_ts = lambda s: int(datetime.datetime.fromisoformat(s.replace("Z", "+00:00")).timestamp())
+        start, end = to_ts(ot), to_ts(ct)
+        try:
+            data = json.loads(get(f"{KALSHI}/series/{series}/markets/{ticker}/candlesticks?start_ts={start}&end_ts={end}&period_interval={period}", tries=2))
+        except Exception as e:
+            print(f"candles skip {ticker}: {e}")
+            continue
+        for c in data.get("candlesticks", []):
+            ts = c["end_period_ts"]
+            bid = dollars(c.get("yes_bid"))
+            ask = dollars(c.get("yes_ask"))
+            price = c.get("price") or {}
+            last = dollars(price.get("close_dollars", price.get("close")))
+            mid = round((bid + ask) / 2, 4) if bid is not None and ask is not None else None
+            et = datetime.datetime.fromtimestamp(ts, datetime.timezone(datetime.timedelta(hours=-5))).strftime("%Y-%m-%d %H:%M")
+            con.execute("INSERT OR REPLACE INTO kalshi_candles VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (
+                ticker, edate, strike, period, ts, et, round((end - ts) / 3600, 2), bid, ask, mid,
+                round(ask - bid, 4) if bid is not None and ask is not None else None, last,
+                num(c.get("volume_fp", c.get("volume"))), num(c.get("open_interest_fp", c.get("open_interest"))),
+                json.dumps(c)))
+            n_c += 1
+        n_mk += 1
+        if n_mk % 100 == 0:
+            con.commit()
+            print(f"candles: {n_mk} markets...")
+        time.sleep(0.12)
+    print(f"candles: {n_mk} markets, {n_c} hourly rows")
+
+
 def upsert(con, date, fields):
     con.execute("INSERT OR IGNORE INTO diesel_daily (date, updated_at) VALUES (?, ?)", (date, NOW))
     sets = ", ".join(f"{k} = COALESCE({k}, ?)" for k in fields)
@@ -135,6 +184,7 @@ def export(con):
         "diesel_breakdown.csv": "SELECT * FROM v_diesel_breakdown",
         "diesel_daily.csv": "SELECT * FROM diesel_daily ORDER BY date",
         "kalshi_markets.csv": "SELECT ticker, event_date, strike, status, result, expiration_value, last_price, yes_bid, yes_ask, volume, open_interest, close_time FROM kalshi_markets ORDER BY event_date, strike",
+        "event_hourly.csv": "SELECT * FROM v_event_hourly",
         "sources.csv": "SELECT * FROM sources",
         "research_log.csv": "SELECT * FROM research_log ORDER BY date, id",
     }
@@ -150,7 +200,7 @@ def export(con):
 def main():
     con = sqlite3.connect(DB)
     if "--export" not in sys.argv:
-        for step in (pull_kalshi, pull_yahoo, pull_fred):
+        for step in (pull_kalshi, pull_candles, pull_yahoo, pull_fred):
             try:
                 step(con)
                 con.commit()
