@@ -130,6 +130,13 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-25 (2:00 AM) · Paused favorite topic; read ECONSTAT terms
+- **Did:** Cancelled full-history backfill run (Dan's request). Removed `backfill_history.py` + `favorite_test.py` from the workflow (scripts kept in `tools/` for later). Read Kalshi ECONSTAT contract terms.
+- **Learned:** Kalshi diesel daily archive goes back to 2026-08-03 (114 events); AAA gas daily/weekly back to Sep/Oct 2023 (old tickers AAAGASD/AAAGASW). Archived markets live at `/historical/markets`. Kalshi-wide study (Bürgi/Deng/Whelan, 300K contracts): favorite-longshot bias is market-wide, shrinking, makers out-earn takers.
+  - ECONSTAT terms (generic economic stats, not AAA): first non-preliminary release counts; later revisions ignored; expiration 10:00 AM ET; last trade 1 min before scheduled release; Trading Economics is backup source; Kalshi can set payouts if value can't be determined.
+- **Decided:** Favorite edge = not a focus. Back to formulas.
+- **Next:** Find the AAA-specific diesel contract terms (likely a separate PDF on assets.kalshi.com/contract_terms/).
+
 ### 2026-11-25 (1:00 AM) · Risk threshold formula + driver-chain approach
 - **Did:** Built `tools/risk_calc.py` + interactive calculator; notes `research/2026-11-25_risk-threshold.md`.
 - **Learned:** $400 over 30 real favorite bets (avg cost 75.8¢): +$128 with 0 losses, +$75 with 3, break-even ≈7 losses, −$48 with 10. Each loss needs ~3–4 wins to erase. At 79% win rate: ~28–30% chance of finishing negative; Monte Carlo median +$21.
