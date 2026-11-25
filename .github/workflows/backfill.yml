@@ -29,6 +29,7 @@ jobs:
         run: |
           python3 tools/build_db.py
           python3 tools/backfill.py
+          python3 tools/story.py
       - name: Commit data
         run: |
           git config user.name "kalshi-twins-bot"

@@ -46,6 +46,7 @@ AAA diesel number and find gaps vs. Kalshi's odds. Demo money only until a strat
 - `diesel_daily` — raw inputs per day (AAA, Brent, ULSD, EIA weekly, taxes) + the source of each value.
 - `kalshi_markets` — every KXDIESELD strike: strike, result, settle value, last price, bid/ask, volume, OI, full raw JSON.
 - `kalshi_candles` — hour-by-hour yes bid/ask/mid/spread/volume for every market (18K rows). `v_event_hourly` = same joined with the final AAA answer.
+- `daily_story` ⭐ — one row per day: AAA before/after, market forecast at 10 AM (mu_N) and close (mu_C), the 75¢ bet (N_price, F_payout), HO moves, delivery slice. Built by `tools/story.py`.
 - `sources` — where each number comes from.
 - `research_log` — queryable copy of findings (mirror of the log below).
 
@@ -85,6 +86,10 @@ Strikes are $0.005 apart. Market opens ~10 PM ET the night before.
 - Daily market opens 8:00 AM ET the day before, closes 11:59 PM ET, settles on the next day's AAA number. ~16-hour market, not 24h.
 - Price tick 1¢. Strikes $0.005 apart. AAA daily move: median 1.43¢, max 3.9¢ (Sep–Nov 2026) → only ~3–6 strikes are ever "live".
 
+**N → F → Z framework (2026-11-24):** N = price of our side at bet (10 AM), F = 1 if it wins, Z = win rate. Profit iff Z > avg(N+fee).
+AAA engine fit (67 days, R² 0.65): ΔAAA ≈ 6.06¢ − 6.72¢×Delivery($) + 1.83¢×HO bet-day move($). Market already prices this by 10 AM.
+Losses come from the intraday info gap (market forecast moves 0.73¢ on losing days vs 0.31¢ on wins), not explained by futures → look at station-level prices. See `research/2026-11-24_N-F-Z-framework.md`.
+
 **Free AAA history hack:** Kalshi's settled KXDIESELD markets carry `expiration_value` = the exact AAA number (verified 5.7982 = AAA site).
 
 ---
@@ -115,6 +120,17 @@ Template:
 - **Decided:** …
 - **Next:** …
 ```
+
+### 2026-11-24 (11:40 PM) · N → F → Z framework + why AAA moves
+- **Did:** Built `tools/story.py` → `daily_story` table (one row per day). Fit AAA daily change on fundamentals; compared winning vs losing favorite bets. Added story.py to the GitHub workflow.
+- **Learned:**
+  - AAA engine: ΔAAA ≈ 6.06¢ − 6.72¢×Delivery slice + 1.83¢×HO bet-day move (R² 0.65). Delivery $1.50 → ~−4¢/day; falling stops near ~$0.90 slice.
+  - Market's 10 AM forecast already includes these fundamentals (miss vs fundamentals R² 0.05).
+  - Losing days = bigger morning miss (0.80¢ vs 0.29¢) and bigger intraday forecast move (0.73¢ vs 0.31¢). Futures explain ~2% of the intraday move.
+  - AAA's data = OPIS station prices (~5M prices/day, up to 150K stations); OPIS rack snapshots at 11 AM / 2 PM.
+  - Strike distance from forecast did not separate wins from losses (median 0.33¢ vs 0.32¢).
+- **Decided:** Fundamentals = table stakes, not the edge. Edge hunt = find a bet-time signal that predicts the intraday info gap (station-level retail prices first).
+- **Next:** Test GasBuddy/crowd diesel prices and AAA state averages as leading indicators of F.
 
 ### 2026-11-24 (11:15 PM) · Bankroll sims: $500, $100 favorite bet per day
 - **Did:** `tools/sim_favorites.py` → results in `research/sims/2026-11-24_favorites_sim.json`. Buy at hourly ask +1¢ slippage + taker fee (rounded up per order). Favorites = lines priced 60–85¢.
