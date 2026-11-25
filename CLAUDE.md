@@ -135,6 +135,11 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-25 (3:30 AM) · Inputs Map priorities + Connectivity tab (Google Sheet)
+- **Did:** Google Sheet "Kalshi Diesel – Inputs Map" (Dan's Drive): 83 inputs in 10 sections, each scored Priority 1–4 (13 essential / 12 test-first / 32 later / 26 parked); Formulas tab (18). New **Connectivity** tab: tier-1 inputs with the raw value for control day Mon 2026-11-23 (event KXDIESELD-26NOV24, 10 AM ET snapshot) + exact source + pipe.
+- **Learned:** 10 of 13 tier-1 inputs already flow through GitHub; 3 are Claude one-time (fee rule, σ fit, model F). Control day: AAA $5.8182 → $5.7982; crowd 10 AM $5.7996 (σ 0.37¢); model F $5.7897 (miss 0.85¢). ⚠️ F uses HO full-day close = look-ahead at 10 AM.
+- **Next:** wire σ + model F into story.py; store can_close_early; then tier 2 on the same control day.
+
 ### 2026-11-25 (3:00 AM) · Archive pull (Aug 3 – Sep 17) breaks the 75–85¢ rule
 - **Did:** Workflow ran `backfill_history.py KXDIESELD`: 114 settled days (2026-08-03 → 11-24), 2,548 markets, 29K hourly candles. Fixed: numpy install in workflow; archived AAA values now copied into `diesel_daily`.
 - **Learned:**
