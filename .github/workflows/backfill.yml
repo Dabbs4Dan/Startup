@@ -18,6 +18,7 @@ permissions:
 jobs:
   backfill:
     runs-on: ubuntu-latest
+    timeout-minutes: 300
     steps:
       - uses: actions/checkout@v4
         with:
@@ -29,7 +30,9 @@ jobs:
         run: |
           python3 tools/build_db.py
           python3 tools/backfill.py
+          python3 tools/backfill_history.py
           python3 tools/story.py
+          python3 tools/favorite_test.py
       - name: Commit data
         run: |
           git config user.name "kalshi-twins-bot"
