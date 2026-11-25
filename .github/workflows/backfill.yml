@@ -30,6 +30,7 @@ jobs:
         run: |
           python3 tools/build_db.py
           python3 tools/backfill.py
+          python3 tools/backfill_history.py KXDIESELD
           python3 tools/story.py
       - name: Commit data
         run: |
