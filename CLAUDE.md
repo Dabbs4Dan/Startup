@@ -116,6 +116,18 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-24 (late night) · Liquidity filter, underdog test, $100 vs $1,000
+- **Did:** Backtested every price level on all 68 settled days (hourly candles, books with spread ≤10¢, one bet per line/side/day, buying at ask + taker fee). Read tonight's live order book (KXDIESELD-26NOV25-T5.765).
+- **Learned:**
+  - Prices = other traders' orders (peer-to-peer order book). Kalshi does not set the odds.
+  - Liquidity: 21 strikes/day; 431 of 1,448 settled markets (30%) never traded; top 3 strikes = 63% of a day's volume.
+  - Calibration (favorite-longshot bias): lines priced 10–20% won 4%; 20–30% won 9%; 30–40% won 27%; 60–70% won 78%; 70–80% won 84%. Cheap side is overpriced, favorites underpriced.
+  - Blind strategies: underdog ≥4x (2–25¢): 1,143 bets, 19 wins (2%), ROI −75%, up on 4/67 days. Middle 25–50¢: ROI −26%. Favorite 60–85¢: 78% win, ROI +6%, up 43/65 days. Heavy favorite 85–97¢: 95% win, ROI +4%, up 50/64 days.
+  - Last hour before close, ≥4x underdogs hit 2 of 480 chances (2 days).
+  - Order book depth (10:47 PM): YES at 4¢ ≈ 1,000 contracts, at 5¢ ≈ 3,000; NO at 97¢ ≈ 3,000 contracts. $100 fills at one price; $1,000 can walk 1–2 cents on the cheap side (slippage).
+- **Decided:** Liquidity filter for the bot = drop strikes with zero volume, spread >10¢, or priced <3% / >97%. Underdog-only strategy rejected unless our model finds specific mispriced days. Sample is small (68 days, falling-price regime) — treat ROI numbers as hints, not proof.
+- **Next:** Edge test (#9) — model probability vs market per bin; check if favorites' +4–6% survives costs and a longer history. Minute candles (#8) for 30-min-before-close questions.
+
 ### 2026-11-24 (night) · How Kalshi prices the diesel ladder + intraday history
 - **Did:** Decoded payouts from Dan's screenshots. Added `kalshi_candles` (hourly bid/ask/volume for all 1,469 markets, 18,094 rows) + `v_event_hourly`. Measured how fast the market finds the answer.
 - **Learned:**
