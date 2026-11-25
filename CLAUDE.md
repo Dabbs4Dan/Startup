@@ -45,6 +45,7 @@ AAA diesel number and find gaps vs. Kalshi's odds. Demo money only until a strat
 - `v_diesel_breakdown` ⭐ — **start here.** Per day: AAA price, crude / refining / taxes / delivery in $ and %, 1-day change.
 - `diesel_daily` — raw inputs per day (AAA, Brent, ULSD, EIA weekly, taxes) + the source of each value.
 - `kalshi_markets` — every KXDIESELD strike: strike, result, settle value, last price, bid/ask, volume, OI, full raw JSON.
+- `kalshi_candles` — hour-by-hour yes bid/ask/mid/spread/volume for every market (18K rows). `v_event_hourly` = same joined with the final AAA answer.
 - `sources` — where each number comes from.
 - `research_log` — queryable copy of findings (mirror of the log below).
 
@@ -77,6 +78,13 @@ A swollen delivery slice (Nov 24: $1.50 vs ~$0.84 in Jan 2026) = pump prices sti
 **Settlement facts:** KXDIESELD "Diesel prices tomorrow" resolves on AAA's national average diesel (AAA data is from OPIS, updated daily).
 Strikes are $0.005 apart. Market opens ~10 PM ET the night before.
 
+**How Kalshi prices the ladder (verified 2026-11-24):**
+- Each strike's % = the crowd's probability that AAA > strike. Whole ladder = one probability curve.
+- Chance of landing in a half-cent bin = P(>low) − P(>high). "Forecast" shown in app = where ladder crosses 50%.
+- Payout per $1 = 1 ÷ (ask price + taker fee). Taker fee = 0.07 × P × (1−P) per contract (rounded up per order). Maker fee 0.0175× on some series. Matched app payouts to the penny.
+- Daily market opens 8:00 AM ET the day before, closes 11:59 PM ET, settles on the next day's AAA number. ~16-hour market, not 24h.
+- Price tick 1¢. Strikes $0.005 apart. AAA daily move: median 1.43¢, max 3.9¢ (Sep–Nov 2026) → only ~3–6 strikes are ever "live".
+
 **Free AAA history hack:** Kalshi's settled KXDIESELD markets carry `expiration_value` = the exact AAA number (verified 5.7982 = AAA site).
 
 ---
@@ -87,10 +95,12 @@ Strikes are $0.005 apart. Market opens ~10 PM ET the night before.
 |---|---|---|
 | 1 | Confirm backfill ran on GitHub; check row counts | ✅ 2026-11-24 |
 | 2 | Lag study: how many days for a ULSD move to reach AAA? Up vs. down speed (rockets & feathers)? | ⬜ |
-| 3 | Find the exact time AAA posts each day and when Kalshi's market opens/closes | ⬜ |
+| 3 | Find the exact time AAA posts each day (Kalshi open/close ✅: 8 AM → 11:59 PM ET day before) | ◐ |
 | 4 | Turn the forecast into odds per strike; compare with Kalshi prices (backtest on history) | ⬜ |
 | 5 | Add gas (KXAAAGASD) to the same table once diesel works | ⬜ |
 | 6 | Find a real-time / official ULSD source (manual Nov 24 values came from tradingeconomics CFDs; Yahoo HO=F futures used for history) | ⬜ |
+| 8 | Minute-level candles for near-money strikes (hourly done) | ⬜ |
+| 9 | Edge test: does our engine's morning forecast beat the market's morning ladder? | ⬜ |
 | 7 | Longer AAA history: Kalshi only goes back to 2026-09-18. FRED (EIA weekly diesel) times out from GitHub runners; try EIA direct or run from Mac | ⬜ |
 
 ---
@@ -105,6 +115,19 @@ Template:
 - **Decided:** …
 - **Next:** …
 ```
+
+### 2026-11-24 (night) · How Kalshi prices the diesel ladder + intraday history
+- **Did:** Decoded payouts from Dan's screenshots. Added `kalshi_candles` (hourly bid/ask/volume for all 1,469 markets, 18,094 rows) + `v_event_hourly`. Measured how fast the market finds the answer.
+- **Learned:**
+  - Payout = $1 ÷ (price + fee), fee = 0.07·P·(1−P). Checks: 5.760 YES @97¢ → 1.03x; NO @4¢ → 23.43x; 5.765 NO @90¢ → 1.10x. All match app.
+  - Nov 25 ladder at 10 PM: P(>5.760)=96–97%, P(>5.765)=8–9% → ~87% on the 5.760–5.765 bin (forecast ≈ 5.76, i.e. −3.5¢ vs today).
+  - Market sharpens through the day: favorite half-cent bin right 26/68 days at ~12h before close vs 42/68 at ~1h. Median forecast miss 0.34¢ (12–15h out) → 0.15¢ (last 3h).
+  - Volume timing: 29% traded 12–15h before close (morning after open), 22% in last 3h.
+  - Near-money spreads: ~20¢ in first hours, ~4¢ midday, ~11¢ last hours.
+  - Example 2026-11-24 event, strike 5.795 (settled YES at 5.7982): 92% at 9 AM → 84–86% 11 AM–noon → 96% 1 PM → 98% by 4 PM.
+  - AAA site still showed 11/24 at ~10:15 PM ET → next AAA number is NOT posted before close; late confidence comes from other info (station-level prices / drift).
+- **Decided:** The edge window is the morning (wide spreads, market only ~38% right on the bin). Our engine must output a probability per half-cent bin; bot only trades strikes priced 10–90%, where (our prob − ask − fee) is biggest.
+- **Next:** #9 edge test on history; #8 minute candles; find AAA posting time (#3).
 
 ### 2026-11-24 (late) · DB filled by GitHub backfill
 - **Did:** GitHub Action ran `tools/backfill.py`. Pulled 1,469 Kalshi diesel markets (69 days, ~4.93M contracts volume) and 5 years of Yahoo futures (BZ=F Brent, HO=F NY Harbor ULSD).
