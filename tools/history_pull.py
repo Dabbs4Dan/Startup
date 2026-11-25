@@ -71,10 +71,14 @@ def write_rows(path, header, rows):
 
 def pull_eia():
     import xlrd  # pip install xlrd
-    ok = 0
+    ok = fails = 0
     for sid, (freq, name) in EIA.items():
+        if fails >= 3 and ok == 0:
+            print("eia: 3 failures in a row and no success -> site looks blocked from here, skipping the rest")
+            break
         try:
-            book = xlrd.open_workbook(file_contents=fetch(f"https://www.eia.gov/dnav/pet/hist_xls/{sid}{freq}.xls", binary=True))
+            book = xlrd.open_workbook(file_contents=fetch(f"https://www.eia.gov/dnav/pet/hist_xls/{sid}{freq}.xls",
+                                                          binary=True, timeout=25, tries=2))
             sh = book.sheet_by_name("Data 1")
             rows = []
             for r in range(3, sh.nrows):
@@ -84,10 +88,11 @@ def pull_eia():
                 dt = xlrd.xldate_as_datetime(d, book.datemode).date().isoformat()
                 rows.append([dt, v])
             write_rows(OUT / f"eia_{name}.csv", ["date", "value"], rows)
-            print(f"eia {name}: {len(rows)} rows {rows[0][0] if rows else ''} -> {rows[-1][0] if rows else ''}")
+            print(f"eia {name}: {len(rows)} rows {rows[0][0] if rows else ''} -> {rows[-1][0] if rows else ''}", flush=True)
             ok += 1
         except Exception as e:  # noqa
-            print(f"eia {name}: FAILED {e}")
+            fails += 1
+            print(f"eia {name}: FAILED {e}", flush=True)
         time.sleep(1)
     print(f"eia: {ok}/{len(EIA)} series")
 
@@ -96,6 +101,7 @@ def pull_eia():
 
 def pull_yahoo():
     """Bars are saved per symbol/interval/MONTH (yahoo_HO_5m_2026-11.csv) so no file outgrows GitHub's limits."""
+    yfails = 0
     for sym in YAHOO:
         for interval, rng in YAHOO_RANGES:
             s = sym.replace("=F", "")
@@ -104,7 +110,7 @@ def pull_yahoo():
                 for host in ("query1", "query2"):
                     try:
                         body = json.loads(fetch(f"https://{host}.finance.yahoo.com/v8/finance/chart/{sym}?interval={interval}&range={rng}",
-                                                tries=2))
+                                                tries=1, timeout=20))
                         break
                     except Exception as e:  # noqa
                         last = e
@@ -128,9 +134,14 @@ def pull_yahoo():
                     have.update(new)                      # merge: history keeps growing past Yahoo's window
                     write_rows(path, ["ts_utc", "open", "high", "low", "close", "volume"], [have[k] for k in sorted(have)])
                     total += len(new)
-                print(f"yahoo {sym} {interval}: {total} bars across {len(by_month)} month file(s)")
+                print(f"yahoo {sym} {interval}: {total} bars across {len(by_month)} month file(s)", flush=True)
+                yfails = 0
             except Exception as e:  # noqa
-                print(f"yahoo {sym} {interval}: FAILED {str(e)[:120]}")
+                print(f"yahoo {sym} {interval}: FAILED {str(e)[:120]}", flush=True)
+                yfails += 1
+                if yfails >= 4:
+                    print("yahoo: 4 failures in a row -> blocked from here right now, skipping the rest")
+                    return
             time.sleep(12)
 
 
