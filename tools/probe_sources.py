@@ -1,0 +1,112 @@
+#!/usr/bin/env python3
+"""One-shot discovery probe (runs on GitHub; this sandbox can't reach these sites).
+
+1. Truckstops: open Love's / Pilot / TA fuel pages, download their JS bundles, list every API-looking URL and
+   any fuel-price JSON endpoints that answer. Also tries known candidate endpoints directly.
+2. Wayback (for L2 history): count archived snapshots of gasprices.aaa.com/?state=XX per state since 2023, and parse
+   a sample so we know if old state tables can be read.
+Output: research/engine_room/probe_<utc>.json (committed by the workflow).
+"""
+import datetime, json, pathlib, re, time, urllib.parse, urllib.request
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+OUT = ROOT / "research" / "engine_room"
+UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36",
+      "Accept": "*/*", "Accept-Language": "en-US,en;q=0.9"}
+STATES = "AL AK AZ AR CA CO CT DE DC FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY".split()
+
+
+def get(url, timeout=25, headers=None):
+    try:
+        req = urllib.request.Request(url, headers={**UA, **(headers or {})})
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return r.status, r.read().decode("utf-8", "replace"), dict(r.headers)
+    except urllib.error.HTTPError as e:
+        return e.code, (e.read() or b"").decode("utf-8", "replace")[:400], {}
+    except Exception as e:  # noqa
+        return None, str(e)[:300], {}
+
+
+PAGES = {
+    "loves": "https://www.loves.com/en/location-and-fuel-price-search",
+    "pilot": "https://www.pilotflyingj.com/fuel-prices",
+    "ta": "https://www.ta-petro.com/location/all-locations",
+}
+CANDIDATES = [
+    "https://www.loves.com/api/sitecore/StoreSearch/SearchStoresWithDetail?pageNumber=0&top=5&lat=35.4676&lng=-97.5164",
+    "https://www.loves.com/api/fetch_stores",
+    "https://apiservices.loves.com/api/stores/search?latitude=35.4676&longitude=-97.5164&radius=100",
+    "https://apiservices.loves.com/locations",
+    "https://www.pilotflyingj.com/api/fuel-prices",
+    "https://www.pilotflyingj.com/fuel-prices.json",
+    "https://locations.pilotflyingj.com/api/getAsyncLocations",
+    "https://www.ta-petro.com/api/locations",
+]
+
+
+def truckstops():
+    res = {}
+    for name, url in PAGES.items():
+        st, html, hdr = get(url)
+        scripts = sorted(set(re.findall(r'<script[^>]+src="([^"]+)"', html or "")))[:60]
+        apis = set(re.findall(r'https?://[A-Za-z0-9.-]*(?:api|services|graphql|contentstack|algolia)[A-Za-z0-9./_?=&%-]*', html or ""))
+        paths = set(re.findall(r'["\'](/api/[A-Za-z0-9/_.?=&-]+)["\']', html or ""))
+        bundle_hits = {}
+        for s in scripts:
+            u = urllib.parse.urljoin(url, s)
+            if not any(k in u for k in ("_next", "static", "chunk", "main", "app", "bundle", ".js")):
+                continue
+            bst, js, _ = get(u, timeout=20)
+            if bst != 200 or not js:
+                continue
+            hits = set(re.findall(r'https?://[A-Za-z0-9.-]*(?:api|services|graphql|contentstack)[A-Za-z0-9./_?=&%{}$-]*', js))
+            hits |= set(re.findall(r'["\'`](/api/[A-Za-z0-9/_.?=&{}$-]+)["\'`]', js))
+            fuel = set(re.findall(r'["\'`]([^"\'`]{0,80}(?:[Ff]uel[Pp]rice|fuelprice|fuel_price|dieselPrice|DieselPrice)[^"\'`]{0,80})["\'`]', js))
+            if hits or fuel:
+                bundle_hits[u[-90:]] = {"api": sorted(hits)[:40], "fuel_strings": sorted(fuel)[:15]}
+            time.sleep(0.3)
+        res[name] = {"status": st, "len": len(html or ""), "scripts": len(scripts), "page_apis": sorted(apis)[:40],
+                     "page_api_paths": sorted(paths)[:40], "bundles": bundle_hits,
+                     "next_data": bool(re.search(r'__NEXT_DATA__', html or "")),
+                     "diesel_in_html": re.findall(r"[Dd]iesel[^$<]{0,60}\$\s?([0-9]\.[0-9]{2,3})", html or "")[:10]}
+    cand = {}
+    for u in CANDIDATES:
+        st, body, hdr = get(u, timeout=20, headers={"Accept": "application/json"})
+        cand[u] = {"status": st, "type": hdr.get("Content-Type", ""), "len": len(body or ""), "head": (body or "")[:300]}
+    res["candidates"] = cand
+    return res
+
+
+def wayback():
+    out = {"per_state_2026": {}, "per_state_since_2023": {}}
+    for s in STATES:
+        q = ("https://web.archive.org/cdx/search/cdx?url=gasprices.aaa.com/%3Fstate%3D" + s +
+             "&output=json&fl=timestamp,statuscode&filter=statuscode:200&from=2023&collapse=timestamp:8")
+        st, body, _ = get(q, timeout=40)
+        try:
+            rows = json.loads(body)[1:]
+        except Exception:  # noqa
+            rows = []
+        days = sorted({r[0][:8] for r in rows})
+        out["per_state_since_2023"][s] = len(days)
+        out["per_state_2026"][s] = len([d for d in days if d.startswith("2026")])
+        if s == "TX":
+            out["tx_days_sample"] = days[-25:]
+        time.sleep(1)
+    # common days: dates where >= 45 states have a snapshot
+    return out
+
+
+def main():
+    t0 = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%MZ")
+    res = {"run_utc": t0, "truckstops": truckstops(), "wayback": wayback()}
+    OUT.mkdir(parents=True, exist_ok=True)
+    p = OUT / f"probe_{t0}.json"
+    p.write_text(json.dumps(res, indent=1))
+    print(json.dumps({k: (v if k != "truckstops" else {n: {kk: vv for kk, vv in d.items() if kk in ("status", "len", "diesel_in_html")}
+                                                     for n, d in v.items() if n != "candidates"}) for k, v in res.items()}, indent=1)[:4000])
+    print(json.dumps(res["truckstops"]["candidates"], indent=1)[:3000])
+
+
+if __name__ == "__main__":
+    main()
