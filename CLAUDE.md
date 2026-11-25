@@ -35,7 +35,7 @@ AAA diesel number and find gaps vs. Kalshi's odds. Demo money only until a strat
 | Schema (all tables + views) | `data/schema.sql` | Read this to know every column. |
 | **Easy-view tables** | `data/exports/*.csv` | Auto-exported copies. GitHub shows them as tables. |
 | Build/refresh DB | `tools/build_db.py` | Creates tables, seeds hand-verified rows. Safe to re-run. |
-| Pull history | `tools/backfill.py` | Kalshi + FRED. Fills blanks only, never overwrites. |
+| Pull history | `tools/backfill.py` | Kalshi + Yahoo futures (+FRED backup). Fills blanks only, never overwrites. |
 | Auto-runner | `.github/workflows/backfill.yml` | Static now. Uncomment `schedule` to go live daily. |
 | Deep research notes | `research/` | One dated file per topic. |
 | This brain | `CLAUDE.md` | Log at the bottom, newest first. |
@@ -85,12 +85,13 @@ Strikes are $0.005 apart. Market opens ~10 PM ET the night before.
 
 | # | Item | Status |
 |---|---|---|
-| 1 | Confirm backfill ran on GitHub; check row counts | ⏳ |
+| 1 | Confirm backfill ran on GitHub; check row counts | ✅ 2026-11-24 |
 | 2 | Lag study: how many days for a ULSD move to reach AAA? Up vs. down speed (rockets & feathers)? | ⬜ |
 | 3 | Find the exact time AAA posts each day and when Kalshi's market opens/closes | ⬜ |
 | 4 | Turn the forecast into odds per strike; compare with Kalshi prices (backtest on history) | ⬜ |
 | 5 | Add gas (KXAAAGASD) to the same table once diesel works | ⬜ |
-| 6 | Find a real-time / official ULSD source (manual Nov 24 values came from tradingeconomics CFDs) | ⬜ |
+| 6 | Find a real-time / official ULSD source (manual Nov 24 values came from tradingeconomics CFDs; Yahoo HO=F futures used for history) | ⬜ |
+| 7 | Longer AAA history: Kalshi only goes back to 2026-09-18. FRED (EIA weekly diesel) times out from GitHub runners; try EIA direct or run from Mac | ⬜ |
 
 ---
 
@@ -104,6 +105,17 @@ Template:
 - **Decided:** …
 - **Next:** …
 ```
+
+### 2026-11-24 (late) · DB filled by GitHub backfill
+- **Did:** GitHub Action ran `tools/backfill.py`. Pulled 1,469 Kalshi diesel markets (69 days, ~4.93M contracts volume) and 5 years of Yahoo futures (BZ=F Brent, HO=F NY Harbor ULSD).
+- **Learned:**
+  - AAA diesel history from Kalshi settlements: 2026-09-18 → 2026-11-24 (64 settled days + 5 hand-seeded AAA points).
+  - 48 days have the full 4-part breakdown. Weekends have AAA but no futures close → breakdown blank (use Friday's futures if needed).
+  - **Delivery slice keeps widening as wholesale falls:** ~$1.01 (Sep 20) → $1.20 (Nov 13) → $1.38 (Nov 18) → $1.50 (Nov 24). Year ago: $0.78. Retail is lagging the wholesale drop (feathers on the way down).
+  - AAA has been falling 1.4–3.4¢ every day in mid/late Nov.
+  - FRED blocks/times out from GitHub runners → switched oil prices to Yahoo futures; FRED kept as backup only.
+- **Decided:** Yahoo front-month futures are the history source for Brent + ULSD (proxy for spot). Hand-verified Nov 24 row keeps its manual values (fills-blanks-only rule).
+- **Next:** Lag study (#2): regress daily AAA change on past N days of HO=F changes; test up vs. down speed.
 
 ### 2026-11-24 · Session 1: market scan → diesel teardown → research DB
 - **Did:** Scanned liquidity on 12 Kalshi markets via the public API. Re-filtered with Dan's rules. Broke down how diesel is priced. Built this repo branch, SQLite DB, backfill script, and auto-runner (static).
