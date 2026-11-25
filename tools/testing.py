@@ -24,7 +24,12 @@ MIN_N = 15
 
 cols = [d[1] for d in con.execute("PRAGMA table_info(panel_daily)")]
 panel = [dict(zip(cols, r)) for r in con.execute("SELECT * FROM panel_daily WHERE aaa_settled IS NOT NULL ORDER BY event_date")]
-panel = [p for p in panel if p["event_date"] <= "2026-11-24"][-N_DAYS:]
+START = sys.argv[2] if len(sys.argv) > 2 else None      # optional window: testing.py 0 2026-08-03 2026-09-25
+END = sys.argv[3] if len(sys.argv) > 3 else "2026-11-24"
+if START:
+    panel = [p for p in panel if START <= p["event_date"] <= END]
+else:
+    panel = [p for p in panel if p["event_date"] <= END][-N_DAYS:]
 P = {p["event_date"]: p for p in panel}
 fee = lambda p: 0.07 * p * (1 - p)
 
@@ -205,6 +210,16 @@ except Exception as e:  # noqa
                   wins="", losses="", win_rate="", avg_price="", edge="", profit_per_100="", worst_streak="", sample_flag="", sticks_out="", note=""))
 
 keys = list(R[0])
+TABLE = "testing_results" if not START else "testing_results_unseen"
+if START:
+    con.execute(f"DROP TABLE IF EXISTS {TABLE}")
+    con.execute(f"CREATE TABLE {TABLE} ({', '.join(keys)})")
+    con.executemany(f"INSERT INTO {TABLE} VALUES ({','.join('?' * len(keys))})", [tuple(r.get(k) for k in keys) for r in R])
+    con.commit()
+    with open(ROOT / "data" / "exports" / f"{TABLE}.csv", "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=keys); w.writeheader(); w.writerows(R)
+    print(f"{TABLE}: {len(R)} tests | {len(DB)} day bets | {len(LB)} line bets | {first} -> {last}")
+    sys.exit(0)
 con.execute("DROP TABLE IF EXISTS testing_results")
 con.execute(f"CREATE TABLE testing_results ({', '.join(keys)})")
 con.executemany(f"INSERT INTO testing_results VALUES ({','.join('?' * len(keys))})", [tuple(r.get(k) for k in keys) for r in R])

@@ -135,6 +135,11 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-25 (3:00 PM) · Bricks hopper + unseen-days check
+- **Did:** Sheet tab **Bricks** (Stage dropdown: 🤖 AI screened → ⭐ Selected → ✅ Vetted, + ❌ Rejected). 12 candidates B1–B12, all "AI screened", each with 60-day result, unseen-days result, holds-up verdict, mechanism, risks, next check, mind-map link. `testing.py` now takes a date window (`testing.py 0 START END` → `testing_results_unseen`); unseen window Aug 3 – Sep 25 (54 days, mostly rising) added to workflow.
+- **Learned:** Holds on unseen days: favorite bias (B1 +7.8 / +8.1), 70–90¢ sweet spot (+10.4 / +16.1), liquid lines ≥500 contracts (+9.2 / +12.3), fat delivery slice (+10.4 / +16.1, small n). Mostly holds: weekend, tight spread. Fails: No-beats-Yes (flips), model-agrees (not on unseen). Can't test: falling regime (no falling days in Aug–Sep).
+- **Decided:** More diesel days don't exist before Aug 3. Next sample boost = gas daily twin (same AAA source, history from 2023) for structural bricks + extra intraday snapshots.
+
 ### 2026-11-25 (2:45 PM) · 60-day audit: two data fixes, story check
 - **Fixed:** (1) Daylight saving: stored `end_et` is fixed UTC−5, so Sep–Oct "10 AM" snapshots were really 11 AM EDT. panel.py + testing.py now cut snapshots with real America/New_York time (end_ts). (2) Stale books: lines with no two-sided quote (spread > 10¢) showed a fake 50% mid and broke the crowd forecast/σ fit (19 mornings had σ stuck at 1.8¢). Forecast + σ now use only lines with spread ≤ 10¢; mornings with none stay blank (8 of 60). Sheet tabs 60 Day + Testing refreshed. ⚠️ story.py / signal_scan.py still use end_et strings (legacy, not in sheet).
 - **Checks passed:** AAA continuity day to day, AAA change math, every pair/Goldilocks WIN-LOSS label vs settled AAA, delivery slice math.
