@@ -128,6 +128,15 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-25 (12:40 AM) · AAA formula teardown + backtest
+- **Did:** Researched AAA/OPIS method; pulled 51 state diesel averages; backtested F formula in/out of sample (`tools/aaa_backtest.py`). Notes: `research/2026-11-25_aaa-formula.md`.
+- **Learned:**
+  - AAA = OPIS, fleet-card swipes (WEX) + direct feeds, up to ~120–130K stations, previous day's transactions.
+  - National ≠ simple mean of states: mean $5.8350 vs national $5.7982 (−3.7¢) → hidden state weights.
+  - F formula: median miss 0.56¢ in-sample, 0.64¢ out-of-sample; right half-cent bin ~25%. Beats "no change" (1.46¢) but loses to crowd at 10 AM (0.34¢) and close (0.11¢). Coefficients unstable.
+- **Decided:** Fundamentals formula = trend anchor only. Precision must come from sub-formulas: state weights, timing window, margin dynamics, regional basis.
+- **Next:** Start collecting AAA state averages daily (add to backfill) to solve national weights; then truckstop chain prices.
+
 ### 2026-11-25 (12:20 AM) · Component map: known vs unknown, N vs F
 - **Did:** Laid both formulas out as one line each (green = clear source, amber = measured but cause unclear, red = unknown). Built the 24-row item table → `research/2026-11-25_component-map.md`.
 - **Learned:** F is fully external (Kalshi reads AAA/OPIS). N = crowd belief (external data) + Kalshi's published fee/order-book mechanics. Unknowns cluster in OPIS methodology, intraday rack/station prices, private market-maker models.
