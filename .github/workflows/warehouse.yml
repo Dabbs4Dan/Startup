@@ -6,7 +6,7 @@ name: kalshi-twins warehouse (history pull + catalog)
 on:
   push:
     branches: [kalshi-twins]
-    paths: ["tools/history_pull.py", "tools/warehouse.py", ".github/workflows/warehouse.yml"]
+    paths: ["tools/history_pull.py", ".github/workflows/warehouse.yml"]   # warehouse.py edits don't restart the slow pull
   workflow_dispatch:
     inputs:
       since:

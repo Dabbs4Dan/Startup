@@ -5,7 +5,10 @@ name: kalshi-twins data backfill
 on:
   push:
     branches: [kalshi-twins]
-    paths: ["tools/**", "!tools/connectivity_pull.py", "!tools/live_recorder.py", ".github/workflows/backfill.yml"]
+    # Only this job's own scripts (other chats' tools no longer restart the daily pull)
+    paths: ["tools/backfill.py", "tools/backfill_history.py", "tools/build_db.py", "tools/kalshi_trades.py", "tools/panel.py",
+            "tools/testing.py", "tools/story.py", "tools/daily_recorders.py", "tools/engine_room.py", "tools/product.py",
+            ".github/workflows/backfill.yml"]
   workflow_dispatch:
   schedule:
     - cron: "17 11 * * *"
@@ -16,7 +19,7 @@ permissions:
 # Only one run at a time; a newer push cancels an older run (avoids push conflicts on data commits).
 concurrency:
   group: kalshi-twins-backfill
-  cancel-in-progress: true
+  cancel-in-progress: false   # a push must never kill a running daily pull; new runs wait in line
 
 jobs:
   backfill:

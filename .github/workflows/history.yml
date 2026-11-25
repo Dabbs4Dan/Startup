@@ -40,7 +40,8 @@ jobs:
         run: |
           git config user.name "kalshi-twins-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add research/engine_room/ data/exports/engine_room_*.csv data/kalshi_twins.db
+          git checkout -- data/kalshi_twins.db 2>/dev/null || true   # single-writer rule: only backfill.yml commits the diesel DB
+          git add research/engine_room/ data/exports/engine_room_*.csv
           git diff --cached --quiet && exit 0
           git commit -m "L2 history: wayback state pages $(date -u +%Y-%m-%dT%H:%MZ)"
           for i in 1 2 3 4; do git pull --rebase -X theirs origin kalshi-twins && git push origin HEAD:kalshi-twins && break; sleep 15; done
