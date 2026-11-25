@@ -104,3 +104,13 @@ print(f"[3] Bets: {len(W)} wins / {len(L)} losses")
 for k in ("miss_N", "info_gap", "ho_bet_day_move", "d_aaa"):
     print(f"    avg |{k}| (cents): wins {avg(W, k)}  losses {avg(L, k)}")
 print("    losing days:", [(r["event_date"], r["bet_side"], r["bet_strike"], r["N_price"], r["mu_N"], r["F_aaa"], r["ho_bet_day_move"]) for r in L])
+
+# ---------- win / loss split (placeholder for trend extraction; formula columns added once agreed) ----------
+con.execute("DROP VIEW IF EXISTS v_win_loss")
+con.execute("""CREATE VIEW v_win_loss AS
+    SELECT CASE F_payout WHEN 1 THEN 'WIN' WHEN 0 THEN 'LOSS' END AS outcome, *
+    FROM daily_story WHERE F_payout IS NOT NULL ORDER BY outcome, event_date""")
+con.commit()
+cur = con.execute("SELECT * FROM v_win_loss")
+with open(ROOT / "data" / "exports" / "win_loss.csv", "w", newline="") as f:
+    w = csv.writer(f); w.writerow([d[0] for d in cur.description]); w.writerows(cur.fetchall())

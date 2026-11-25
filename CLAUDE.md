@@ -47,6 +47,7 @@ AAA diesel number and find gaps vs. Kalshi's odds. Demo money only until a strat
 - `kalshi_markets` — every KXDIESELD strike: strike, result, settle value, last price, bid/ask, volume, OI, full raw JSON.
 - `kalshi_candles` — hour-by-hour yes bid/ask/mid/spread/volume for every market (18K rows). `v_event_hourly` = same joined with the final AAA answer.
 - `daily_story` ⭐ — one row per day: AAA before/after, market forecast at 10 AM (mu_N) and close (mu_C), the 75¢ bet (N_price, F_payout), HO moves, delivery slice. Built by `tools/story.py`.
+- `v_win_loss` — `daily_story` split into WIN / LOSS rows (export `win_loss.csv`) for trend extraction.
 - `sources` — where each number comes from.
 - `research_log` — queryable copy of findings (mirror of the log below).
 
@@ -90,6 +91,11 @@ Strikes are $0.005 apart. Market opens ~10 PM ET the night before.
 AAA engine fit (67 days, R² 0.65): ΔAAA ≈ 6.06¢ − 6.72¢×Delivery($) + 1.83¢×HO bet-day move($). Market already prices this by 10 AM.
 Losses come from the intraday info gap (market forecast moves 0.73¢ on losing days vs 0.31¢ on wins), not explained by futures → look at station-level prices. See `research/2026-11-24_N-F-Z-framework.md`.
 
+**Reconstructed formulas (2026-11-24, see `research/2026-11-24_formula-reconstruction.md`):**
+- N (crowd at 10 AM): mu_N ≈ AAA_today + 0.89×yesterday's change (R² 0.69), σ ≈ 0.35¢, + bias/spread/fee layer. Kalshi publishes no pricing model (order book + private market makers).
+- F (truth): AAA_tomorrow ≈ AAA_today + 0.73×yesterday's change (R² 0.66) + fundamentals + unmeasured station-price moves. Crowd at close ≈ 0.77× (miss 0.11¢).
+- Morning crowd over-extrapolates momentum (0.89 vs 0.73) = first candidate edge.
+
 **Free AAA history hack:** Kalshi's settled KXDIESELD markets carry `expiration_value` = the exact AAA number (verified 5.7982 = AAA site).
 
 ---
@@ -120,6 +126,16 @@ Template:
 - **Decided:** …
 - **Next:** …
 ```
+
+### 2026-11-24 (11:55 PM) · Formula reconstruction: N vs F + shared components
+- **Did:** Searched for published models (Kalshi, CFTC filings, OPIS methodology, academic pass-through). Reconstructed N and F from data. Added `v_win_loss` view + `win_loss.csv`. Wrote `research/2026-11-24_formula-reconstruction.md` (component map + flags).
+- **Learned:**
+  - Kalshi publishes no pricing model; prices = order book (makers × takers) incl. designated market makers. Settlement rule = "Diesel Price on <date> above $K" (AAA). Old weekly diesel contract used EIA as Source Agency.
+  - OPIS diesel = 9,000+ truckstops via fuel cards (Comdata, TCH) + chain feeds; files at 7:30 AM. Collection window, weighting, national roll-up NOT published.
+  - Crowd 10 AM forecast ≈ AAA + 0.89×yesterday's move (R² 0.69); truth ≈ 0.73× (R² 0.66); crowd at close ≈ 0.77×. Morning crowd over-extrapolates momentum.
+  - Median miss: "same as yesterday" 0.63¢ · crowd 10 AM 0.35¢ · crowd close 0.11¢.
+- **Decided:** Proposed formulas pending Dan's sign-off before adding model columns to `daily_story`.
+- **Next:** (a) Dan approves formulas → add model_N / model_F columns per day. (b) Research free truckstop chain prices (Pilot/Love's/TA) as the missing intraday input. (c) Find daily KXDIESELD CFTC filing.
 
 ### 2026-11-24 (11:40 PM) · N → F → Z framework + why AAA moves
 - **Did:** Built `tools/story.py` → `daily_story` table (one row per day). Fit AAA daily change on fundamentals; compared winning vs losing favorite bets. Added story.py to the GitHub workflow.
