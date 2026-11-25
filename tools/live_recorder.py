@@ -67,6 +67,10 @@ def append(feed, header, rows, day):
         return
     path = LIVE / feed / f"{day}.csv"
     path.parent.mkdir(parents=True, exist_ok=True)
+    v = 1
+    while path.exists() and path.open().readline().strip() != ",".join(header):   # columns changed -> new file, never mix
+        v += 1
+        path = LIVE / feed / f"{day}_v{v}.csv"
     new = not path.exists()
     with path.open("a", newline="") as f:
         w = csv.writer(f)
