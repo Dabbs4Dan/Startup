@@ -1,1 +1,62 @@
-{"error": "Expecting value: line 2 column 1 (char 2)"}
+{
+ "grid_points": 151,
+ "sites": 120,
+ "rows": 340,
+ "sample": [
+  [
+   "ta",
+   "/location/ok/ta-express-tonkawa/",
+   "OK",
+   null,
+   null,
+   null,
+   "Unleaded",
+   2.659,
+   null
+  ],
+  [
+   "ta",
+   "/location/ok/ta-express-tonkawa/",
+   "OK",
+   null,
+   null,
+   null,
+   "Auto Diesel",
+   5.439,
+   null
+  ],
+  [
+   "ta",
+   "/location/ok/ta-express-tonkawa/",
+   "OK",
+   null,
+   null,
+   null,
+   "DEF",
+   4.899,
+   null
+  ],
+  [
+   "ta",
+   "/location/co/ta-express-grand-junction/",
+   "CO",
+   null,
+   null,
+   null,
+   "DEF",
+   4.889,
+   null
+  ],
+  [
+   "ta",
+   "/location/az/petro-eloy/",
+   "AZ",
+   null,
+   null,
+   null,
+   "Unleaded",
+   3.399,
+   null
+  ]
+ ]
+}
