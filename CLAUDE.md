@@ -135,6 +135,11 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-25 (12:40 PM) · Testing framework v0 (sheet tab "Testing")
+- **Did:** `tools/testing.py` → `testing_results` + `data/exports/testing_results.csv` (37 tests on the 60-day window). Two units: DAY (one Goldilocks 75–85¢ favorite/day, 26 bets) and LINE (every line/side 60–97¢ at 10 AM passing the liquidity filter, 162 bets). Layer 1 = standard checks (favorite win/lose, baseline, calibration, monthly stability, costs/streaks, holdout rule); Layer 2 = one condition; Layer 3 = two. Origin column: Core (obvious) vs Computer (depth-2 decision tree, min 15 per leaf). "What sticks out" = top-3 standardized win-vs-loss gaps inside the slice (needs ≥3 losses). Recorder result: AAA 51 states saved ✅; Yahoo 5-min HO still 429 ❌.
+- **Learned (60 days, hints only):** baseline edge +4.3% (89.5% win at 84.3¢). Oct negative (−4.8%), Nov +10.4%. NO side +7.8% vs YES ≈ 0. Losses sit closer to the crowd forecast (0.58σ vs 1.15σ) and are cheaper (75¢ vs 85¢). Tree: lines ≤82.5¢ with refining slice >$2.04 → 60% win, −19% per $100.
+- **Next:** Bricks tab linked to Test IDs; widen to 114 days + close snapshot; apply holdout.
+
 ### 2026-11-25 (11:30 AM) · 60-day panel + daily recorders + top-3 liquidity rule
 - **Did:** `tools/panel.py` → table `panel_daily` + `data/exports/panel_daily.csv` (one row per event day, 91 point-in-time columns: calendar, AAA trend/regime, HO/Brent last-known closes, price slices, model F no-peek, Kalshi 10 AM + close: crowd forecast, σ, Goldilocks bet, top-3 liquid Yes/No pairs, misses). Sheet tab "60 Day" mirrors the last 60 rows. `tools/daily_recorders.py` (AAA 51-state snapshot → `aaa_state_daily`; HO 10 AM from Yahoo 5-min → `research/connectivity/ho_10am.json`), both fail-soft, added to backfill workflow (still static: runs on push / by hand; daily schedule NOT turned on — Dan's call).
 - **Decided:** Formula #19 "Top-3 liquid pairs": line tradeable if traded since open, spread ≤10¢, 3–97%; rank by volume since open; keep 3. Inputs needing a live realtime system marked ⚡ in the sheet; forward-only daily recorders marked 📼.

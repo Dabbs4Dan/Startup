@@ -37,7 +37,9 @@ jobs:
         continue-on-error: true
         run: python3 tools/daily_recorders.py
       - name: Research panel (one row per day)
-        run: python3 tools/panel.py
+        run: |
+          python3 tools/panel.py
+          python3 tools/testing.py
       - name: Commit data
         run: |
           git config user.name "kalshi-twins-bot"
