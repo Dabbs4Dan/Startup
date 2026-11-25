@@ -7,7 +7,7 @@
    a sample so we know if old state tables can be read.
 Output: research/engine_room/probe_<utc>.json (committed by the workflow).
 """
-import datetime, json, pathlib, re, time, urllib.parse, urllib.request
+import datetime, json, pathlib, re, sys, time, urllib.parse, urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "research" / "engine_room"
@@ -97,7 +97,44 @@ def wayback():
     return out
 
 
+def loves_deep():
+    """Find how the Love's page asks for prices: grep their JS for search_stores / fuelPrices and try it."""
+    st, html, _ = get(PAGES["loves"])
+    out = {"snippets": [], "tries": {}}
+    for src in sorted(set(re.findall(r'<script[^>]+src="([^"]+)"', html or ""))):
+        u = urllib.parse.urljoin(PAGES["loves"], src)
+        bst, js, _ = get(u, timeout=20)
+        if bst != 200 or not js:
+            continue
+        for key in ("search_stores", "fuelPrices", "fetch_stores", "FuelPrice"):
+            for m in re.finditer(key, js):
+                out["snippets"].append({"file": u[-40:], "key": key, "ctx": js[max(0, m.start() - 400): m.start() + 400]})
+                if len([x for x in out["snippets"] if x["key"] == key]) > 4:
+                    break
+    for u, body in (("https://www.loves.com/api/search_stores", None),
+                    ("https://www.loves.com/api/search_stores?StoreNumbers=5", None),
+                    ("https://www.loves.com/api/search_stores?storeNumbers=5,10", None)):
+        try:
+            req = urllib.request.Request(u, headers={**UA, "Accept": "application/json"})
+            with urllib.request.urlopen(req, timeout=25) as r:
+                out["tries"][u] = {"status": r.status, "head": r.read().decode("utf-8", "replace")[:600]}
+        except urllib.error.HTTPError as e:
+            out["tries"][u] = {"status": e.code, "head": (e.read() or b"").decode("utf-8", "replace")[:300]}
+        except Exception as e:  # noqa
+            out["tries"][u] = {"error": str(e)[:200]}
+    return out
+
+
 def main():
+    if "--loves" in sys.argv:
+        t0 = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%MZ")
+        res = loves_deep()
+        OUT.mkdir(parents=True, exist_ok=True)
+        (OUT / f"probe_loves_{t0}.json").write_text(json.dumps(res, indent=1))
+        print(json.dumps(res["tries"], indent=1)[:3000])
+        for sn in res["snippets"][:12]:
+            print("----", sn["key"], sn["file"]); print(sn["ctx"][:800])
+        return
     t0 = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%MZ")
     res = {"run_utc": t0, "truckstops": truckstops(), "wayback": wayback()}
     OUT.mkdir(parents=True, exist_ok=True)
