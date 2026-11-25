@@ -128,6 +128,11 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-25 (12:20 AM) · Component map: known vs unknown, N vs F
+- **Did:** Laid both formulas out as one line each (green = clear source, amber = measured but cause unclear, red = unknown). Built the 24-row item table → `research/2026-11-25_component-map.md`.
+- **Learned:** F is fully external (Kalshi reads AAA/OPIS). N = crowd belief (external data) + Kalshi's published fee/order-book mechanics. Unknowns cluster in OPIS methodology, intraday rack/station prices, private market-maker models.
+- **Next:** Solve red rows in order: #15 truckstop prices → #14 rack proxy → #21 daily rulebook → #18–20 OPIS method.
+
 ### 2026-11-25 (12:10 AM) · Formulas plugged in live (Nov 25 market) — fundamentals beat momentum
 - **Did:** Pulled hourly candles for KXDIESELD-26NOV25 lines 5.760 / 5.765 / 5.770; fit crowd center μ and wiggle σ (normal curve) at 10 AM, noon, 11 PM; plugged today's inputs into both formulas.
 - **Learned:**
