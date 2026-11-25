@@ -158,7 +158,10 @@ def pilot_chunks():
     """SvelteKit loads code via inline import('/_app/immutable/...') - no <script src>. Follow every chunk, grep for price feeds."""
     page = "https://www.pilotflyingj.com/fuel-prices"
     st, html, _ = get(page)
-    todo = set(re.findall(r'["\'](/_app/immutable/[^"\']+\.js)["\']', html or ""))
+    todo = {"/" + m.lstrip("./") if not m.startswith("http") else m
+            for m in re.findall(r'["\']((?:https?://[^"\']+)?\.?/?_app/immutable/[^"\']+\.js)["\']', html or "")}
+    if not todo:
+        print("no _app chunks in page; script-ish refs:", re.findall(r'(?:src|href|import\()\s*=?\s*["\']([^"\']+\.js)', html or "")[:20])
     seen, hits = set(), []
     while todo and len(seen) < 120:
         path = todo.pop()
