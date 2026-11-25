@@ -254,6 +254,14 @@ def export(con):
         w = csv.writer(f)
         w.writerow(["algo", "layer", "name", "window", "n", "median_abs_miss_c", "share_within_tol", "verdict", "pass_rule", "note"])
         w.writerows([tuple(r) for r in rows])
+    pts = con.execute("SELECT algo_id, target, predicted, actual, miss_cents, detail FROM algo_predictions "
+                      "WHERE product=? AND algo_id IN ('L2.0','L2.1') ORDER BY target DESC, algo_id", (P,)).fetchall()
+    with (product.EXPORTS / "engine_room_l2_points.csv").open("w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["date", "algo", "kind", "predicted_national", "actual_aaa", "miss_cents", "n_states", "knowable_at"])
+        for a, t, pr, ac, m, d in pts:
+            d = json.loads(d)
+            w.writerow([t, a, d.get("kind"), pr, ac, m, d.get("n_states"), d.get("knowable_at")])
     mv = con.execute("SELECT detail FROM algo_predictions WHERE algo_id='L0.2' AND product=? ORDER BY target", (P,)).fetchall()
     with (product.EXPORTS / "engine_room_moves.csv").open("w", newline="") as f:
         w = csv.writer(f)
