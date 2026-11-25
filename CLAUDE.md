@@ -133,6 +133,17 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-25 (2:30 AM) · Signal scan: when do favorites win ~90%?
+- **Did:** `tools/signal_scan.py` — every line/side priced 60–97¢ at 10 AM (258 bets, 55 days), bucketed by bet-time features; walk-forward model agreement (fit only on earlier days).
+- **Learned:**
+  - Price buckets: 60–75¢ win 73% (ROI +5%) · **75–85¢ win 90% (ROI +11.8%)** · 85–97¢ win 97% (ROI +3.8%). Sweet spot = 75–85¢: ~90% wins while paying ~80¢.
+  - 75–85¢ filters: weekend bet day 17/17 wins (+22%, small n); line ≥1σ from crowd 93% (+14%); model agrees 91% (+13%); one bet/day 36 bets → 32 wins, +9%.
+  - Our AAA model barely separates winners (agree 90.8% vs disagree 86.7%) → not a strong signal yet.
+  - "Wins 90%+" alone ≠ profit: 85–97¢ wins 97% but ROI only +3.8%. What matters = win rate minus price.
+  - Line timing: all 21 strikes open together at 8 AM ET the day before and never change; odds move continuously until 11:59 PM close; no midday freeze. AAA itself posts once per morning. Market can close early if AAA data releases.
+- **Decided:** Candidate rule to test on more days: favorites priced 75–85¢ at 10 AM, one per day; extra filters (weekend, ≥1σ, model agrees) = hints only.
+- **Next:** Validate 75–85¢ rule on archived diesel days (Aug 3 – Sep 17) not yet in the DB.
+
 ### 2026-11-25 (2:15 AM) · Diesel rulebook = ECONSTAT; research framework
 - **Learned:** KXDIESELD official terms ARE ECONSTAT.pdf (series contract_terms_url). AAA = Source Agency, Trading Economics backup, first release only, early close if data released, 30-min settlement timer. MNPI prohibition applies — paid OPIS feeds that are AAA's own inputs need a compliance check.
 - **Decided (framework):** Replace "dozens of side-by-side Excels" with one master panel (event × snapshot time, point-in-time inputs) → deltas open→close → attribution → hypothesis → walk-forward backtest → demo.
