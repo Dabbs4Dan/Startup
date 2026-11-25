@@ -5,13 +5,14 @@ One "shift" = a loop that takes a snapshot every few minutes for up to ~5.5 hour
 Four shifts a day cover 24 hours (see .github/workflows/live_recorder.yml). No paid server needed.
 
 Feeds (each fails soft; one broken feed never stops the others):
-  1. kalshi_markets   every 5 min   every open KXDIESELD strike: yes bid/ask, last, volume, open interest
+  1. kalshi_markets   every 5 min   every open diesel + gas strike: yes bid/ask, last, volume, open interest
                                      (Inputs Map: Yes %, No %, spread, strike ladder, volume)          [Custom Build CB5-lite]
   2. kalshi_orderbook every 15 min  full order book (every price level + contracts waiting) for the
                                      most-traded live strikes -> slippage + "big order" signals         [CB5]
-  3. aaa_national     every 15 min  AAA national diesel (current + yesterday + "price as of" date);
+  3. aaa_national     every 15 min  AAA national diesel (current + yesterday + "price as of" date) + regular gas;
                                      aaa_flips.csv logs the first snapshot where the number changed    [CB4 flip time]
-  4. futures          every 5 min   delayed HO (diesel futures) + Brent + WTI quotes from Stooq          [CB3]
+  4. futures          every 5 min   delayed HO (diesel futures), Brent, WTI, RBOB gasoline, natural gas
+                                     quotes (TradingView -> Yahoo -> Stooq)                                                 [CB3]
 
 Output: data/live/<feed>/YYYY-MM-DD.csv (one file per ET day, append-only, raw). Pushed to GitHub about every hour.
 Usage:  python3 tools/live_recorder.py [--minutes 330] [--every 5] [--once]
@@ -21,9 +22,10 @@ import argparse, csv, datetime, json, pathlib, re, subprocess, sys, time, urllib
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 LIVE = ROOT / "data" / "live"
 KALSHI = "https://api.elections.kalshi.com/trade-api/v2"
-SERIES = ["KXDIESELD"]                 # add "KXAAAGASD" here to record the gas twin too
+SERIES = ["KXDIESELD", "KXAAAGASD"]    # diesel + the gas twin (Inputs Map #79); order books only for BOOK_SERIES
+BOOK_SERIES = {"KXDIESELD"}
 BOOK_TOP_N = 6                         # order books for this many live strikes per snapshot
-STOOQ = {"HO": "ho.f", "BRENT": "cb.f", "WTI": "cl.f"}
+STOOQ = {"HO": "ho.f", "BRENT": "cb.f", "WTI": "cl.f", "RBOB": "rb.f", "NATGAS": "ng.f"}
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36",
       "Accept-Language": "en-US,en;q=0.9"}
 
@@ -40,11 +42,13 @@ def et_now():
     return utc, utc.astimezone(datetime.timezone(datetime.timedelta(hours=off)))
 
 
-def fetch(url, tries=3, as_json=False):
+def fetch(url, tries=3, as_json=False, timeout=30, post=None):
     err = ""
     for i in range(tries):
         try:
-            with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30) as r:
+            hdr = dict(UA, **({"Content-Type": "application/json"} if post is not None else {}))
+            req = urllib.request.Request(url, headers=hdr, data=json.dumps(post).encode() if post is not None else None)
+            with urllib.request.urlopen(req, timeout=timeout) as r:
                 body = r.read().decode("utf-8", "replace")
                 return json.loads(body) if as_json else body
         except urllib.error.HTTPError as e:
@@ -92,7 +96,7 @@ def kalshi_markets(ts_utc, ts_et, day, state):
                          num(m.get("last_price_dollars")), vol, num(m.get("volume_24h_fp")) or num(m.get("volume_24h")),
                          num(m.get("open_interest_fp")) or num(m.get("open_interest")), m.get("close_time")])
             mid = (yb + ya) / 2 if yb is not None and ya is not None else None
-            if mid is not None and 0.03 <= mid <= 0.97:
+            if series in BOOK_SERIES and mid is not None and 0.03 <= mid <= 0.97:
                 live.append((vol or 0, m.get("ticker"), m.get("event_ticker")))
     append("kalshi_markets", ["ts_utc", "ts_et", "series", "event", "ticker", "strike", "yes_bid", "yes_ask",
                               "no_bid", "no_ask", "last", "volume", "volume_24h", "open_interest", "close_time"], rows, day)
@@ -103,7 +107,9 @@ def kalshi_markets(ts_utc, ts_et, day, state):
 def kalshi_orderbook(ts_utc, ts_et, day, state):
     rows = []
     for _, ticker, event in state.get("live", []):
-        ob = fetch(f"{KALSHI}/markets/{ticker}/orderbook", as_json=True).get("orderbook") or {}
+        raw = fetch(f"{KALSHI}/markets/{ticker}/orderbook", as_json=True)
+        ob = raw.get("orderbook") or raw.get("orderbook_fp") or {}
+        before = len(rows)
         for key, levels in ob.items():          # yes / no (cents) or yes_dollars / no_dollars, whichever the API sends
             if not isinstance(levels, list):
                 continue
@@ -111,6 +117,14 @@ def kalshi_orderbook(ts_utc, ts_et, day, state):
             for lvl in levels:
                 if isinstance(lvl, (list, tuple)) and len(lvl) >= 2:
                     rows.append([ts_utc, ts_et, event, ticker, key, side, lvl[0], lvl[1]])
+                elif isinstance(lvl, dict):
+                    rows.append([ts_utc, ts_et, event, ticker, key, side, lvl.get("price") or lvl.get("price_dollars"),
+                                 lvl.get("count") or lvl.get("quantity") or lvl.get("count_fp")])
+        if len(rows) == before and not state.get("ob_debug"):   # unknown format -> keep one raw sample to inspect
+            dbg = LIVE / "_debug" / "orderbook_sample.json"
+            dbg.parent.mkdir(parents=True, exist_ok=True)
+            dbg.write_text(json.dumps({"ts": ts_utc, "ticker": ticker, "raw": raw}, indent=1)[:20000])
+            state["ob_debug"] = True
         time.sleep(0.3)
     append("kalshi_orderbook", ["ts_utc", "ts_et", "event", "ticker", "field", "side", "price", "contracts"], rows, day)
     return f"{len(rows)} levels over {len(state.get('live', []))} strikes"
@@ -120,7 +134,7 @@ def aaa_national(ts_utc, ts_et, day, state):
     html = fetch("https://gasprices.aaa.com/")
     asof = re.search(r"Price as of\s*([0-9/]+)", html)
     asof = asof.group(1) if asof else None
-    cur = yest = None
+    cur = yest = reg = None
     for tb in re.findall(r"<table[^>]*>(.*?)</table>", html, re.S | re.I):
         if "Current Avg" not in tb:
             continue
@@ -128,11 +142,12 @@ def aaa_national(ts_utc, ts_et, day, state):
             cells = [re.sub(r"<[^>]+>|\s+", " ", c).strip() for c in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", tr, re.S | re.I)]
             if len(cells) >= 5 and cells[0].startswith("Current"):
                 cur = num(cells[4].replace("$", ""))
+                reg = num(cells[1].replace("$", ""))
             if len(cells) >= 5 and cells[0].startswith("Yesterday"):
                 yest = num(cells[4].replace("$", ""))
         break                                    # first table = national
-    append("aaa_national", ["ts_utc", "ts_et", "price_as_of", "diesel_current", "diesel_yesterday"],
-           [[ts_utc, ts_et, asof, cur, yest]], day)
+    append("aaa_national", ["ts_utc", "ts_et", "price_as_of", "diesel_current", "diesel_yesterday", "regular_gas_current"],
+           [[ts_utc, ts_et, asof, cur, yest, reg]], day)
     last = state.get("aaa_last")
     if cur is not None and last is not None and (cur, asof) != last:
         flips = LIVE / "aaa_flips.csv"
@@ -147,17 +162,58 @@ def aaa_national(ts_utc, ts_et, day, state):
     return f"diesel {cur} as of {asof}"
 
 
-def futures(ts_utc, ts_et, day, state):
-    rows = []
+TV = {"HO": "NYMEX:HO1!", "BRENT": "ICEEUR:BRN1!", "WTI": "NYMEX:CL1!", "RBOB": "NYMEX:RB1!", "NATGAS": "NYMEX:NG1!"}
+YH = {"HO": "HO=F", "BRENT": "BZ=F", "WTI": "CL=F", "RBOB": "RB=F", "NATGAS": "NG=F"}
+FUT_HEADER = ["ts_utc", "ts_et", "name", "source", "symbol", "quote_time", "open", "high", "low", "last"]
+
+
+def _fut_tradingview(ts_utc, ts_et):
+    body = fetch("https://scanner.tradingview.com/futures/scan", tries=1, timeout=15, as_json=True,
+                 post={"symbols": {"tickers": list(TV.values())}, "columns": ["open", "high", "low", "close", "update_mode"]})
+    back = {v: k for k, v in TV.items()}
+    out = []
+    for d in body.get("data", []):
+        o, h, l, c, mode = (d.get("d") or [None] * 5)[:5]
+        if c is not None:
+            out.append([ts_utc, ts_et, back.get(d.get("s"), d.get("s")), "tradingview", d.get("s"), mode, o, h, l, c])
+    return out
+
+
+def _fut_yahoo(ts_utc, ts_et):
+    out = []
+    for name, sym in YH.items():
+        r = fetch(f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}?interval=1m&range=1d", tries=1, timeout=10,
+                  as_json=True)["chart"]["result"][0]["meta"]
+        t = datetime.datetime.fromtimestamp(r.get("regularMarketTime", 0), datetime.timezone.utc).strftime("%H:%M:%SZ")
+        out.append([ts_utc, ts_et, name, "yahoo", sym, t, None, r.get("regularMarketDayHigh"),
+                    r.get("regularMarketDayLow"), r.get("regularMarketPrice")])
+        time.sleep(1)
+    return out
+
+
+def _fut_stooq(ts_utc, ts_et):
+    out = []
     for name, sym in STOOQ.items():
-        body = fetch(f"https://stooq.com/q/l/?s={sym}&f=sd2t2ohlcv&h&e=csv")
-        lines = [l for l in body.strip().splitlines() if l]
-        if len(lines) >= 2:
-            f = lines[1].split(",")
-            if len(f) >= 7 and f[6] not in ("N/D", ""):
-                rows.append([ts_utc, ts_et, name, sym, f[1], f[2], num(f[3]), num(f[4]), num(f[5]), num(f[6])])
-    append("futures", ["ts_utc", "ts_et", "name", "symbol", "quote_date", "quote_time", "open", "high", "low", "last"], rows, day)
-    return f"{len(rows)}/{len(STOOQ)} quotes"
+        f = fetch(f"https://stooq.com/q/l/?s={sym}&f=sd2t2ohlcv&h&e=csv", tries=1, timeout=10).strip().splitlines()[1].split(",")
+        if len(f) >= 7 and f[6] not in ("N/D", ""):
+            out.append([ts_utc, ts_et, name, "stooq", sym, f"{f[1]} {f[2]}", num(f[3]), num(f[4]), num(f[5]), num(f[6])])
+    return out
+
+
+def futures(ts_utc, ts_et, day, state):
+    """Try free delayed-quote sources in order; keep the first that answers (GitHub's servers are blocked by some)."""
+    errs = []
+    order = state.get("fut_order") or [_fut_tradingview, _fut_yahoo, _fut_stooq]
+    for src in order:
+        try:
+            rows = src(ts_utc, ts_et)
+            if rows:
+                append("futures", FUT_HEADER, rows, day)
+                state["fut_order"] = [src] + [x for x in order if x is not src]   # remember the winner
+                return f"{len(rows)} quotes via {src.__name__[5:]}"
+        except Exception as ex:  # noqa
+            errs.append(f"{src.__name__[5:]}: {str(ex)[:60]}")
+    raise RuntimeError("; ".join(errs))
 
 
 FEEDS = [  # (feed, run every Nth snapshot)  — with --every 5: 1 = 5 min, 3 = 15 min
