@@ -17,7 +17,7 @@ permissions:
 
 concurrency:
   group: kalshi-twins-gas
-  cancel-in-progress: true
+  cancel-in-progress: false   # never kill a long gas pull; new runs wait in line
 
 env:
   KT_PRODUCT: gas
