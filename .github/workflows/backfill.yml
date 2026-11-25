@@ -28,6 +28,7 @@ jobs:
           python-version: "3.12"
       - name: Build + backfill
         run: |
+          pip install numpy
           python3 tools/build_db.py
           python3 tools/backfill.py
           python3 tools/backfill_history.py KXDIESELD
