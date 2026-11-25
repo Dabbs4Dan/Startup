@@ -1,0 +1,3 @@
+# Locked on purpose: 2.0.0rc9 is the first NautilusTrader with the official Kalshi adapter (pre-release line).
+# Upgrade only on a branch, re-run run_backtest.py + selfcheck_fees.py, then bump kt_nautilus.PINNED_VERSION.
+nautilus_trader==2.0.0rc9
