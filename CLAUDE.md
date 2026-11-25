@@ -39,6 +39,8 @@ AAA diesel number and find gaps vs. Kalshi's odds. Demo money only until a strat
 | Auto-runner | `.github/workflows/backfill.yml` | Static now. Uncomment `schedule` to go live daily. |
 | Deep research notes | `research/` | One dated file per topic. |
 | This brain | `CLAUDE.md` | Log at the bottom, newest first. |
+| **Strategy engine** | `nautilus/` (read `nautilus/README.md`) | NautilusTrader **2.0.0rc9, locked**. Same strategy code → backtest → Kalshi demo → live. Strategy IDs = sheet tab **Strategies** (S00 = replay check, no orders). |
+| DIY scheduler | `.github/workflows/live_recorder.yml` (relay step) | ⚠️ GitHub ignores `schedule:` off `main`. Each recorder shift starts the next, then runs `nautilus.yml` + daily backfill if none in 20h. Pause: commit `data/live/STOP`. |
 
 ### Tables & views (what to query)
 
@@ -134,6 +136,12 @@ Template:
 - **Decided:** …
 - **Next:** …
 ```
+
+### 2026-11-25 (3:40 PM) · NautilusTrader in the system + Strategies tab + DIY relay
+- **Did:** `nautilus/` skeleton on NautilusTrader **2.0.0rc9** (only line with the official Kalshi adapter; stable 1.231 has none). Bridge: KXDIESELD strikes → `BinaryOption` `<ticker>.KALSHI`; `kalshi_trades` → TradeTick; 1-min candles → QuoteTick; live recorder CSVs → QuoteTick with real top-of-book sizes. Kalshi quadratic fee model plugged into the sim venue. Strategy registry (S00 replay check only — Dan: no strategy wiring yet). Locked Kalshi DEMO node (`live_demo_node.py`, 3 locks, refuses GitHub). `nautilus.yml` (replay + fee check + demo config check → `nautilus/reports/`). Relay step in `live_recorder.yml`. Sheet: new **Strategies** tab (S00–S12 + rejected X1–X2, gate dropdown) + Custom Build **CB20** (Nautilus) / **CB21** (relay).
+- **Learned:** All 115 events replay 1:1 (29,159 trades + 54,253 quotes). Fee meter = Kalshi to the cent (10 @ 90¢ → $0.07). Kalshi now trades **fractional contracts** (0.01; 12.6K of 29.5K trades) → size precision 2. Adapter: limit orders only, risk engine must be bypassed, no auto-reconnect, no historical books/quotes, backtest can't open net-short NO. **Daily backfill `schedule:` never fired** (non-default branch) — relay now covers it.
+- **Decided (Dan):** engine locked at 2.0 rc; stay public for now (private later; relay minutes are free only while public); GitHub only until the server (CB1).
+- **Next:** first real strategy = S01 baseline in Nautilus, after adding (1) $1/$0 settlement at AAA, (2) NO-side mirror instrument. Then demo keys → GitHub Secrets and paper trade on CB1.
 
 ### 2026-11-25 (3:00 PM) · Bricks hopper + unseen-days check
 - **Did:** Sheet tab **Bricks** (Stage dropdown: 🤖 AI screened → ⭐ Selected → ✅ Vetted, + ❌ Rejected). 12 candidates B1–B12, all "AI screened", each with 60-day result, unseen-days result, holds-up verdict, mechanism, risks, next check, mind-map link. `testing.py` now takes a date window (`testing.py 0 START END` → `testing_results_unseen`); unseen window Aug 3 – Sep 25 (54 days, mostly rising) added to workflow.
