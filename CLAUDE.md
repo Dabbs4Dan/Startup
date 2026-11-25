@@ -135,6 +135,16 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-25 (3:50 AM) · Connectivity tier 2 + back-solved state weights
+- **Did:** `tools/connectivity_pull.py` + `.github/workflows/connectivity.yml` (one-shot; excluded from backfill trigger). Raw output: `research/connectivity/tier2_pull*.json`. Filled tier-2 rows in the sheet's Connectivity tab.
+- **Learned:**
+  - AAA state pages (`gasprices.aaa.com/?state=XX`) work from GitHub: table 0 = state (current / yesterday / week / month / year ago); ~27 metro tables follow. Nov 24 plain state mean $5.8372 vs national $5.7982.
+  - Back-solve: 5 regions (PADD) × 5 AAA snapshots → weights East 24.8% / Midwest 48.2% / Gulf 7.9% / Rockies 6.2% / West 12.9%. Leave-one-out miss 0.2¢ on recent days (vs 3.9¢ plain mean), 2.9¢ year-ago. Fragile (5 pts / 5 unknowns) → mini-AAA v0.
+  - Yahoo 5-min bars return 429 from GitHub runners → HO live (#35) not connected.
+  - Truckstops: no free history. Love's prices load from apiservices.loves.com; Pilot via Contentstack; TA none seen. ToS check pending.
+  - Control day regime: 27 straight AAA down days; 10-day −24.6¢.
+- **Next:** daily AAA state snapshot on schedule (builds history for weights); HO intraday fallback source; Love's API mapping + ToS.
+
 ### 2026-11-25 (3:30 AM) · Inputs Map priorities + Connectivity tab (Google Sheet)
 - **Did:** Google Sheet "Kalshi Diesel – Inputs Map" (Dan's Drive): 83 inputs in 10 sections, each scored Priority 1–4 (13 essential / 12 test-first / 32 later / 26 parked); Formulas tab (18). New **Connectivity** tab: tier-1 inputs with the raw value for control day Mon 2026-11-23 (event KXDIESELD-26NOV24, 10 AM ET snapshot) + exact source + pipe.
 - **Learned:** 10 of 13 tier-1 inputs already flow through GitHub; 3 are Claude one-time (fee rule, σ fit, model F). Control day: AAA $5.8182 → $5.7982; crowd 10 AM $5.7996 (σ 0.37¢); model F $5.7897 (miss 0.85¢). ⚠️ F uses HO full-day close = look-ahead at 10 AM.
