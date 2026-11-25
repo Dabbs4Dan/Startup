@@ -128,6 +128,10 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-25 (12:50 AM) · Clarified: AAA does not move intraday
+- **Learned:** AAA posts once per day (morning), so between a 10 AM bet and close the AAA number is constant; only the crowd's guess of TOMORROW's AAA moves. Example event 2026-11-24 (bet day 11/23): AAA known 5.8182 all day; crowd forecast 10 AM 5.7996 → close 5.7977; actual 5.7982 (−2.00¢). Line "above 5.800": 47% (10 AM) → 28% (noon) → 32.5% (4 PM) → 7.5% (11 PM) → settled NO. Wholesale HO fell 22.4¢ that day.
+- **Shared by N and F:** AAA today (anchor), squeeze/delivery slice, oil (HO, Brent), taxes, station/rack prices (unseen). N-only: crowd wiggle, bias, spread, fee, market makers. F-only: payout rule, OPIS method.
+
 ### 2026-11-25 (12:40 AM) · AAA formula teardown + backtest
 - **Did:** Researched AAA/OPIS method; pulled 51 state diesel averages; backtested F formula in/out of sample (`tools/aaa_backtest.py`). Notes: `research/2026-11-25_aaa-formula.md`.
 - **Learned:**
