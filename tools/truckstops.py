@@ -32,27 +32,67 @@ def first(d, *keys):
     return None
 
 
+def post_json(url, body, timeout=60):
+    req = urllib.request.Request(url, data=json.dumps(body).encode(), method="POST",
+                                 headers={**UA, "Content-Type": "application/json;charset=utf-8"})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return json.loads(r.read().decode("utf-8", "replace"))
+
+
+BODY_VARIANTS = [   # request shapes to try for /api/search_stores (page JS POSTs JSON; exact keys unknown)
+    lambda la, lo: {"latitude": la, "longitude": lo, "radius": 300},
+    lambda la, lo: {"latitude": la, "longitude": lo, "radiusInMiles": 300},
+    lambda la, lo: {"lat": la, "lng": lo, "radius": 300},
+    lambda la, lo: {"Latitude": la, "Longitude": lo, "Radius": 300},
+    lambda la, lo: {"latitude": la, "longitude": lo},
+]
+
+
 def loves():
-    data = get_json("https://www.loves.com/api/fetch_stores")
-    stores = data.get("stores", data if isinstance(data, list) else [])
+    """fetch_stores = every store (no prices). search_stores (POST, near a point) = stores WITH fuelPrices.
+    We search near one store per ~150-mile grid cell so every store is covered, de-duplicated by store number."""
+    stores = get_json("https://www.loves.com/api/fetch_stores").get("stores", [])
+    cells = {}
+    for st in stores:
+        try:
+            la, lo = float(st["latitude"]), float(st["longitude"])
+        except (TypeError, ValueError, KeyError):
+            continue
+        cells.setdefault((round(la / 2), round(lo / 2.5)), (la, lo))
+    url = "https://www.loves.com/api/search_stores"
+    variant, seen, rows, tried = None, {}, [], []
+    for la, lo in cells.values():
+        for v in ([variant] if variant else BODY_VARIANTS):
+            try:
+                res = post_json(url, v(la, lo))
+            except Exception as e:  # noqa
+                tried.append(str(e)[:80])
+                continue
+            got = res.get("stores", res if isinstance(res, list) else [])
+            if got and any((g.get("fuelPrices") or (g.get("site") or {}).get("fuelPrices")) for g in got):
+                variant = v
+                for g in got:
+                    seen[first(g, "number", "storeNumber", "siteId", "id")] = g
+                break
+        time.sleep(0.5)
     OUT.mkdir(parents=True, exist_ok=True)
-    if stores:
-        s0 = stores[0]
-        (OUT / "_schema_loves.json").write_text(json.dumps(
-            {"n_stores": len(stores), "keys": sorted(s0.keys()),
-             "fuel_sample": next((s.get("fuelPrices") for s in stores if s.get("fuelPrices")), None)}, indent=1)[:20000])
-    rows = []
-    for s in stores:
-        fp = s.get("fuelPrices") or s.get("FuelPrices") or []
-        for f in fp if isinstance(fp, list) else []:
-            prod = str(first(f, "productName", "ProductName", "name", "fuelType") or "")
-            price = first(f, "cashPrice", "price", "Price", "currentPrice", "retailPrice", "creditPrice")
+    sample = next(iter(seen.values()), None)
+    (OUT / "_schema_loves.json").write_text(json.dumps(
+        {"all_stores": len(stores), "grid_cells": len(cells), "stores_with_prices": len(seen),
+         "body_used": variant(0, 0) if variant else None, "errors_sample": tried[:5],
+         "store_keys": sorted(sample.keys()) if sample else None,
+         "fuel_sample": (sample.get("fuelPrices") or (sample.get("site") or {}).get("fuelPrices")) if sample else None},
+        indent=1)[:20000])
+    for num_, g in seen.items():
+        fp = g.get("fuelPrices") or (g.get("site") or {}).get("fuelPrices") or []
+        for f in fp:
+            price = first(f, "cashPrice", "creditPrice", "price")
             if price in (None, "", 0):
                 continue
-            rows.append(["loves", first(s, "number", "storeNumber", "id"), first(s, "state", "stateCode"),
-                         first(s, "city"), first(s, "latitude"), first(s, "longitude"), prod, price,
-                         first(f, "lastPriceChangeDateTime", "lastUpdated", "effectiveDate", "updatedAt", "priceDate")])
-    return rows, len(stores)
+            rows.append(["loves", num_, first(g, "state", "stateCode"), first(g, "city"), first(g, "latitude"),
+                         first(g, "longitude"), f"{first(f, 'fuelType') or ''}|{first(f, 'productName', 'displayName') or ''}",
+                         price, first(f, "lastPriceChangeDateTime", "lastCheckInDateTime")])
+    return rows, len(seen)
 
 
 def ta():
