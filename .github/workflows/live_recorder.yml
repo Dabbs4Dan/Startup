@@ -1,0 +1,48 @@
+name: kalshi-twins live recorder
+
+# Free 24/7-ish recorder: 4 "shifts" a day, each loops ~5h40m taking a snapshot every 5 min (see tools/live_recorder.py).
+# Data -> data/live/<feed>/YYYY-MM-DD.csv, pushed about every hour.
+# ⚠️ GitHub only fires `schedule` from the repo's DEFAULT branch (main). Until a scheduler exists on main,
+#    shifts start by hand (Actions tab → Run workflow) or via: gh workflow run live_recorder.yml --ref kalshi-twins
+# ⚠️ Free minutes are unlimited only while the repo is PUBLIC. Private = 2,000 min/month (this uses ~41,000).
+on:
+  workflow_dispatch:
+    inputs:
+      minutes:
+        description: "How long this shift runs (max ~345)"
+        default: "340"
+      every:
+        description: "Minutes between snapshots"
+        default: "5"
+  schedule:
+    - cron: "7 */6 * * *"   # 00:07, 06:07, 12:07, 18:07 UTC
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kalshi-twins-live-recorder
+  cancel-in-progress: false
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: kalshi-twins
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Record
+        run: |
+          git config user.name "kalshi-twins-bot"
+          git config user.email "actions@users.noreply.github.com"
+          python3 tools/live_recorder.py --minutes "${{ github.event.inputs.minutes || '340' }}" --every "${{ github.event.inputs.every || '5' }}"
+      - name: Final push
+        if: always()
+        run: |
+          git add data/live
+          git diff --cached --quiet || git commit -m "live: end of shift $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3 4; do git pull --rebase -X theirs origin kalshi-twins && git push origin HEAD:kalshi-twins && break; sleep 15; done

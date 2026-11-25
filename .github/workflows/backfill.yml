@@ -5,7 +5,7 @@ name: kalshi-twins data backfill
 on:
   push:
     branches: [kalshi-twins]
-    paths: ["tools/**", "!tools/connectivity_pull.py", ".github/workflows/backfill.yml"]
+    paths: ["tools/**", "!tools/connectivity_pull.py", "!tools/live_recorder.py", ".github/workflows/backfill.yml"]
   workflow_dispatch:
   schedule:
     - cron: "17 11 * * *"
