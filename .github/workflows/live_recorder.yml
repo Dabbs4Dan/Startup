@@ -60,8 +60,11 @@ jobs:
         run: |
           git pull -q origin kalshi-twins || true
           if [ -f data/live/STOP ]; then echo "STOP file found - relay paused"; exit 0; fi
-          gh workflow run live_recorder.yml --ref kalshi-twins -R "$R" && echo "next shift queued" || echo "::warning::relay failed"
-          gh workflow run nautilus.yml --ref kalshi-twins -R "$R" && echo "nautilus refresh queued" || true
-          last=$(gh run list -R "$R" --workflow backfill.yml --branch kalshi-twins --status success --limit 1 --json createdAt --jq '.[0].createdAt' 2>/dev/null)
+          # Dispatch by numeric workflow ID: `gh workflow run <file>` looks the file up on main and 404s.
+          wf() { gh api "repos/$R/actions/workflows" --jq ".workflows[]|select(.path==\".github/workflows/$1\")|.id"; }
+          go() { id=$(wf "$1"); [ -n "$id" ] && gh api -X POST "repos/$R/actions/workflows/$id/dispatches" -f ref=kalshi-twins; }
+          go live_recorder.yml && echo "next shift queued" || echo "::warning::relay failed"
+          go nautilus.yml && echo "nautilus refresh queued" || true
+          last=$(gh api "repos/$R/actions/workflows/$(wf backfill.yml)/runs?branch=kalshi-twins&status=success&per_page=1" --jq '.workflow_runs[0].created_at' 2>/dev/null)
           age=$(( $(date -u +%s) - $(date -u -d "${last:-2000-01-01T00:00:00Z}" +%s) ))
-          if [ "$age" -gt 72000 ]; then gh workflow run backfill.yml --ref kalshi-twins -R "$R" && echo "daily backfill queued (last success ${last:-never})"; fi
+          if [ "$age" -gt 72000 ]; then go backfill.yml && echo "daily backfill queued (last success ${last:-never})"; fi
