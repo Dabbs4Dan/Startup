@@ -46,9 +46,9 @@ def main():
     wh_sid = BOOKS["diesel"][0]
     cat, fh = ROOT / "data" / "warehouse_catalog.csv", ROOT / "data" / "feed_health.csv"
     stamp = datetime.datetime.fromtimestamp(cat.stat().st_mtime).strftime("%Y-%m-%d %H:%M") if cat.exists() else "waiting"
-    out.append({"spreadsheetId": wh_sid, "range": "Warehouse!A3:G3", "values": [[f"Updated: {stamp} (written by Claude after each warehouse run)", "", "", "", "", "", ""]]})
-    out.append({"spreadsheetId": wh_sid, "range": "Warehouse!A4:G53", "values": block(cat, 50, 7)})
-    out.append({"spreadsheetId": wh_sid, "range": "Warehouse!A55:E55", "values": [["FEED HEALTH: is every recorder still on point? (OK = arrived on time, STALE = late)", "", "", "", ""]]})
+    out.append({"spreadsheetId": wh_sid, "range": "Warehouse!A3:H3", "values": [[f"Updated: {stamp} (written by Claude after each warehouse run)", "", "", "", "", "", "", ""]]})
+    out.append({"spreadsheetId": wh_sid, "range": "Warehouse!A4:H53", "values": block(cat, 50, 8)})
+    out.append({"spreadsheetId": wh_sid, "range": "Warehouse!A55:E55", "values": [["FEED HEALTH: is every recorder still on point? (OK = on time; live feeds save to GitHub hourly, so up to ~75 min old is normal; STALE = late)", "", "", "", ""]]})
     out.append({"spreadsheetId": wh_sid, "range": "Warehouse!A56:E70", "values": block(fh, 15, 5)})
     print(json.dumps(out))
 

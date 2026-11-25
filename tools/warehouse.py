@@ -95,6 +95,11 @@ def connect():
     for d in sorted(p for p in (ROOT / "data" / "live").glob("*") if p.is_dir() and not p.name.startswith("_")):
         if list(d.glob("*.csv")):
             con.execute(f"CREATE VIEW live.\"{d.name}\" AS SELECT * FROM {_csv(f'data/live/{d.name}/*.csv')}")
+    for prod in ("diesel", "gas"):
+        base = "data/archive" if prod == "diesel" else f"data/{prod}/archive"
+        for kind in ("trades", "candles_1min"):
+            if _files(f"{base}/{kind}/*.csv.gz"):
+                con.execute(f"CREATE VIEW live.\"archive_{prod}_{kind}\" AS SELECT * FROM {_csv(f'{base}/{kind}/*.csv.gz')}")
     if (ROOT / "data" / "live" / "aaa_flips.csv").exists():
         con.execute(f"CREATE VIEW live.aaa_flips AS SELECT * FROM {_csv('data/live/aaa_flips.csv')}")
     if _files("research/engine_room/wayback_states/*.csv"):
@@ -166,6 +171,12 @@ def _unified(con, products):
                              strike::DOUBLE AS strike, yes_bid::DOUBLE AS yes_bid, yes_ask::DOUBLE AS yes_ask, mid::DOUBLE AS mid,
                              volume::DOUBLE AS volume, open_interest::DOUBLE AS open_interest,
                              'candle_' || period_min || 'm' AS source FROM {p}.kalshi_candles""")
+    for p in products:
+        if _has(con, "live", f"archive_{p}_candles_1min"):
+            parts.append(f"""SELECT to_timestamp(end_ts::BIGINT)::TIMESTAMP AS ts_utc, '{p}' AS product, event_date::DATE AS event_date,
+                             strike::DOUBLE AS strike, yes_bid::DOUBLE AS yes_bid, yes_ask::DOUBLE AS yes_ask, mid::DOUBLE AS mid,
+                             TRY_CAST(volume AS DOUBLE) AS volume, TRY_CAST(open_interest AS DOUBLE) AS open_interest,
+                             'candle_1m' AS source FROM live.archive_{p}_candles_1min""")
     if _has(con, "live", "kalshi_markets"):
         parts.append("""SELECT ts_utc::TIMESTAMP AS ts_utc, CASE WHEN series='KXAAAGASD' THEN 'gas' ELSE 'diesel' END AS product,
                         strptime(regexp_extract(event, '-(\\d{2}[A-Z]{3}\\d{2})$', 1), '%y%b%d')::DATE AS event_date,
@@ -175,11 +186,14 @@ def _unified(con, products):
     _union(con, "ladder_all", parts, [("ts_utc", "TIMESTAMP"), ("product", "VARCHAR"), ("strike", "DOUBLE"), ("source", "VARCHAR")])
     con.execute(f"CREATE VIEW ladder AS SELECT *, {ERA} AS era FROM ladder_all")
     # ---- Kalshi trades ---------------------------------------------------------------------------------
-    parts = [f"""SELECT created_time::TIMESTAMP AS ts_utc, '{p}' AS product, ticker, event_date::DATE AS event_date, strike::DOUBLE AS strike,
+    parts = [f"""SELECT trade_id, created_time::TIMESTAMP AS ts_utc, '{p}' AS product, ticker, event_date::DATE AS event_date, strike::DOUBLE AS strike,
                  yes_price::DOUBLE AS yes_price, "count"::DOUBLE AS contracts, taker_side FROM {p}.kalshi_trades"""
              for p in products if _has(con, p, "kalshi_trades")]
+    parts += [f"""SELECT trade_id, created_time::TIMESTAMP AS ts_utc, '{p}' AS product, ticker, event_date::DATE AS event_date,
+                  strike::DOUBLE AS strike, yes_price::DOUBLE AS yes_price, "count"::DOUBLE AS contracts, taker_side
+                  FROM live.archive_{p}_trades""" for p in products if _has(con, "live", f"archive_{p}_trades")]
     _union(con, "trades_all", parts, [("ts_utc", "TIMESTAMP"), ("product", "VARCHAR"), ("ticker", "VARCHAR")])
-    con.execute(f"CREATE VIEW trades AS SELECT *, {ERA} AS era FROM trades_all")
+    con.execute(f"CREATE VIEW trades AS SELECT * EXCLUDE (trade_id), {ERA} AS era FROM trades_all QUALIFY row_number() OVER (PARTITION BY trade_id) = 1")
     # ---- Futures: daily closes, EIA settlements, Yahoo intraday, live TradingView ------------------------
     parts = []
     if _has(con, "diesel", "diesel_daily"):
@@ -268,7 +282,7 @@ def _live_extras(con):
     con.execute("CREATE VIEW feed_health AS SELECT feed, last_row_utc, expect_every_min, "
                 "round(date_diff('second', last_row_utc, now()::TIMESTAMP) / 60.0) AS minutes_since, "
                 "CASE WHEN last_row_utc IS NULL THEN 'NO DATA' "
-                "WHEN date_diff('second', last_row_utc, now()::TIMESTAMP) / 60.0 <= expect_every_min * 2 THEN 'OK' ELSE 'STALE' END AS status "
+                "WHEN date_diff('second', last_row_utc, now()::TIMESTAMP) / 60.0 <= expect_every_min * 2 + 75 THEN 'OK' ELSE 'STALE' END AS status "
                 "FROM (" + " UNION ALL ".join(parts) + ")")
 
 
@@ -287,6 +301,21 @@ CATALOG = [  # view, time column, group-by for one line per source, what it is (
 ]
 
 
+GAS_WORDS = ("gas", "gasoline", "rbob", "regular")
+SHARED_WORDS = ("brent", "wti", "natgas")
+
+
+def _role(view, key):
+    """Diesel = the main system. Gas = side test / analog (same AAA engine, used to check ideas and inputs).
+    Oil + nat gas feed both."""
+    k = key.lower()
+    if any(w in k for w in SHARED_WORDS):
+        return "🔗 Shared input"
+    if any(w in k for w in GAS_WORDS) and "diesel" not in k:
+        return "⛽ Side test (gas analog)"
+    return "🎯 Main (diesel)"
+
+
 def catalog(con):
     rows = []
     for view, tcol, grp, what in CATALOG:
@@ -301,11 +330,14 @@ def catalog(con):
                 key = " · ".join(str(x) for x in r[:len(grp.split(','))]) if grp else ""
                 n, first, last, live = r[-4:]
                 if n:
-                    rows.append([view, key, what, n, (first or "")[:16], (last or "")[:16], live if live is not None else ""])
+                    rows.append([_role(view, key), view, key, what, n, (first or "")[:16], (last or "")[:16],
+                                 live if live is not None else ""])
         except Exception as e:  # noqa
-            rows.append([view, "", what, 0, "", "", f"error: {str(e)[:80]}"])
+            rows.append([_role(view, ""), view, "", what, 0, "", "", f"error: {str(e)[:80]}"])
+    order = {"🎯 Main (diesel)": 0, "🔗 Shared input": 1, "⛽ Side test (gas analog)": 2}
+    rows.sort(key=lambda r: order.get(r[0], 9))
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    header = ["dataset", "slice", "what it is", "rows", "first", "last", "rows since go-live"]
+    header = ["role", "dataset", "slice", "what it is", "rows", "first", "last", "rows since go-live"]
     with (ROOT / "data" / "warehouse_catalog.csv").open("w", newline="") as f:
         w = csv.writer(f)
         w.writerow(header)

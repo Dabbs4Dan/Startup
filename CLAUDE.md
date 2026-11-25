@@ -148,6 +148,10 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-25 (5:35 PM) · Warehouse roles: diesel main, gas = side test/analog
+- **Did:** Catalog + sheet Warehouse tab now has a **role** column: 🎯 Main (diesel) · 🔗 Shared input (Brent, WTI, nat gas) · ⛽ Side test (gas analog: same AAA engine, used to check ideas/inputs, not the main system). Warehouse now also reads the gas archive (`data/gas/archive/{trades,candles_1min}/*.csv.gz`, created by the DB size guard), so gas trades stay complete (221K) after old rows move out of the DB; trades de-duplicated by trade_id. Feed health allows +75 min because live feeds push to GitHub hourly.
+- **Decided (Dan):** gas twin = side test / analog that informs which diesel inputs to track; diesel stays the main system.
+
 ### 2026-11-25 (5:25 PM) · Warehouse wired to all live feeds + feed health + audit
 - **Did:** New warehouse views `truckstop_diesel`, `truckstop_state`, `l3_state_compare` (truckstop vs AAA state), `aaa_flips`, `ho_at_10am` (last live HO ≤10:10 ET, no peeking), `feed_health` (OK/STALE per recorder). Catalog writes `data/feed_health.csv`. `sheet_payload.py` now also emits the **Warehouse** tab blocks (catalog A4:G53, feed health A56:E70). IMPORTDATA removed per mobile-first rule. Started the truckstop loop by hand (it only restarts at shift change). Audit table in `research/2026-11-25_warehouse.md`.
 - **Learned:** No duplicate feeds that matter. Dead: HO-at-10-AM step in `daily_recorders.py` (never got data) → use `ho_at_10am`. Minor duplicates: AAA state pages scraped twice (diesel + gas jobs). Love's truck diesel ≈ −7¢ vs AAA state, TA auto diesel ≈ +3¢ → use changes, not levels. Gas DB already holds 221K trades + 2023+ hourly ladder.
