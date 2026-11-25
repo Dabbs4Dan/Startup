@@ -41,6 +41,7 @@ AAA diesel number and find gaps vs. Kalshi's odds. Demo money only until a strat
 | This brain | `CLAUDE.md` | Log at the bottom, newest first. |
 | **Strategy engine** | `nautilus/` (read `nautilus/README.md`) | NautilusTrader **2.0.0rc9, locked**. Same strategy code → backtest → Kalshi demo → live. Strategy IDs = sheet tab **Strategies** (S00 = replay check, no orders). |
 | DIY scheduler | `.github/workflows/live_recorder.yml` (relay step) | ⚠️ GitHub ignores `schedule:` off `main`. Each recorder shift starts the next, then runs `nautilus.yml` + daily backfill if none in 20h. Pause: commit `data/live/STOP`. |
+| **Live recorder** | `tools/live_recorder.py` → `data/live/<feed>/YYYY-MM-DD.csv` | Free GitHub shifts, every 5 min: Kalshi diesel+gas strikes, order book (15 min), AAA national + flip log (15 min), HO/Brent/WTI/RBOB/natgas (TradingView, ~10 min delayed). Map to Inputs Map rows: `research/2026-11-25_live-recorders.md` + sheet column N. |
 
 ### Tables & views (what to query)
 
@@ -136,6 +137,11 @@ Template:
 - **Decided:** …
 - **Next:** …
 ```
+
+### 2026-11-25 (3:55 PM) · Live recorder verified (4 feeds) + relay fix
+- **Did:** `tools/live_recorder.py` + `live_recorder.yml`. Snapshot loop per shift: Kalshi strikes, diesel + gas (5 min, incl. top-of-book sizes); order book for the 6 most-traded live diesel lines (15 min); AAA national diesel + regular gas (15 min), with `data/live/aaa_flips.csv` on change; futures quotes (5 min). If columns change, the recorder starts a new `_v2` file. Fixed the relay: dispatch by **numeric workflow ID**, because `gh workflow run <file>` looks the file up on `main` and 404s. Notes in `research/2026-11-25_live-recorders.md`. Sheet: Inputs Map **column N** maps each row to its file/column; Custom Build CB3/CB4/CB5 set to ✅.
+- **Learned:** Works from GitHub: Kalshi public API, AAA homepage (5.7645 as of 11/25), **TradingView scanner** (`delayed_streaming_600` = ~10 min delay). Blocked from GitHub: Yahoo (429), Stooq (timeout). Order book fields are `yes_dollars`/`no_dollars` with fractional contract counts. Kalshi sends `volume_fp`=0.00 on quiet lines (treat 0 as real, not missing).
+- **Next:** After ~1 week, read `aaa_flips.csv` (earliest knowable time) and use 5-min crowd μ/σ vs futures to explain the noon move; take forward `ho_10am` from live futures (last row ≤ 10:10 ET).
 
 ### 2026-11-25 (3:40 PM) · NautilusTrader in the system + Strategies tab + DIY relay
 - **Did:** `nautilus/` skeleton on NautilusTrader **2.0.0rc9** (only line with the official Kalshi adapter; stable 1.231 has none). Bridge: KXDIESELD strikes → `BinaryOption` `<ticker>.KALSHI`; `kalshi_trades` → TradeTick; 1-min candles → QuoteTick; live recorder CSVs → QuoteTick with real top-of-book sizes. Kalshi quadratic fee model plugged into the sim venue. Strategy registry (S00 replay check only — Dan: no strategy wiring yet). Locked Kalshi DEMO node (`live_demo_node.py`, 3 locks, refuses GitHub). `nautilus.yml` (replay + fee check + demo config check → `nautilus/reports/`). Relay step in `live_recorder.yml`. Sheet: new **Strategies** tab (S00–S12 + rejected X1–X2, gate dropdown) + Custom Build **CB20** (Nautilus) / **CB21** (relay).
