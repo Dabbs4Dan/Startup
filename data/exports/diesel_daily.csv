@@ -1,0 +1,6 @@
+date,aaa_diesel,aaa_source,brent_usd_bbl,brent_source,ulsd_nyh_usd_gal,ulsd_source,eia_weekly_diesel,tax_federal,tax_state_avg,notes,updated_at
+2025-11-24,3.7849,aaa_site,,,,,,0.244,0.3586,AAA 'year ago' value read 2026-11-24,2026-11-25T02:43:05Z
+2026-10-24,6.3374,aaa_site,,,,,,0.244,0.3586,AAA 'month ago' value read 2026-11-24,2026-11-25T02:43:05Z
+2026-11-17,5.9848,aaa_site,,,,,,0.244,0.3586,AAA 'week ago' value read 2026-11-24,2026-11-25T02:43:05Z
+2026-11-23,5.8182,aaa_site,,,,,,0.244,0.3586,AAA 'yesterday' value read 2026-11-24,2026-11-25T02:43:05Z
+2026-11-24,5.7982,kalshi_settlement+aaa_site,90.76,manual:tradingeconomics,3.6954,manual:tradingeconomics,,0.244,0.3586,Session 1 teardown row. Delivery slice $1.50 vs ~$0.84 in Jan-2026 = retail lagging the wholesale drop.,2026-11-25T02:43:05Z

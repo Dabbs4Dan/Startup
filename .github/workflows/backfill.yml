@@ -1,0 +1,38 @@
+name: kalshi-twins data backfill
+
+# STATIC MODE (current): runs once whenever tools/ or this file changes on the
+# kalshi-twins branch, or by hand from the Actions tab.
+# GO LIVE: uncomment the two "schedule" lines below -> runs every day at 11:17 UTC
+# (6:17 AM ET, after AAA posts the overnight price).
+on:
+  push:
+    branches: [kalshi-twins]
+    paths: ["tools/**", ".github/workflows/backfill.yml"]
+  workflow_dispatch:
+  # schedule:
+  #   - cron: "17 11 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: kalshi-twins
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build + backfill
+        run: |
+          python3 tools/build_db.py
+          python3 tools/backfill.py
+      - name: Commit data
+        run: |
+          git config user.name "kalshi-twins-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/
+          git diff --cached --quiet || git commit -m "data: backfill $(date -u +%Y-%m-%d)"
+          git push origin HEAD:kalshi-twins

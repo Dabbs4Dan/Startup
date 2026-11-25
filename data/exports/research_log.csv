@@ -1,0 +1,6 @@
+id,date,topic,finding,source
+1,2026-11-24,market-selection,"Liquidity scan of 12 candidate Kalshi markets. Under Dan's rules (no temperature, securities, or irregular events; daily/weekly cadence) gas + diesel rank first.",Kalshi public API + category pages
+2,2026-11-24,market-selection,"Diesel tomorrow ~$52K vol, diesel this week ~$85K, 30-yr mortgage weekly ~$84K, nat gas daily ~$29K, WTI daily ~$27K, gold daily ~$24K. Jobless claims ~5K contracts (thin).","kalshi.com/category/economics, /commodities"
+3,2026-11-24,edge-thesis,Edge = AAA retail diesel lags wholesale (NY Harbor ULSD) and crude. Forecast tomorrow's AAA from upstream prices; trade gaps vs Kalshi odds.,EIA pump-component methodology
+4,2026-11-24,data,Kalshi settled KXDIESELD markets carry expiration_value = exact AAA diesel number -> free AAA history archive.,"Kalshi API, verified vs gasprices.aaa.com"
+5,2026-11-24,breakdown,"Nov 24: crude $2.1610 (37.3%), refining $1.5344 (26.5%), delivery+station $1.5002 (25.9%), taxes $0.6026 (10.4%) = $5.7982.",Computed; see v_diesel_breakdown
