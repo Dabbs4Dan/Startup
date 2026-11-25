@@ -125,7 +125,56 @@ def loves_deep():
     return out
 
 
+def deep(name, page, extra_urls=()):
+    """Generic deep look: every script (incl. modules / inline), API-looking strings near 'fuel' / 'price'."""
+    st, html, _ = get(page)
+    out = {"status": st, "len": len(html or ""), "script_srcs": [], "inline_json_keys": [], "hits": [], "tries": {}}
+    srcs = sorted(set(re.findall(r'<script[^>]*\bsrc=["\']([^"\']+)', html or "")))
+    srcs += sorted(set(re.findall(r'<link[^>]+rel=["\']modulepreload["\'][^>]+href=["\']([^"\']+)', html or "")))
+    out["script_srcs"] = srcs[:60]
+    for m in re.finditer(r'(window\.__[A-Z_]+__|__NUXT__|__INITIAL_STATE__|"fuelPrices"|dieselPrice|fuel_price)', html or ""):
+        out["inline_json_keys"].append((html or "")[max(0, m.start() - 200): m.start() + 300])
+        if len(out["inline_json_keys"]) > 5:
+            break
+    for src in srcs:
+        u = urllib.parse.urljoin(page, src)
+        bst, js, _ = get(u, timeout=25)
+        if bst != 200 or not js:
+            continue
+        for m in re.finditer(r'(?i)(fuel ?prices?|diesel|/api/[a-z0-9/_-]*(?:fuel|price|location|store)[a-z0-9/_?=&{}$-]*)', js):
+            ctx = js[max(0, m.start() - 250): m.start() + 250]
+            if "http" in ctx or "/api" in ctx or "fetch(" in ctx or "graphql" in ctx:
+                out["hits"].append({"file": u[-60:], "ctx": ctx})
+            if len(out["hits"]) > 25:
+                break
+    for u in extra_urls:
+        sst, body, hdr = get(u, timeout=25, headers={"Accept": "application/json"})
+        out["tries"][u] = {"status": sst, "type": hdr.get("Content-Type", ""), "len": len(body or ""), "head": (body or "")[:500]}
+    return out
+
+
 def main():
+    if "--deep" in sys.argv:
+        t0 = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%MZ")
+        res = {
+            "pilot": deep("pilot", "https://www.pilotflyingj.com/fuel-prices", [
+                "https://www.pilotflyingj.com/api/locations", "https://www.pilotflyingj.com/api/stores",
+                "https://locations.pilotflyingj.com/", "https://locations.pilotflyingj.com/us/tn/knoxville"]),
+            "ta": deep("ta", "https://www.ta-petro.com/location/all-locations", [
+                "https://www.ta-petro.com/api/locations/coordinates/?",
+                "https://www.ta-petro.com/api/locations/coordinates/?lat=36.1&lng=-86.7",
+                "https://www.ta-petro.com/location/tn/nashville"]),
+            "gasbuddy": deep("gasbuddy", "https://www.gasbuddy.com/gasprices/texas", []),
+        }
+        OUT.mkdir(parents=True, exist_ok=True)
+        (OUT / f"probe_deep_{t0}.json").write_text(json.dumps(res, indent=1))
+        for k, v in res.items():
+            print("=====", k, v["status"], v["len"], "scripts", len(v["script_srcs"]))
+            print(" srcs:", v["script_srcs"][:12])
+            for x in v["inline_json_keys"][:3]: print(" inline:", x[:400].replace("\n", " "))
+            for h in v["hits"][:10]: print(" hit", h["file"], "::", h["ctx"][:400].replace("\n", " "))
+            for u, t in v["tries"].items(): print(" try", t["status"], t["type"][:25], t["len"], u, "|", t["head"][:250].replace("\n", " "))
+        return
     if "--loves" in sys.argv:
         t0 = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%MZ")
         res = loves_deep()
