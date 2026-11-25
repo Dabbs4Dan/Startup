@@ -56,6 +56,7 @@ def record_ho_10am():
             break
     else:
         print("ho_10am: Yahoo refused:", str(body)[:200])
+        record_ho_stooq()
         return
     r = json.loads(body)["chart"]["result"][0]
     q = r["indicators"]["quote"][0]
@@ -69,6 +70,22 @@ def record_ho_10am():
     old.update(out)
     path.write_text(json.dumps({"note": "HO=F last 5-min close at or before 10:00 AM ET (Yahoo)", "ho_10am": dict(sorted(old.items()))}, indent=1))
     print(f"ho_10am: {len(out)} days ({min(out) if out else '-'} -> {max(out) if out else '-'})")
+
+
+def record_ho_stooq():
+    """Fallback: Stooq 5-min bars for HO futures (ho.f). Saves the raw file for inspection + any 10 AM values."""
+    st, body = get("https://stooq.com/q/d/l/?s=ho.f&i=5")
+    raw = ROOT / "research" / "connectivity" / "ho_stooq_5m.csv"
+    if st != 200 or not body or "Date" not in body[:50]:
+        print("ho_10am (stooq): no data:", str(body)[:120])
+        return
+    raw.write_text(body)
+    out = {}
+    for line in body.splitlines()[1:]:
+        f = line.split(",")
+        if len(f) >= 6 and f[1][:5] <= "10:00":   # Stooq times are exchange/local; checked by Claude before use
+            out[f[0]] = float(f[5])
+    print(f"ho_10am (stooq): {len(body.splitlines())-1} bars saved to {raw.name}; {len(out)} days with a bar <= 10:00 (timezone unverified)")
 
 
 if __name__ == "__main__":

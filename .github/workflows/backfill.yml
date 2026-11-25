@@ -1,16 +1,14 @@
 name: kalshi-twins data backfill
 
-# STATIC MODE (current): runs once whenever tools/ or this file changes on the
-# kalshi-twins branch, or by hand from the Actions tab.
-# GO LIVE: uncomment the two "schedule" lines below -> runs every day at 11:17 UTC
-# (6:17 AM ET, after AAA posts the overnight price).
+# DAILY MODE (turned on 2026-11-25 at Dan's request): runs every day at 11:17 UTC (6:17 AM ET,
+# after AAA posts), plus whenever tools/ or this file changes, or by hand from the Actions tab.
 on:
   push:
     branches: [kalshi-twins]
     paths: ["tools/**", "!tools/connectivity_pull.py", ".github/workflows/backfill.yml"]
   workflow_dispatch:
-  # schedule:
-  #   - cron: "17 11 * * *"
+  schedule:
+    - cron: "17 11 * * *"
 
 permissions:
   contents: write
