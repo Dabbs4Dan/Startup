@@ -95,6 +95,7 @@ Losses come from the intraday info gap (market forecast moves 0.73¢ on losing d
 - N (crowd at 10 AM): mu_N ≈ AAA_today + 0.89×yesterday's change (R² 0.69), σ ≈ 0.35¢, + bias/spread/fee layer. Kalshi publishes no pricing model (order book + private market makers).
 - F (truth): AAA_tomorrow ≈ AAA_today + 0.73×yesterday's change (R² 0.66) + fundamentals + unmeasured station-price moves. Crowd at close ≈ 0.77× (miss 0.11¢).
 - Morning crowd over-extrapolates momentum (0.89 vs 0.73) = first candidate edge.
+- ⚠️ Update 2026-11-25: momentum-only fails after big wholesale moves (Nov 25: said 5.7804). Base F formula = fundamentals version: AAA_today − 6.72%×(Delivery − $0.90) + 1.83¢/$ HO today − 1.30¢/$ HO prior 5d → 5.7626 vs crowd 5.7625.
 
 **Free AAA history hack:** Kalshi's settled KXDIESELD markets carry `expiration_value` = the exact AAA number (verified 5.7982 = AAA site).
 
@@ -126,6 +127,17 @@ Template:
 - **Decided:** …
 - **Next:** …
 ```
+
+### 2026-11-25 (12:10 AM) · Formulas plugged in live (Nov 25 market) — fundamentals beat momentum
+- **Did:** Pulled hourly candles for KXDIESELD-26NOV25 lines 5.760 / 5.765 / 5.770; fit crowd center μ and wiggle σ (normal curve) at 10 AM, noon, 11 PM; plugged today's inputs into both formulas.
+- **Learned:**
+  - **F (agreed draft):** AAA_tmrw = AAA_today − 6.72%×(Delivery − $0.90) + 1.83¢/$ HO bet-day move − 1.30¢/$ HO prior-5d move + station surprise(?). Nov 25: 5.7982 −4.02¢ +0.46¢ −0.00¢ = **5.7626**.
+  - **N:** chance(AAA > K) with center μ = F, σ 0.24¢ (10 AM) → 0.18¢ (noon) → 0.14¢ (11 PM), + bias + spread + fee.
+  - Crowd center: 10 AM 5.7636 → noon 5.7619 → 11 PM 5.7625 ≈ model 5.7626. Momentum-only model said 5.7804 (wrong) → momentum fails after big wholesale drops; fundamentals version is the base formula.
+  - Model vs crowd at 10 AM: >5.760 86% vs 93.5%; >5.765 16% vs 28%; >5.770 0.1% vs 2.5%. At 11 PM nearly identical (96.8/4.3/0 vs 96.5/3.5/1).
+  - Mystery: at noon the 5.765 line fell 28% → 4.5% with no futures move (HO −0.2¢). Timing matches OPIS 11 AM rack snapshot (hypothesis).
+- **Open ?s:** (1) what caused the noon move; (2) why σ shrinks 8–11 PM; (3) OPIS window/weighting; (4) HO futures ≠ rack prices; (5) market-maker models private; (6) only 67 days of fit.
+- **Next:** Add model_F / model_N columns to `daily_story` on Dan's OK; test noon-move ↔ rack/station prices.
 
 ### 2026-11-24 (11:55 PM) · Formula reconstruction: N vs F + shared components
 - **Did:** Searched for published models (Kalshi, CFTC filings, OPIS methodology, academic pass-through). Reconstructed N and F from data. Added `v_win_loss` view + `win_loss.csv`. Wrote `research/2026-11-24_formula-reconstruction.md` (component map + flags).
