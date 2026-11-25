@@ -26,6 +26,7 @@ CFG = {
         normal_delivery=None,            # None = use trailing 90-day median of the delivery slice (point-in-time)
         model_f=None,                    # not fitted for gas yet -> model columns stay blank
         candle_hours=20, unseen=None,    # unseen window chosen after the first pull
+        trades_keep_days=30,             # gas trades ~3.7K/day: keep 30 event days in the DB, older -> data/gas/archive/*.csv.gz
     ),
 }
 C = CFG[PRODUCT]

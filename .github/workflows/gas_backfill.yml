@@ -50,7 +50,7 @@ jobs:
       - name: Kalshi trade tape + 1-min candles (last 60 days) - fail soft
         continue-on-error: true
         timeout-minutes: 90
-        run: python3 tools/kalshi_trades.py 60
+        run: python3 tools/kalshi_trades.py 30
       - name: Research panel + tests
         run: |
           python3 tools/panel.py

@@ -100,3 +100,37 @@ for E in events:
 print(f"kalshi_trades: +{nt} trades | 1-min candles: +{nc} rows | events {events[0]} -> {events[-1]}")
 print("totals:", con.execute("SELECT COUNT(*), COUNT(DISTINCT ticker) FROM kalshi_trades").fetchone(),
       con.execute("SELECT COUNT(*) FROM kalshi_candles WHERE period_min=1").fetchone())
+
+# ---- Size guard: GitHub refuses files > 100 MB. When the DB passes 70 MB, move trades + 1-min candles
+# older than the newest trades_keep_days event days (product.py; default N+5) out to compressed per-day CSVs (archive/<kind>/YYYY-MM-DD.csv.gz),
+# then shrink the DB. Nothing is lost: each archived day is written once and never changes.
+import csv, gzip, io, os  # noqa: E402
+LIMIT_MB = 70
+if os.path.getsize(product.DB) / 1e6 > LIMIT_MB:
+    days = [r[0] for r in con.execute("SELECT DISTINCT event_date FROM kalshi_trades ORDER BY event_date DESC")]
+    keep = product.C.get("trades_keep_days") or (N + 5)
+    cut = days[keep] if len(days) > keep else None
+    if cut:
+        arch = pathlib.Path(product.DB).parent / "archive"
+        for kind, sql in (("trades", "SELECT * FROM kalshi_trades WHERE event_date=?"),
+                          ("candles_1min", "SELECT * FROM kalshi_candles WHERE period_min=1 AND event_date=?")):
+            old = [r[0] for r in con.execute(sql.replace("SELECT *", "SELECT DISTINCT event_date").replace("event_date=?", "event_date<=?"), (cut,))]
+            for d in old:
+                cur = con.execute(sql, (d,))
+                f = arch / kind / f"{d}.csv.gz"
+                f.parent.mkdir(parents=True, exist_ok=True)
+                buf = io.StringIO(); w = csv.writer(buf)
+                w.writerow([c[0] for c in cur.description]); w.writerows(cur.fetchall())
+                if f.exists():  # day already archived earlier: merge, keep unique rows
+                    prev = gzip.decompress(f.read_bytes()).decode().splitlines()[1:]
+                    rows = sorted(set(prev) | set(buf.getvalue().splitlines()[1:]))
+                    data = buf.getvalue().splitlines()[0] + "\n" + "\n".join(rows) + "\n"
+                else:
+                    data = buf.getvalue()
+                f.write_bytes(gzip.compress(data.encode(), mtime=0))
+        con.execute("DELETE FROM kalshi_trades WHERE event_date<=?", (cut,))
+        con.execute("DELETE FROM kalshi_candles WHERE period_min=1 AND event_date<=?", (cut,))
+        con.commit()
+        con.execute("VACUUM")
+        print(f"size guard: archived trades/1-min candles for event days <= {cut}; DB now "
+              f"{os.path.getsize(product.DB)/1e6:.1f} MB")
