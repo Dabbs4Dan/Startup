@@ -1,0 +1,46 @@
+name: kalshi-twins L2 history (wayback)
+
+# Recovers old AAA state pages from the Internet Archive -> new L2 test days for diesel + gas, then re-scores
+# the Engine Room. Resumable: re-run to continue where it stopped. By hand, or on change to the script.
+on:
+  push:
+    branches: [kalshi-twins]
+    paths: ["tools/wayback_states.py", ".github/workflows/history.yml"]
+  workflow_dispatch:
+    inputs:
+      since:
+        description: "Oldest snapshot date (YYYYMMDD)"
+        default: "20260801"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kalshi-twins-history
+  cancel-in-progress: false
+
+jobs:
+  wayback:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: kalshi-twins
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Recover state pages
+        run: python3 tools/wayback_states.py "${{ github.event.inputs.since || '20260801' }}" --max-minutes 300
+      - name: Re-score Engine Room (diesel)
+        continue-on-error: true
+        run: python3 tools/engine_room.py
+      - name: Commit
+        if: always()
+        run: |
+          git config user.name "kalshi-twins-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add research/engine_room/ data/exports/engine_room_*.csv data/kalshi_twins.db
+          git diff --cached --quiet && exit 0
+          git commit -m "L2 history: wayback state pages $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3 4; do git pull --rebase -X theirs origin kalshi-twins && git push origin HEAD:kalshi-twins && break; sleep 15; done

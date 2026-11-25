@@ -136,16 +136,43 @@ def load_gas_state_csvs(con):
                          num(r["week_ago"]), num(r["month_ago"]), num(r["year_ago"])))
 
 
+def wayback_points(points):
+    """Add exact-date state values recovered from archived AAA state pages (tools/wayback_states.py)."""
+    folder = ROOT / "research" / "engine_room" / "wayback_states"
+    grade = "diesel" if P == "diesel" else "regular"
+    if not folder.exists():
+        return 0
+    n = 0
+    for f in folder.glob("*.csv"):
+        for r in csv.DictReader(f.open()):
+            if r.get("grade") != grade or not r.get("as_of"):
+                continue
+            try:
+                day = parse_asof(r["as_of"])
+            except Exception:  # noqa
+                continue
+            for col, off in (("current", 0), ("yesterday", 1)):
+                try:
+                    v = float(r[col])
+                except (TypeError, ValueError):
+                    continue
+                t = (day - datetime.timedelta(days=off)).isoformat()
+                pt = points.setdefault(t, {"states": {}, "kind": "exact", "knowable": r["snapshot_ts"][:8], "src": set()})
+                if pt["kind"] != "exact":                       # exact beats week/month/year-ago values
+                    points[t] = pt = {"states": {}, "kind": "exact", "knowable": r["snapshot_ts"][:8], "src": set()}
+                pt["states"].setdefault(r["state"], v)
+                pt["src"].add("wayback")
+                n += 1
+    return n
+
+
 def run_l2(con, run):
     load_gas_state_csvs(con)
-    if not con.execute("SELECT name FROM sqlite_master WHERE name='aaa_state_daily'").fetchone():
-        for a in ("L2.0", "L2.1"):
-            score(con, a, "all", [], 0.10, "no state data yet (recorder saves it daily)")
-        return {}
+    has_daily = con.execute("SELECT name FROM sqlite_master WHERE name='aaa_state_daily'").fetchone()
     w = {r["state"]: float(r["transport_kbbl"]) for r in csv.DictReader(WEIGHTS[P].open())}
     nat = dict(con.execute("SELECT date, aaa_diesel FROM diesel_daily WHERE aaa_diesel IS NOT NULL"))
-    rows = con.execute("SELECT * FROM aaa_state_daily WHERE as_of IS NOT NULL ORDER BY pulled_date").fetchall()
-    points = {}                                   # target date -> (states dict, kind, knowable_at); newest pull wins
+    points = {}                     # target date -> {states, kind, knowable, src}
+    rows = con.execute("SELECT * FROM aaa_state_daily WHERE as_of IS NOT NULL ORDER BY pulled_date DESC").fetchall() if has_daily else []
     for r in rows:
         try:
             day = parse_asof(r["as_of"])
@@ -157,27 +184,37 @@ def run_l2(con, run):
                 continue
             t = target_date(day, col).isoformat()
             kind = "exact" if col in ("diesel_current", "diesel_yesterday") else ("week" if col == "diesel_week_ago" else FUZZY[col])
-            points.setdefault(t, {"states": {}, "kind": kind, "knowable": r["pulled_date"]})
-            points[t]["states"][r["state"]] = v
+            pt = points.get(t)
+            if pt is None or (kind == "exact" and pt["kind"] != "exact"):
+                pt = points[t] = {"states": {}, "kind": kind, "knowable": r["pulled_date"], "src": set()}
+            if kind != pt["kind"]:
+                continue
+            pt["states"].setdefault(r["state"], v)
+            pt["src"].add("recorder")
             con.execute("INSERT OR REPLACE INTO inputs_asof VALUES (?,?,?,?,?,?)",
                         (P, t, f"aaa_state_{r['state']}", v, r["pulled_date"], f"AAA state page ({col})"))
+    wb = wayback_points(points)
     out = {"L2.0": {}, "L2.1": {}}
     for t, pt in sorted(points.items()):
         st = pt["states"]
-        if len(st) < 45:
+        if len(st) < 48:
             continue
         actual = nat.get(t)
         mean = sum(st.values()) / len(st)
         ww = {s: w[s] for s in st if s in w}
         blend = sum(st[s] * ww[s] for s in ww) / sum(ww.values())
-        d = {"kind": pt["kind"], "n_states": len(st), "knowable_at": pt["knowable"]}
-        out["L2.0"][t] = (save_pred(con, "L2.0", t, round(mean, 4), actual, d, run), pt["kind"])
-        out["L2.1"][t] = (save_pred(con, "L2.1", t, round(blend, 4), actual, d, run), pt["kind"])
+        kind = pt["kind"] if len(st) == 51 else pt["kind"] + "-partial"
+        d = {"kind": kind, "n_states": len(st), "knowable_at": pt["knowable"], "src": sorted(pt["src"])}
+        out["L2.0"][t] = (save_pred(con, "L2.0", t, round(mean, 4), actual, d, run), kind)
+        out["L2.1"][t] = (save_pred(con, "L2.1", t, round(blend, 4), actual, d, run), kind)
     for a in ("L2.0", "L2.1"):
         exact = [m for m, k in out[a].values() if k == "exact"]
+        part = [m for m, k in out[a].values() if k == "exact-partial"]
         allm = [m for m, _ in out[a].values()]
-        score(con, a, "exact-date points", exact, 0.10, "current + yesterday columns (date certain)")
+        score(con, a, "exact-date points", exact, 0.10, "all 51 states known for that exact date")
+        score(con, a, "exact, 48-50 states", part, 0.10, "a few states missing, weights re-scaled")
         score(con, a, "all points", allm, 0.10, "incl. week / month / year-ago columns (dates approximate)")
+    print(f"L2: {len(out['L2.1'])} testable dates ({wb} wayback state-values loaded)")
     return out
 
 
