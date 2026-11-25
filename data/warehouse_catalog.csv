@@ -1,0 +1,18 @@
+dataset,slice,what it is,rows,first,last,rows since go-live
+aaa_daily,diesel,"AAA national price per day (Kalshi settlements, live recorder, Internet Archive)",116,2025-11-24,2026-11-25,0
+aaa_daily,gas,"AAA national price per day (Kalshi settlements, live recorder, Internet Archive)",1,2026-11-25,2026-11-25,1
+state_prices,diesel,AAA price per state per day (daily recorder + Internet Archive state pages),51,2026-11-25,2026-11-25,
+ladder,diesel · candle_60m,"Kalshi Yes/No prices per strike (hourly, 1-min, 5-min live)",29240,2026-08-02 17:00,2026-11-25 17:00,0
+ladder,diesel · live_5m,"Kalshi Yes/No prices per strike (hourly, 1-min, 5-min live)",168,2026-11-25 19:21,2026-11-25 19:51,168
+ladder,diesel · candle_1m,"Kalshi Yes/No prices per strike (hourly, 1-min, 5-min live)",54672,2026-09-27 13:59,2026-11-25 18:37,0
+ladder,gas · live_5m,"Kalshi Yes/No prices per strike (hourly, 1-min, 5-min live)",102,2026-11-25 19:31,2026-11-25 19:51,102
+trades,diesel,Every Kalshi trade,29500,2026-09-27 12:32,2026-11-25 18:32,0
+futures_bars,BRENT · live_5m,"Diesel/oil/gas futures (daily, hourly, 5-min, 1-min, live)",6,2026-11-25 19:31,2026-11-25 19:51,6
+futures_bars,BRENT · 1d,"Diesel/oil/gas futures (daily, hourly, 5-min, 1-min, live)",1258,2021-11-24 19:00,2026-11-25 19:00,0
+futures_bars,HO · 1d,"Diesel/oil/gas futures (daily, hourly, 5-min, 1-min, live)",1258,2021-11-24 19:00,2026-11-25 19:00,0
+futures_bars,HO · live_5m,"Diesel/oil/gas futures (daily, hourly, 5-min, 1-min, live)",6,2026-11-25 19:31,2026-11-25 19:51,6
+futures_bars,NATGAS · live_5m,"Diesel/oil/gas futures (daily, hourly, 5-min, 1-min, live)",6,2026-11-25 19:31,2026-11-25 19:51,6
+futures_bars,RBOB · live_5m,"Diesel/oil/gas futures (daily, hourly, 5-min, 1-min, live)",6,2026-11-25 19:31,2026-11-25 19:51,6
+futures_bars,WTI · live_5m,"Diesel/oil/gas futures (daily, hourly, 5-min, 1-min, live)",6,2026-11-25 19:31,2026-11-25 19:51,6
+orderbook,,"Kalshi order book depth (live only, no history exists)",257,2026-11-25 19:31,2026-11-25 19:41,257
+truckstops,,Love's truckstop posted diesel prices (live only),3770,2026-11-25 20:20,2026-11-25 20:20,3770

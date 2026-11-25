@@ -1,0 +1,59 @@
+name: kalshi-twins warehouse (history pull + catalog)
+
+# Pulls free long history (EIA spot/settlements/weekly retail, Yahoo intraday bars, Internet Archive AAA national
+# snapshots) into data/lake/history/, then rebuilds the warehouse catalog. Resumable + merge-only: safe to re-run.
+# Started daily by the relay in live_recorder.yml (schedule: doesn't fire off main), on code change, or by hand.
+on:
+  push:
+    branches: [kalshi-twins]
+    paths: ["tools/history_pull.py", "tools/warehouse.py", ".github/workflows/warehouse.yml"]
+  workflow_dispatch:
+    inputs:
+      since:
+        description: "Oldest Internet Archive year for AAA national snapshots"
+        default: "2019"
+      minutes:
+        description: "Max minutes for the Internet Archive part"
+        default: "240"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kalshi-twins-warehouse
+  cancel-in-progress: false
+
+jobs:
+  warehouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: kalshi-twins
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install duckdb pandas pyarrow xlrd
+      - name: EIA + Yahoo history (fast)
+        continue-on-error: true
+        run: python3 tools/history_pull.py eia yahoo
+      - name: Save progress
+        run: |
+          git config user.name "kalshi-twins-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/lake
+          git diff --cached --quiet || git commit -m "lake: EIA + Yahoo history $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3 4; do git pull --rebase -X theirs origin kalshi-twins && git push origin HEAD:kalshi-twins && break; sleep 15; done
+      - name: Internet Archive AAA national snapshots (slow, resumable)
+        continue-on-error: true
+        run: python3 tools/history_pull.py wayback --since "${{ github.event.inputs.since || '2019' }}" --max-minutes "${{ github.event.inputs.minutes || '240' }}"
+      - name: Warehouse catalog
+        continue-on-error: true
+        run: python3 tools/warehouse.py catalog
+      - name: Commit
+        if: always()
+        run: |
+          git add data/lake data/warehouse_catalog.csv data/warehouse_catalog.md
+          git diff --cached --quiet || git commit -m "warehouse: history + catalog $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3 4; do git pull --rebase -X theirs origin kalshi-twins && git push origin HEAD:kalshi-twins && break; sleep 15; done

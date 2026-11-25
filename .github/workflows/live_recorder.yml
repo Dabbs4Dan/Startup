@@ -66,7 +66,7 @@ jobs:
           go live_recorder.yml && echo "next shift queued" || echo "::warning::relay failed"
           go nautilus.yml && echo "nautilus refresh queued" || true
           go truckstops.yml && echo "truckstop recorder queued" || true
-          for f in backfill.yml gas_backfill.yml; do   # daily pulls (their own schedule: never fires off main)
+          for f in backfill.yml gas_backfill.yml warehouse.yml; do   # daily pulls (their own schedule: never fires off main)
             last=$(gh api "repos/$R/actions/workflows/$(wf $f)/runs?branch=kalshi-twins&status=success&per_page=1" --jq '.workflow_runs[0].created_at' 2>/dev/null)
             age=$(( $(date -u +%s) - $(date -u -d "${last:-2000-01-01T00:00:00Z}" +%s) ))
             if [ "$age" -gt 72000 ]; then go $f && echo "$f queued (last success ${last:-never})"; fi
