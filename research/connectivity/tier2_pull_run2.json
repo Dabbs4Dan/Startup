@@ -1,0 +1,171 @@
+{
+ "pulled_at_utc": "2026-11-25T08:37:29.891213Z",
+ "yahoo": {
+  "HO=F": {
+   "status": null,
+   "error": "HTTP Error 429: Too Many Requests"
+  },
+  "BZ=F": {
+   "status": null,
+   "error": "HTTP Error 429: Too Many Requests"
+  }
+ },
+ "aaa_states": "skipped (pulled in run 1)",
+ "truckstop_probes": {
+  "loves_search": {
+   "url": "https://www.loves.com/en/location-and-fuel-price-search",
+   "status": 200,
+   "len": 2378530,
+   "diesel_prices_seen": [],
+   "api_hints": [
+    "https://apiservices.loves.com",
+    "https://edge.sitecorecloud.io/lovestravela9dd-loves2161-lovesprod042a-cf5a/media/images/locationsearch/mapicons/countrystorepin.png",
+    "https://edge.sitecorecloud.io/lovestravela9dd-loves2161-lovesprod042a-cf5a/media/images/locationsearch/mapicons/rvpin20x20.png",
+    "https://edge.sitecorecloud.io/lovestravela9dd-loves2161-lovesprod042a-cf5a/media/images/locationsearch/mapicons/speedcopin.png",
+    "https://edge.sitecorecloud.io/lovestravela9dd-loves2161-lovesprod042a-cf5a/media/images/locationsearch/mapicons/travelstop2.png",
+    "https://edge.sitecorecloud.io/lovestravela9dd-loves2161-lovesprod042a-cf5a/media/images/locationsearch/mapicons/travelstoppin.png"
+   ],
+   "fuel_paths": [
+    "/about-us/winter-fuel-program",
+    "/location-and-fuel-price-search",
+    "/location-and-fuel-price-search/all-locations",
+    "/location-and-fuel-price-search/locationsearchresults",
+    "/location-and-fuel-price-search/station-codes",
+    "/pricesblendstax",
+    "location-and-fuel-price-search"
+   ],
+   "scripts": [
+    "/_next/static/-sDEs-I38lbomTENc6O9p/_buildManifest.js",
+    "/_next/static/-sDEs-I38lbomTENc6O9p/_clientMiddlewareManifest.js",
+    "/_next/static/-sDEs-I38lbomTENc6O9p/_ssgManifest.js",
+    "/_next/static/chunks/0-65m5xgajjht.js",
+    "/_next/static/chunks/0.8-34m4kugf2.js",
+    "/_next/static/chunks/0.p37t5a9myas.js",
+    "/_next/static/chunks/01dpzzd-6.d1o.js",
+    "/_next/static/chunks/07ru~n5nc9go2.js",
+    "/_next/static/chunks/08pe8a1c~tokv.js",
+    "/_next/static/chunks/092wcbuj3.os~.js",
+    "/_next/static/chunks/0b4.4i3y9edjg.js",
+    "/_next/static/chunks/0f7l8dee0omjj.js",
+    "/_next/static/chunks/0ftyt0vd9kui4.js",
+    "/_next/static/chunks/0fwzjnbgx4rai.js",
+    "/_next/static/chunks/0fz~ho9057i_h.js",
+    "/_next/static/chunks/0g4pwuebo9ro_.js",
+    "/_next/static/chunks/0gd~el6gux.e~.js",
+    "/_next/static/chunks/0gixef4go7bm1.js",
+    "/_next/static/chunks/0imasvby5vomb.js",
+    "/_next/static/chunks/0ix8g3sf9d1rv.js",
+    "/_next/static/chunks/0kwm.jortzert.js",
+    "/_next/static/chunks/0sa.rw8t0tkv..js",
+    "/_next/static/chunks/0vhgruybf6-y9.js",
+    "/_next/static/chunks/1052u0ddvptqi.js",
+    "/_next/static/chunks/12~-kfw97cu.r.js"
+   ]
+  },
+  "pilot_fuel": {
+   "url": "https://www.pilotflyingj.com/fuel-prices",
+   "status": 200,
+   "len": 115798,
+   "diesel_prices_seen": [],
+   "api_hints": [
+    "https://api.contentstack.io",
+    "https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap"
+   ],
+   "fuel_paths": [
+    "/fuel-and-factoring",
+    "/fuel-prices",
+    "/mobile-fueling",
+    "/one9-fuel-network",
+    "fuel-savings-legal"
+   ],
+   "scripts": [
+    "https://cdn.bc0a.com/autopilot/f00000000286747/autopilot_sdk.js",
+    "https://cdn.cookielaw.org/consent/0198e0d9-943a-7950-9e34-0b30943912c2/otSDKStub.js"
+   ]
+  },
+  "pilot_locations": {
+   "url": "https://locations.pilotflyingj.com/us/tn/knoxville",
+   "status": null,
+   "len": 25,
+   "diesel_prices_seen": [],
+   "api_hints": [],
+   "fuel_paths": [],
+   "scripts": []
+  },
+  "ta_locations": {
+   "url": "https://www.ta-petro.com/location/all-locations",
+   "status": 200,
+   "len": 113669,
+   "diesel_prices_seen": [],
+   "api_hints": [],
+   "fuel_paths": [
+    "/professional-drivers/def-fuel/"
+   ],
+   "scripts": [
+    "/sb/sitebuilder-js-bundle.js.vRelease-219",
+    "/sc/c8213103.js.vRelease-219",
+    "https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"
+   ]
+  },
+  "gasbuddy_diesel": {
+   "url": "https://www.gasbuddy.com/usa",
+   "status": 200,
+   "len": 100681,
+   "diesel_prices_seen": [],
+   "api_hints": [
+    "https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+   ],
+   "fuel_paths": [
+    "/account/fuel-log-book",
+    "/gaspricemap",
+    "/gasprices",
+    "/gasprices/alabama",
+    "/gasprices/alberta",
+    "/gasprices/arizona",
+    "/gasprices/arizona/phoenix",
+    "/gasprices/british-columbia",
+    "/gasprices/california",
+    "/gasprices/california/los-angeles",
+    "/gasprices/california/san-diego",
+    "/gasprices/california/san-francisco",
+    "/gasprices/colorado/denver",
+    "/gasprices/florida",
+    "/gasprices/florida/miami",
+    "/gasprices/florida/orlando",
+    "/gasprices/florida/tampa",
+    "/gasprices/georgia",
+    "/gasprices/georgia/atlanta",
+    "/gasprices/illinois",
+    "/gasprices/illinois/chicago",
+    "/gasprices/indiana",
+    "/gasprices/manitoba",
+    "/gasprices/massachusetts",
+    "/gasprices/massachusetts/boston",
+    "/gasprices/michigan",
+    "/gasprices/michigan/detroit",
+    "/gasprices/missouri",
+    "/gasprices/new-jersey",
+    "/gasprices/new-york",
+    "/gasprices/new-york/new-york-city",
+    "/gasprices/north-carolina",
+    "/gasprices/ohio",
+    "/gasprices/ohio/cleveland",
+    "/gasprices/ontario",
+    "/gasprices/ontario/toronto",
+    "/gasprices/pennsylvania",
+    "/gasprices/pennsylvania/philadelphia",
+    "/gasprices/quebec",
+    "/gasprices/quebec/montreal"
+   ],
+   "scripts": [
+    "/bundles/bootstrap?v=Dkl3ou4BsjtXA9FIl7iLvh7mIAOAUJidd7qOVs3obPA1",
+    "/bundles/gbcore?v=-T5QLlQH5Ujm1cOYzO8i7SrMpoa4eGp3pJffmz_K1441",
+    "/bundles/jquery?v=cr2m_QBRpjRuuxyjAK9VTfCnKCT-rwItKazh9uX4w_c1",
+    "/bundles/modernizr?v=inCVuEFe6J4Q07A0AcRsbJic_UE5MwpRMNGcOtk94TE1",
+    "/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
+    "https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js",
+    "https://oss.maxcdn.com/respond/1.4.2/respond.min.js"
+   ]
+  }
+ }
+}
