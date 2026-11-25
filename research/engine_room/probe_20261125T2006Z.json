@@ -1,0 +1,340 @@
+{
+ "run_utc": "20261125T2006Z",
+ "truckstops": {
+  "loves": {
+   "status": 200,
+   "len": 2378530,
+   "scripts": 29,
+   "page_apis": [
+    "https://apiservices.loves.com"
+   ],
+   "page_api_paths": [
+    "/api/graphql"
+   ],
+   "bundles": {
+    "https://www.loves.com/_next/static/-sDEs-I38lbomTENc6O9p/_buildManifest.js": {
+     "api": [
+      "/api/analytics/track",
+      "/api/analytics/track.spec",
+      "/api/business_interruptions_locations",
+      "/api/business_interruptions_service_types",
+      "/api/contactForm",
+      "/api/dmb_slide_group",
+      "/api/editing/render",
+      "/api/fetch_stores",
+      "/api/get_refinement_categories",
+      "/api/get_sc_items_in_folder",
+      "/api/google_place_ratings",
+      "/api/graphql",
+      "/api/healthz",
+      "/api/locations_report",
+      "/api/revalidate",
+      "/api/robots",
+      "/api/search_stores",
+      "/api/sitemap",
+      "/api/sse/dmb/tobacco",
+      "/api/websocket/negotiate"
+     ],
+     "fuel_strings": []
+    },
+    "https://www.loves.com/_next/static/chunks/0.p37t5a9myas.js": {
+     "api": [
+      "https://maps.googleapis.com/maps/api/js"
+     ],
+     "fuel_strings": []
+    },
+    "https://www.loves.com/_next/static/chunks/0f7l8dee0omjj.js": {
+     "api": [
+      "https://api.sitecorecloud.io"
+     ],
+     "fuel_strings": []
+    },
+    "https://www.loves.com/_next/static/chunks/0ftyt0vd9kui4.js": {
+     "api": [
+      "/api/analytics/track",
+      "/api/business_interruptions_locations?category=${e}&${t}",
+      "/api/business_interruptions_service_types",
+      "/api/contactForm",
+      "/api/discover/v2",
+      "/api/dmb_slide_group",
+      "/api/event/v4/publish",
+      "/api/get_refinement_categories?category=${e}&${t}",
+      "/api/graphql",
+      "/api/locations_report",
+      "/api/search_stores",
+      "/api/v1/search/{{domain}}",
+      "/api/websocket/negotiate",
+      "https://fonts.googleapis.com/css?family=Google",
+      "https://fonts.googleapis.com/css?family=Roboto",
+      "https://maps.googleapis.com"
+     ],
+     "fuel_strings": [
+      "),e.fuelPrices.some(e=>",
+      "fuelPrices",
+      "}},eb=e=>{let t=[];return e.fuelPrices.some(e=>e.productName.includes("
+     ]
+    },
+    "https://www.loves.com/_next/static/chunks/0gixef4go7bm1.js": {
+     "api": [
+      "/api/graphql",
+      "https://api.sitecorecloud.io"
+     ],
+     "fuel_strings": []
+    },
+    "https://www.loves.com/_next/static/chunks/1052u0ddvptqi.js": {
+     "api": [
+      "/api/graphql"
+     ],
+     "fuel_strings": []
+    }
+   },
+   "next_data": true,
+   "diesel_in_html": []
+  },
+  "pilot": {
+   "status": 200,
+   "len": 115798,
+   "scripts": 2,
+   "page_apis": [
+    "https://api.contentstack.io",
+    "https://cdn.contentstack.io",
+    "https://fonts.googleapis.com/css2?family=Roboto",
+    "https://images.contentstack.io",
+    "https://images.contentstack.io/v3/assets/bltbb269d202e34fd86/blt102d061adf43cdf7/69f356a4502b2ca431db9e85/home_may2026_rdirectbill.webp?auto=webp%2Cavif&amp",
+    "https://images.contentstack.io/v3/assets/bltbb269d202e34fd86/blt233ebb888e666faf/6ae251f5c275434b2571ac6e/nov_redbull.webp?auto=webp%2Cavif&amp",
+    "https://images.contentstack.io/v3/assets/bltbb269d202e34fd86/blt7ec368d5d9d33705/6ae24ab7629a08f319b2ba3c/nov_amdeal.webp?auto=webp%2Cavif&amp",
+    "https://images.contentstack.io/v3/assets/bltbb269d202e34fd86/blt853eaf1da65f55c8/6ae24e166876858cdfd6f88f/nov_twofreedrinks.webp?auto=webp%2Cavif&amp",
+    "https://images.contentstack.io/v3/assets/bltbb269d202e34fd86/bltc66da5153123a2e7/68a8ab4e4f9d3d2b99820a02/truck-profile-llama.svg?auto=webp%2Cavif&amp",
+    "https://images.contentstack.io/v3/assets/bltbb269d202e34fd86/bltd5234f3abfd93b30/69b186b18bb88fb3f85a5172/PilotCompany_White_logo.svg?auto=webp%2Cavif&amp",
+    "https://images.contentstack.io/v3/assets/bltbb269d202e34fd86/bltf207f4aaf02f5793/6a8de934d05d4c34fe57fdad/sept26_careers.webp?auto=webp%2Cavif&amp",
+    "https://images.contentstack.io/v3/assets/bltbb269d202e34fd86/bltfe88b69b59cfec36/6ae2531bf0e9f20765e1ae43/nov_bogo.webp?auto=webp%2Cavif&amp"
+   ],
+   "page_api_paths": [],
+   "bundles": {
+    "https://cdn.bc0a.com/autopilot/f00000000286747/autopilot_sdk.js": {
+     "api": [
+      "/api/ixf/",
+      "https://ixfd2-api.bc0a.com"
+     ],
+     "fuel_strings": []
+    },
+    "https://cdn.cookielaw.org/consent/0198e0d9-943a-7950-9e34-0b30943912c2/otSDKStub.js": {
+     "api": [
+      "https://consent-api.onetrust.com/v2/preferences"
+     ],
+     "fuel_strings": []
+    }
+   },
+   "next_data": false,
+   "diesel_in_html": []
+  },
+  "ta": {
+   "status": 200,
+   "len": 113669,
+   "scripts": 3,
+   "page_apis": [],
+   "page_api_paths": [],
+   "bundles": {
+    "https://www.ta-petro.com/sb/sitebuilder-js-bundle.js.vRelease-219": {
+     "api": [
+      "https://www.googleapis.com/youtube/v3/videos?id="
+     ],
+     "fuel_strings": []
+    },
+    "https://www.ta-petro.com/sc/c8213103.js.vRelease-219": {
+     "api": [
+      "/api/locations/coordinates/?"
+     ],
+     "fuel_strings": []
+    }
+   },
+   "next_data": false,
+   "diesel_in_html": []
+  },
+  "candidates": {
+   "https://www.loves.com/api/sitecore/StoreSearch/SearchStoresWithDetail?pageNumber=0&top=5&lat=35.4676&lng=-97.5164": {
+    "status": 404,
+    "type": "",
+    "len": 400,
+    "head": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\" data-next-head=\"\"/><meta name=\"viewport\" content=\"width=device-width\" data-next-head=\"\"/><title data-next-head=\"\">404</title><meta name=\"description\" content=\"\" data-next-head=\"\"/><meta name=\"keywords\" content=\"\" data-next-head=\"\"/><meta pro"
+   },
+   "https://www.loves.com/api/fetch_stores": {
+    "status": 200,
+    "type": "application/json; charset=utf-8",
+    "len": 7576574,
+    "head": "{\"stores\":[{\"number\":5,\"latitude\":35.85947,\"longitude\":-97.932291,\"address1\":\"203 S Main St\",\"address2\":null,\"addressId\":0,\"addressTypeId\":0,\"city\":\"Kingfisher\",\"comments\":null,\"county\":null,\"name\":\"Site 5\",\"specialInstructions\":null,\"state\":\"OK\",\"zip\":\"73750\",\"exitNumber\":\"E Sheridan Ave\",\"highway\""
+   },
+   "https://apiservices.loves.com/api/stores/search?latitude=35.4676&longitude=-97.5164&radius=100": {
+    "status": 404,
+    "type": "",
+    "len": 400,
+    "head": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\r\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\"/>\r\n<title>404 - File or directory not found.</title>\r\n<style typ"
+   },
+   "https://apiservices.loves.com/locations": {
+    "status": 404,
+    "type": "",
+    "len": 400,
+    "head": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\r\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\"/>\r\n<title>404 - File or directory not found.</title>\r\n<style typ"
+   },
+   "https://www.pilotflyingj.com/api/fuel-prices": {
+    "status": 200,
+    "type": "text/html",
+    "len": 115798,
+    "head": "<!doctype html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\" />\n        <link rel=\"icon\" href=\"/images/favicon.ico\" />\n\n        <!-- let's provision our fonts eagerly to prevent FOUC -->\n        <!-- Roboto Flex import includes wght, wdth, and ytlc-->\n        <link\n            rel=\"prel"
+   },
+   "https://www.pilotflyingj.com/fuel-prices.json": {
+    "status": 200,
+    "type": "text/html",
+    "len": 115798,
+    "head": "<!doctype html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\" />\n        <link rel=\"icon\" href=\"/images/favicon.ico\" />\n\n        <!-- let's provision our fonts eagerly to prevent FOUC -->\n        <!-- Roboto Flex import includes wght, wdth, and ytlc-->\n        <link\n            rel=\"prel"
+   },
+   "https://locations.pilotflyingj.com/api/getAsyncLocations": {
+    "status": 404,
+    "type": "",
+    "len": 400,
+    "head": "<!doctype html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\" />\n        <link rel=\"icon\" href=\"/images/favicon.ico\" />\n\n        <!-- let's provision our fonts eagerly to prevent FOUC -->\n        <!-- Roboto Flex import includes wght, wdth, and ytlc-->\n        <link\n            rel=\"prel"
+   },
+   "https://www.ta-petro.com/api/locations": {
+    "status": 404,
+    "type": "",
+    "len": 400,
+    "head": "<!DOCTYPE html>\r\n<html dir=\"ltr\" lang=\"en\" class=\"no-js usn\">\r\n<head>\r\n    <!-- OneTrust Cookies Consent Notice start for ta-petro.com -->\r\n    <script type=\"text/javascript\" charset=\"UTF-8\" data-domain-script=\"81e32590-efe2-4f46-be5c-31f3653855e9\" src=\"https://cdn.cookielaw.org/scripttemplates/otSD"
+   }
+  }
+ },
+ "wayback": {
+  "per_state_2026": {
+   "AL": 144,
+   "AK": 104,
+   "AZ": 104,
+   "AR": 130,
+   "CA": 173,
+   "CO": 91,
+   "CT": 206,
+   "DE": 144,
+   "DC": 130,
+   "FL": 0,
+   "GA": 0,
+   "HI": 0,
+   "ID": 0,
+   "IL": 0,
+   "IN": 0,
+   "IA": 0,
+   "KS": 0,
+   "KY": 105,
+   "LA": 110,
+   "ME": 217,
+   "MD": 137,
+   "MA": 216,
+   "MI": 202,
+   "MN": 146,
+   "MS": 110,
+   "MO": 150,
+   "MT": 0,
+   "NE": 0,
+   "NV": 0,
+   "NH": 0,
+   "NJ": 0,
+   "NM": 0,
+   "NY": 0,
+   "NC": 128,
+   "ND": 136,
+   "OH": 144,
+   "OK": 0,
+   "OR": 0,
+   "PA": 0,
+   "RI": 0,
+   "SC": 0,
+   "SD": 0,
+   "TN": 0,
+   "TX": 128,
+   "UT": 103,
+   "VT": 182,
+   "VA": 0,
+   "WA": 0,
+   "WV": 0,
+   "WI": 0,
+   "WY": 0
+  },
+  "per_state_since_2023": {
+   "AL": 516,
+   "AK": 464,
+   "AZ": 554,
+   "AR": 499,
+   "CA": 790,
+   "CO": 463,
+   "CT": 635,
+   "DE": 516,
+   "DC": 499,
+   "FL": 0,
+   "GA": 0,
+   "HI": 0,
+   "ID": 0,
+   "IL": 0,
+   "IN": 0,
+   "IA": 0,
+   "KS": 0,
+   "KY": 458,
+   "LA": 470,
+   "ME": 627,
+   "MD": 509,
+   "MA": 643,
+   "MI": 653,
+   "MN": 544,
+   "MS": 464,
+   "MO": 524,
+   "MT": 0,
+   "NE": 0,
+   "NV": 0,
+   "NH": 0,
+   "NJ": 0,
+   "NM": 0,
+   "NY": 0,
+   "NC": 522,
+   "ND": 504,
+   "OH": 541,
+   "OK": 0,
+   "OR": 0,
+   "PA": 0,
+   "RI": 0,
+   "SC": 0,
+   "SD": 0,
+   "TN": 0,
+   "TX": 533,
+   "UT": 459,
+   "VT": 586,
+   "VA": 0,
+   "WA": 0,
+   "WV": 0,
+   "WI": 0,
+   "WY": 0
+  },
+  "tx_days_sample": [
+   "20261020",
+   "20261022",
+   "20261024",
+   "20261025",
+   "20261026",
+   "20261027",
+   "20261028",
+   "20261029",
+   "20261030",
+   "20261031",
+   "20261101",
+   "20261102",
+   "20261103",
+   "20261104",
+   "20261105",
+   "20261106",
+   "20261107",
+   "20261111",
+   "20261113",
+   "20261116",
+   "20261118",
+   "20261119",
+   "20261122",
+   "20261123",
+   "20261125"
+  ]
+ }
+}
