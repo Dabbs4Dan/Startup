@@ -75,6 +75,11 @@ def append(feed, header, rows, day):
         w.writerows(rows)
 
 
+def first(*vals):
+    """First value that isn't None (0 counts as a real value)."""
+    return next((v for v in vals if v is not None), None)
+
+
 def num(x):
     try:
         return float(x)
@@ -90,16 +95,18 @@ def kalshi_markets(ts_utc, ts_et, day, state):
         data = fetch(f"{KALSHI}/markets?series_ticker={series}&status=open&limit=200", as_json=True)
         for m in data.get("markets", []):
             yb, ya = num(m.get("yes_bid_dollars")), num(m.get("yes_ask_dollars"))
-            vol = num(m.get("volume_fp")) or num(m.get("volume"))
+            vol = first(num(m.get("volume_fp")), num(m.get("volume")))
             rows.append([ts_utc, ts_et, series, m.get("event_ticker"), m.get("ticker"), num(m.get("floor_strike")),
                          yb, ya, num(m.get("no_bid_dollars")), num(m.get("no_ask_dollars")),
-                         num(m.get("last_price_dollars")), vol, num(m.get("volume_24h_fp")) or num(m.get("volume_24h")),
-                         num(m.get("open_interest_fp")) or num(m.get("open_interest")), m.get("close_time")])
+                         num(m.get("last_price_dollars")), vol, first(num(m.get("volume_24h_fp")), num(m.get("volume_24h"))),
+                         first(num(m.get("open_interest_fp")), num(m.get("open_interest"))),
+                         num(m.get("yes_bid_size_fp")), num(m.get("yes_ask_size_fp")), m.get("close_time")])
             mid = (yb + ya) / 2 if yb is not None and ya is not None else None
             if series in BOOK_SERIES and mid is not None and 0.03 <= mid <= 0.97:
                 live.append((vol or 0, m.get("ticker"), m.get("event_ticker")))
     append("kalshi_markets", ["ts_utc", "ts_et", "series", "event", "ticker", "strike", "yes_bid", "yes_ask",
-                              "no_bid", "no_ask", "last", "volume", "volume_24h", "open_interest", "close_time"], rows, day)
+                              "no_bid", "no_ask", "last", "volume", "volume_24h", "open_interest",
+                              "yes_bid_size", "yes_ask_size", "close_time"], rows, day)
     state["live"] = sorted(live, reverse=True)[:BOOK_TOP_N]
     return f"{len(rows)} strikes, {len(state['live'])} live"
 
