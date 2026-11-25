@@ -59,6 +59,7 @@ def loves():
         except (TypeError, ValueError, KeyError):
             continue
         cells.setdefault((round(la / 2), round(lo / 2.5)), (la, lo))
+    TA_GRID[:] = list(cells.values())
     url = "https://www.loves.com/api/search_stores"
     variant, seen, rows, tried = None, {}, [], []
     for la, lo in cells.values():
@@ -95,16 +96,40 @@ def loves():
     return rows, len(seen)
 
 
+TA_GRID = []   # filled from Love's store cells (US truck-corridor coverage), 100-mile search radius per point
+
+
 def ta():
-    rows = []
-    try:
-        data = get_json("https://www.ta-petro.com/api/locations/coordinates/?")
-        locs = data if isinstance(data, list) else data.get("locations", data.get("data", []))
-        if locs:
-            (OUT / "_schema_ta.json").write_text(json.dumps({"n": len(locs), "keys": sorted(locs[0].keys()) if isinstance(locs[0], dict) else str(locs[0])[:300]}, indent=1))
-    except Exception as e:  # noqa
-        (OUT / "_schema_ta.json").write_text(json.dumps({"error": str(e)[:300]}))
-    return rows
+    """TA/Petro: GET /api/locations/coordinates/?lat=&lon= returns an HTML panel of sites within 100 miles,
+    each with fuel prices. We search the same truck-corridor grid as Love's and de-duplicate by site."""
+    import re, html as H
+    rows, seen = [], {}
+    for i, (la, lo) in enumerate(TA_GRID):
+        try:
+            req = urllib.request.Request(f"https://www.ta-petro.com/api/locations/coordinates/?lat={la:.3f}&lon={lo:.3f}",
+                                         headers={**UA, "Accept": "text/html"})
+            with urllib.request.urlopen(req, timeout=40) as r:
+                page = r.read().decode("utf-8", "replace")
+        except Exception:  # noqa
+            continue
+        if i == 0 or (not seen and page.count("strong>") > 5):
+            (OUT / "_sample_ta.html").write_text(page[:60000])
+        # one card per site: split on the site link (/location/<state>/<city>/<id> or similar)
+        for card in re.split(r'(?=<a[^>]+href="/location/)', page)[1:]:
+            m = re.search(r'href="(/location/[^"]+)"', card)
+            if not m:
+                continue
+            key = m.group(1)
+            parts = key.strip("/").split("/")
+            state = parts[1].upper() if len(parts) > 1 and len(parts[1]) == 2 else None
+            text = H.unescape(re.sub(r"<[^>]+>", " | ", card))
+            for prod, price in re.findall(r"(Diesel|DEF|Unleaded|Regular|Premium|Plus|Midgrade|Auto Diesel)[^0-9$]{0,80}?\$?\s?([0-9]\.[0-9]{2,3})", text, re.I):
+                seen.setdefault((key, prod.lower()), ["ta", key, state, None, None, None, prod, float(price), None])
+        time.sleep(0.4)
+    rows = list(seen.values())
+    (OUT / "_schema_ta.json").write_text(json.dumps({"grid_points": len(TA_GRID), "sites": len({r[1] for r in rows}),
+                                                     "rows": len(rows), "sample": rows[:5]}, indent=1))
+    return rows, len({r[1] for r in rows})
 
 
 def snapshot():
