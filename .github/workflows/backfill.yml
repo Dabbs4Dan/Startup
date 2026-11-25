@@ -33,10 +33,15 @@ jobs:
           python3 tools/backfill.py
           python3 tools/backfill_history.py KXDIESELD
           python3 tools/story.py
+      - name: Daily recorders (AAA states, HO at 10 AM) - fail soft
+        continue-on-error: true
+        run: python3 tools/daily_recorders.py
+      - name: Research panel (one row per day)
+        run: python3 tools/panel.py
       - name: Commit data
         run: |
           git config user.name "kalshi-twins-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/
+          git add data/ research/connectivity/
           git diff --cached --quiet || git commit -m "data: backfill $(date -u +%Y-%m-%d)"
           git push origin HEAD:kalshi-twins

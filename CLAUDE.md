@@ -135,6 +135,12 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-25 (11:30 AM) · 60-day panel + daily recorders + top-3 liquidity rule
+- **Did:** `tools/panel.py` → table `panel_daily` + `data/exports/panel_daily.csv` (one row per event day, 91 point-in-time columns: calendar, AAA trend/regime, HO/Brent last-known closes, price slices, model F no-peek, Kalshi 10 AM + close: crowd forecast, σ, Goldilocks bet, top-3 liquid Yes/No pairs, misses). Sheet tab "60 Day" mirrors the last 60 rows. `tools/daily_recorders.py` (AAA 51-state snapshot → `aaa_state_daily`; HO 10 AM from Yahoo 5-min → `research/connectivity/ho_10am.json`), both fail-soft, added to backfill workflow (still static: runs on push / by hand; daily schedule NOT turned on — Dan's call).
+- **Decided:** Formula #19 "Top-3 liquid pairs": line tradeable if traded since open, spread ≤10¢, 3–97%; rank by volume since open; keep 3. Inputs needing a live realtime system marked ⚡ in the sheet; forward-only daily recorders marked 📼.
+- **Learned:** Last 60 days: crowd 10 AM median miss 0.34¢, close 0.13¢, model F (no peek) 0.59¢. 10 AM has no tradeable line on 10/60 days; at close usually only 1 line is between 3–97%.
+- **Next:** Bricks tab (hypothesis cards) on top of panel_daily.
+
 ### 2026-11-25 (3:50 AM) · Connectivity tier 2 + back-solved state weights
 - **Did:** `tools/connectivity_pull.py` + `.github/workflows/connectivity.yml` (one-shot; excluded from backfill trigger). Raw output: `research/connectivity/tier2_pull*.json`. Filled tier-2 rows in the sheet's Connectivity tab.
 - **Learned:**
