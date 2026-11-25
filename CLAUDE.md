@@ -101,6 +101,8 @@ Losses come from the intraday info gap (market forecast moves 0.73¢ on losing d
 
 **Official diesel rulebook (verified 2026-11-25):** KXDIESELD series `contract_terms_url` = ECONSTAT.pdf (same generic econ-stat terms). Source Agency = AAA (Trading Economics backup). First release counts, later revisions ignored. Market rule: "If the Diesel Price on <date> is above $K → Yes", strike_type greater, settlement timer 30 min, closes early "if the economic data is released". Fee type quadratic, multiplier 1. ⚠️ Prohibition: people with material non-public info on the Underlying (or employed by the Source Agency) may not trade → check any paid OPIS data for MNPI risk before using it.
 
+**Formula registry + master-panel column plan:** `research/2026-11-25_formulas-and-panel-columns.md` (18 formulas, ~50 columns with ease/parent/source).
+
 **Free AAA history hack:** Kalshi's settled KXDIESELD markets carry `expiration_value` = the exact AAA number (verified 5.7982 = AAA site).
 
 ---
