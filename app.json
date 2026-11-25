@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "daily-bread",
+    "name": "Daily Bread",
     "slug": "daily-bread",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true
     },
@@ -19,6 +19,18 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "owner": "dabbs4dan",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/84b86a72-d607-4b6f-98fc-d0f5f0d3673f"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "84b86a72-d607-4b6f-98fc-d0f5f0d3673f"
+      }
     }
   }
 }
