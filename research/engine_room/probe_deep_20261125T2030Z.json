@@ -1,0 +1,136 @@
+{
+ "pilot": {
+  "status": 200,
+  "len": 115798,
+  "script_srcs": [
+   "https://cdn.bc0a.com/autopilot/f00000000286747/autopilot_sdk.js",
+   "https://cdn.cookielaw.org/consent/0198e0d9-943a-7950-9e34-0b30943912c2/otSDKStub.js"
+  ],
+  "inline_json_keys": [
+   "dth\" />\n\n        <!--12qhfyh--><script async=\"\" defer=\"\" src=\"https://cdn.bc0a.com/autopilot/f00000000286747/autopilot_sdk.js\" class=\"svelte-12qhfyh\"></script> <script class=\"svelte-12qhfyh\">\n        window.__INITIAL_SCREEN_WIDTH__ =\n            window.innerWidth ||\n            (window.matchMedia('(max-width: 1199px)').matches ? 800 : 1400);\n    </script><!----><!--1a69gmx--><meta name=\"title\" content=\"Pilot Company | Travel Center &amp; Gas Station Network\"/> <meta name=\"description\" content=\"&"
+  ],
+  "hits": [],
+  "tries": {
+   "https://www.pilotflyingj.com/api/locations": {
+    "status": 200,
+    "type": "text/html",
+    "len": 115798,
+    "head": "<!doctype html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\" />\n        <link rel=\"icon\" href=\"/images/favicon.ico\" />\n\n        <!-- let's provision our fonts eagerly to prevent FOUC -->\n        <!-- Roboto Flex import includes wght, wdth, and ytlc-->\n        <link\n            rel=\"preload\"\n            href=\"/fonts/Roboto/RobotoFlex.woff2\"\n            as=\"font\"\n            type=\"font/woff2\"\n            crossorigin\n        />\n\n        <!-- Google Consent Mode v2 - Set defaults before",
+    "prices": [],
+    "diesel_ctx": [
+     "<meta name=\"description\" content=\"&lt;p>Pilot Company is a travel center network of truck stops, Pilot Eats, gas stations, the Pilot app, and gas and diesel fuel.&lt;/p>\"/> <meta name=\"keywords\" content=\"Pilot, Pilot Company, Pilot Flying J, Flying J\"/> <!--[0--><link rel=\"canonical\" href=\"https://p",
+     "ng\">Mobile Fueling <!--[-1--><!--]--></a><!--]--></li><li class=\"menu-item svelte-12yw0q0\"><!--[--><a class=\"_custom nav-link  svelte-15h6n9f\" href=\"/diesel-exhaust-fluid\">Diesel Exhaust Fluid <!--[-1--><!--]--></a><!--]--></li><li class=\"menu-item svelte-12yw0q0\"><!--[--><a class=\"_custom nav-link ",
+     "-[-1--><!--]--></a><!--]--></li><li class=\"menu-item svelte-12yw0q0\"><!--[--><a class=\"_custom nav-link  svelte-15h6n9f\" href=\"/diesel-exhaust-fluid\">Diesel Exhaust Fluid <!--[-1--><!--]--></a><!--]--></li><li class=\"menu-item svelte-12yw0q0\"><!--[--><a class=\"_custom nav-link  svelte-15h6n9f\" href=",
+     "margin=''; this.style.position=''; this.style.zIndex='';\"><sup>3</sup></a>, and owner/operator fleets can save up to an average of $3,876 per year on diesel.<a href=\"#average-annual-savings\" target=\"_self\" title=\"65 Cents Savings\" onfocus=\"this.style.outline='none'; this.style.boxShadow='0 0 0 2px v"
+    ]
+   },
+   "https://www.pilotflyingj.com/api/stores": {
+    "status": 200,
+    "type": "text/html",
+    "len": 115798,
+    "head": "<!doctype html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\" />\n        <link rel=\"icon\" href=\"/images/favicon.ico\" />\n\n        <!-- let's provision our fonts eagerly to prevent FOUC -->\n        <!-- Roboto Flex import includes wght, wdth, and ytlc-->\n        <link\n            rel=\"preload\"\n            href=\"/fonts/Roboto/RobotoFlex.woff2\"\n            as=\"font\"\n            type=\"font/woff2\"\n            crossorigin\n        />\n\n        <!-- Google Consent Mode v2 - Set defaults before",
+    "prices": [],
+    "diesel_ctx": [
+     "<meta name=\"description\" content=\"&lt;p>Pilot Company is a travel center network of truck stops, Pilot Eats, gas stations, the Pilot app, and gas and diesel fuel.&lt;/p>\"/> <meta name=\"keywords\" content=\"Pilot, Pilot Company, Pilot Flying J, Flying J\"/> <!--[0--><link rel=\"canonical\" href=\"https://p",
+     "ng\">Mobile Fueling <!--[-1--><!--]--></a><!--]--></li><li class=\"menu-item svelte-12yw0q0\"><!--[--><a class=\"_custom nav-link  svelte-15h6n9f\" href=\"/diesel-exhaust-fluid\">Diesel Exhaust Fluid <!--[-1--><!--]--></a><!--]--></li><li class=\"menu-item svelte-12yw0q0\"><!--[--><a class=\"_custom nav-link ",
+     "-[-1--><!--]--></a><!--]--></li><li class=\"menu-item svelte-12yw0q0\"><!--[--><a class=\"_custom nav-link  svelte-15h6n9f\" href=\"/diesel-exhaust-fluid\">Diesel Exhaust Fluid <!--[-1--><!--]--></a><!--]--></li><li class=\"menu-item svelte-12yw0q0\"><!--[--><a class=\"_custom nav-link  svelte-15h6n9f\" href=",
+     "margin=''; this.style.position=''; this.style.zIndex='';\"><sup>3</sup></a>, and owner/operator fleets can save up to an average of $3,876 per year on diesel.<a href=\"#average-annual-savings\" target=\"_self\" title=\"65 Cents Savings\" onfocus=\"this.style.outline='none'; this.style.boxShadow='0 0 0 2px v"
+    ]
+   },
+   "https://www.pilotflyingj.com/fuel-prices/__data.json": {
+    "status": 200,
+    "type": "text/html",
+    "len": 115798,
+    "head": "<!doctype html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\" />\n        <link rel=\"icon\" href=\"/images/favicon.ico\" />\n\n        <!-- let's provision our fonts eagerly to prevent FOUC -->\n        <!-- Roboto Flex import includes wght, wdth, and ytlc-->\n        <link\n            rel=\"preload\"\n            href=\"/fonts/Roboto/RobotoFlex.woff2\"\n            as=\"font\"\n            type=\"font/woff2\"\n            crossorigin\n        />\n\n        <!-- Google Consent Mode v2 - Set defaults before",
+    "prices": [],
+    "diesel_ctx": [
+     "<meta name=\"description\" content=\"&lt;p>Pilot Company is a travel center network of truck stops, Pilot Eats, gas stations, the Pilot app, and gas and diesel fuel.&lt;/p>\"/> <meta name=\"keywords\" content=\"Pilot, Pilot Company, Pilot Flying J, Flying J\"/> <!--[0--><link rel=\"canonical\" href=\"https://p",
+     "ng\">Mobile Fueling <!--[-1--><!--]--></a><!--]--></li><li class=\"menu-item svelte-12yw0q0\"><!--[--><a class=\"_custom nav-link  svelte-15h6n9f\" href=\"/diesel-exhaust-fluid\">Diesel Exhaust Fluid <!--[-1--><!--]--></a><!--]--></li><li class=\"menu-item svelte-12yw0q0\"><!--[--><a class=\"_custom nav-link ",
+     "-[-1--><!--]--></a><!--]--></li><li class=\"menu-item svelte-12yw0q0\"><!--[--><a class=\"_custom nav-link  svelte-15h6n9f\" href=\"/diesel-exhaust-fluid\">Diesel Exhaust Fluid <!--[-1--><!--]--></a><!--]--></li><li class=\"menu-item svelte-12yw0q0\"><!--[--><a class=\"_custom nav-link  svelte-15h6n9f\" href=",
+     "margin=''; this.style.position=''; this.style.zIndex='';\"><sup>3</sup></a>, and owner/operator fleets can save up to an average of $3,876 per year on diesel.<a href=\"#average-annual-savings\" target=\"_self\" title=\"65 Cents Savings\" onfocus=\"this.style.outline='none'; this.style.boxShadow='0 0 0 2px v"
+    ]
+   },
+   "https://www.pilotflyingj.com/fuel-prices/__data.json?x-sveltekit-invalidated=01": {
+    "status": 200,
+    "type": "text/html",
+    "len": 115798,
+    "head": "<!doctype html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\" />\n        <link rel=\"icon\" href=\"/images/favicon.ico\" />\n\n        <!-- let's provision our fonts eagerly to prevent FOUC -->\n        <!-- Roboto Flex import includes wght, wdth, and ytlc-->\n        <link\n            rel=\"preload\"\n            href=\"/fonts/Roboto/RobotoFlex.woff2\"\n            as=\"font\"\n            type=\"font/woff2\"\n            crossorigin\n        />\n\n        <!-- Google Consent Mode v2 - Set defaults before",
+    "prices": [],
+    "diesel_ctx": [
+     "<meta name=\"description\" content=\"&lt;p>Pilot Company is a travel center network of truck stops, Pilot Eats, gas stations, the Pilot app, and gas and diesel fuel.&lt;/p>\"/> <meta name=\"keywords\" content=\"Pilot, Pilot Company, Pilot Flying J, Flying J\"/> <!--[0--><link rel=\"canonical\" href=\"https://p",
+     "ng\">Mobile Fueling <!--[-1--><!--]--></a><!--]--></li><li class=\"menu-item svelte-12yw0q0\"><!--[--><a class=\"_custom nav-link  svelte-15h6n9f\" href=\"/diesel-exhaust-fluid\">Diesel Exhaust Fluid <!--[-1--><!--]--></a><!--]--></li><li class=\"menu-item svelte-12yw0q0\"><!--[--><a class=\"_custom nav-link ",
+     "-[-1--><!--]--></a><!--]--></li><li class=\"menu-item svelte-12yw0q0\"><!--[--><a class=\"_custom nav-link  svelte-15h6n9f\" href=\"/diesel-exhaust-fluid\">Diesel Exhaust Fluid <!--[-1--><!--]--></a><!--]--></li><li class=\"menu-item svelte-12yw0q0\"><!--[--><a class=\"_custom nav-link  svelte-15h6n9f\" href=",
+     "margin=''; this.style.position=''; this.style.zIndex='';\"><sup>3</sup></a>, and owner/operator fleets can save up to an average of $3,876 per year on diesel.<a href=\"#average-annual-savings\" target=\"_self\" title=\"65 Cents Savings\" onfocus=\"this.style.outline='none'; this.style.boxShadow='0 0 0 2px v"
+    ]
+   },
+   "https://locations.pilotflyingj.com/__data.json": {
+    "status": 200,
+    "type": "application/json",
+    "len": 50,
+    "head": "{\"type\":\"redirect\",\"location\":\"/locations/search\"}",
+    "prices": [],
+    "diesel_ctx": []
+   }
+  }
+ },
+ "ta": {
+  "status": 200,
+  "len": 113669,
+  "script_srcs": [
+   "/sb/sitebuilder-js-bundle.js.vRelease-219",
+   "/sc/c8213103.js.vRelease-219",
+   "https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"
+  ],
+  "inline_json_keys": [],
+  "hits": [
+   {
+    "file": "https://www.ta-petro.com/sc/c8213103.js.vRelease-219",
+    "ctx": "(){var resultsDiv=document.getElementById('nearestLocationsSearchResults');var loadingDiv=document.getElementById('nearestLocationsLoading');function successCallback(position){let lat=position.coords.latitude;let lon=position.coords.longitude;fetch('/api/locations/coordinates/?'+new URLSearchParams({lat:lat,lon:lon,})).then((response)=>{if(!response.ok)throw new Error(response.status);resultsDiv.style.display=\"block\";loadingDiv.style.display=\"none\";response.text().then((text)=>{resultsDiv.innerH"
+   }
+  ],
+  "tries": {
+   "https://www.ta-petro.com/api/locations/coordinates/?": {
+    "status": 200,
+    "type": "text/html; charset=utf-8",
+    "len": 681,
+    "head": "\r\n<div class=\"text-center\">\r\n    <button class=\"nearest-locations-accordion nearest-location-btn\" id=\"nearestLocationsAccordion\"><strong>0</strong> Locations within <strong>100</strong> miles of you</button>\r\n</div>\r\n<div class=\"nearest-locations-panel\" id=\"nearestLocationsPanel\" style=\"display: none\">\r\n    <div class=\"container-fluid mt-5\">\r\n        <div class=\"row justify-content-center\">\r\n        </div>\r\n    </div>\r\n    <script type=\"application/ld+json\">\r\n        {\r\n            \"@context\": \"",
+    "prices": [],
+    "diesel_ctx": []
+   },
+   "https://www.ta-petro.com/api/locations/coordinates/?lat=36.16&lon=-86.78": {
+    "status": 200,
+    "type": "text/html; charset=utf-8",
+    "len": 42987,
+    "head": "\r\n<div class=\"text-center\">\r\n    <button class=\"nearest-locations-accordion nearest-location-btn\" id=\"nearestLocationsAccordion\"><strong>7</strong> Locations within <strong>100</strong> miles of you</button>\r\n</div>\r\n<div class=\"nearest-locations-panel\" id=\"nearestLocationsPanel\" style=\"display: none\">\r\n    <div class=\"container-fluid mt-5\">\r\n        <div class=\"row justify-content-center\">\r\n                <div class=\"location-wrap col-lg-4 col-md-4 col-sm-6 mb-5 nearest\">\r\n                    ",
+    "prices": [],
+    "diesel_ctx": [
+     "strong>5.499</strong></div>\r\n                                        <div class=\"fuel-description\">\r\n                                            Auto Diesel\r\n                                        </div>\r\n                                    </li>\r\n                                    <li class=\"col-",
+     "<strong>5.499</strong></div>\r\n                                        <div class=\"fuel-description\">\r\n                                            BIO DIESEL 20% ULS\r\n                                        </div>\r\n                                    </li>\r\n                                    <li cla",
+     ".499</strong></div>\r\n                                            <div class=\"fuel-description\">\r\n                                                Auto Diesel\r\n                                            </div>\r\n                                        </div>\r\n                                        <d",
+     "5.499</strong></div>\r\n                                            <div class=\"fuel-description\">\r\n                                                BIO DIESEL 20% ULS\r\n                                            </div>\r\n                                        </div>\r\n                                  "
+    ]
+   },
+   "https://www.ta-petro.com/api/locations/coordinates/?lat=41.5&lon=-87.9": {
+    "status": 200,
+    "type": "text/html; charset=utf-8",
+    "len": 134286,
+    "head": "\r\n<div class=\"text-center\">\r\n    <button class=\"nearest-locations-accordion nearest-location-btn\" id=\"nearestLocationsAccordion\"><strong>17</strong> Locations within <strong>100</strong> miles of you</button>\r\n</div>\r\n<div class=\"nearest-locations-panel\" id=\"nearestLocationsPanel\" style=\"display: none\">\r\n    <div class=\"container-fluid mt-5\">\r\n        <div class=\"row justify-content-center\">\r\n                <div class=\"location-wrap col-lg-4 col-md-4 col-sm-6 mb-5 nearest\">\r\n                   ",
+    "prices": [],
+    "diesel_ctx": [
+     "strong>5.459</strong></div>\r\n                                        <div class=\"fuel-description\">\r\n                                            Auto Diesel\r\n                                        </div>\r\n                                    </li>\r\n                                    <li class=\"col-",
+     "<strong>5.459</strong></div>\r\n                                        <div class=\"fuel-description\">\r\n                                            BIO DIESEL 20% ULS\r\n                                        </div>\r\n                                    </li>\r\n                                    <li cla",
+     ".459</strong></div>\r\n                                            <div class=\"fuel-description\">\r\n                                                Auto Diesel\r\n                                            </div>\r\n                                        </div>\r\n                                        <d",
+     "5.459</strong></div>\r\n                                            <div class=\"fuel-description\">\r\n                                                BIO DIESEL 20% ULS\r\n                                            </div>\r\n                                        </div>\r\n                                  "
+    ]
+   },
+   "https://www.ta-petro.com/location/tn/nashville": {
+    "status": 404,
+    "type": "",
+    "len": 400,
+    "head": "<!DOCTYPE html>\r\n<html dir=\"ltr\" lang=\"en\" class=\"no-js usn\">\r\n<head>\r\n    <!-- OneTrust Cookies Consent Notice start for ta-petro.com -->\r\n    <script type=\"text/javascript\" charset=\"UTF-8\" data-domain-script=\"81e32590-efe2-4f46-be5c-31f3653855e9\" src=\"https://cdn.cookielaw.org/scripttemplates/otSDKStub.js\"></script>\r\n    <script type=\"text/javascript\">\r\n        function OptanonWrapper() { }\r\n   ",
+    "prices": [],
+    "diesel_ctx": []
+   }
+  }
+ }
+}
