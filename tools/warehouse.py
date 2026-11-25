@@ -33,7 +33,9 @@ def _files(pattern):
 
 
 def _csv(pattern):
-    return f"read_csv('{ROOT / pattern}', union_by_name=true, filename=true, all_varchar=true, header=true)"
+    opts = ("union_by_name=true, filename=true, all_varchar=true, header=true, delim=',', "
+            "quote='\"', escape='\"', null_padding=true, strict_mode=false")
+    return f"read_csv('{ROOT / pattern}', {opts})"
 
 
 def _attach_sqlite(con, name, path):

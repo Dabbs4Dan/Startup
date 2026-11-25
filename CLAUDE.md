@@ -51,6 +51,7 @@ AAA diesel number and find gaps vs. Kalshi's odds. Demo money only until a strat
 | **Strategy engine** | `nautilus/` (read `nautilus/README.md`) | NautilusTrader **2.0.0rc9, locked**. Same strategy code → backtest → Kalshi demo → live. Strategy IDs = sheet tab **Strategies** (S00 = replay check, no orders). |
 | DIY scheduler | `.github/workflows/live_recorder.yml` (relay step) | ⚠️ GitHub ignores `schedule:` off `main`. Each recorder shift starts the next, then runs `nautilus.yml` + daily backfill if none in 20h. Pause: commit `data/live/STOP`. |
 | **Live recorder** | `tools/live_recorder.py` → `data/live/<feed>/YYYY-MM-DD.csv` | Free GitHub shifts, every 5 min: Kalshi diesel+gas strikes, order book (15 min), AAA national + flip log (15 min), HO/Brent/WTI/RBOB/natgas (TradingView, ~10 min delayed). Map to Inputs Map rows: `research/2026-11-25_live-recorders.md` + sheet column N. |
+| **Warehouse** ⭐ | `tools/warehouse.py` (DuckDB) + `data/lake/history/` (`tools/history_pull.py`, `warehouse.yml`) | ONE query layer over every source (diesel + gas SQLite, live CSVs, history CSVs, Engine Room files). Unified views: `aaa_daily`, `state_prices`, `ladder`, `trades`, `futures_bars`, `spot_daily`, `eia_weekly`, `orderbook`, `truckstops`, each with `era` (history / since_live). Catalog → `data/warehouse_catalog.csv` → sheet tab **Warehouse**. Notes: `research/2026-11-25_warehouse.md`. |
 
 ### Tables & views (what to query)
 
@@ -146,6 +147,11 @@ Template:
 - **Decided:** …
 - **Next:** …
 ```
+
+### 2026-11-25 (5:10 PM) · Warehouse layer + free long history (EIA) + Wishlist tab
+- **Did:** `tools/warehouse.py`: DuckDB views over all sources, both products, with `era` = history / since_live (go-live 19:21 UTC). `tools/history_pull.py` + `warehouse.yml` (relay runs it daily): EIA 17 series, Yahoo intraday (monthly files, merge-forward), Internet Archive AAA **national** snapshots since 2019 (resumable). Sheet: **Warehouse** tab (IMPORTDATA of the catalog) and **Wishlist** tab (W1–W17).
+- **Learned:** EIA reachable from GitHub (FRED isn't). Spot ULSD 2006+, Brent/WTI 1986+, HO settles 1980–Apr 2024, weekly retail diesel by PADD 1994+. Yahoo intraday blocked from GitHub (all fail). AAA Monday vs EIA weekly diesel gap: ~0–4¢ in Oct → +12.3¢ on 11/23.
+- **Next:** read the Internet Archive national run → years of L1 history (diesel before Aug 2026); point Engine Room + Nautilus loaders at warehouse views; HO intraday history = Wishlist W1 (Databento credits) unless a free source opens.
 
 ### 2026-11-25 (4:45 PM) · L3 truckstops live (Love's) + Wayback L2 history + sheet auto-feed
 - **Did:** `tools/probe_sources.py` (+`probe.yml`) found Love's feeds: `GET /api/fetch_stores` (734 stores, no prices) and `POST /api/search_stores` body `{"lat","lng","radius":300}` → stores WITH `fuelPrices` (cashPrice, fuelType, productName). `tools/truckstops.py` searches a ~150-mile grid of store points (151 cells) → `data/live/truckstops/YYYY-MM-DD.csv`; `truckstops.yml` runs hourly for ~5.5h, started by the relay each shift. TA/Petro added: `GET /api/locations/coordinates/?lat=&lon=` returns an HTML panel of sites within 100 mi with fuel prices (first pull 120 sites, 110 diesel). Pilot (SvelteKit + Contentstack): no open price feed found (`/api/*` and `__data.json` return the page shell). `tools/wayback_states.py` (+`history.yml`, resumable) recovers archived `gasprices.aaa.com/?state=XX` pages since Aug 2026 → `research/engine_room/wayback_states/<ST>.csv` (diesel + regular in one pass); Engine Room L2 now reads them (exact = current/yesterday columns; needs all 51 states for an exact point, 48–50 scored separately with re-scaled weights). Exports `engine_room_l2_points.csv`; sheet Engine Room tab scorecard + points are written by Claude via `tools/sheet_payload.py` + Sheets connector (IMPORTDATA dropped: needs a desktop "Allow access" click).
