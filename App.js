@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  View, Text, TextInput, Pressable, ScrollView, Modal, SafeAreaView,
+  View, Text, TextInput, Pressable, ScrollView, Modal,
   KeyboardAvoidingView, Platform, Linking, StatusBar, useColorScheme, Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 const LABELS = {
   guide: { name: 'Guide', emoji: '💡', c: '#f5c518', bg: '#fff6cf', bgD: '#3a3215' },
@@ -114,6 +115,14 @@ function NoteCard({ n, t, onToggle, onOpen }) {
 }
 
 export default function App() {
+  return (
+    <SafeAreaProvider>
+      <Planner />
+    </SafeAreaProvider>
+  );
+}
+
+function Planner() {
   const t = useTheme();
   const verse = useMemo(todayVerse, []);
   const [notes, setNotes] = useState([]);
