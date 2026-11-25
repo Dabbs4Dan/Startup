@@ -8,9 +8,11 @@ Usage: python3 tools/backfill_history.py [SERIES ...]
 import json, re, sys, time, datetime, sqlite3, pathlib, urllib.request, urllib.error
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-DB = ROOT / "data" / "kalshi_twins.db"
+sys.path.insert(0, str(ROOT / "tools"))
+import product  # noqa: E402
+DB = product.DB
 API = "https://api.elections.kalshi.com/trade-api/v2"
-SERIES = sys.argv[1:] or ["KXDIESELD", "KXAAAGASD", "KXAAAGASW"]
+SERIES = sys.argv[1:] or product.SERIES
 NOW = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 MON = {m: i for i, m in enumerate("JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC".split(), 1)}
 ET = datetime.timezone(datetime.timedelta(hours=-5))
@@ -89,8 +91,9 @@ def main():
                 if (num(m.get("volume_fp")) or 0) == 0:          # never traded -> no useful candles
                     continue
                 st, en = to_ts(m["open_time"]), to_ts(m["close_time"])
-                if en - st > 2 * 86400:                           # keep DB small: last 48h before close is enough
-                    st = en - 2 * 86400
+                H = product.C["candle_hours"] * 3600            # keep DB small: only the last N hours before close
+                if en - st > H:
+                    st = en - H
                 ser = m.get("series_ticker") or t.split("-")[0]
                 q = f"start_ts={st}&end_ts={en}&period_interval=60"
                 cs = get(f"{API}/series/{ser}/markets/{t}/candlesticks?{q}").get("candlesticks") or \
@@ -110,9 +113,9 @@ def main():
                 time.sleep(0.15)
             con.commit()
         print(f"{series}: {nm} markets stored, {nc} new hourly candles")
-        if series == "KXDIESELD":   # copy settled AAA values into diesel_daily (fills blanks only)
+        if series in product.SERIES:   # copy settled AAA values into diesel_daily (fills blanks only)
             for d, v in con.execute("""SELECT event_date, MAX(expiration_value) FROM kalshi_markets
-                                      WHERE series_ticker='KXDIESELD' AND expiration_value IS NOT NULL GROUP BY event_date""").fetchall():
+                                      WHERE series_ticker=? AND expiration_value IS NOT NULL GROUP BY event_date""", (series,)).fetchall():
                 con.execute("INSERT OR IGNORE INTO diesel_daily (date, updated_at) VALUES (?, ?)", (d, NOW))
                 con.execute("UPDATE diesel_daily SET aaa_diesel=COALESCE(aaa_diesel, ?), aaa_source=COALESCE(aaa_source,'kalshi_settlement'), updated_at=? WHERE date=?", (v, NOW, d))
             con.commit()

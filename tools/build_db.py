@@ -5,10 +5,12 @@ Safe to re-run any time: tables use CREATE IF NOT EXISTS and seeds use upserts
 that never overwrite a value already filled by a better source.
 Usage:  python3 tools/build_db.py
 """
-import sqlite3, datetime, pathlib
+import sqlite3, datetime, pathlib, sys
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import product  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-DB = ROOT / "data" / "kalshi_twins.db"
+DB = product.DB
 SCHEMA = ROOT / "data" / "schema.sql"
 NOW = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -50,6 +52,11 @@ def main():
     DB.parent.mkdir(parents=True, exist_ok=True)
     con = sqlite3.connect(DB)
     con.executescript(SCHEMA.read_text())
+    if product.PRODUCT != "diesel":       # gas twin: schema + readable view only (diesel seeds do not apply)
+        con.execute("DROP VIEW IF EXISTS gas_daily")
+        con.execute("CREATE VIEW gas_daily AS SELECT date, aaa_diesel AS aaa_regular_gas, aaa_source, brent_usd_bbl, brent_source, "
+                    "ulsd_nyh_usd_gal AS rbob_usd_gal, ulsd_source AS rbob_source, notes, updated_at FROM diesel_daily")
+        con.commit(); con.close(); print(f"OK -> {DB}"); return
     con.executemany("INSERT OR REPLACE INTO sources VALUES (?,?,?,?,?)", SOURCES)
     for d, aaa, aaas, b, bs, u, us, notes in SEED_DAILY:
         con.execute("""

@@ -15,9 +15,15 @@ import sqlite3, csv, pathlib, datetime as dt, math, json
 from zoneinfo import ZoneInfo
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-con = sqlite3.connect(ROOT / "data" / "kalshi_twins.db")
+import sys as _sys
+_sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import product  # noqa: E402
+con = sqlite3.connect(product.DB)
 D = dt.date.fromisoformat
-TAX = 0.6026
+TAX = product.C["tax"]
+NORMAL = product.C["normal_delivery"]       # None -> trailing 90-day median of the delivery slice
+MF = product.C["model_f"]                  # None -> model F not fitted for this product
+_deliv_hist = []
 HOLIDAYS = {"2026-09-07": "Labor Day", "2026-10-12": "Columbus Day", "2026-11-11": "Veterans Day",
             "2026-11-26": "Thanksgiving", "2026-12-25": "Christmas", "2026-07-03": "July 4 (obs.)"}
 HOLIDAY_WEEKS = {("2026-11-23", "2026-11-29"): "Thanksgiving week", ("2026-09-04", "2026-09-07"): "Labor Day weekend"}
@@ -169,14 +175,17 @@ for E in events:
              ho_10am=ho10.get(bet), brent_last_close=bc[0][1] if bc else None)
     if a0 and h_last and bc:
         crude = bc[0][1] / 42
+        dl = a0 - h_last - TAX
+        norm = NORMAL if NORMAL is not None else (sorted(_deliv_hist[-90:])[len(_deliv_hist[-90:]) // 2] if len(_deliv_hist) >= 20 else None)
         r.update(crude_slice=round(crude, 4), refining_slice=round(h_last - crude, 4), taxes=TAX,
-                 delivery_slice=round(a0 - h_last - TAX, 4), delivery_gap_vs_090=round(a0 - h_last - TAX - 0.90, 4))
+                 delivery_slice=round(dl, 4), delivery_gap_vs_090=round(dl - norm, 4) if norm is not None else None)
+        _deliv_hist.append(dl)
     else:
         r.update(crude_slice=None, refining_slice=None, taxes=TAX, delivery_slice=None, delivery_gap_vs_090=None)
     # --- Model F (no peek): AAA - 6.72% x (delivery - 0.90) + 0 x HO today - 1.30c/$ x HO prior move ---
     # "prior move" = same window the formula was fitted on in story.py (last known close vs 4 closes earlier)
-    if a0 and r["delivery_slice"] is not None and r["ho_chg_4d_fit"] is not None:
-        r["model_F"] = round(a0 - 0.0672 * (r["delivery_slice"] - 0.90) - 0.0130 * r["ho_chg_4d_fit"], 4)
+    if MF and a0 and r["delivery_slice"] is not None and r["ho_chg_4d_fit"] is not None:
+        r["model_F"] = round(a0 - MF["k_delivery"] * (r["delivery_slice"] - NORMAL) - MF["k_ho_prior"] * r["ho_chg_4d_fit"], 4)
     else:
         r["model_F"] = None
     # --- Kalshi: 10 AM + close ---
@@ -213,7 +222,7 @@ con.execute("DROP TABLE IF EXISTS panel_daily")
 con.execute(f"CREATE TABLE panel_daily ({', '.join(cols)})")
 con.executemany(f"INSERT INTO panel_daily VALUES ({','.join('?' * len(cols))})", [tuple(r.get(c) for c in cols) for r in out])
 con.commit()
-with open(ROOT / "data" / "exports" / "panel_daily.csv", "w", newline="") as f:
+with open(product.EXPORTS / "panel_daily.csv", "w", newline="") as f:
     w = csv.DictWriter(f, fieldnames=cols)
     w.writeheader()
     w.writerows(out)

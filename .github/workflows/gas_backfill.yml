@@ -1,0 +1,63 @@
+name: gas twin data backfill
+
+# Gas twin (KXAAAGASD + old AAAGASD tickers) — same tools as diesel, run with KT_PRODUCT=gas.
+# Own database: data/gas/kalshi_gas.db (never mixes with diesel). Daily at 11:47 UTC (6:47 AM ET),
+# on pushes that touch the shared tools, or by hand from the Actions tab.
+on:
+  push:
+    branches: [kalshi-twins]
+    paths: ["tools/product.py", "tools/panel.py", "tools/testing.py", "tools/backfill.py", "tools/backfill_history.py",
+            "tools/build_db.py", "tools/kalshi_trades.py", ".github/workflows/gas_backfill.yml"]
+  workflow_dispatch:
+  schedule:
+    - cron: "47 11 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kalshi-twins-gas
+  cancel-in-progress: true
+
+env:
+  KT_PRODUCT: gas
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: kalshi-twins
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build + backfill (first run pulls ~3 years of gas markets; later runs only add new days)
+        run: |
+          pip install numpy scikit-learn
+          python3 tools/build_db.py
+          python3 tools/backfill.py
+          python3 tools/backfill_history.py
+      - name: Save progress (so a long first run never loses data)
+        run: |
+          git config user.name "kalshi-twins-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/gas/
+          git diff --cached --quiet || git commit -m "gas data: backfill $(date -u +%Y-%m-%d)"
+          git pull --rebase -X theirs origin kalshi-twins || true
+          git push origin HEAD:kalshi-twins || true
+      - name: Kalshi trade tape + 1-min candles (last 60 days) - fail soft
+        continue-on-error: true
+        timeout-minutes: 90
+        run: python3 tools/kalshi_trades.py 60
+      - name: Research panel + tests
+        run: |
+          python3 tools/panel.py
+          python3 tools/testing.py
+      - name: Commit data
+        run: |
+          git add data/gas/
+          git diff --cached --quiet || git commit -m "gas data: panel + tests $(date -u +%Y-%m-%d)"
+          git pull --rebase -X theirs origin kalshi-twins || true
+          git push origin HEAD:kalshi-twins

@@ -11,7 +11,10 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 API = "https://api.elections.kalshi.com/trade-api/v2"
 ET = datetime.timezone(datetime.timedelta(hours=-5))
 N = int(sys.argv[1]) if len(sys.argv) > 1 else 60
-con = sqlite3.connect(ROOT / "data" / "kalshi_twins.db")
+sys.path.insert(0, str(ROOT / "tools"))
+import product  # noqa: E402
+SER_IN = ",".join("'%s'" % s for s in product.SERIES)
+con = sqlite3.connect(product.DB)
 con.execute("""CREATE TABLE IF NOT EXISTS kalshi_trades (
     trade_id TEXT PRIMARY KEY, ticker TEXT, event_date TEXT, strike REAL, created_time TEXT, created_et TEXT,
     yes_price REAL, no_price REAL, count REAL, taker_side TEXT)""")
@@ -45,12 +48,12 @@ def to_ts(s):
     return int(datetime.datetime.fromisoformat(s.replace("Z", "+00:00")).timestamp())
 
 
-events = [r[0] for r in con.execute("SELECT DISTINCT event_date FROM kalshi_markets WHERE series_ticker='KXDIESELD' ORDER BY 1")][-N:]
+events = [r[0] for r in con.execute(f"SELECT DISTINCT event_date FROM kalshi_markets WHERE series_ticker IN ({SER_IN}) ORDER BY 1")][-N:]
 done = {r[0] for r in con.execute("SELECT DISTINCT ticker FROM kalshi_trades")}
 nt = nc = 0
 for E in events:
     mk = con.execute("""SELECT ticker, strike, volume, open_time, close_time, status FROM kalshi_markets
-                        WHERE event_date=? AND series_ticker='KXDIESELD'""", (E,)).fetchall()
+                        WHERE event_date=? AND series_ticker IN ({SER_IN})""".format(SER_IN=SER_IN), (E,)).fetchall()
     settled = all((s or "") in ("settled", "finalized", "determined") for *_, s in mk)
     # ---- trades ----
     for t, k, vol, ot, ct, st in mk:
@@ -80,7 +83,7 @@ for E in events:
             continue
         en = to_ts(ct); sa = max(to_ts(ot) if ot else en - 16 * 3600, en - 16 * 3600)
         qs = f"start_ts={sa}&end_ts={en}&period_interval=1"
-        cs = get(f"{API}/series/KXDIESELD/markets/{t}/candlesticks?{qs}").get("candlesticks") or \
+        cs = get(f"{API}/series/{t.split('-')[0]}/markets/{t}/candlesticks?{qs}").get("candlesticks") or \
              get(f"{API}/historical/markets/{t}/candlesticks?{qs}").get("candlesticks") or []
         for c in cs:
             ts = c["end_period_ts"]

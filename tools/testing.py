@@ -18,14 +18,17 @@ import sqlite3, csv, pathlib, sys, math, statistics as st, datetime as dt
 from zoneinfo import ZoneInfo
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-con = sqlite3.connect(ROOT / "data" / "kalshi_twins.db")
+import sys as _sys
+_sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import product  # noqa: E402
+con = sqlite3.connect(product.DB)
 N_DAYS = int(sys.argv[1]) if len(sys.argv) > 1 else 60
 MIN_N = 15
 
 cols = [d[1] for d in con.execute("PRAGMA table_info(panel_daily)")]
 panel = [dict(zip(cols, r)) for r in con.execute("SELECT * FROM panel_daily WHERE aaa_settled IS NOT NULL ORDER BY event_date")]
 START = sys.argv[2] if len(sys.argv) > 2 else None      # optional window: testing.py 0 2026-08-03 2026-09-25
-END = sys.argv[3] if len(sys.argv) > 3 else "2026-11-24"
+END = sys.argv[3] if len(sys.argv) > 3 else ("2026-11-24" if product.PRODUCT == "diesel" else "9999-12-31")
 if START:
     panel = [p for p in panel if START <= p["event_date"] <= END]
 else:
@@ -184,6 +187,7 @@ add("T3.3-weekend-7585", 3, "T2.3-Weekend", "Weekend × 75–85¢", "Weekend bet
 try:
     from sklearn.tree import DecisionTreeClassifier
     feats = list(LINE_FEATS) + [f for f in DAY_FEATS if f != "weekend"] + ["weekend"]
+    feats = [f for f in feats if any(b.get(f) is not None for b in LB)]   # drop columns this product does not have
     X, y, keep = [], [], []
     for b in LB:
         v = [b.get(f) for f in feats]
@@ -216,7 +220,7 @@ if START:
     con.execute(f"CREATE TABLE {TABLE} ({', '.join(keys)})")
     con.executemany(f"INSERT INTO {TABLE} VALUES ({','.join('?' * len(keys))})", [tuple(r.get(k) for k in keys) for r in R])
     con.commit()
-    with open(ROOT / "data" / "exports" / f"{TABLE}.csv", "w", newline="") as f:
+    with open(product.EXPORTS / f"{TABLE}.csv", "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=keys); w.writeheader(); w.writerows(R)
     print(f"{TABLE}: {len(R)} tests | {len(DB)} day bets | {len(LB)} line bets | {first} -> {last}")
     sys.exit(0)
@@ -224,6 +228,6 @@ con.execute("DROP TABLE IF EXISTS testing_results")
 con.execute(f"CREATE TABLE testing_results ({', '.join(keys)})")
 con.executemany(f"INSERT INTO testing_results VALUES ({','.join('?' * len(keys))})", [tuple(r.get(k) for k in keys) for r in R])
 con.commit()
-with open(ROOT / "data" / "exports" / "testing_results.csv", "w", newline="") as f:
+with open(product.EXPORTS / "testing_results.csv", "w", newline="") as f:
     w = csv.DictWriter(f, fieldnames=keys); w.writeheader(); w.writerows(R)
 print(f"testing_results: {len(R)} tests | {len(DB)} day bets | {len(LB)} line bets | {first} -> {last}")

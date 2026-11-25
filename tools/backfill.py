@@ -12,12 +12,14 @@ Usage:  python3 tools/backfill.py            (all steps)
         python3 tools/backfill.py --export   (CSV export only)
 """
 import csv, datetime, json, pathlib, re, sqlite3, sys, time, urllib.request, io
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import product  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-DB = ROOT / "data" / "kalshi_twins.db"
-EXPORTS = ROOT / "data" / "exports"
+DB = product.DB
+EXPORTS = product.EXPORTS
 KALSHI = "https://api.elections.kalshi.com/trade-api/v2"
-SERIES = ["KXDIESELD"]          # add more diesel/gas series here later (e.g. weekly)
+SERIES = product.SERIES          # set by KT_PRODUCT (diesel default)
 FRED = {"brent_usd_bbl": "DCOILBRENTEU", "ulsd_nyh_usd_gal": "DDFUELNYH", "eia_weekly_diesel": "GASDESW"}
 NOW = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 MONTHS = {m: i for i, m in enumerate(["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"], 1)}
@@ -78,8 +80,8 @@ def pull_kalshi(con):
                 time.sleep(0.3)
     # One AAA value per settled day.
     rows = con.execute("""SELECT event_date, MAX(expiration_value) FROM kalshi_markets
-                          WHERE series_ticker='KXDIESELD' AND expiration_value IS NOT NULL
-                          GROUP BY event_date""").fetchall()
+                          WHERE series_ticker IN (%s) AND expiration_value IS NOT NULL
+                          GROUP BY event_date""" % ",".join("'%s'" % s for s in SERIES)).fetchall()
     for d, v in rows:
         upsert(con, d, {"aaa_diesel": v, "aaa_source": "kalshi_settlement"})
     print(f"kalshi: {total} markets, {len(rows)} settled days")
@@ -104,7 +106,7 @@ def pull_fred(con):
         print(f"fred {sid}: {n} rows")
 
 
-YAHOO = {"brent_usd_bbl": ("BZ=F", "brent_source"), "ulsd_nyh_usd_gal": ("HO=F", "ulsd_source")}
+YAHOO = {"brent_usd_bbl": ("BZ=F", "brent_source"), "ulsd_nyh_usd_gal": (product.C["wholesale_symbol"], "ulsd_source")}
 
 
 def pull_yahoo(con):
@@ -200,7 +202,8 @@ def export(con):
 def main():
     con = sqlite3.connect(DB)
     if "--export" not in sys.argv:
-        for step in (pull_kalshi, pull_candles, pull_yahoo, pull_fred):
+        steps = (pull_kalshi, pull_candles, pull_yahoo, pull_fred) if product.PRODUCT == "diesel" else (pull_kalshi, pull_yahoo)
+        for step in steps:
             try:
                 step(con)
                 con.commit()
