@@ -1,0 +1,68 @@
+{
+ "snippets": [
+  {
+   "file": "/-sDEs-I38lbomTENc6O9p/_buildManifest.js",
+   "key": "search_stores",
+   "ctx": "uptions_locations\",\n    \"/api/business_interruptions_service_types\",\n    \"/api/contactForm\",\n    \"/api/dmb_slide_group\",\n    \"/api/editing/render\",\n    \"/api/fetch_stores\",\n    \"/api/get_refinement_categories\",\n    \"/api/get_sc_items_in_folder\",\n    \"/api/google_place_ratings\",\n    \"/api/graphql\",\n    \"/api/healthz\",\n    \"/api/locations_report\",\n    \"/api/revalidate\",\n    \"/api/robots\",\n    \"/api/search_stores\",\n    \"/api/sitemap\",\n    \"/api/sse/dmb/tobacco\",\n    \"/api/websocket/negotiate\",\n    \"/locations/[...slug]\",\n    \"/[[...path]]\"\n  ]\n};self.__BUILD_MANIFEST_CB && self.__BUILD_MANIFEST_CB()"
+  },
+  {
+   "file": "/-sDEs-I38lbomTENc6O9p/_buildManifest.js",
+   "key": "fetch_stores",
+   "ctx": "stination\": \"/:nextInternalLocale/api/sitemap\"\n      }\n    ],\n    \"beforeFiles\": [],\n    \"fallback\": []\n  },\n  \"sortedPages\": [\n    \"/_app\",\n    \"/_error\",\n    \"/api/analytics/track\",\n    \"/api/analytics/track.spec\",\n    \"/api/business_interruptions_locations\",\n    \"/api/business_interruptions_service_types\",\n    \"/api/contactForm\",\n    \"/api/dmb_slide_group\",\n    \"/api/editing/render\",\n    \"/api/fetch_stores\",\n    \"/api/get_refinement_categories\",\n    \"/api/get_sc_items_in_folder\",\n    \"/api/google_place_ratings\",\n    \"/api/graphql\",\n    \"/api/healthz\",\n    \"/api/locations_report\",\n    \"/api/revalidate\",\n    \"/api/robots\",\n    \"/api/search_stores\",\n    \"/api/sitemap\",\n    \"/api/sse/dmb/tobacco\",\n    \"/api/websocket/negotiate\",\n    \"/locations/[...slug]\",\n    \"/[[...path]]\"\n  ]\n};self.__BU"
+  },
+  {
+   "file": "com/_next/static/chunks/0ftyt0vd9kui4.js",
+   "key": "search_stores",
+   "ctx": "single-location-header-module-scss-module__9Ei2tq__single-location-header\"})},66878,e=>{e.v({breadcrumb:\"breadcrumb-module-scss-module__rQ8oKG__breadcrumb\"})},7696,87372,41609,59585,69816,24955,21215,8673,93601,49929,58621,42134,59121,71015,64354,95477,e=>{\"use strict\";var t=e.i(91398),i=e.i(38573),r=e.i(39253),a=e.i(22276),n=e.i(73142),s=e.i(66570);async function l(e){try{let t=await fetch(\"/api/search_stores\",{method:\"POST\",headers:{\"Content-Type\":\"application/json;charset=utf-8\"},body:JSON.stringify(e)}),{stores:i}=await t.json();return i}catch(e){return console.warn(\"Error searching stores:\",e),s.default.stores}}async function o(e,t=\"\"){let i=await fetch(`/api/get_refinement_categories?category=${e}&${t}`),{data:r}=await i.json();return r}async function d(){let e=await fetch(\"/api/busi"
+  },
+  {
+   "file": "com/_next/static/chunks/0ftyt0vd9kui4.js",
+   "key": "search_stores",
+   "ctx": "edDataFor:tu,baseQuery:R({baseUrl:\"/api/\",headers:{\"Content-Type\":\"application/json;charset=utf-8\"}}),endpoints:e=>({fetchStores:e.query({async queryFn({params:e},t,i,r){if(!e)return{data:[]};let a=await r({url:\"fetch_stores\",method:\"POST\",body:e});return a.error?{error:a.error}:{data:a.data.stores}}}),searchStores:e.query({async queryFn({params:e},t,i,r){if(!e)return{data:[]};let a=await r({url:\"search_stores\",method:\"POST\",body:e});return a.error?{error:a.error}:{data:a.data.stores}}})}),extractRehydrationInfo(e,{reducerPath:t}){if(tc(e))return e.payload[t]}}),{useFetchStoresQuery:tp,useSearchStoresQuery:th}=tf;e.s([\"locationsApi\",0,tf,\"useFetchStoresQuery\",0,tp,\"useSearchStoresQuery\",0,th],55856)},74796,15207,43249,48108,e=>{\"use strict\";var t=e.i(29835);let i=\"web\",r=()=>{let e=window."
+  },
+  {
+   "file": "com/_next/static/chunks/0ftyt0vd9kui4.js",
+   "key": "fuelPrices",
+   "ctx": "-search/PropaneTankExchange.png\",\"sortOrder\":14,\"includeInExcelExport\":true,\"section\":\"Select Amenities\",\"hideInSearch\":false,\"myLovesRewardsTypeId\":null,\"smaFieldName\":\"propanetankexchange\",\"link\":\"\",\"target\":null,\"isLeased\":false,\"facilityId\":0,\"fieldId\":0,\"fieldName\":\"Propane Tank Exchange\",\"fieldValue\":\"true\",\"dataType\":null}],\"stationCodes\":[],\"foodConcepts\":[],\"facilityHoursOfOperation\":[],\"fuelPrices\":[]},\"fuelPrices\":[{\"productName\":\"OXY UNL REG 10%\",\"fuelType\":\"Unleaded\",\"cashPrice\":2.759,\"displayName\":\"UNLEADED\",\"displayOrder\":\"1\",\"group\":0,\"orderInGroup\":1},{\"productName\":\"UNL-PLUS B 50/50\",\"fuelType\":\"Midgrade\",\"cashPrice\":3.659,\"displayName\":\"MIDGRADE\",\"displayOrder\":\"2\",\"group\":0,\"orderInGroup\":2},{\"productName\":\"UNL-SUPER\",\"fuelType\":\"Premium\",\"cashPrice\":4.059,\"displayName\""
+  },
+  {
+   "file": "com/_next/static/chunks/0ftyt0vd9kui4.js",
+   "key": "fuelPrices",
+   "ctx": "nkExchange.png\",\"sortOrder\":14,\"includeInExcelExport\":true,\"section\":\"Select Amenities\",\"hideInSearch\":false,\"myLovesRewardsTypeId\":null,\"smaFieldName\":\"propanetankexchange\",\"link\":\"\",\"target\":null,\"isLeased\":false,\"facilityId\":0,\"fieldId\":0,\"fieldName\":\"Propane Tank Exchange\",\"fieldValue\":\"true\",\"dataType\":null}],\"stationCodes\":[],\"foodConcepts\":[],\"facilityHoursOfOperation\":[],\"fuelPrices\":[]},\"fuelPrices\":[{\"productName\":\"OXY UNL REG 10%\",\"fuelType\":\"Unleaded\",\"cashPrice\":2.759,\"displayName\":\"UNLEADED\",\"displayOrder\":\"1\",\"group\":0,\"orderInGroup\":1},{\"productName\":\"UNL-PLUS B 50/50\",\"fuelType\":\"Midgrade\",\"cashPrice\":3.659,\"displayName\":\"MIDGRADE\",\"displayOrder\":\"2\",\"group\":0,\"orderInGroup\":2},{\"productName\":\"UNL-SUPER\",\"fuelType\":\"Premium\",\"cashPrice\":4.059,\"displayName\":\"PREMIUM\",\"displ"
+  },
+  {
+   "file": "com/_next/static/chunks/0ftyt0vd9kui4.js",
+   "key": "fuelPrices",
+   "ctx": "\":35.014805,\"longitude\":-97.366676,\"utcOffset\":-6,\"usesDaylightSavings\":true,\"mainPhone\":\"(405) 527-9491\",\"mainEmail\":\"Store28@loves.com\",\"fax\":\"(405) 527-9491\",\"geoLocation\":null,\"site\":{\"siteId\":28,\"restaurants\":[{\"id\":1951,\"siteId\":28,\"name\":\"Godfather\\'s Pizza\",\"isLeased\":false,\"myLovesRewardsTypeId\":3},{\"id\":2238,\"siteId\":28,\"name\":\"Big Boss Subs\",\"isLeased\":false,\"myLovesRewardsTypeId\":3}],\"fuelPrices\":[{\"siteId\":28,\"productId\":1,\"productName\":\"UNL-REGULAR\",\"fuelType\":\"Unleaded E0\",\"lastPriceChangeDateTime\":\"2024-09-10T15:28:00\",\"lastCheckInDateTime\":\"2024-09-10T15:30:01.1966667\",\"cashPrice\":3.259,\"creditPrice\":null},{\"siteId\":28,\"productId\":2,\"productName\":\"UNL-SUPER\",\"fuelType\":\"Premium\",\"lastPriceChangeDateTime\":\"2024-09-10T15:28:00\",\"lastCheckInDateTime\":\"2024-09-10T15:30:01.1966"
+  },
+  {
+   "file": "com/_next/static/chunks/0ftyt0vd9kui4.js",
+   "key": "fuelPrices",
+   "ctx": "-search/PropaneTankExchange.png\",\"sortOrder\":14,\"includeInExcelExport\":true,\"section\":\"Select Amenities\",\"hideInSearch\":false,\"myLovesRewardsTypeId\":null,\"smaFieldName\":\"propanetankexchange\",\"link\":\"\",\"target\":null,\"isLeased\":false,\"facilityId\":0,\"fieldId\":0,\"fieldName\":\"Propane Tank Exchange\",\"fieldValue\":\"true\",\"dataType\":null}],\"stationCodes\":[],\"foodConcepts\":[],\"facilityHoursOfOperation\":[],\"fuelPrices\":[]},\"fuelPrices\":[{\"productName\":\"OXY UNL REG 10%\",\"fuelType\":\"Unleaded\",\"cashPrice\":2.799,\"displayName\":\"UNLEADED\",\"displayOrder\":\"1\",\"group\":0,\"orderInGroup\":1},{\"productName\":\"AUTO DIESEL\",\"fuelType\":\"Diesel\",\"cashPrice\":2.999,\"displayName\":\"DIESEL\",\"displayOrder\":\"12\",\"group\":1,\"orderInGroup\":2}],\"hotel\":null,\"storeSearchData\":{\"name\":\"Country Store\",\"displayName\":\"Country Store\",\""
+  },
+  {
+   "file": "com/_next/static/chunks/0ftyt0vd9kui4.js",
+   "key": "fuelPrices",
+   "ctx": "nkExchange.png\",\"sortOrder\":14,\"includeInExcelExport\":true,\"section\":\"Select Amenities\",\"hideInSearch\":false,\"myLovesRewardsTypeId\":null,\"smaFieldName\":\"propanetankexchange\",\"link\":\"\",\"target\":null,\"isLeased\":false,\"facilityId\":0,\"fieldId\":0,\"fieldName\":\"Propane Tank Exchange\",\"fieldValue\":\"true\",\"dataType\":null}],\"stationCodes\":[],\"foodConcepts\":[],\"facilityHoursOfOperation\":[],\"fuelPrices\":[]},\"fuelPrices\":[{\"productName\":\"OXY UNL REG 10%\",\"fuelType\":\"Unleaded\",\"cashPrice\":2.799,\"displayName\":\"UNLEADED\",\"displayOrder\":\"1\",\"group\":0,\"orderInGroup\":1},{\"productName\":\"AUTO DIESEL\",\"fuelType\":\"Diesel\",\"cashPrice\":2.999,\"displayName\":\"DIESEL\",\"displayOrder\":\"12\",\"group\":1,\"orderInGroup\":2}],\"hotel\":null,\"storeSearchData\":{\"name\":\"Country Store\",\"displayName\":\"Country Store\",\"mapIconZIndex\":88"
+  },
+  {
+   "file": "com/_next/static/chunks/0ftyt0vd9kui4.js",
+   "key": "fetch_stores",
+   "ctx": "([\"createApi\",0,to],55661);var td=e.i(25777);let tu=(0,e.i(29835).getRuntimeConfig)().FACILITY_SEARCH_CACHE_TTL_SECONDS,tc=e=>e.type===td.HYDRATE,tf=to({reducerPath:\"locationsApi\",keepUnusedDataFor:tu,baseQuery:R({baseUrl:\"/api/\",headers:{\"Content-Type\":\"application/json;charset=utf-8\"}}),endpoints:e=>({fetchStores:e.query({async queryFn({params:e},t,i,r){if(!e)return{data:[]};let a=await r({url:\"fetch_stores\",method:\"POST\",body:e});return a.error?{error:a.error}:{data:a.data.stores}}}),searchStores:e.query({async queryFn({params:e},t,i,r){if(!e)return{data:[]};let a=await r({url:\"search_stores\",method:\"POST\",body:e});return a.error?{error:a.error}:{data:a.data.stores}}})}),extractRehydrationInfo(e,{reducerPath:t}){if(tc(e))return e.payload[t]}}),{useFetchStoresQuery:tp,useSearchStoresQuer"
+  }
+ ],
+ "tries": {
+  "https://www.loves.com/api/search_stores": {
+   "status": 400,
+   "head": "{\"error\":\"Latitude is invalid\"}"
+  },
+  "https://www.loves.com/api/search_stores?StoreNumbers=5": {
+   "status": 400,
+   "head": "{\"error\":\"Latitude is invalid\"}"
+  },
+  "https://www.loves.com/api/search_stores?storeNumbers=5,10": {
+   "status": 400,
+   "head": "{\"error\":\"Latitude is invalid\"}"
+  }
+ }
+}
