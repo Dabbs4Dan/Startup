@@ -22,10 +22,17 @@ NOW = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"
 MONTHS = {m: i for i, m in enumerate(["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"], 1)}
 
 
-def get(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "kalshi-twins-research/1.0"})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        return r.read().decode()
+def get(url, tries=4):
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (kalshi-twins-research)"})
+    for i in range(tries):
+        try:
+            with urllib.request.urlopen(req, timeout=120) as r:
+                return r.read().decode()
+        except Exception as e:
+            if i == tries - 1:
+                raise
+            print(f"retry {i+1} {url[:60]}: {e}")
+            time.sleep(10 * (i + 1))
 
 
 def num(x):
