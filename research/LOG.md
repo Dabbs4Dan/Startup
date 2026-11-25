@@ -11,6 +11,12 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-25 (6:20 PM) · Quant-standard edge check: the favorite edge is NOT proven
+- **Did:** `tools/edge_check.py`: every 10 AM ET line/side priced 60–97¢ (spread ≤10¢), bought at ask + fee, settled on AAA; returns **clustered by day** + bootstrap CI + monthly split.
+- **Learned:** 362 bets / 72 days, 87% win at avg cost 85.7¢. Return per $ **+3.3%, t = 1.41, 95% CI [−1.6%, +7.7%] → includes zero.** By month: Aug +6.6% (7d), Sep −1.0%, Oct −5.3%, Nov +13.1% → it's a November (falling-price) effect, not a structural edge. Matches gas (no edge). Earlier "+6–8%" figures counted lines as independent and mixed in-sample tuning.
+- **Re-check (same session):** backfill success 21:30 ✅; recorder shift + relay running ✅. Risk: `truckstops.yml` and the warehouse Internet Archive step only commit at the END of 4–5 h runs (a crash loses the run) → truckstops.py should push hourly like live_recorder.
+- **Decided (proposed):** stop treating favorite bias as an edge. The only edge worth testing = information timing: a nowcast of tomorrow's AAA from today's state / truckstop data that beats the crowd's 10 AM miss (~0.3¢) on unseen days.
+
 ### 2026-11-25 (6:05 PM) · Cross-chat audit: 3 silent breaks fixed, CLAUDE.md slimmed
 - **Fixed:** (1) `backfill.yml` was cancelled 5× in a row (`cancel-in-progress: true` + trigger on any `tools/**` change from any chat); last success 12:52 PM ET. Now it queues instead, and it only triggers on its own scripts. (2) `history.yml` committed `data/kalshi_twins.db` too. With `pull --rebase -X theirs`, the last pusher's copy wins, so a long Internet Archive run could silently roll the DB back. Single-writer rule now (only backfill.yml commits the diesel DB). The run already in progress still uses the old file, and its rollback self-heals on the next daily pull. (3) `warehouse.yml` restarted its 4-h pull on every `warehouse.py` edit → trigger narrowed.
 - **CLAUDE.md:** 51 KB → 14 KB. Log moved here (`research/LOG.md`). Added a Jobs table (who writes what, who starts it) + 5 rules. Fixed stale lines ("static, uncomment schedule") and the open-questions statuses.
