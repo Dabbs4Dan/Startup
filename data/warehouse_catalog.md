@@ -1,4 +1,4 @@
-# Warehouse catalog (2026-11-25 21:05 UTC)
+# Warehouse catalog (2026-11-25 21:20 UTC)
 
 Go-live (start of 'since inception'): 2026-11-25 19:21:00 UTC
 
@@ -41,4 +41,20 @@ Go-live (start of 'since inception'): 2026-11-25 19:21:00 UTC
 | eia_weekly | retail_diesel_us | EIA weekly retail diesel/gas by region + diesel inventories | 1706 | 1994-03-21 | 2026-11-23 |  |
 | eia_weekly | retail_regular_us | EIA weekly retail diesel/gas by region + diesel inventories | 1887 | 1990-08-20 | 2026-11-23 |  |
 | orderbook |  | Kalshi order book depth (live only, no history exists) | 848 | 2026-11-25 19:31 | 2026-11-25 20:51 | 848 |
-| truckstops |  | Love's truckstop posted diesel prices (live only) | 7880 | 2026-11-25 20:20 | 2026-11-25 20:31 | 7880 |
+| truckstop_diesel | loves | Truckstop posted diesel prices, Love's + TA (live only, Chat 4) | 2224 | 2026-11-25 20:20 | 2026-11-25 20:31 | 2224 |
+| truckstop_diesel | ta | Truckstop posted diesel prices, Love's + TA (live only, Chat 4) | 110 | 2026-11-25 20:31 | 2026-11-25 20:31 | 110 |
+
+## Feed health (2026-11-25 21:20 UTC)
+
+| feed | last row (UTC) | expected every (min) | minutes since | status |
+|---|---|---|---|---|
+| Kalshi strikes, 5-min (live recorder) | 2026-11-25 20:51 | 15 | 29.0 | OK |
+| Kalshi order book, 15-min (live recorder) | 2026-11-25 20:51 | 30 | 29.0 | OK |
+| AAA national, 15-min (live recorder) | 2026-11-25 20:51 | 30 | 29.0 | OK |
+| Futures quotes, 5-min (live recorder) | 2026-11-25 20:51 | 15 | 29.0 | OK |
+| Love's truckstops, hourly (Chat 4) | 2026-11-25 20:31 | 90 | 49.0 | OK |
+| TA truckstops, hourly (Chat 4) | 2026-11-25 20:31 | 90 | 49.0 | OK |
+| Kalshi trades + 1-min candles (daily job) | 2026-11-25 20:53 | 2160 | 27.0 | OK |
+| Kalshi hourly candles + settlements (daily job) | 2026-11-25 17:00 | 2160 | 261.0 | OK |
+| AAA state prices (daily job) | 2026-11-25 12:00 | 2160 | 561.0 | OK |
+| EIA spot prices (warehouse job) | 2026-11-24 20:00 | 5760 | 1521.0 | OK |

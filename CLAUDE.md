@@ -148,6 +148,11 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-25 (5:25 PM) · Warehouse wired to all live feeds + feed health + audit
+- **Did:** New warehouse views `truckstop_diesel`, `truckstop_state`, `l3_state_compare` (truckstop vs AAA state), `aaa_flips`, `ho_at_10am` (last live HO ≤10:10 ET, no peeking), `feed_health` (OK/STALE per recorder). Catalog writes `data/feed_health.csv`. `sheet_payload.py` now also emits the **Warehouse** tab blocks (catalog A4:G53, feed health A56:E70). IMPORTDATA removed per mobile-first rule. Started the truckstop loop by hand (it only restarts at shift change). Audit table in `research/2026-11-25_warehouse.md`.
+- **Learned:** No duplicate feeds that matter. Dead: HO-at-10-AM step in `daily_recorders.py` (never got data) → use `ho_at_10am`. Minor duplicates: AAA state pages scraped twice (diesel + gas jobs). Love's truck diesel ≈ −7¢ vs AAA state, TA auto diesel ≈ +3¢ → use changes, not levels. Gas DB already holds 221K trades + 2023+ hourly ladder.
+- **Next:** after a few days of truckstops: L3.1 = does a state's truckstop change on day X−1 predict its AAA state change on day X.
+
 ### 2026-11-25 (5:10 PM) · Warehouse layer + free long history (EIA) + Wishlist tab
 - **Did:** `tools/warehouse.py`: DuckDB views over all sources, both products, with `era` = history / since_live (go-live 19:21 UTC). `tools/history_pull.py` + `warehouse.yml` (relay runs it daily): EIA 17 series, Yahoo intraday (monthly files, merge-forward), Internet Archive AAA **national** snapshots since 2019 (resumable). Sheet: **Warehouse** tab (IMPORTDATA of the catalog) and **Wishlist** tab (W1–W17).
 - **Learned:** EIA reachable from GitHub (FRED isn't). Spot ULSD 2006+, Brent/WTI 1986+, HO settles 1980–Apr 2024, weekly retail diesel by PADD 1994+. Yahoo intraday blocked from GitHub (all fail). AAA Monday vs EIA weekly diesel gap: ~0–4¢ in Oct → +12.3¢ on 11/23.

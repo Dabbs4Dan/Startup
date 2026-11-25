@@ -36,4 +36,5 @@ eia_weekly,retail_diesel_padd5,EIA weekly retail diesel/gas by region + diesel i
 eia_weekly,retail_diesel_us,EIA weekly retail diesel/gas by region + diesel inventories,1706,1994-03-21,2026-11-23,
 eia_weekly,retail_regular_us,EIA weekly retail diesel/gas by region + diesel inventories,1887,1990-08-20,2026-11-23,
 orderbook,,"Kalshi order book depth (live only, no history exists)",848,2026-11-25 19:31,2026-11-25 20:51,848
-truckstops,,Love's truckstop posted diesel prices (live only),7880,2026-11-25 20:20,2026-11-25 20:31,7880
+truckstop_diesel,loves,"Truckstop posted diesel prices, Love's + TA (live only, Chat 4)",2224,2026-11-25 20:20,2026-11-25 20:31,2224
+truckstop_diesel,ta,"Truckstop posted diesel prices, Love's + TA (live only, Chat 4)",110,2026-11-25 20:31,2026-11-25 20:31,110

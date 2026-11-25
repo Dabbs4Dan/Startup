@@ -41,6 +41,15 @@ def main():
                     "values": [["🔄 L2 POINTS — our state blend vs AAA's real national number, newest first", "", "", "", "", "", "", "", "", ""]]})
         out.append({"spreadsheetId": sid, "range": f"Engine Room!A{15 + SCORE_ROWS}:J{14 + SCORE_ROWS + POINT_ROWS}",
                     "values": block(exp / "engine_room_l2_points.csv", POINT_ROWS)})
+    # Warehouse tab (diesel workbook): catalog + feed health, written from data/*.csv (tools/warehouse.py catalog)
+    import datetime
+    wh_sid = BOOKS["diesel"][0]
+    cat, fh = ROOT / "data" / "warehouse_catalog.csv", ROOT / "data" / "feed_health.csv"
+    stamp = datetime.datetime.fromtimestamp(cat.stat().st_mtime).strftime("%Y-%m-%d %H:%M") if cat.exists() else "waiting"
+    out.append({"spreadsheetId": wh_sid, "range": "Warehouse!A3:G3", "values": [[f"Updated: {stamp} (written by Claude after each warehouse run)", "", "", "", "", "", ""]]})
+    out.append({"spreadsheetId": wh_sid, "range": "Warehouse!A4:G53", "values": block(cat, 50, 7)})
+    out.append({"spreadsheetId": wh_sid, "range": "Warehouse!A55:E55", "values": [["FEED HEALTH: is every recorder still on point? (OK = arrived on time, STALE = late)", "", "", "", ""]]})
+    out.append({"spreadsheetId": wh_sid, "range": "Warehouse!A56:E70", "values": block(fh, 15, 5)})
     print(json.dumps(out))
 
 

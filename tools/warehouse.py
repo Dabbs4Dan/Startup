@@ -102,6 +102,7 @@ def connect():
     if _files("research/engine_room/aaa_states_gas/*.csv"):
         con.execute(f"CREATE VIEW er.aaa_states_gas AS SELECT * FROM {_csv('research/engine_room/aaa_states_gas/*.csv')}")
     _unified(con, products)
+    _live_extras(con)
     return con
 
 
@@ -215,6 +216,62 @@ def _unified(con, products):
             con.execute(f"CREATE VIEW {v} AS SELECT NULL::TIMESTAMP AS ts, NULL AS era WHERE false")
 
 
+def _live_extras(con):
+    """Live feeds from both chats, shaped for algos: truckstop diesel (L3), AAA flips, HO at bet time, feed health."""
+    if _has(con, "live", "truckstops"):
+        con.execute(f"""CREATE VIEW truckstop_diesel AS
+            SELECT ts_utc::TIMESTAMP AS ts_utc, (ts_utc::TIMESTAMP AT TIME ZONE 'UTC' AT TIME ZONE 'America/New_York')::DATE AS date_et,
+                   chain, store, state, city, TRY_CAST(price AS DOUBLE) AS price,
+                   CASE WHEN lower(product) LIKE '%bio%' OR lower(product) LIKE '%b20%' THEN 'biodiesel'
+                        WHEN lower(product) LIKE '%auto diesel%' THEN 'auto_diesel' ELSE 'diesel' END AS grade,
+                   product, {ERA.replace('ts_utc', 'ts_utc::TIMESTAMP')} AS era
+            FROM live.truckstops
+            WHERE lower(product) LIKE '%diesel%' AND TRY_CAST(price AS DOUBLE) BETWEEN 2 AND 12""")
+        # one number per state per pull (median of truck-lane diesel), the L3 input that lines up with AAA states
+        con.execute("""CREATE VIEW truckstop_state AS
+            SELECT ts_utc, date_et, state, chain, grade, median(price) AS diesel_median, count(*) AS stores, era
+            FROM truckstop_diesel WHERE grade <> 'biodiesel' GROUP BY ALL""")
+        con.execute("""CREATE VIEW l3_state_compare AS
+            WITH last_pull AS (SELECT date_et, state, chain, grade, arg_max(diesel_median, ts_utc) AS truckstop_diesel,
+                                      arg_max(stores, ts_utc) AS stores FROM truckstop_state GROUP BY ALL)
+            SELECT l.date_et AS date, l.state, l.chain, l.grade, l.truckstop_diesel, l.stores, s.value AS aaa_state_diesel,
+                   round((l.truckstop_diesel - s.value) * 100, 2) AS gap_cents
+            FROM last_pull l LEFT JOIN state_prices s ON s.date = l.date_et AND s.state = l.state AND s.product = 'diesel'""")
+    if _has(con, "live", "aaa_flips"):
+        con.execute("""CREATE VIEW aaa_flips AS SELECT first_seen_utc::TIMESTAMP AS ts_utc, first_seen_et, price_as_of,
+                       TRY_CAST(diesel_new AS DOUBLE) AS diesel_new, TRY_CAST(diesel_before AS DOUBLE) AS diesel_before
+                       FROM live.aaa_flips""")
+    # HO at the 10 AM bet time, no peeking: last live quote stamped at/before 10:10 ET (quotes run ~10 min late)
+    con.execute("""CREATE VIEW ho_at_10am AS
+        SELECT (ts_utc AT TIME ZONE 'UTC' AT TIME ZONE 'America/New_York')::DATE AS date_et,
+               arg_max(price, ts_utc) AS ho_price, max(ts_utc) AS quote_ts_utc
+        FROM futures_bars WHERE symbol = 'HO' AND bar = 'live_5m'
+          AND strftime(ts_utc AT TIME ZONE 'UTC' AT TIME ZONE 'America/New_York', '%H:%M') <= '10:10'
+        GROUP BY 1""")
+    # feed health: is every recorder still on point?
+    checks = [
+        ("Kalshi strikes, 5-min (live recorder)", "SELECT max(ts_utc) FROM ladder WHERE source='live_5m'", 15),
+        ("Kalshi order book, 15-min (live recorder)", "SELECT max(ts) FROM orderbook", 30),
+        ("AAA national, 15-min (live recorder)", "SELECT max(ts_utc::TIMESTAMP) FROM live.aaa_national" if _has(con, "live", "aaa_national") else None, 30),
+        ("Futures quotes, 5-min (live recorder)", "SELECT max(ts_utc) FROM futures_bars WHERE bar='live_5m'", 15),
+        ("Love's truckstops, hourly (Chat 4)", "SELECT max(ts_utc) FROM truckstop_diesel WHERE chain='loves'" if _has(con, "live", "truckstops") else None, 90),
+        ("TA truckstops, hourly (Chat 4)", "SELECT max(ts_utc) FROM truckstop_diesel WHERE chain='ta'" if _has(con, "live", "truckstops") else None, 90),
+        ("Kalshi trades + 1-min candles (daily job)", "SELECT max(ts_utc) FROM trades", 36 * 60),
+        ("Kalshi hourly candles + settlements (daily job)", "SELECT max(ts_utc) FROM ladder WHERE source='candle_60m'", 36 * 60),
+        ("AAA state prices (daily job)", "SELECT max(date)::TIMESTAMP + INTERVAL 12 HOUR FROM state_prices WHERE sources LIKE '%daily_recorder%'", 36 * 60),
+        ("EIA spot prices (warehouse job)", "SELECT max(date)::TIMESTAMP + INTERVAL 20 HOUR FROM spot_daily", 4 * 24 * 60),
+    ]
+    parts = []
+    for name, q, limit in checks:
+        if q:
+            parts.append(f"SELECT '{name.replace(chr(39), chr(39) * 2)}' AS feed, ({q}) AS last_row_utc, {limit} AS expect_every_min")
+    con.execute("CREATE VIEW feed_health AS SELECT feed, last_row_utc, expect_every_min, "
+                "round(date_diff('second', last_row_utc, now()::TIMESTAMP) / 60.0) AS minutes_since, "
+                "CASE WHEN last_row_utc IS NULL THEN 'NO DATA' "
+                "WHEN date_diff('second', last_row_utc, now()::TIMESTAMP) / 60.0 <= expect_every_min * 2 THEN 'OK' ELSE 'STALE' END AS status "
+                "FROM (" + " UNION ALL ".join(parts) + ")")
+
+
 CATALOG = [  # view, time column, group-by for one line per source, what it is (plain words)
     ("aaa_daily", "date", "product", "AAA national price per day (Kalshi settlements, live recorder, Internet Archive)"),
     ("state_prices", "date", "product", "AAA price per state per day (daily recorder + Internet Archive state pages)"),
@@ -224,13 +281,17 @@ CATALOG = [  # view, time column, group-by for one line per source, what it is (
     ("spot_daily", "date", "series", "EIA daily spot prices + NYMEX front-month settlements"),
     ("eia_weekly", "date", "series", "EIA weekly retail diesel/gas by region + diesel inventories"),
     ("orderbook", "ts", None, "Kalshi order book depth (live only, no history exists)"),
-    ("truckstops", "ts", None, "Love's truckstop posted diesel prices (live only)"),
+    ("truckstop_diesel", "ts_utc", "chain", "Truckstop posted diesel prices, Love's + TA (live only, Chat 4)"),
+    ("aaa_flips", "ts_utc", None, "Moments AAA's national number changed (live recorder)"),
+    ("ho_at_10am", "date_et", None, "Diesel futures price at the 10 AM bet time, no peeking (live recorder)"),
 ]
 
 
 def catalog(con):
     rows = []
     for view, tcol, grp, what in CATALOG:
+        if not con.execute("select count(*) from information_schema.tables where table_name=?", [view]).fetchone()[0]:
+            continue                                   # feed not recorded yet (e.g. no AAA flip seen so far)
         g = f"{grp}," if grp else ""
         era = ", sum(CASE WHEN era='since_live' THEN 1 ELSE 0 END)" if "era" in [c[0] for c in con.execute(f"DESCRIBE {view}").fetchall()] else ", NULL"
         q = f"SELECT {g} count(*), min({tcol})::VARCHAR, max({tcol})::VARCHAR {era} FROM {view} {'GROUP BY ' + grp if grp else ''} ORDER BY 1"
@@ -252,6 +313,13 @@ def catalog(con):
     md = [f"# Warehouse catalog ({stamp})", "", f"Go-live (start of 'since inception'): {GO_LIVE} UTC", "",
           "| " + " | ".join(header) + " |", "|" + "---|" * len(header)]
     md += ["| " + " | ".join(str(x) for x in r) + " |" for r in rows]
+    fh = con.execute("SELECT feed, strftime(last_row_utc, '%Y-%m-%d %H:%M') AS last_row_utc, expect_every_min, minutes_since, status FROM feed_health").fetchall()
+    with (ROOT / "data" / "feed_health.csv").open("w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["feed", "last row (UTC)", "expected every (min)", "minutes since", "status"])
+        w.writerows(fh)
+    md += ["", f"## Feed health ({stamp})", "", "| feed | last row (UTC) | expected every (min) | minutes since | status |", "|---|---|---|---|---|"]
+    md += ["| " + " | ".join(str(x) for x in r) + " |" for r in fh]
     (ROOT / "data" / "warehouse_catalog.md").write_text("\n".join(md) + "\n")
     print("\n".join(md))
     return rows
