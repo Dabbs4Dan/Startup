@@ -78,7 +78,7 @@ Delivery   = AAA − ULSD − Taxes   (trucks, station costs + profit; the "left
 A swollen delivery slice (Nov 24: $1.50 vs ~$0.84 in Jan 2026) = pump prices still have room to fall.
 
 **Settlement facts:** KXDIESELD "Diesel prices tomorrow" resolves on AAA's national average diesel (AAA data is from OPIS, updated daily).
-Strikes are $0.005 apart. Market opens ~10 PM ET the night before.
+Strikes are $0.005 apart. Market opens 8:00 AM ET the day before (API open_time; the app's "10:00 PM" label is NOT the open). Close: 11:59 PM ET (Nov) / ~1:59 AM ET (Aug–Sep archive).
 
 **How Kalshi prices the ladder (verified 2026-11-24):**
 - Each strike's % = the crowd's probability that AAA > strike. Whole ladder = one probability curve.
@@ -118,7 +118,7 @@ Losses come from the intraday info gap (market forecast moves 0.73¢ on losing d
 | 8 | Minute-level candles for near-money strikes (hourly done) | ⬜ |
 | 9 | Edge test: does our engine's morning forecast beat the market's morning ladder? | ⬜ |
 | 10 | Build master research panel: one row per event × snapshot time (open, 10 AM, noon, 2:30 PM, close) with every input as-of that time + Kalshi state + outcome | ⬜ |
-| 7 | Longer AAA history: Kalshi only goes back to 2026-09-18. FRED (EIA weekly diesel) times out from GitHub runners; try EIA direct or run from Mac | ⬜ |
+| 7 | Longer AAA history: diesel now back to 2026-08-03 (114 days). FRED (EIA weekly diesel) times out from GitHub runners; try EIA direct or run from Mac | ⬜ |
 
 ---
 
@@ -132,6 +132,17 @@ Template:
 - **Decided:** …
 - **Next:** …
 ```
+
+### 2026-11-25 (3:00 AM) · Archive pull (Aug 3 – Sep 17) breaks the 75–85¢ rule
+- **Did:** Workflow ran `backfill_history.py KXDIESELD`: 114 settled days (2026-08-03 → 11-24), 2,548 markets, 29K hourly candles. Fixed: numpy install in workflow; archived AAA values now copied into `diesel_daily`.
+- **Learned:**
+  - On never-seen days (Aug 3 – Sep 17): 75–85¢ favorites 80.8% win, ROI +0.9% (26 bets); one-per-day 7/11 wins, ROI −21%; 85–97¢ ROI −7.6%. Weekend 75–85¢ still 5/5.
+  - All 114 days: 75–85¢ 87.2% win, ROI +8.1%; one-per-day +2.0%; weekend 22/22 (+23%, 13 days).
+  - Regime: Aug 3 – Sep 17 AAA rose 5.36 → 6.50 (32 up / 13 down days, "rockets"); Sep 18+ fell (17 up / 51 down, "feathers"). Favorites worked in the slow fall, not the fast rise.
+  - Yesterday's AAA direction alone does NOT separate (75–85¢: fell +8.1% vs rose +8.3%) → regime is multi-week, not 1-day.
+  - Correction to handoff brief: market opens 8 AM ET day before (not 10 PM).
+- **Decided:** 75–85¢ rule = regime-dependent, not standalone. Need a regime detector (multi-day trend / wholesale direction) + weekend effect check.
+- **Next:** Regime test (5–10 day AAA trend, HO trend) + weekend mechanism; AAA flip-time tracker.
 
 ### 2026-11-25 (2:30 AM) · Signal scan: when do favorites win ~90%?
 - **Did:** `tools/signal_scan.py` — every line/side priced 60–97¢ at 10 AM (258 bets, 55 days), bucketed by bet-time features; walk-forward model agreement (fit only on earlier days).

@@ -110,6 +110,12 @@ def main():
                 time.sleep(0.15)
             con.commit()
         print(f"{series}: {nm} markets stored, {nc} new hourly candles")
+        if series == "KXDIESELD":   # copy settled AAA values into diesel_daily (fills blanks only)
+            for d, v in con.execute("""SELECT event_date, MAX(expiration_value) FROM kalshi_markets
+                                      WHERE series_ticker='KXDIESELD' AND expiration_value IS NOT NULL GROUP BY event_date""").fetchall():
+                con.execute("INSERT OR IGNORE INTO diesel_daily (date, updated_at) VALUES (?, ?)", (d, NOW))
+                con.execute("UPDATE diesel_daily SET aaa_diesel=COALESCE(aaa_diesel, ?), aaa_source=COALESCE(aaa_source,'kalshi_settlement'), updated_at=? WHERE date=?", (v, NOW, d))
+            con.commit()
     con.close()
 
 
