@@ -55,6 +55,9 @@ jobs:
         run: |
           python3 tools/panel.py
           python3 tools/testing.py
+      - name: Engine Room (gas) - fail soft
+        continue-on-error: true
+        run: python3 tools/engine_room.py
       - name: Commit data
         run: |
           git add data/gas/

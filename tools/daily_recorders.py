@@ -9,7 +9,7 @@ Runs on GitHub (the runner can reach AAA + Yahoo; Claude's sandbox can't).
 Each part fails soft: an error is printed and the rest still runs.
 Usage: python3 tools/daily_recorders.py
 """
-import json, sqlite3, pathlib, datetime, time, sys
+import csv, json, sqlite3, pathlib, datetime, time, sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from connectivity_pull import get, aaa_states  # noqa: E402
 
@@ -30,6 +30,7 @@ def record_states():
         pulled_date TEXT, as_of TEXT, state TEXT, diesel_current REAL, diesel_yesterday REAL,
         diesel_week_ago REAL, diesel_month_ago REAL, diesel_year_ago REAL, PRIMARY KEY (as_of, state))""")
     res, n = aaa_states(), 0
+    gas_rows = []
     today = datetime.datetime.now(ET).date().isoformat()
     for s, v in res.items():
         tabs = v.get("tables") or []
@@ -40,8 +41,21 @@ def record_states():
         con.execute("INSERT OR REPLACE INTO aaa_state_daily VALUES (?,?,?,?,?,?,?,?)",
                     (today, v.get("as_of"), s, col("Current Avg."), col("Yesterday Avg."), col("Week Ago Avg."),
                      col("Month Ago Avg."), col("Year Ago Avg.")))
+        # Gas twin: same page, column 0 = Regular. Saved in the gas DB under the twin's shared column names.
+        reg = lambda label: to_num(t.get(label, [None])[0]) if t.get(label) else None
+        gas_rows.append((today, v.get("as_of"), s, reg("Current Avg."), reg("Yesterday Avg."), reg("Week Ago Avg."),
+                         reg("Month Ago Avg."), reg("Year Ago Avg.")))
         n += 1
     con.commit()
+    if gas_rows:
+        # One CSV per day (not the gas DB): the gas workflow owns that DB, so two jobs never fight over one binary file.
+        out = ROOT / "research" / "engine_room" / "aaa_states_gas" / f"{today}.csv"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        with out.open("w", newline="") as f:
+            w = csv.writer(f)
+            w.writerow(["pulled_date", "as_of", "state", "current", "yesterday", "week_ago", "month_ago", "year_ago"])
+            w.writerows(gas_rows)
+        print(f"gas states (regular): {len(gas_rows)} saved to {out.name}")
     print(f"aaa_state_daily: {n} states recorded")
 
 
