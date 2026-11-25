@@ -99,6 +99,8 @@ Losses come from the intraday info gap (market forecast moves 0.73¢ on losing d
 
 **Risk formula (2026-11-25, `tools/risk_calc.py`):** c = price + fee. P&L = (B/n)·[(n−L)(1−c)/c − L]. Max losses L* = n(1−c). Win rate needed = c. Wins per loss = c/(1−c). Chance negative = P(Binomial(n,1−q) > L*).
 
+**Official diesel rulebook (verified 2026-11-25):** KXDIESELD series `contract_terms_url` = ECONSTAT.pdf (same generic econ-stat terms). Source Agency = AAA (Trading Economics backup). First release counts, later revisions ignored. Market rule: "If the Diesel Price on <date> is above $K → Yes", strike_type greater, settlement timer 30 min, closes early "if the economic data is released". Fee type quadratic, multiplier 1. ⚠️ Prohibition: people with material non-public info on the Underlying (or employed by the Source Agency) may not trade → check any paid OPIS data for MNPI risk before using it.
+
 **Free AAA history hack:** Kalshi's settled KXDIESELD markets carry `expiration_value` = the exact AAA number (verified 5.7982 = AAA site).
 
 ---
@@ -115,6 +117,7 @@ Losses come from the intraday info gap (market forecast moves 0.73¢ on losing d
 | 6 | Find a real-time / official ULSD source (manual Nov 24 values came from tradingeconomics CFDs; Yahoo HO=F futures used for history) | ⬜ |
 | 8 | Minute-level candles for near-money strikes (hourly done) | ⬜ |
 | 9 | Edge test: does our engine's morning forecast beat the market's morning ladder? | ⬜ |
+| 10 | Build master research panel: one row per event × snapshot time (open, 10 AM, noon, 2:30 PM, close) with every input as-of that time + Kalshi state + outcome | ⬜ |
 | 7 | Longer AAA history: Kalshi only goes back to 2026-09-18. FRED (EIA weekly diesel) times out from GitHub runners; try EIA direct or run from Mac | ⬜ |
 
 ---
@@ -129,6 +132,11 @@ Template:
 - **Decided:** …
 - **Next:** …
 ```
+
+### 2026-11-25 (2:15 AM) · Diesel rulebook = ECONSTAT; research framework
+- **Learned:** KXDIESELD official terms ARE ECONSTAT.pdf (series contract_terms_url). AAA = Source Agency, Trading Economics backup, first release only, early close if data released, 30-min settlement timer. MNPI prohibition applies — paid OPIS feeds that are AAA's own inputs need a compliance check.
+- **Decided (framework):** Replace "dozens of side-by-side Excels" with one master panel (event × snapshot time, point-in-time inputs) → deltas open→close → attribution → hypothesis → walk-forward backtest → demo.
+- **Next:** Build the master panel (#10) once Dan confirms snapshot times.
 
 ### 2026-11-25 (2:00 AM) · Paused favorite topic; read ECONSTAT terms
 - **Did:** Cancelled full-history backfill run (Dan's request). Removed `backfill_history.py` + `favorite_test.py` from the workflow (scripts kept in `tools/` for later). Read Kalshi ECONSTAT contract terms.
