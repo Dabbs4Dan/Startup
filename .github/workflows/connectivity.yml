@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Pull
-        run: python3 tools/connectivity_pull.py
+        run: SKIP_AAA=1 OUT=research/connectivity/tier2_pull_run2.json python3 tools/connectivity_pull.py
       - name: Commit
         run: |
           git config user.name "kalshi-twins-bot"

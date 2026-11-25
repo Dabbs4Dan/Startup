@@ -8,7 +8,7 @@ Writes research/connectivity/tier2_pull.json (raw, for Claude to read and put in
 """
 import json, re, time, datetime, urllib.request, os
 
-OUT = "research/connectivity/tier2_pull.json"
+OUT = os.environ.get("OUT", "research/connectivity/tier2_pull.json")
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36",
       "Accept-Language": "en-US,en;q=0.9"}
 ET = datetime.timezone(datetime.timedelta(hours=-5))
@@ -29,7 +29,11 @@ def get(url, tries=3):
 def yahoo_5m(sym):
     p1 = int(datetime.datetime(2026, 11, 20, 0, 0, tzinfo=ET).timestamp())
     p2 = int(datetime.datetime(2026, 11, 24, 0, 0, tzinfo=ET).timestamp())
-    st, body = get(f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}?interval=5m&period1={p1}&period2={p2}")
+    for host in ("query2", "query1", "query2"):
+        time.sleep(8)
+        st, body = get(f"https://{host}.finance.yahoo.com/v8/finance/chart/{sym}?interval=5m&period1={p1}&period2={p2}")
+        if st == 200:
+            break
     if st != 200:
         return {"status": st, "error": body[:300]}
     res = json.loads(body)["chart"]["result"][0]
@@ -93,7 +97,9 @@ def probes():
         txt = body or ""
         prices = re.findall(r"[Dd]iesel[^$]{0,80}\$\s?([0-9]\.[0-9]{2,3})", txt)[:5]
         out[k] = {"url": u, "status": st, "len": len(txt), "diesel_prices_seen": prices,
-                  "api_hints": sorted(set(re.findall(r"https?://[^\"' ]*api[^\"' ]*", txt)))[:10]}
+                  "api_hints": sorted(set(re.findall(r"https?://[^\"' ]*api[^\"' ]*", txt)))[:10],
+                  "fuel_paths": sorted(set(re.findall(r"[\"'](/?[A-Za-z0-9_/.-]*(?:[Ff]uel|[Pp]rice)[A-Za-z0-9_/.?=-]*)[\"']", txt)))[:40],
+                  "scripts": sorted(set(re.findall(r"<script[^>]+src=[\"']([^\"']+)", txt)))[:25]}
     return out
 
 
@@ -101,8 +107,8 @@ if __name__ == "__main__":
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     result = {"pulled_at_utc": datetime.datetime.utcnow().isoformat() + "Z",
               "yahoo": {s: yahoo_5m(s) for s in ("HO=F", "BZ=F")},
-              "aaa_states": aaa_states(),
+              "aaa_states": aaa_states() if os.environ.get("SKIP_AAA") != "1" else "skipped (pulled in run 1)",
               "truckstop_probes": probes()}
     json.dump(result, open(OUT, "w"), indent=1)
-    ok = sum(1 for v in result["aaa_states"].values() if v.get("tables"))
+    ok = sum(1 for v in result["aaa_states"].values() if v.get("tables")) if isinstance(result["aaa_states"], dict) else 0
     print("yahoo:", {k: v.get("n_bars") for k, v in result["yahoo"].items()}, "| aaa states with tables:", ok)
