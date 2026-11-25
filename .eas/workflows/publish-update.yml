@@ -1,0 +1,12 @@
+name: Publish Daily Bread to Expo
+
+on:
+  push:
+    branches: ['daily-bread']
+
+jobs:
+  publish_update:
+    name: Publish update
+    type: update
+    params:
+      branch: daily-bread
