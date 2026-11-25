@@ -46,6 +46,7 @@ AAA diesel number and find gaps vs. Kalshi's odds. Demo money only until a strat
 | Auto-runner | `.github/workflows/backfill.yml` | Static now. Uncomment `schedule` to go live daily. |
 | Deep research notes | `research/` | One dated file per topic. |
 | This brain | `CLAUDE.md` | Log at the bottom, newest first. |
+| **Engine Room** | `tools/engine_room.py` → tables `algo_registry` / `inputs_asof` / `algo_predictions` / `algo_scorecard` (both DBs) | Proves each pricing algo layer (L0 market maker → L1 AAA → L2 OPIS state roll-up → L3 inputs) before patterns. Sheet tab **Engine Room** (diesel + gas). Only ✅ PASS algos (20+ points) may feed slices/bricks. |
 | **Strategy engine** | `nautilus/` (read `nautilus/README.md`) | NautilusTrader **2.0.0rc9, locked**. Same strategy code → backtest → Kalshi demo → live. Strategy IDs = sheet tab **Strategies** (S00 = replay check, no orders). |
 | DIY scheduler | `.github/workflows/live_recorder.yml` (relay step) | ⚠️ GitHub ignores `schedule:` off `main`. Each recorder shift starts the next, then runs `nautilus.yml` + daily backfill if none in 20h. Pause: commit `data/live/STOP`. |
 | **Live recorder** | `tools/live_recorder.py` → `data/live/<feed>/YYYY-MM-DD.csv` | Free GitHub shifts, every 5 min: Kalshi diesel+gas strikes, order book (15 min), AAA national + flip log (15 min), HO/Brent/WTI/RBOB/natgas (TradingView, ~10 min delayed). Map to Inputs Map rows: `research/2026-11-25_live-recorders.md` + sheet column N. |
@@ -144,6 +145,12 @@ Template:
 - **Decided:** …
 - **Next:** …
 ```
+
+### 2026-11-25 (4:20 PM) · Engine Room v0 — L2 state blend nearly exact, L0 bell curve not enough
+- **Did:** `tools/engine_room.py` (product-aware, runs in both daily workflows). L2.1 = national AAA as states weighted by EIA 2024 transportation fuel use (diesel: distillate, gas: motor gasoline; weights in `research/engine_room/`), zero fitted numbers. L2.0 plain mean baseline. L0.1 = normal-curve ladder fit per hourly snapshot; L0.2 = log of every ≥0.3¢ hourly move in crowd centre (marked UNEXPLAINED until intraday inputs exist). Gas state regular prices now saved daily to `research/engine_room/aaa_states_gas/*.csv` (CSV, not the gas DB, so two workflows never fight over one binary). Sheet tab **Engine Room** in both workbooks.
+- **Learned:** L2.1 misses **0.09¢ (Nov 24) and 0.06¢ (Nov 25)** vs plain mean 3.7¢ → national ≈ fuel-volume-weighted states. Only 2 exact points → "promising", pass needs 20. Week/month/year-ago points miss 0.2–1.0¢ (fuzzy dates, 2024 weights). L0.1 median line miss 2.09¢ (48% ≤2¢) → ladder has fatter tails/lean than a bell curve. L0.2: 184 moves; peaks noon–1 PM and 6 PM ET.
+- **Decided (Dan):** prove the algo stack before patterns. Order: L2 → L1 → L3 truckstops → L0 explained.
+- **Next:** L2 exact points accrue daily (pass ≈ mid-Dec); L0.1 v2 fat-tailed curve + spread layer; L0.2 match moves to live HO futures; L3 truckstop recorder (Love's/Pilot terms check, CB10).
 
 ### 2026-11-25 (3:55 PM) · Live recorder verified (4 feeds) + relay fix
 - **Did:** `tools/live_recorder.py` + `live_recorder.yml`. Snapshot loop per shift: Kalshi strikes, diesel + gas (5 min, incl. top-of-book sizes); order book for the 6 most-traded live diesel lines (15 min); AAA national diesel + regular gas (15 min), with `data/live/aaa_flips.csv` on change; futures quotes (5 min). If columns change, the recorder starts a new `_v2` file. Fixed the relay: dispatch by **numeric workflow ID**, because `gh workflow run <file>` looks the file up on `main` and 404s. Notes in `research/2026-11-25_live-recorders.md`. Sheet: Inputs Map **column N** maps each row to its file/column; Custom Build CB3/CB4/CB5 set to ✅.
