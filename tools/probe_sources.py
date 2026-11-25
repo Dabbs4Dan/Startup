@@ -149,7 +149,8 @@ def deep(name, page, extra_urls=()):
                 break
     for u in extra_urls:
         sst, body, hdr = get(u, timeout=25, headers={"Accept": "application/json"})
-        out["tries"][u] = {"status": sst, "type": hdr.get("Content-Type", ""), "len": len(body or ""), "head": (body or "")[:500]}
+        out["tries"][u] = {"status": sst, "type": hdr.get("Content-Type", ""), "len": len(body or ""), "head": (body or "")[:500], "prices": re.findall(r"\$\s?([0-9]\.[0-9]{2,3})", body or "")[:20],
+                          "diesel_ctx": [body[max(0, m.start()-150): m.start()+150] for m in re.finditer(r"(?i)diesel", body or "")][:4]}
     return out
 
 
@@ -159,12 +160,15 @@ def main():
         res = {
             "pilot": deep("pilot", "https://www.pilotflyingj.com/fuel-prices", [
                 "https://www.pilotflyingj.com/api/locations", "https://www.pilotflyingj.com/api/stores",
-                "https://locations.pilotflyingj.com/", "https://locations.pilotflyingj.com/us/tn/knoxville"]),
+                "https://www.pilotflyingj.com/fuel-prices/__data.json",
+                "https://www.pilotflyingj.com/fuel-prices/__data.json?x-sveltekit-invalidated=01",
+                "https://locations.pilotflyingj.com/__data.json"]),
             "ta": deep("ta", "https://www.ta-petro.com/location/all-locations", [
                 "https://www.ta-petro.com/api/locations/coordinates/?",
-                "https://www.ta-petro.com/api/locations/coordinates/?lat=36.1&lng=-86.7",
+                "https://www.ta-petro.com/api/locations/coordinates/?lat=36.16&lon=-86.78",
+                "https://www.ta-petro.com/api/locations/coordinates/?lat=41.5&lon=-87.9",
                 "https://www.ta-petro.com/location/tn/nashville"]),
-            "gasbuddy": deep("gasbuddy", "https://www.gasbuddy.com/gasprices/texas", []),
+            
         }
         OUT.mkdir(parents=True, exist_ok=True)
         (OUT / f"probe_deep_{t0}.json").write_text(json.dumps(res, indent=1))
@@ -173,7 +177,7 @@ def main():
             print(" srcs:", v["script_srcs"][:12])
             for x in v["inline_json_keys"][:3]: print(" inline:", x[:400].replace("\n", " "))
             for h in v["hits"][:10]: print(" hit", h["file"], "::", h["ctx"][:400].replace("\n", " "))
-            for u, t in v["tries"].items(): print(" try", t["status"], t["type"][:25], t["len"], u, "|", t["head"][:250].replace("\n", " "))
+            for u, t in v["tries"].items(): print(" try", t["status"], t["type"][:25], t["len"], u, "| prices", t["prices"][:10]); [print("   diesel:", c.replace("\n", " ")[:300]) for c in t["diesel_ctx"][:3]]
         return
     if "--loves" in sys.argv:
         t0 = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%MZ")
