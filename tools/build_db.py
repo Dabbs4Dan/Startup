@@ -20,6 +20,8 @@ SOURCES = [
     ("fred:DCOILBRENTEU", "Brent crude spot $/bbl (EIA via FRED)", "https://fred.stlouisfed.org/series/DCOILBRENTEU", "daily", "Lags ~1 week."),
     ("fred:DDFUELNYH", "NY Harbor ULSD No.2 diesel spot $/gal (EIA via FRED)", "https://fred.stlouisfed.org/series/DDFUELNYH", "daily", "Lags ~1 week."),
     ("fred:GASDESW", "EIA weekly U.S. on-highway diesel retail $/gal", "https://fred.stlouisfed.org/series/GASDESW", "weekly (Mon)", "Different survey than AAA; long history to 1994."),
+    ("yahoo:BZ=F", "Brent front-month futures daily close $/bbl (Yahoo Finance)", "https://finance.yahoo.com/quote/BZ=F", "daily", "Futures, not spot; close proxy for Brent spot."),
+    ("yahoo:HO=F", "NY Harbor ULSD front-month futures daily close $/gal (Yahoo Finance)", "https://finance.yahoo.com/quote/HO=F", "daily", "Futures proxy for NY Harbor ULSD wholesale."),
     ("manual:tradingeconomics", "Brent and heating-oil quotes read by hand from tradingeconomics.com", "https://tradingeconomics.com/commodity/heating-oil", "ad hoc", "CFD/OTC-based, not official benchmark; may differ by a cent or two."),
     ("eia:taxes", "Federal 24.4c + avg state 35.86c/gal (EIA, as of Jan 2026)", "https://www.eia.gov/energyexplained/index.php?page=diesel_prices", "rarely changes", ""),
 ]

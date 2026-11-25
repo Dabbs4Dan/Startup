@@ -3,7 +3,7 @@
 
 1. Kalshi: every KXDIESELD market (settled + open) -> kalshi_markets,
    and each settled day's expiration_value -> diesel_daily.aaa_diesel (= AAA number).
-2. FRED: Brent (DCOILBRENTEU), NY Harbor ULSD (DDFUELNYH), EIA weekly diesel (GASDESW).
+2. Yahoo futures: Brent (BZ=F), NY Harbor ULSD (HO=F). FRED (often blocks cloud runners) as backup + EIA weekly diesel (GASDESW).
 3. Export every table/view to data/exports/*.csv (GitHub renders these as tables).
 
 Never overwrites a filled value (fills NULLs only). Safe to re-run.
@@ -87,7 +87,7 @@ def pull_kalshi(con):
 def pull_fred(con):
     start = "2022-01-01"
     for col, sid in FRED.items():
-        text = get(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={sid}&cosd={start}")
+        text = get(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={sid}&cosd={start}", tries=1)
         n = 0
         for row in csv.DictReader(io.StringIO(text)):
             d = row.get("observation_date") or row.get("DATE")
@@ -101,6 +101,26 @@ def pull_fred(con):
                 upsert(con, d, fields)
                 n += 1
         print(f"fred {sid}: {n} rows")
+
+
+YAHOO = {"brent_usd_bbl": ("BZ=F", "brent_source"), "ulsd_nyh_usd_gal": ("HO=F", "ulsd_source")}
+
+
+def pull_yahoo(con):
+    """Daily closes of front-month futures: Brent (BZ=F, $/bbl) and NY Harbor ULSD (HO=F, $/gal)."""
+    for col, (sym, src_col) in YAHOO.items():
+        data = json.loads(get(f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}?range=5y&interval=1d"))
+        res = data["chart"]["result"][0]
+        off = res["meta"].get("gmtoffset", -18000)
+        closes = res["indicators"]["quote"][0]["close"]
+        n = 0
+        for ts, v in zip(res["timestamp"], closes):
+            if v is None:
+                continue
+            d = datetime.datetime.fromtimestamp(ts + off, datetime.timezone.utc).strftime("%Y-%m-%d")
+            upsert(con, d, {col: round(v, 4), src_col: f"yahoo:{sym}"})
+            n += 1
+        print(f"yahoo {sym}: {n} rows")
 
 
 def upsert(con, date, fields):
@@ -130,7 +150,7 @@ def export(con):
 def main():
     con = sqlite3.connect(DB)
     if "--export" not in sys.argv:
-        for step in (pull_kalshi, pull_fred):
+        for step in (pull_kalshi, pull_yahoo, pull_fred):
             try:
                 step(con)
                 con.commit()
