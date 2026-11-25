@@ -116,6 +116,16 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-24 (11 PM) · Stress test: "always bet the favorite"
+- **Did:** Split favorite backtest into Sep–Oct vs Nov, added +1¢ worse fills, computed break-even win rates.
+- **Learned:**
+  - Favorite 60–85¢: Sep–Oct 75% win, ROI +1.5% · Nov 87% win, ROI +18.5%. Heavy fav 85–97¢: Sep–Oct 94%, +3.3% · Nov 98%, +7.1%.
+  - With 1¢ worse fills: 60–85¢ → +4.3%, 85–97¢ → +3.4%. Worst single days ≈ −1.6 to −1.8 units.
+  - Break-even: at 90¢ need 90.6% wins (1 loss ≈ 10 wins); at 95¢ need 95.3% (1 loss ≈ 20 wins).
+  - Most of the profit came from November's steady price slide; in Sep–Oct favorites barely beat break-even.
+- **Decided:** "Always favorite" = baseline strategy to beat, not the strategy. Engine's job: skip favorites on risky days (e.g. wholesale jump / trend turn).
+- **Next:** Edge test (#9) with the favorite baseline as the benchmark.
+
 ### 2026-11-24 (late night) · Liquidity filter, underdog test, $100 vs $1,000
 - **Did:** Backtested every price level on all 68 settled days (hourly candles, books with spread ≤10¢, one bet per line/side/day, buying at ask + taker fee). Read tonight's live order book (KXDIESELD-26NOV25-T5.765).
 - **Learned:**
