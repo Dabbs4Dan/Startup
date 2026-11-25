@@ -6,6 +6,9 @@ name: kalshi-twins live recorder
 #    shifts start by hand (Actions tab → Run workflow) or via: gh workflow run live_recorder.yml --ref kalshi-twins
 # ⚠️ Free minutes are unlimited only while the repo is PUBLIC. Private = 2,000 min/month (this uses ~41,000).
 on:
+  push:                     # a code change runs a short 12-min test shift
+    branches: [kalshi-twins]
+    paths: ["tools/live_recorder.py", ".github/workflows/live_recorder.yml"]
   workflow_dispatch:
     inputs:
       minutes:
@@ -39,7 +42,7 @@ jobs:
         run: |
           git config user.name "kalshi-twins-bot"
           git config user.email "actions@users.noreply.github.com"
-          python3 tools/live_recorder.py --minutes "${{ github.event.inputs.minutes || '340' }}" --every "${{ github.event.inputs.every || '5' }}"
+          python3 tools/live_recorder.py --minutes "${{ github.event.inputs.minutes || (github.event_name == 'push' && '12') || '340' }}" --every "${{ github.event.inputs.every || '5' }}"
       - name: Final push
         if: always()
         run: |
