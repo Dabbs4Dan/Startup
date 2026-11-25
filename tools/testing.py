@@ -15,6 +15,7 @@ standardized gap = (mean_win - mean_loss) / spread of the column; top 3 shown. N
 Writes table `testing_results` + data/exports/testing_results.csv.  Usage: python3 tools/testing.py [days=60]
 """
 import sqlite3, csv, pathlib, sys, math, statistics as st, datetime as dt
+from zoneinfo import ZoneInfo
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 con = sqlite3.connect(ROOT / "data" / "kalshi_twins.db")
@@ -46,7 +47,8 @@ def line_bets():
     for E, p in P.items():
         bet = p["bet_day"]
         rows = con.execute("""SELECT strike, end_et, yes_bid, yes_ask, mid, spread, volume FROM kalshi_candles
-                              WHERE event_date=? AND period_min=60 AND end_et<=? ORDER BY strike, end_et""", (E, f"{bet} 10:00")).fetchall()
+                              WHERE event_date=? AND period_min=60 AND end_ts<=? ORDER BY strike, end_ts""",
+                           (E, int(dt.datetime.fromisoformat(f"{bet} 10:00").replace(tzinfo=ZoneInfo("America/New_York")).timestamp()))).fetchall()
         L = {}
         for k, t, b, a, m, s, v in rows:
             d = L.setdefault(k, dict(vol=0.0)); d["vol"] += v or 0; d.update(bid=b, ask=a, mid=m, spread=s)

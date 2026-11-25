@@ -135,6 +135,12 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-25 (2:45 PM) · 60-day audit: two data fixes, story check
+- **Fixed:** (1) Daylight saving: stored `end_et` is fixed UTC−5, so Sep–Oct "10 AM" snapshots were really 11 AM EDT. panel.py + testing.py now cut snapshots with real America/New_York time (end_ts). (2) Stale books: lines with no two-sided quote (spread > 10¢) showed a fake 50% mid and broke the crowd forecast/σ fit (19 mornings had σ stuck at 1.8¢). Forecast + σ now use only lines with spread ≤ 10¢; mornings with none stay blank (8 of 60). Sheet tabs 60 Day + Testing refreshed. ⚠️ story.py / signal_scan.py still use end_et strings (legacy, not in sheet).
+- **Checks passed:** AAA continuity day to day, AAA change math, every pair/Goldilocks WIN-LOSS label vs settled AAA, delivery slice math.
+- **Learned (60 days):** baseline edge now +6.6% (90.8% win, 142 line bets); Oct −2.3% vs Nov +12.0%; NO side +12.7% vs YES +1.0%; model agrees +10.3% vs disagrees −0.2%. Crowd 10 AM median miss 0.28¢ (Nov 0.16¢), close 0.17¢; model F 0.59¢. All 3 Goldilocks losses in mid/late Oct (choppy, delivery slice below $0.90).
+- **Next:** Bricks tab; re-check candidates on unseen Aug 3 – Sep 25.
+
 ### 2026-11-25 (1:10 PM) · Daily schedule ON + Custom Build tab + trade tape
 - **Did:** Turned on the daily GitHub schedule (6:17 AM ET, Dan's request). Added Stooq fallback for HO 5-min (`daily_recorders.py`). New `tools/kalshi_trades.py` (CB6 + CB7): every trade per traded line → `kalshi_trades`; 1-min candles for top-3 lines per event → `kalshi_candles` period_min=1 (panel/testing/story all filter period_min=60). New sheet tab **Custom Build**: 19 items (CB1–CB19) needing more than a daily GitHub job, each with time horizon, where it runs, build scope, cost, blocker.
 - **Decided:** GitHub = all once-a-day + backfillable jobs. Always-on server (CB1, ~$5–6/mo) = home for every ⚡ realtime item; pending Dan's OK. Databento ($125 free credits) = proposed one-time HO 10 AM backfill (CB2), pending Dan's signup.

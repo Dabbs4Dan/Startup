@@ -12,6 +12,7 @@ Snapshot rules (formula #19 "Top-3 liquid pairs"):
 Model F (formula #3, 10 AM no-peek version): HO's same-day move is unknown at 10 AM -> set to 0.
 """
 import sqlite3, csv, pathlib, datetime as dt, math, json
+from zoneinfo import ZoneInfo
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 con = sqlite3.connect(ROOT / "data" / "kalshi_twins.db")
@@ -80,11 +81,22 @@ def cross50(rows):
     return None
 
 
-def snapshot(E, until_et):
-    """As-of state of every line at time `until_et` ('YYYY-MM-DD HH:MM'): latest candle <= time + volume since open."""
+NY = ZoneInfo("America/New_York")   # real New York clock (handles daylight saving; stored end_et is fixed UTC-5)
+
+
+def ny_ts(day, hhmm):
+    return int(dt.datetime.fromisoformat(f"{day} {hhmm}").replace(tzinfo=NY).timestamp())
+
+
+def ny_label(ts):
+    return dt.datetime.fromtimestamp(ts, NY).strftime("%H:%M")
+
+
+def snapshot(E, until_ts):
+    """As-of state of every line at unix time `until_ts`: latest hourly candle ending <= that time + volume since open."""
     rows = con.execute("""SELECT strike, end_et, yes_bid, yes_ask, mid, spread, volume, open_interest
-                          FROM kalshi_candles WHERE event_date=? AND period_min=60 AND end_et<=? ORDER BY strike, end_et""",
-                       (E, until_et)).fetchall()
+                          FROM kalshi_candles WHERE event_date=? AND period_min=60 AND end_ts<=? ORDER BY strike, end_ts""",
+                       (E, until_ts)).fetchall()
     lines = {}
     for k, t, b, a, m, s, v, oi in rows:
         L = lines.setdefault(k, dict(strike=k, vol=0.0))
@@ -168,13 +180,14 @@ for E in events:
     else:
         r["model_F"] = None
     # --- Kalshi: 10 AM + close ---
-    last_t = con.execute("SELECT MAX(end_et) FROM kalshi_candles WHERE event_date=? AND period_min=60 AND end_et<=?", (E, f"{E} 01:00")).fetchone()[0]
-    for tag, t in (("am10", f"{bet} 10:00"), ("close", last_t)):
+    last_t = con.execute("SELECT MAX(end_ts) FROM kalshi_candles WHERE event_date=? AND period_min=60", (E,)).fetchone()[0]
+    for tag, t in (("am10", ny_ts(bet, "10:00")), ("close", last_t)):
         lines = snapshot(E, t) if t else {}
-        mids = [(L["strike"], L["mid"]) for L in lines.values()]
+        # forecast + sigma use only lines with a real two-sided quote (stale 0/100 books show a fake 50% mid)
+        mids = [(L["strike"], L["mid"]) for L in lines.values() if L["spread"] is not None and L["spread"] <= 0.10]
         mu50 = cross50(mids)
         mu, sg = fit_ladder(mids) if lines else (None, None)
-        r[f"{tag}_time"] = t[11:] if t else None
+        r[f"{tag}_time"] = ny_label(t) if t else None
         r[f"{tag}_crowd_forecast"] = round(mu50, 4) if mu50 else (round(mu, 4) if mu else None)
         r[f"{tag}_crowd_sigma_c"] = round(sg * 100, 3) if sg else None
         # favorite in the Goldilocks zone (75-85c) on either side
