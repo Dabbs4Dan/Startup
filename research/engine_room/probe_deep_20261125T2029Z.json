@@ -1,0 +1,84 @@
+{
+ "pilot": {
+  "status": 200,
+  "len": 115798,
+  "script_srcs": [
+   "https://cdn.bc0a.com/autopilot/f00000000286747/autopilot_sdk.js",
+   "https://cdn.cookielaw.org/consent/0198e0d9-943a-7950-9e34-0b30943912c2/otSDKStub.js"
+  ],
+  "inline_json_keys": [
+   "dth\" />\n\n        <!--12qhfyh--><script async=\"\" defer=\"\" src=\"https://cdn.bc0a.com/autopilot/f00000000286747/autopilot_sdk.js\" class=\"svelte-12qhfyh\"></script> <script class=\"svelte-12qhfyh\">\n        window.__INITIAL_SCREEN_WIDTH__ =\n            window.innerWidth ||\n            (window.matchMedia('(max-width: 1199px)').matches ? 800 : 1400);\n    </script><!----><!--1a69gmx--><meta name=\"title\" content=\"Pilot Company | Travel Center &amp; Gas Station Network\"/> <meta name=\"description\" content=\"&"
+  ],
+  "hits": [],
+  "tries": {
+   "https://www.pilotflyingj.com/api/locations": {
+    "status": 200,
+    "type": "text/html",
+    "len": 115798,
+    "head": "<!doctype html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\" />\n        <link rel=\"icon\" href=\"/images/favicon.ico\" />\n\n        <!-- let's provision our fonts eagerly to prevent FOUC -->\n        <!-- Roboto Flex import includes wght, wdth, and ytlc-->\n        <link\n            rel=\"preload\"\n            href=\"/fonts/Roboto/RobotoFlex.woff2\"\n            as=\"font\"\n            type=\"font/woff2\"\n            crossorigin\n        />\n\n        <!-- Google Consent Mode v2 - Set defaults before"
+   },
+   "https://www.pilotflyingj.com/api/stores": {
+    "status": 200,
+    "type": "text/html",
+    "len": 115798,
+    "head": "<!doctype html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\" />\n        <link rel=\"icon\" href=\"/images/favicon.ico\" />\n\n        <!-- let's provision our fonts eagerly to prevent FOUC -->\n        <!-- Roboto Flex import includes wght, wdth, and ytlc-->\n        <link\n            rel=\"preload\"\n            href=\"/fonts/Roboto/RobotoFlex.woff2\"\n            as=\"font\"\n            type=\"font/woff2\"\n            crossorigin\n        />\n\n        <!-- Google Consent Mode v2 - Set defaults before"
+   },
+   "https://locations.pilotflyingj.com/": {
+    "status": 200,
+    "type": "text/html",
+    "len": 43428,
+    "head": "<!doctype html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\" />\n        <link rel=\"icon\" href=\"/images/favicon.ico\" />\n\n        <!-- let's provision our fonts eagerly to prevent FOUC -->\n        <!-- Roboto Flex import includes wght, wdth, and ytlc-->\n        <link\n            rel=\"preload\"\n            href=\"/fonts/Roboto/RobotoFlex.woff2\"\n            as=\"font\"\n            type=\"font/woff2\"\n            crossorigin\n        />\n\n        <!-- Google Consent Mode v2 - Set defaults before"
+   },
+   "https://locations.pilotflyingj.com/us/tn/knoxville": {
+    "status": 404,
+    "type": "",
+    "len": 400,
+    "head": "<!doctype html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\" />\n        <link rel=\"icon\" href=\"/images/favicon.ico\" />\n\n        <!-- let's provision our fonts eagerly to prevent FOUC -->\n        <!-- Roboto Flex import includes wght, wdth, and ytlc-->\n        <link\n            rel=\"preload\"\n            href=\"/fonts/Roboto/RobotoFlex.woff2\"\n            as=\"font\"\n            type=\"font/"
+   }
+  }
+ },
+ "ta": {
+  "status": 200,
+  "len": 113669,
+  "script_srcs": [
+   "/sb/sitebuilder-js-bundle.js.vRelease-219",
+   "/sc/c8213103.js.vRelease-219",
+   "https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"
+  ],
+  "inline_json_keys": [],
+  "hits": [
+   {
+    "file": "https://www.ta-petro.com/sc/c8213103.js.vRelease-219",
+    "ctx": "(){var resultsDiv=document.getElementById('nearestLocationsSearchResults');var loadingDiv=document.getElementById('nearestLocationsLoading');function successCallback(position){let lat=position.coords.latitude;let lon=position.coords.longitude;fetch('/api/locations/coordinates/?'+new URLSearchParams({lat:lat,lon:lon,})).then((response)=>{if(!response.ok)throw new Error(response.status);resultsDiv.style.display=\"block\";loadingDiv.style.display=\"none\";response.text().then((text)=>{resultsDiv.innerH"
+   }
+  ],
+  "tries": {
+   "https://www.ta-petro.com/api/locations/coordinates/?": {
+    "status": 200,
+    "type": "text/html; charset=utf-8",
+    "len": 681,
+    "head": "\r\n<div class=\"text-center\">\r\n    <button class=\"nearest-locations-accordion nearest-location-btn\" id=\"nearestLocationsAccordion\"><strong>0</strong> Locations within <strong>100</strong> miles of you</button>\r\n</div>\r\n<div class=\"nearest-locations-panel\" id=\"nearestLocationsPanel\" style=\"display: none\">\r\n    <div class=\"container-fluid mt-5\">\r\n        <div class=\"row justify-content-center\">\r\n        </div>\r\n    </div>\r\n    <script type=\"application/ld+json\">\r\n        {\r\n            \"@context\": \""
+   },
+   "https://www.ta-petro.com/api/locations/coordinates/?lat=36.1&lng=-86.7": {
+    "status": 200,
+    "type": "text/html; charset=utf-8",
+    "len": 681,
+    "head": "\r\n<div class=\"text-center\">\r\n    <button class=\"nearest-locations-accordion nearest-location-btn\" id=\"nearestLocationsAccordion\"><strong>0</strong> Locations within <strong>100</strong> miles of you</button>\r\n</div>\r\n<div class=\"nearest-locations-panel\" id=\"nearestLocationsPanel\" style=\"display: none\">\r\n    <div class=\"container-fluid mt-5\">\r\n        <div class=\"row justify-content-center\">\r\n        </div>\r\n    </div>\r\n    <script type=\"application/ld+json\">\r\n        {\r\n            \"@context\": \""
+   },
+   "https://www.ta-petro.com/location/tn/nashville": {
+    "status": 404,
+    "type": "",
+    "len": 400,
+    "head": "<!DOCTYPE html>\r\n<html dir=\"ltr\" lang=\"en\" class=\"no-js usn\">\r\n<head>\r\n    <!-- OneTrust Cookies Consent Notice start for ta-petro.com -->\r\n    <script type=\"text/javascript\" charset=\"UTF-8\" data-domain-script=\"81e32590-efe2-4f46-be5c-31f3653855e9\" src=\"https://cdn.cookielaw.org/scripttemplates/otSDKStub.js\"></script>\r\n    <script type=\"text/javascript\">\r\n        function OptanonWrapper() { }\r\n   "
+   }
+  }
+ },
+ "gasbuddy": {
+  "status": 403,
+  "len": 400,
+  "script_srcs": [],
+  "inline_json_keys": [],
+  "hits": [],
+  "tries": {}
+ }
+}
