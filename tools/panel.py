@@ -168,7 +168,7 @@ for E in events:
     else:
         r["model_F"] = None
     # --- Kalshi: 10 AM + close ---
-    last_t = con.execute("SELECT MAX(end_et) FROM kalshi_candles WHERE event_date=? AND end_et<=?", (E, f"{E} 01:00")).fetchone()[0]
+    last_t = con.execute("SELECT MAX(end_et) FROM kalshi_candles WHERE event_date=? AND period_min=60 AND end_et<=?", (E, f"{E} 01:00")).fetchone()[0]
     for tag, t in (("am10", f"{bet} 10:00"), ("close", last_t)):
         lines = snapshot(E, t) if t else {}
         mids = [(L["strike"], L["mid"]) for L in lines.values()]

@@ -135,6 +135,11 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-25 (1:10 PM) · Daily schedule ON + Custom Build tab + trade tape
+- **Did:** Turned on the daily GitHub schedule (6:17 AM ET, Dan's request). Added Stooq fallback for HO 5-min (`daily_recorders.py`). New `tools/kalshi_trades.py` (CB6 + CB7): every trade per traded line → `kalshi_trades`; 1-min candles for top-3 lines per event → `kalshi_candles` period_min=1 (panel/testing/story all filter period_min=60). New sheet tab **Custom Build**: 19 items (CB1–CB19) needing more than a daily GitHub job, each with time horizon, where it runs, build scope, cost, blocker.
+- **Decided:** GitHub = all once-a-day + backfillable jobs. Always-on server (CB1, ~$5–6/mo) = home for every ⚡ realtime item; pending Dan's OK. Databento ($125 free credits) = proposed one-time HO 10 AM backfill (CB2), pending Dan's signup.
+- **Next:** read first trade-tape run; EIA API key (CB13); Dan decisions on CB1 / CB2 / CB10.
+
 ### 2026-11-25 (12:40 PM) · Testing framework v0 (sheet tab "Testing")
 - **Did:** `tools/testing.py` → `testing_results` + `data/exports/testing_results.csv` (37 tests on the 60-day window). Two units: DAY (one Goldilocks 75–85¢ favorite/day, 26 bets) and LINE (every line/side 60–97¢ at 10 AM passing the liquidity filter, 162 bets). Layer 1 = standard checks (favorite win/lose, baseline, calibration, monthly stability, costs/streaks, holdout rule); Layer 2 = one condition; Layer 3 = two. Origin column: Core (obvious) vs Computer (depth-2 decision tree, min 15 per leaf). "What sticks out" = top-3 standardized win-vs-loss gaps inside the slice (needs ≥3 losses). Recorder result: AAA 51 states saved ✅; Yahoo 5-min HO still 429 ❌.
 - **Learned (60 days, hints only):** baseline edge +4.3% (89.5% win at 84.3¢). Oct negative (−4.8%), Nov +10.4%. NO side +7.8% vs YES ≈ 0. Losses sit closer to the crowd forecast (0.58σ vs 1.15σ) and are cheaper (75¢ vs 85¢). Tree: lines ≤82.5¢ with refining slice >$2.04 → 60% win, −19% per $100.
