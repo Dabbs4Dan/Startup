@@ -116,6 +116,17 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-24 (11:15 PM) · Bankroll sims: $500, $100 favorite bet per day
+- **Did:** `tools/sim_favorites.py` → results in `research/sims/2026-11-24_favorites_sim.json`. Buy at hourly ask +1¢ slippage + taker fee (rounded up per order). Favorites = lines priced 60–85¢.
+- **Learned:**
+  - Sim A fixed rule (~75¢ favorite at 10 AM): 65 days, 51 wins / 14 losses, $500 → $615. Fees $107. Dipped to $56 on Nov 2 before recovering.
+  - Sim A random picks ×1,000: median $799, 10th pct $0 (bust), 90th pct $1,254; lost money in 34% of runs.
+  - Sim B (30 wins, 0 losses, $100/bet @ ~76¢): +$857 (~$28.55/win).
+  - Win/loss math per $100: @65¢ +$50/−$100 (need 66.6%), @75¢ +$31/−$99 (76.3%), @85¢ +$16/−$99 (85.9%), @95¢ +$5/−$98 (95.3%).
+  - No minimum bankroll: fees are a % (~1.5–1.8% of stake). Size only adds slippage.
+- **Decided:** Win RATE vs break-even is what matters, not bankroll size. Strategy = bet fewer days (skip risky ones) to lift win rate above break-even.
+- **Next:** Edge test (#9): which features (oil move, delivery slice, time of day) predict losing days?
+
 ### 2026-11-24 (11 PM) · Stress test: "always bet the favorite"
 - **Did:** Split favorite backtest into Sep–Oct vs Nov, added +1¢ worse fills, computed break-even win rates.
 - **Learned:**
