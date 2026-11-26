@@ -1,0 +1,82 @@
+{
+ "series": "KXDIESELD",
+ "pulled_utc": "2026-11-26 22:50",
+ "found": true,
+ "title": "Daily Diesel Price",
+ "frequency": "daily",
+ "fee_type": "quadratic",
+ "fee_multiplier": 1,
+ "cutoff": {
+  "market_positions_last_updated_ts": "2026-09-27T00:00:00Z",
+  "market_settled_ts": "2026-09-27T00:00:00Z",
+  "orders_updated_ts": "2026-11-12T00:00:00Z",
+  "trades_created_ts": "2026-09-27T00:00:00Z"
+ },
+ "first_page_live": {
+  "cursor": "CgwItfai1gYQwOCssAESGEtYRElFU0VMRC0yNk9DVDEwLVQ2LjI3MA",
+  "markets": "list[1000]"
+ },
+ "first_page_historical": {
+  "cursor": "CgwIvZSG1AYQ4MeF3AISGEtYRElFU0VMRC0yNkFVRzE3LVQ1LjQyMA",
+  "markets": "list[1000]"
+ },
+ "sample_historical_market": {
+  "can_close_early": true,
+  "close_time": "2026-09-26T05:59:00Z",
+  "created_time": "2026-09-25T10:00:36.664872Z",
+  "early_close_condition": "This market will close and expire early if the economic data is released.",
+  "event_ticker": "KXDIESELD-26SEP26",
+  "exchange_index": 0,
+  "expected_expiration_time": "2026-10-03T07:30:00Z",
+  "expiration_value": "6.4839",
+  "floor_strike": 6.55,
+  "last_price_dollars": "0.0100",
+  "latest_expiration_time": "2026-10-03T07:30:00Z",
+  "market_type": "binary",
+  "no_ask_dollars": "1.0000",
+  "no_bid_dollars": "0.0000",
+  "no_sub_title": "Above $6.550",
+  "notional_value_dollars": "1.0000",
+  "occurrence_datetime": "2026-09-26T07:30:00Z",
+  "open_interest_fp": "0.00",
+  "open_time": "2026-09-25T12:00:00Z",
+  "previous_price_dollars": "0.0100",
+  "previous_yes_ask_dollars": "1.0000",
+  "previous_yes_bid_dollars": "0.0000",
+  "price_level_structure": "linear_cent",
+  "price_ranges": [
+   {
+    "end": "1.0000",
+    "start": "0.0000",
+    "step": "0.0100"
+   }
+  ],
+  "result": "no",
+  "rules_primary": "If the Diesel Price on September 26, 2026 is above $6.550, then the market resolves to Yes.",
+  "settlement_bounds_type": "default",
+  "settlement_timer_seconds": 1800,
+  "settlement_ts": "2026-09-26T12:50:36.453729Z",
+  "settlement_value_dollars": "0.0000",
+  "status": "finalized",
+  "strike_type": "greater",
+  "ticker": "KXDIESELD-26SEP26-T6.550",
+  "title": "Will Diesel Price on September 26, 2026 be above $6.550?",
+  "updated_time": "2026-09-26T12:50:36.750544Z",
+  "volume_24h_fp": "0.00",
+  "volume_fp": "4952.92",
+  "yes_ask_dollars": "1.0000",
+  "yes_ask_size_fp": "0.00",
+  "yes_bid_dollars": "0.0000",
+  "yes_bid_size_fp": "0.00",
+  "yes_sub_title": "Above $6.550",
+  "_tier": "historical"
+ },
+ "markets_live": 1459,
+ "markets_historical": 1299,
+ "markets_total": 2590,
+ "events": 116,
+ "first_close": "2026-08-03T05:59:00Z",
+ "last_close": "2026-11-26T04:59:00Z",
+ "candle_rows_added": 33880,
+ "markets_no_candles": 0
+}
