@@ -11,6 +11,15 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-26 (3:10 AM) · Chat 6 · PLAN (written before running): deep scan of every parameter, diesel then gas
+- **Asked (Dan):** as deep a backtest as possible on all parameters we have, all diesel days, then gas.
+- **Risk:** a scan this wide WILL throw up lucky winners. So the rules are fixed here first.
+- **Data:** `panel_daily` + hourly `kalshi_candles`, diesel (115 events) and gas (269 events). Bets bought at ask + taker fee 0.07·p·(1−p), spread ≤ 10¢, held to settlement. All stats clustered by day.
+- **Part A (the main question):** which bet-time parameters predict the crowd's 10 AM miss (`aaa_settled − am10_crowd_forecast`, signed and absolute)? Spearman rank correlation per parameter.
+- **Part B:** bet-level grid = parameter tercile × price band × side at 10 AM. **Part C:** hour of day × price band × side.
+- **Part D:** walk-forward model using all parameters to shift the crowd's center; bet when model chance − cost ≥ 5¢.
+- **What counts as a find:** (1) passes a false-discovery filter (Benjamini–Hochberg 10%) on the first 60% of days, AND (2) same sign with p < 0.05 on the last 40% (never used for selection), AND (3) same sign in the other product. Anything less = "hint". Primary number reported: how many cells pass vs how many luck alone would give.
+
 ### 2026-11-26 (3:00 AM) · Chat 6 · G1 first read: how big can a bet be?
 - **Question (Dan):** what's the max bet; would $5–10K work? Deciding number: share of favorite-side quotes (ask 60–97¢) where the full amount fills, and the slip in cents.
 - **Did:** Walked the recorded order book (KXDIESELD-26NOV26, 40 snapshots, 2:31 PM–11:57 PM ET 11/25, 78 favorite quotes) for $1K / $5K / $10K; summarized the trade tape (29.5K trades, 60 event days, top-3 lines).
