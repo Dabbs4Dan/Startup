@@ -1,0 +1,6 @@
+series,title,frequency,fee_type,fee_multiplier
+KXDIESELW,diesel price week,weekly,quadratic,1
+KXDIESELMON,Diesel Prices month,monthly,quadratic,1
+KXDIESELM,Diesel price this month,monthly,quadratic,1
+KXAAAGASW,US gas price up,weekly,quadratic,1
+KXAAAGASM,US gas price,monthly,quadratic_with_maker_fees,1
