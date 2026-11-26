@@ -1,0 +1,32 @@
+[
+ {
+  "query": "(all)",
+  "series_returned": 17148,
+  "http": null
+ },
+ {
+  "query": "?category=Economics",
+  "series_returned": 952,
+  "http": null
+ },
+ {
+  "query": "?category=Commodities",
+  "series_returned": 203,
+  "http": null
+ },
+ {
+  "query": "?category=Financials",
+  "series_returned": 1599,
+  "http": null
+ },
+ {
+  "query": "?category=Energy",
+  "series_returned": 0,
+  "http": null
+ },
+ {
+  "query": "?category=Climate%20and%20Weather",
+  "series_returned": 547,
+  "http": null
+ }
+]

@@ -1,0 +1,290 @@
+ticker,title,category,frequency,fee_type
+AAAGASD,US gas price up,Economics,daily,quadratic
+AAAGASM,US gas price,Economics,monthly,quadratic
+AAAGASMAX,US highest gas price yearly,Economics,annual,quadratic
+AAAGASMAXCA,California highest gas price yearly,Economics,annual,quadratic
+AAAGASMAXTX,Texas highest gas price yearly,Economics,annual,quadratic
+AAAGASMIN,US lowest gas price yearly,Economics,annual,quadratic
+AAAGASMINCA,California lowest gas price yearly,Economics,annual,quadratic
+AAAGASMINTX,Texas lowest gas price yearly,Economics,annual,quadratic
+AAAGASW,US gas price up,Economics,weekly,quadratic
+AAAGASY,US gas price up,Economics,annual,quadratic
+CPIGAS,CPI on gas,Economics,monthly,quadratic
+DIESEL,Diesel price this week,Economics,weekly,quadratic
+DIESELM,Diesel price this month,Economics,monthly,quadratic
+GAS,Gas weekly,Economics,weekly,quadratic
+GAS-MONTH,Gas monthly,Economics,monthly,quadratic
+GASD,Gas daily,Economics,one_off,quadratic
+GASMAX,EIA Gas highest price yearly,Economics,annual,quadratic
+GASMIN,EIA Gas lowest price yearly,Economics,annual,quadratic
+GASTAX,Gasoline tax holiday bill,Politics,annual,quadratic
+KXAAAEVM,US EV charging price,Economics,monthly,quadratic
+KXAAAGASCDAK,Alaska gas price,Economics,daily,quadratic
+KXAAAGASCDAL,Alabama gas price,Economics,daily,quadratic
+KXAAAGASCDAR,Arkansas gas price,Economics,daily,quadratic
+KXAAAGASCDAZ,Arizona gas price,Economics,daily,quadratic
+KXAAAGASCDCA,California gas price,Economics,daily,quadratic
+KXAAAGASCDCO,Colorado gas price,Economics,daily,quadratic
+KXAAAGASCDCT,Connecticut gas price,Economics,daily,quadratic
+KXAAAGASCDDE,Delaware gas price,Economics,daily,quadratic
+KXAAAGASCDFL,Florida gas price,Economics,daily,quadratic
+KXAAAGASCDGA,Georgia gas price,Economics,daily,quadratic
+KXAAAGASCDHI,Hawaii gas price,Economics,daily,quadratic
+KXAAAGASCDIA,Iowa gas price,Economics,daily,quadratic
+KXAAAGASCDID,Idaho gas price,Economics,daily,quadratic
+KXAAAGASCDIL,Illinois gas price,Economics,daily,quadratic
+KXAAAGASCDIN,Indiana gas price,Economics,daily,quadratic
+KXAAAGASCDKS,Kansas gas price,Economics,daily,quadratic
+KXAAAGASCDKY,Kentucky gas price,Economics,daily,quadratic
+KXAAAGASCDLA,Louisiana gas price,Economics,daily,quadratic
+KXAAAGASCDMA,Massachusetts gas price,Economics,daily,quadratic
+KXAAAGASCDMD,Maryland gas price,Economics,daily,quadratic
+KXAAAGASCDME,Maine gas price,Economics,daily,quadratic
+KXAAAGASCDMI,Michigan gas price,Economics,daily,quadratic
+KXAAAGASCDMN,Minnesota gas price,Economics,daily,quadratic
+KXAAAGASCDMO,Missouri gas price,Economics,daily,quadratic
+KXAAAGASCDMS,Mississippi gas price,Economics,daily,quadratic
+KXAAAGASCDMT,Montana gas price,Economics,daily,quadratic
+KXAAAGASCDNC,North Carolina gas price,Economics,daily,quadratic
+KXAAAGASCDND,North Dakota gas price,Economics,daily,quadratic
+KXAAAGASCDNE,Nebraska gas price,Economics,daily,quadratic
+KXAAAGASCDNH,New Hampshire gas price,Economics,daily,quadratic
+KXAAAGASCDNJ,New Jersey gas price,Economics,daily,quadratic
+KXAAAGASCDNM,New Mexico gas price,Economics,daily,quadratic
+KXAAAGASCDNV,Nevada gas price,Economics,daily,quadratic
+KXAAAGASCDNY,New York gas price,Economics,daily,quadratic
+KXAAAGASCDOH,Ohio gas price,Economics,daily,quadratic
+KXAAAGASCDOK,Oklahoma gas price,Economics,daily,quadratic
+KXAAAGASCDOR,Oregon gas price,Economics,daily,quadratic
+KXAAAGASCDPA,Pennsylvania gas price,Economics,daily,quadratic
+KXAAAGASCDRI,Rhode Island gas price,Economics,daily,quadratic
+KXAAAGASCDSC,South Carolina gas price,Economics,daily,quadratic
+KXAAAGASCDSD,South Dakota gas price,Economics,daily,quadratic
+KXAAAGASCDTN,Tennessee gas price,Economics,daily,quadratic
+KXAAAGASCDTX,Texas gas price,Economics,daily,quadratic
+KXAAAGASCDUT,Utah gas price,Economics,daily,quadratic
+KXAAAGASCDVA,Virginia gas price,Economics,daily,quadratic
+KXAAAGASCDVT,Vermont gas price,Economics,daily,quadratic
+KXAAAGASCDWA,Washington gas price,Economics,daily,quadratic
+KXAAAGASCDWI,Wisconsin gas price,Economics,daily,quadratic
+KXAAAGASCDWV,West Virginia gas price,Economics,daily,quadratic
+KXAAAGASCDWY,Wyoming gas price,Economics,daily,quadratic
+KXAAAGASD,US gas price up,Economics,daily,quadratic
+KXAAAGASDAK,Alaska gas price,Economics,daily,quadratic
+KXAAAGASDAL,Alabama gas price,Economics,daily,quadratic
+KXAAAGASDAR,Arkansas gas price,Economics,daily,quadratic
+KXAAAGASDAZ,Arizona gas price,Economics,daily,quadratic
+KXAAAGASDCA,California gas price,Economics,daily,quadratic
+KXAAAGASDCO,Colorado gas price,Economics,daily,quadratic
+KXAAAGASDCT,Connecticut gas price,Economics,daily,quadratic
+KXAAAGASDDE,Delaware gas price,Economics,daily,quadratic
+KXAAAGASDFL,Florida gas price,Economics,daily,quadratic
+KXAAAGASDGA,Georgia gas price,Economics,daily,quadratic
+KXAAAGASDHI,Hawaii gas price,Economics,daily,quadratic
+KXAAAGASDIA,Iowa gas price,Economics,daily,quadratic
+KXAAAGASDID,Idaho gas price,Economics,daily,quadratic
+KXAAAGASDIL,Illinois gas price,Economics,daily,quadratic
+KXAAAGASDIN,Indiana gas price,Economics,daily,quadratic
+KXAAAGASDKS,Kansas gas price,Economics,daily,quadratic
+KXAAAGASDKY,Kentucky gas price,Economics,daily,quadratic
+KXAAAGASDLA,Louisiana gas price,Economics,daily,quadratic
+KXAAAGASDMA,Massachusetts gas price,Economics,daily,quadratic
+KXAAAGASDMD,Maryland gas price,Economics,daily,quadratic
+KXAAAGASDME,Maine gas price,Economics,daily,quadratic
+KXAAAGASDMI,Michigan gas price,Economics,daily,quadratic
+KXAAAGASDMN,Minnesota gas price,Economics,daily,quadratic
+KXAAAGASDMO,Missouri gas price,Economics,daily,quadratic
+KXAAAGASDMS,Mississippi gas price,Economics,daily,quadratic
+KXAAAGASDMT,Montana gas price,Economics,daily,quadratic
+KXAAAGASDNC,North Carolina gas price,Economics,daily,quadratic
+KXAAAGASDND,North Dakota gas price,Economics,daily,quadratic
+KXAAAGASDNE,Nebraska gas price,Economics,daily,quadratic
+KXAAAGASDNH,New Hampshire gas price,Economics,daily,quadratic
+KXAAAGASDNJ,New Jersey gas prices,Economics,daily,quadratic
+KXAAAGASDNM,New Mexico gas price,Economics,daily,quadratic
+KXAAAGASDNV,Nevada gas price,Economics,daily,quadratic
+KXAAAGASDNY,New York gas price,Economics,daily,quadratic
+KXAAAGASDOH,Ohio gas price,Economics,daily,quadratic
+KXAAAGASDOK,Oklahoma gas price,Economics,daily,quadratic
+KXAAAGASDOR,Oregon gas price,Economics,daily,quadratic
+KXAAAGASDPA,Pennsylvania gas price,Economics,daily,quadratic
+KXAAAGASDRI,Rhode Island gas price,Economics,daily,quadratic
+KXAAAGASDSC,South Carolina gas price,Economics,daily,quadratic
+KXAAAGASDSD,South Dakota gas price,Economics,daily,quadratic
+KXAAAGASDTN,Tennessee gas price,Economics,daily,quadratic
+KXAAAGASDTX,TX gas price,Economics,daily,quadratic
+KXAAAGASDUT,Utah gas price,Economics,daily,quadratic
+KXAAAGASDVA,Virginia gas price,Economics,daily,quadratic
+KXAAAGASDVT,Vermont gas price,Economics,daily,quadratic
+KXAAAGASDWA,Washington gas price,Economics,daily,quadratic
+KXAAAGASDWI,Wisconsin gas price,Economics,daily,quadratic
+KXAAAGASDWV,West Virginia gas price,Economics,daily,quadratic
+KXAAAGASDWY,Wyoming gas price,Economics,daily,quadratic
+KXAAAGASED,US gas price on Election Day,Economics,one_off,quadratic
+KXAAAGASEOYNJ,New Jersey gas price at EOY,Economics,annual,quadratic
+KXAAAGASM,US gas price,Economics,monthly,quadratic_with_maker_fees
+KXAAAGASMAX,US highest gas price yearly,Economics,annual,quadratic
+KXAAAGASMAXCA,California highest gas price yearly,Economics,annual,quadratic
+KXAAAGASMAXFL,Florida highest gas price yearly,Economics,annual,quadratic
+KXAAAGASMAXM,US highest gas price monthly,Economics,monthly,quadratic
+KXAAAGASMAXNY,NEW YORK highest gas price yearly,Economics,annual,quadratic
+KXAAAGASMAXTX,Texas highest gas price yearly,Economics,annual,quadratic
+KXAAAGASMIN,US lowest gas price yearly,Economics,annual,quadratic
+KXAAAGASMINCA,California lowest gas price yearly,Economics,annual,quadratic
+KXAAAGASMINFL,Florida lowest gas price yearly,Economics,annual,quadratic
+KXAAAGASMINM,US lowest gas price monthly,Economics,monthly,quadratic
+KXAAAGASMINNY,NEW YORK LOWEST gas price yearly,Economics,annual,quadratic
+KXAAAGASMINTX,Texas lowest gas price yearly,Economics,annual,quadratic
+KXAAAGASMTX,Texas gas price this month,Economics,monthly,quadratic
+KXAAAGASW,US gas price up,Economics,weekly,quadratic
+KXAAAGASWNJ,New Jersey gas price this week,Economics,weekly,quadratic
+KXAAAGASY,US gas price up,Economics,annual,quadratic
+KXAKCRUDEOIL,Alaska crude oil production,Economics,annual,quadratic
+KXARBROILER,Arkansas broiler production,Economics,annual,quadratic
+KXAVGTKLAS,Average Weekly Temp in Las Vegas ,Climate and Weather,weekly,quadratic
+KXBARRELS,Oil barrels,Economics,custom,quadratic
+KXBARRLES,Oil barrels,Economics,custom,quadratic
+KXBRENT15M,Brent 15-minute,Commodities,fifteen_min,quadratic
+KXBRENTD,Brent Oil Daily,Commodities,daily,quadratic
+KXBRENTMON,Brent Monthly,Commodities,monthly,quadratic
+KXBRENTW,Brent Oil,Commodities,weekly,quadratic
+KXBRENTWEX,Brent Oil Weekly Exclusive,Commodities,one_off,quadratic
+KXBUNDESLIGASCORE,Correct Score,Sports,custom,quadratic
+KXBUNDESLIGASPREAD,Bundesliga Spread,Sports,custom,quadratic
+KXC4POS,C4 Energy Point of Sale Growth,Financials,one_off,quadratic
+KXCHINAOILINV,China strategic oil inventories,Economics,quarterly,quadratic
+KXCPIGAS,CPI on gas,Economics,monthly,quadratic
+KXCRUDEEXPORTBAN,US Crude Oil Export Ban,Politics,one_off,quadratic
+KXDENSUPERLIGASPREAD,Spread,Sports,custom,quadratic
+KXDIESEL,Diesel price this week,Economics,weekly,quadratic
+KXDIESELD,Daily Diesel Price,Economics,daily,quadratic
+KXDIESELELECT,Diesel prices on Election Day,Economics,one_off,quadratic
+KXDIESELEXPORTBAN,US Diesel Export Ban,Politics,one_off,quadratic
+KXDIESELM,Diesel price this month,Economics,monthly,quadratic
+KXDIESELMAXY,Highest U.S. diesel price by year,Economics,annual,quadratic
+KXDIESELMINY,Lowest U.S. diesel price by year,Economics,annual,quadratic
+KXDIESELMON,Diesel Prices month,Economics,monthly,quadratic
+KXDIESELMONAK,Alaska diesel price this month,Economics,monthly,quadratic
+KXDIESELW,diesel price week,Economics,weekly,quadratic
+KXDIESELYE,Diesel prices at year end,Economics,annual,quadratic
+KXDOESPRTENDER,DOE Strategic Petroleum Reserve tenders,Economics,one_off,quadratic
+KXEARNINGSMENTIONNEE,NextEra Energy Earnings Call,Mentions,one_off,quadratic
+KXEARNINGSMENTIONTLN,Talen Energy Earnings Call,Mentions,one_off,quadratic
+KXEIACRUDEW,U.S. crude oil inventories,Economics,weekly,quadratic
+KXEIACRUDEXPM,U.S. crude oil exports,Economics,monthly,quadratic
+KXEIAGASINVM,U.S. gasoline inventories,Economics,monthly,quadratic
+KXENERGYARRAY,Energy drink point of sale spend array,Financials,monthly,quadratic
+KXGAS,Gas weekly,Economics,weekly,quadratic
+KXGAS-MONTH,Gas monthly,Economics,monthly,quadratic
+KXGASARRAY,Gas station credit card spend array,Financials,monthly,quadratic
+KXGASBAN,Gas stove ban,Politics,custom,quadratic
+KXGASCHOOLSUPER,Georgia State School Superintendent winner,Elections,custom,quadratic
+KXGASD,Gas daily,Economics,one_off,quadratic
+KXGASEN1R,Will a candidate win outright in the Georgia Senate election?,Elections,one_off,quadratic
+KXGASENGOVCOMBO,Georgia Senate-Governor Combo,Elections,one_off,quadratic
+KXGASMAX,EIA Gas highest price yearly,Economics,annual,quadratic
+KXGASMIN,EIA Gas lowest price yearly,Economics,annual,quadratic
+KXGASOSD,Georgia Democratic secretary of state nominee,Elections,one_off,quadratic
+KXGASOSR,Georiga republican secretary of state nominee,Elections,one_off,quadratic
+KXGASTATELEG,Georgia State Legislature control,Elections,one_off,quadratic
+KXGASTAX,Gasoline tax holiday bill,Politics,annual,quadratic
+KXHIGHTLV,Las Vegas Max Daily Temperature,Climate and Weather,daily,quadratic
+KXHOILMON,Heating Oil Monthly,Commodities,monthly,quadratic
+KXHOILW,Heating Oil Weekly,Commodities,weekly,quadratic
+KXHORMUZGASCOMBO,"Hormuz traffic × Jul 31, 2027 gas price",Politics,one_off,quadratic
+KXIEAOIL,Will the IEA approve a strategic oil reserves release?,Financials,one_off,quadratic
+KXINDIAOIL,India Russian oil,Politics,custom,quadratic
+KXIRANCRUDE,Iran crude oil production in [month],Economics,monthly,quadratic
+KXIRANWTICOMBO,Iran nuclear deal × WTI at end of 2027,Politics,one_off,quadratic
+KXJETFUEL,US Gulf Coast jet fuel price weekly,Economics,weekly,quadratic
+KXLALIGASCORE,Correct Score,Sports,custom,quadratic
+KXLALIGASPREAD,La Liga Spread,Sports,custom,quadratic
+KXLAOILGASEMP,Louisiana oil and gas extraction employment,Economics,annual,quadratic
+KXLOWTLV,Las Vegas Daily Low Temperature,Climate and Weather,daily,quadratic
+KXMAGASTAX,Massachusetts gas tax suspension,Politics,custom,quadratic
+KXMARCELLUSGAS,Marcellus natural gas production,Economics,annual,quadratic
+KXMEGASPEEDCHARGE,Will the U.S. or Singapore criminally charge Megaspeed?,Politics,one_off,quadratic
+KXMEXCUBOIL,Mexico resumes oil exports to Cuba before date,Economics,one_off,quadratic
+KXMONSTERPOS,Monster Energy Drinks Point of Sale Growth,Financials,one_off,quadratic
+KXNATGAS15M,Natural Gas 15-minute,Commodities,fifteen_min,quadratic
+KXNATGASD,Natural Gas Daily,Commodities,daily,quadratic
+KXNATGASMON,Natural Gas Monthly,Commodities,monthly,quadratic
+KXNATGASW,Natural Gas Weekly,Commodities,weekly,quadratic
+KXNBALASVEGAS,Las Vegas NBA team,Sports,custom,quadratic
+KXNCAAATTEND,NCAA attend,Entertainment,custom,quadratic
+KXNDKOIL,North Dakota crude oil production,Economics,annual,quadratic
+KXNEEEPS,NextEra Energy GAAP diluted EPS,Financials,quarterly,quadratic
+KXNEEREV,NextEra Energy total revenue,Financials,quarterly,quadratic
+KXNEWCOACHLV,Las Vegas Raiders New Coach,Sports,custom,quadratic
+KXNFLEXACTWINSLV,Pro football exact wins Las Vegas,Sports,annual,quadratic
+KXNFLWINS-LV,Pro football wins Las Vegas,Sports,annual,quadratic
+KXNGAS,Natural gas price max and min monthly,Economics,monthly,quadratic
+KXNGASMAX,Natural gas price peak,Economics,annual,quadratic
+KXNGASMIN,Natural gas yearly low,Economics,annual,quadratic
+KXNGASW,Natural gas price max and min weekly,Economics,weekly,quadratic
+KXNMCOIL,New Mexico crude oil production,Economics,annual,quadratic
+KXNOAAADMIN,NOAA Administrator,Politics,custom,quadratic
+KXNYCLOBSTER,Will NYC ban boiling live lobsters?,Politics,one_off,quadratic
+KXOIL,Price of oil monthly,Economics,monthly,quadratic
+KXOILRIGS,Oil rigs,Economics,custom,quadratic
+KXOILW,Price of oil weekly,Economics,weekly,quadratic
+KXOKOIL,Oklahoma crude oil production,Economics,annual,quadratic
+KXOPECCUTS,Oil production cuts,Economics,custom,quadratic
+KXPAGAS,Pennsylvania natural gas production,Economics,annual,quadratic
+KXPGASOLHEIM,Solheim Cup,Sports,annual,quadratic_with_maker_fees
+KXPGASTROKEMARGIN,PGA Stroke Margin,Sports,custom,quadratic
+KXPOILIEVREOUT,Pierre Poilievre out as Conservative Party leader?,Politics,one_off,quadratic
+KXPOILIEVRESEAT,Poilievre lose seat,Elections,custom,quadratic
+KXPRIMEENGCONSUMPTION,Prime energy source,Science and Technology,custom,quadratic
+KXRAINDLV,Daily Rain - Las Vegas,Climate and Weather,daily,quadratic
+KXRAINLVM,Rain in Las Vegas,Climate and Weather,monthly,quadratic
+KXROCKSTARPOS,Rockstar Energy Point of Sale Growth,Financials,one_off,quadratic
+KXRTSARAHSOIL,Sarah's Oil Rotten Tomatoes score,Entertainment,custom,quadratic
+KXRUSDIESELGL,Will OFAC end its Russian diesel import license?,Politics,one_off,quadratic
+KXRUSDIESELIMPORT,Will Russian diesel be imported into the United States?,Politics,one_off,quadratic
+KXSAUDICRUDE,Saudi Arabia crude oil production,Economics,monthly,quadratic
+KXSECENERGY,Next Secretary of Energy,Politics,custom,quadratic
+KXSTOCKXLABUBUENERGY,Pop Mart Labubu The Monsters Big Into Energy Series Vinyl Plush Pendant Sealed Case (6 Blind Box),Entertainment,one_off,quadratic
+KXSUSPENDGASTAX,Will the federal gas tax be suspended?,Politics,one_off,quadratic
+KXTAKEOVERNEE,NextEra Energy acquisition,Financials,one_off,quadratic
+KXTESLAENERGYBY,Tesla energy business,Financials,custom,quadratic
+KXTESLAGAS,Tesla gas car,Science and Technology,custom,quadratic
+KXTLN,Talen Energy KPI,Financials,one_off,quadratic
+KXTLNA,Talen Energy Annual KPI,Financials,one_off,quadratic
+KXTRUFGAS,Truflation US CPI Gasoline Price Index,Economics,monthly,quadratic
+KXTTFD,Dutch TTF gas daily,Commodities,daily,quadratic
+KXTTFMON,Dutch TTF gas monthly,Commodities,monthly,quadratic
+KXTTFW,Dutch TTF gas weekly,Commodities,weekly,quadratic
+KXTXOIL,Texas crude oil production,Economics,annual,quadratic
+KXUSGASCPI,US gasoline CPI in [month],Economics,monthly,quadratic
+KXUSVENEZOIL,US Venezuelan oil field deal,Politics,one_off,quadratic
+KXVENEZCRUDE,Venezuela crude oil production in [month],Economics,monthly,quadratic
+KXVENEZOILCOS,Oil companies starting Venezuelan production,Politics,one_off,quadratic
+KXWAYMOCITYLV,Waymo Las Vegas,Science and Technology,custom,quadratic
+KXWEEKHTLAS,Weekly high temperature Las Vegas,Climate and Weather,weekly,quadratic
+KXWHENWTI,When will WTI hit price,Commodities,one_off,quadratic
+KXWTI,WTI oil on day,Commodities,daily,quadratic
+KXWTI15M,WTI 15-minute,Commodities,fifteen_min,quadratic
+KXWTIDIRY,WTIDIRY,Commodities,annual,quadratic
+KXWTIE,WTI oil election day,Commodities,custom,quadratic
+KXWTIEU,WTI oil up after election,Commodities,custom,quadratic
+KXWTIH,WTI Hourly,Commodities,hourly,quadratic
+KXWTIMAX,WTI oil high,Commodities,annual,quadratic
+KXWTIMAXM,WTI oil monthly high,Commodities,one_off,quadratic
+KXWTIMIN,WTI oil low,Commodities,annual,quadratic
+KXWTIMINM,WTI oil monthly low,Commodities,one_off,quadratic
+KXWTIMONTHLY,WTI oil monthly,Commodities,monthly,quadratic
+KXWTIVSBRENT,Will the WTI outperform Brent this year?,Financials,custom,quadratic
+KXWTIW,WTI oil weekly range,Commodities,weekly,quadratic
+KXWTIWHEN,WTI When,Commodities,one_off,quadratic
+NGAS,Natural gas price max and min monthly,Economics,monthly,quadratic
+NGASMAX,Natural gas price peak,Economics,annual,quadratic
+NGASMIN,Natural gas yearly low,Economics,annual,quadratic
+NGASW,Natural gas price max and min weekly,Economics,weekly,quadratic
+OIL,Price of oil monthly,Economics,monthly,quadratic
+OILW,Price of oil weekly,Economics,weekly,quadratic
+WTI,WTI oil daily range,Financials,daily,quadratic
+WTIH,WTI oil over/under,Financials,hourly,quadratic
+WTIMAX,WTI oil yearly high,Financials,annual,quadratic
+WTIMIN,WTI oil yearly low,Financials,annual,quadratic
+WTIW,WTI oil weekly range,Financials,weekly,quadratic
