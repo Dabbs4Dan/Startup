@@ -1,0 +1,81 @@
+{
+ "series": "KXAAAGASM",
+ "pulled_utc": "2026-11-26 22:37",
+ "found": true,
+ "title": "US gas price",
+ "frequency": "monthly",
+ "fee_type": "quadratic_with_maker_fees",
+ "fee_multiplier": 1,
+ "cutoff": {
+  "market_positions_last_updated_ts": "2026-09-27T00:00:00Z",
+  "market_settled_ts": "2026-09-27T00:00:00Z",
+  "orders_updated_ts": "2026-11-12T00:00:00Z",
+  "trades_created_ts": "2026-09-27T00:00:00Z"
+ },
+ "first_page_live": {
+  "cursor": "",
+  "markets": "list[68]"
+ },
+ "first_page_historical": {
+  "cursor": "",
+  "markets": "list[425]"
+ },
+ "sample_historical_market": {
+  "can_close_early": true,
+  "close_time": "2026-08-31T03:59:00Z",
+  "created_time": "2026-08-27T13:10:16.272074Z",
+  "event_ticker": "KXAAAGASM-26AUG31",
+  "exchange_index": 0,
+  "expected_expiration_time": "2026-08-31T14:00:00Z",
+  "expiration_value": "4.0807",
+  "floor_strike": 4.09,
+  "last_price_dollars": "0.0200",
+  "latest_expiration_time": "2026-09-30T14:00:00Z",
+  "market_type": "binary",
+  "no_ask_dollars": "1.0000",
+  "no_bid_dollars": "0.0000",
+  "no_sub_title": "Above 4.09",
+  "notional_value_dollars": "1.0000",
+  "occurrence_datetime": "2026-08-31T14:00:00Z",
+  "open_interest_fp": "0.00",
+  "open_time": "2026-08-27T13:30:00Z",
+  "previous_price_dollars": "0.0200",
+  "previous_yes_ask_dollars": "1.0000",
+  "previous_yes_bid_dollars": "0.0000",
+  "price_level_structure": "linear_cent",
+  "price_ranges": [
+   {
+    "end": "1.0000",
+    "start": "0.0000",
+    "step": "0.0100"
+   }
+  ],
+  "result": "no",
+  "rules_primary": "If average regular gas prices for \nUnited States are strictly greater than $4.09 on Aug 31, 2026 according to AAA, then the market resolves to Yes.",
+  "settlement_bounds_type": "default",
+  "settlement_timer_seconds": 300,
+  "settlement_ts": "2026-08-31T13:24:51.114029Z",
+  "settlement_value_dollars": "0.0000",
+  "status": "finalized",
+  "strike_type": "greater",
+  "ticker": "KXAAAGASM-26AUG31-4.09",
+  "title": "Will average **gas prices** be above $4.09?",
+  "updated_time": "2026-08-31T13:24:51.200018Z",
+  "volume_24h_fp": "0.00",
+  "volume_fp": "108823.39",
+  "yes_ask_dollars": "1.0000",
+  "yes_ask_size_fp": "0.00",
+  "yes_bid_dollars": "0.0000",
+  "yes_bid_size_fp": "0.00",
+  "yes_sub_title": "Above 4.09",
+  "_tier": "historical"
+ },
+ "markets_live": 68,
+ "markets_historical": 425,
+ "markets_total": 493,
+ "events": 35,
+ "first_close": "2023-12-31T14:55:00Z",
+ "last_close": "2026-10-31T03:59:00Z",
+ "candle_rows_added": 164028,
+ "markets_no_candles": 0
+}
