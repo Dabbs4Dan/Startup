@@ -11,6 +11,11 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-26 (1:40 AM) · Maker vs taker on the real trade tape
+- **Did:** Scored both sides of every recorded trade (`kalshi_trades`, top-3 lines/day; diesel 29K trades / 59 days, gas 75K / 29 days) against the AAA print. Taker pays ask + 0.07·P·(1−P); maker assumed 0 fee (daily series fee_type "quadratic"; checked 0.0175 maker fee too).
+- **Learned:** Being the maker alone is NOT an edge here (opposite of the Bürgi et al. 300K-contract average): diesel makers −2.2%/day-avg (CI −9.3 to +8.4), gas makers −1.3% (CI −2.2 to −0.5). Takers who buy 40–90¢ favorites make money → makers get picked off on that side. But **makers who end up holding the favorite (60–97¢) made +6.2% in diesel, CI +1.4 to +10.4** (70–97¢: +6.7%, CI +1.9 to +10.5). By month: Sep +8.7%, **Oct −4.2%**, Nov +9.9%. Gas: −1.0% (CI −9.1 to +5.9).
+- **Decided (candidate):** "Limit-order favorites" = first diesel result with a CI above zero, but regime-dependent (lost in October), gas doesn't confirm, and fills are queue-dependent. Needs: more days, the regime filter, and order-book queue checks before paper trading.
+
 ### 2026-11-26 (1:00 AM) · Which time band? Daily has the biggest provable timing ceiling
 - **Did:** Measured how much each band's ladder sharpens before settlement, and the "ceiling" return if you knew the later ladder early (bet at early ask + fee when late mid − cost ≥ 5¢).
 - **Learned:** Daily: knowing the 10 PM ladder at 10 AM → **+70% per $ diesel (67 days, CI +42 to +105), +79% gas (187 days, CI +59 to +103)**. Weekly: knowing the 1–2-days-out ladder at 5–7 days → +54% diesel (8 events), +41% gas (3). Monthly: +126% diesel on 2 events (driven by crude moves; nobody's model predicts 30 days: our best = "no change"). Share of the move the market already explains: daily ~67%, weekly 5–7d ~76%, monthly ~9–23%.
