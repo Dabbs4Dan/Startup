@@ -4,9 +4,20 @@
 RULEBOOK (every backtest reads these tables; change the rules here, nowhere else)
   Unit        one row = (fuel, horizon, event, snapshot). fuel: diesel | gas. horizon: daily | weekly | monthly.
   Event       one Kalshi ladder that settles on AAA's national average for one date (the date in the event ticker).
-  Snapshots   10:00, 18:00 and 22:00 US/Eastern on every calendar day the ladder is open.
-  No peeking  Kalshi quote = last hourly candle that ENDED at or before the snapshot (and is at most 6 h old).
-              AAA known  = AAA for the snapshot's own date (assumes AAA posts before 10 AM ET; gap G2).
+  Snapshots   (Dan, 2026-11-26: open and close always; Claude picks the in-between marks from the research)
+              open   = the first hour the ladder has quotes
+              10am   = our bet time; 8-10 AM carries ~36% of the day's dollars
+              noon   = first cluster of unexplained crowd moves (rack prices post ~11 AM)
+              3pm    = just after diesel / gasoline futures settle (2:30 PM)
+              6pm    = second cluster of unexplained moves; Love's reprices in one batch ~5 PM
+              10pm   = evening volume peak (9-11 PM, ~20% of dollars); where the trend-fade candidate lives
+              close  = the last quotes before the ladder closes
+              The five clock marks repeat on every calendar day the ladder is open (weekly / monthly too).
+  No peeking  Kalshi quote = last hourly candle that ENDED at or before the snapshot (at most 6 h old; 12 h for close).
+              AAA known  = AAA for the snapshot's own date if the snapshot is at 6 AM ET or later, else the day
+              before. (AAA flipped between 3:17 and 3:32 AM ET on 2026-11-26, the one flip recorded so far; gap G2.)
+              All other inputs use the same as-of date. Rows where that date is the settle date itself are
+              flagged answer_may_be_public = 1 (older ladders stayed open into settle day); exclude them from tests.
               Daily futures / spot = last close dated BEFORE the snapshot date.
               EIA weekly pump prices (dated Monday) = usable from the next day. EIA weekly supply data (dated the
               Friday the week ended) = usable 6 days later (it is published the next Wednesday). Monthly = 60 days later.
@@ -23,7 +34,7 @@ Reads   data/lake/kalshi/<SERIES>/ (pull_kalshi_history.py), data/lake/history/ 
 Writes  data/lake/master/aaa_daily.csv            reconciled AAA national per day, both fuels, with source
         data/lake/master/inputs_daily.csv         every input as one daily, as-of-safe column
         data/lake/master/ladder_snapshots.csv.gz  every quoted line at every snapshot (for brute tests on all strikes)
-        data/lake/master/backtest_master.csv      one row per snapshot: crowd, liquid 3, inputs, regimes, targets
+        data/lake/master/backtest_master.csv.gz   one row per snapshot: crowd, liquid 3, inputs, regimes, targets
         data/lake/master/COVERAGE.md              what exists, how far back, fill rates, conflicts found (vetting)
 Usage   python3 tools/backtest_master.py      (pandas + numpy only; ~1 minute)
 """
@@ -36,7 +47,8 @@ LAKE, OUT = ROOT / "data" / "lake", ROOT / "data" / "lake" / "master"
 SERIES = {"KXDIESELD": ("diesel", "daily"), "KXDIESELW": ("diesel", "weekly"), "KXDIESELMON": ("diesel", "monthly"),
           "KXDIESELM": ("diesel", "monthly"), "KXAAAGASD": ("gas", "daily"), "KXAAAGASW": ("gas", "weekly"),
           "KXAAAGASM": ("gas", "monthly")}
-SNAP_HOURS = (10, 18, 22)
+SNAP_MARKS = {10: "10am", 12: "noon", 15: "3pm", 18: "6pm", 22: "10pm"}
+AAA_POSTED_BY_HOUR = 6
 ET = "America/New_York"
 MAIN_FUT = {"diesel": "ho", "gas": "rbob"}
 notes = []
@@ -245,12 +257,13 @@ def ladders():
         for ev, g in c.groupby("event_ticker"):
             e = ev_meta.loc[ev]
             days = pd.date_range(e.open_ts.tz_convert(ET).normalize(), e.close_ts.tz_convert(ET).normalize(), freq="D")
-            times = [dd + pd.Timedelta(hours=h) for dd in days for h in SNAP_HOURS]
-            times = [t for t in times if e.open_ts < t <= e.close_ts]
             g = g.sort_values("end")
+            times = [(dd + pd.Timedelta(hours=h), lab) for dd in days for h, lab in SNAP_MARKS.items()]
+            first = g.end.iloc[0].tz_convert(ET)
+            times = [(first, "open")] + [(t, lab) for t, lab in times if first <= t < e.close_ts.tz_convert(ET)] + [(e.close_ts.tz_convert(ET), "close")]
             n_ev += 1
-            for t in times:
-                w = g[(g.end <= t) & (g.end > t - pd.Timedelta(hours=6))]
+            for t, label in times:
+                w = g[(g.end <= t) & (g.end > t - pd.Timedelta(hours=12 if label == "close" else 6))]
                 if w.empty:
                     continue
                 q = w.drop_duplicates("ticker", keep="last").sort_values("floor_strike")
@@ -260,7 +273,8 @@ def ladders():
                 lo, hi = (crossing(good.floor_strike.values, good.mid.values, 0.84), crossing(good.floor_strike.values, good.mid.values, 0.16)) if len(good) > 2 else (np.nan, np.nan)
                 trad = good[(good.mid >= 0.03) & (good.mid <= 0.97)].sort_values("cum_vol", ascending=False).head(3)
                 row = {"fuel": fuel, "horizon": hz, "series": series, "event": ev, "settle_date": e.settle_date.date(),
-                       "snapshot_et": t.tz_localize(None), "snapshot_date": t.date(), "snapshot_hour": t.hour,
+                       "snapshot": label, "snapshot_et": t.tz_localize(None), "snapshot_date": t.date(), "snapshot_hour": t.hour,
+                       "asof_date": (t - pd.Timedelta(days=1)).date() if t.hour < AAA_POSTED_BY_HOUR else t.date(),
                        "days_to_settle": (e.settle_date.date() - t.date()).days,
                        "hours_to_close": round((e.close_ts - t).total_seconds() / 3600, 1), "tier": e.tier,
                        "n_lines": int(e.n_lines), "n_quoted": len(q), "n_tight": len(good), "n_tradeable": int(((good.mid >= 0.03) & (good.mid <= 0.97)).sum()),
@@ -275,6 +289,7 @@ def ladders():
                 n_snap += 1
                 ql = q[["ticker", "floor_strike", "yes_bid", "yes_ask", "last", "cum_vol", "open_interest"]].copy()
                 ql.insert(0, "snapshot_et", t.tz_localize(None))
+                ql.insert(0, "snapshot", label)
                 ql.insert(0, "event", ev)
                 ql["settled_yes"] = (e.settle_value > ql.floor_strike).astype(int)
                 lines.append(ql)
@@ -298,11 +313,13 @@ def main():
         return
     out = []
     for fuel in ("diesel", "gas"):
-        f = features(x, fuel).reset_index().rename(columns={"date": "snapshot_date"})
+        f = features(x, fuel).reset_index().rename(columns={"date": "asof_date"})
         s = snaps[snaps.fuel == fuel].copy()
-        s["snapshot_date"] = pd.to_datetime(s.snapshot_date)
-        out.append(s.merge(f, on="snapshot_date", how="left"))
+        s["asof_date"] = pd.to_datetime(s.asof_date)
+        out.append(s.merge(f, on="asof_date", how="left"))
     mst = pd.concat(out, ignore_index=True).sort_values(["fuel", "horizon", "settle_date", "snapshot_et"])
+    # some older ladders stayed open into the settle day itself; AAA for that day may already have been public
+    mst["answer_may_be_public"] = (pd.to_datetime(mst.asof_date) >= pd.to_datetime(mst.settle_date)).astype(int)
     mst["change_to_settle_c"] = (mst.settle_value - mst.aaa_known_filled) * 100
     mst["crowd_expected_change_c"] = (mst.crowd_center - mst.aaa_known_filled) * 100
     mst["crowd_miss_c"] = (mst.settle_value - mst.crowd_center) * 100
@@ -310,7 +327,7 @@ def main():
     mst["weekday"], mst["month"] = dts.dt.day_name().str[:3], dts.dt.month
     mst["settle_month"] = pd.to_datetime(mst.settle_date).dt.strftime("%Y-%m")
     mst = mst.dropna(axis=1, how="all")
-    mst.round(5).to_csv(OUT / "backtest_master.csv", index=False)
+    mst.round(5).to_csv(OUT / "backtest_master.csv.gz", index=False)
     lines.round(4).to_csv(OUT / "ladder_snapshots.csv.gz", index=False)
 
     # ---------------- vetting ----------------
@@ -321,7 +338,7 @@ def main():
     for db, fuel in ((ROOT / "data" / "kalshi_twins.db", "diesel"), (ROOT / "data" / "gas" / "kalshi_gas.db", "gas")):
         try:
             p = pd.read_sql("SELECT event_date, am10_crowd_forecast, aaa_settled FROM panel_daily", sqlite3.connect(db))
-            mm = mst[(mst.fuel == fuel) & (mst.horizon == "daily") & (mst.snapshot_hour == 10) & (mst.days_to_settle == 1)]
+            mm = mst[(mst.fuel == fuel) & (mst.horizon == "daily") & (mst.snapshot == "10am") & (mst.days_to_settle == 1)]
             j = mm.assign(event_date=mm.settle_date.astype(str)).merge(p, on="event_date")
             dc = ((j.crowd_center - pd.to_numeric(j.am10_crowd_forecast, errors="coerce")) * 100).abs()
             ds = ((j.settle_value - pd.to_numeric(j.aaa_settled, errors="coerce")) * 100).abs()

@@ -11,6 +11,16 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-26 (7:05 PM) · Chat 6 · Master snapshots: open, close + five in-between marks; AAA post time seen
+- **Decided (Dan):** keep the 3 busiest lines; snapshot at multiple times: open and close always, Claude picks the in-between marks from the research.
+- **Did:** `tools/backtest_master.py` now writes 7 snapshots: open, 10 AM, noon, 3 PM, 6 PM, 10 PM, close (reasons in the RULEBOOK: bet time and morning volume, the noon and 6 PM clusters of unexplained moves, futures settle at 2:30 PM, Love's ~5 PM batch, evening volume). Master is now `backtest_master.csv.gz`: 576 events, 12,845 snapshots, 155 columns; 147,530 line-rows.
+- **Learned:**
+  - **AAA post time, first recorded flip:** between 3:17 and 3:32 AM ET on 2026-11-26 (gap G2; one observation). As-of rule: snapshots before 6 AM ET use the previous day's AAA.
+  - 36 snapshots on older gas ladders fall on the settle day itself, after that post time → flagged `answer_may_be_public = 1`; exclude from tests.
+  - Re-vet vs old daily panels: 114 diesel + 242 gas shared days, settle values identical, 10 AM crowd center gap 0.00¢.
+  - Descriptive only (not a test): median crowd miss by snapshot. Diesel: open 0.30¢ · 10 AM 0.35 · noon 0.32 · 3 PM 0.33 · 6 PM 0.27 · 10 PM 0.24 · close 0.23. Gas: 0.40 · 0.39 · 0.35 · 0.26 · 0.21 · 0.20 · 0.18. Diesel's crowd sharpens between 3 PM and 6 PM; gas between noon and 3 PM.
+- **Next:** vet the state-level and older Kalshi series now landing in `data/lake/kalshi/`; then Dan's custom arrays.
+
 ### 2026-11-26 (6:45 PM) · Chat 6 · Backtest master: both fuels × daily/weekly/monthly, Kalshi historical tier, wider inputs
 - **Asked (Dan):** now is the raw data collection stage. Rebuild for weekly and monthly, go below AAA into the sub-components, reconcile into ONE backtest master for gas + diesel × 3 time slices with the 3 most liquid lines; source, reconcile and vet proactively. Also earlier this session: a phone command system (saved skill `kalshi`) and the two-pillar framing (phone playbook + market system).
 - **Did:**
