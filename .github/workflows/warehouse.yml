@@ -37,7 +37,7 @@ jobs:
       - run: pip install duckdb pandas pyarrow xlrd
       - name: EIA + Yahoo history (fast)
         continue-on-error: true
-        run: python3 tools/history_pull.py eia yahoo
+        run: python3 tools/history_pull.py eia daily yahoo
       - name: Save progress
         run: |
           git config user.name "kalshi-twins-bot"

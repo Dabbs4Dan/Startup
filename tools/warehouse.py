@@ -211,6 +211,11 @@ def _unified(con, products):
         _, s, bar = stem.split("_")[:3]
         parts.append(f"""SELECT ts_utc::TIMESTAMP AS ts_utc, '{ymap.get(s, s)}' AS symbol, close::DOUBLE AS price, '{bar}' AS bar,
                          'yahoo' AS source FROM hist."{stem}" WHERE close IS NOT NULL AND close <> ''""")
+    for f in _files("data/lake/history/fut_*_1d.csv"):        # Yahoo daily, full history (history_pull.py daily)
+        stem = pathlib.Path(f).stem                             # fut_rbob_1d
+        sym = {"ho": "HO", "rbob": "RBOB", "brent": "BRENT", "wti": "WTI", "natgas": "NATGAS"}.get(stem.split("_")[1], stem)
+        parts.append(f"""SELECT (date::DATE + INTERVAL 19 HOUR)::TIMESTAMP AS ts_utc, '{sym}' AS symbol, close::DOUBLE AS price,
+                         '1d' AS bar, 'yahoo_daily' AS source FROM hist."{stem}" WHERE close IS NOT NULL""")
     if _has(con, "live", "futures"):
         parts.append("""SELECT ts_utc::TIMESTAMP AS ts_utc, name AS symbol, TRY_CAST("last" AS DOUBLE) AS price, 'live_5m' AS bar,
                         coalesce(source, 'stooq') AS source FROM live.futures""")
@@ -221,7 +226,7 @@ def _unified(con, products):
           for f in _files("data/lake/history/eia_*.csv")]
     _union(con, "eia_all", sp, [("date", "DATE"), ("series", "VARCHAR"), ("value", "DOUBLE")])
     con.execute("CREATE VIEW spot_daily AS SELECT * FROM eia_all WHERE series LIKE '%spot%' OR series LIKE '%futures%'")
-    con.execute("CREATE VIEW eia_weekly AS SELECT * FROM eia_all WHERE series LIKE 'retail_%' OR series LIKE '%stocks%'")
+    con.execute("CREATE VIEW eia_weekly AS SELECT * FROM eia_all WHERE series LIKE 'retail_%' OR series LIKE '%stocks%' OR series LIKE 'weekly_%' OR series LIKE 'monthly_%'")
     # ---- pass-through live feeds with era ---------------------------------------------------------------
     for v, src in (("orderbook", "kalshi_orderbook"), ("truckstops", "truckstops")):
         if _has(con, "live", src):
