@@ -1,6 +1,6 @@
 {
  "series": "KXDIESELW",
- "pulled_utc": "2026-11-26 22:40",
+ "pulled_utc": "2026-11-26 23:30",
  "found": true,
  "title": "diesel price week",
  "frequency": "weekly",
@@ -77,6 +77,6 @@
  "events": 16,
  "first_close": "2026-08-09T05:59:00Z",
  "last_close": "2026-11-23T04:59:00Z",
- "candle_rows_added": 39433,
+ "candle_rows_added": 0,
  "markets_no_candles": 0
 }
