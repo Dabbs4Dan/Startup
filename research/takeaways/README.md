@@ -11,4 +11,6 @@ tabs **Takeaways – master** and **Takeaways – by chat**).
 
 How a new session should use this: read `master.csv` for what is true now; read `by_chat.csv` to see what a given chat concluded and what later replaced it.
 
-Chats so far: 1 Setup & core research · 2 OPIS & 60 day excel · 3 Initial excel · 4 Nautilus Trader · 5 Sample models & backtest.
+Chats so far: 1 Setup & core research · 2 OPIS & 60 day excel · 3 Initial excel · 4 Nautilus Trader · 5 Sample models & backtest · 6 Audit, structure & truckstop test.
+
+Add new `MASTER` rows at the end of the list so existing M-numbers never change.

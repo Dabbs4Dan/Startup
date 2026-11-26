@@ -6,6 +6,42 @@
 
 ---
 
+## 0. Start here: how every session works (added 2026-11-26, Chat 6)
+
+**Starting a session (2 minutes):**
+1. `git pull` the `kalshi-twins` branch. Read this file. Then read **§6 (Now)**: it holds the one live direction.
+2. Read `research/takeaways/master.csv` (what is true now) and the top 3 entries of `research/LOG.md` (what just happened).
+3. Check feeds: bottom of `data/warehouse_catalog.md` (OK / STALE).
+4. Tell Dan which chat number you are and what you will do. Don't re-open settled questions (§3b, master.csv).
+
+**Ending a session (always, without being asked):**
+1. Add a `research/LOG.md` entry at the top. Title starts with the chat number: `### 2026-11-26 (2:10 AM) · Chat 6 · title`.
+2. Update takeaways: edit the lists in `research/takeaways/build_takeaways.py`, run it, mirror both tabs to the Build Board sheet.
+3. If the direction, a job, or a file location changed: update §4 or §6 here. Keep this file under ~20 KB.
+4. Push. Confirm the push landed (`git ls-remote origin refs/heads/kalshi-twins`).
+
+**Working rules (so chats don't collide or fool themselves):**
+- **Several chats push to this branch.** Always `git pull --rebase` right before pushing. Never force-push. Never move or rename a file a workflow uses without updating the Jobs table and every workflow that names it.
+- **One home per fact.** Findings → `master.csv`. History of what was done → `LOG.md`. Where things are → §4. What's next → §6. Gaps → `research/2026-11-26_gaps-and-direction.md`. Don't start a new tracking file or sheet tab for something that already has a home.
+- **Write the test before running it.** One LOG line first: the question, the one number that decides it, the days held out. Then run. We have ~115 days and have tested dozens of cuts; a lucky "winner" is expected (the favorites edge went +8% → +3.3% not proven this way).
+- **A result counts only with** day-clustered ranges, costs included, and a check on days the rule never saw. Otherwise label it "hint".
+- **Data flow is one-way:** recorders/pulls → raw files + DBs → warehouse views → Engine Room scorecards → takeaways → Sheets. Sheets and CSV exports are read-only copies; never treat them as a source.
+
+```
+Kalshi / AAA / futures / truckstops / EIA
+        │  (GitHub jobs, started by the relay)
+        ▼
+data/live/*.csv   data/kalshi_twins.db   data/gas/   data/lake/history/     ← RAW (append-only, one writer each)
+        ▼
+tools/warehouse.py  (DuckDB views: one place to query everything)           ← QUERY LAYER
+        ▼
+Engine Room + scorecards (research/engine_room/, algo_scorecard)            ← PROOF (20+ days to PASS)
+        ▼
+research/takeaways/master.csv  →  Google Sheets (Build Board)               ← WHAT DAN READS
+```
+
+---
+
 ## 1. Mission (one paragraph)
 
 Build an AI-assisted algorithmic trading system for **Kalshi** event contracts, starting with **U.S. retail diesel**.
@@ -47,7 +83,9 @@ AAA diesel number and find gaps vs. Kalshi's odds. Demo money only until a strat
 | Daily pull | `.github/workflows/backfill.yml` | Started by the relay (see Jobs table). `schedule:` never fires off `main`. |
 | Deep research notes | `research/` | One dated file per topic. |
 | **Takeaways** ⭐ | `research/takeaways/` (`master.csv` = what is true now, `by_chat.csv` = each chat's closing table) | Same as Build Board sheet tabs "Takeaways – master / by chat". Update both at the end of a chat. |
-| This brain | `CLAUDE.md` | Log at the bottom, newest first. |
+| This brain | `CLAUDE.md` | §0 = how to work, §6 = what's next. The dated log is `research/LOG.md`. |
+| **Gaps + direction** ⭐ | `research/2026-11-26_gaps-and-direction.md` | 13 ranked gaps in our understanding and the one direction. Update statuses in place. |
+| **Truckstop test (L3)** ⭐ | `tools/truckstop_test.py` → `research/engine_room/l3_truckstop_scorecard.csv` | One row per day: truckstop move vs what the crowd missed. Refreshed hourly by `truckstops.yml`. Verdict at 10 scored days; PASS needs 20+. |
 | **Engine Room** | `tools/engine_room.py` → tables `algo_registry` / `inputs_asof` / `algo_predictions` / `algo_scorecard` (both DBs) | Proves each pricing algo layer (L0 market maker → L1 AAA → L2 OPIS state roll-up → L3 inputs) before patterns. Sheet tab **Engine Room** (diesel + gas). Only ✅ PASS algos (20+ points) may feed slices/bricks. |
 | **Strategy engine** | `nautilus/` (read `nautilus/README.md`) | NautilusTrader **2.0.0rc9, locked**. Same strategy code → backtest → Kalshi demo → live. Strategy IDs = sheet tab **Strategies** (S00 = replay check, no orders). |
 | DIY scheduler | `.github/workflows/live_recorder.yml` (relay step) | ⚠️ GitHub ignores `schedule:` off `main`. Each recorder shift starts the next, then runs `nautilus.yml` + daily backfill if none in 20h. Pause: commit `data/live/STOP`. |
@@ -72,7 +110,7 @@ Quick query example: `sqlite3 data/kalshi_twins.db "SELECT * FROM v_diesel_break
 | Workflow | What it does | Writes (commits) | Started by |
 |---|---|---|---|
 | `live_recorder.yml` | 5-min Kalshi + futures, 15-min order book + AAA; **relay**: starts next shift + nautilus + truckstops + daily jobs | `data/live/` | itself (relay), push to its files |
-| `truckstops.yml` | Love's + TA posted prices, hourly | `data/live/truckstops/` | relay each shift |
+| `truckstops.yml` | Love's + TA posted prices, hourly, **saved after every snapshot**; then refreshes the L3 scorecard | `data/live/truckstops/`, `research/engine_room/l3_truckstop_scorecard.csv` | relay each shift |
 | `backfill.yml` | diesel daily pull: Kalshi, trades, candles, panel, testing, Engine Room | **`data/kalshi_twins.db`** (only writer), `data/exports/` | relay if no success in 20h |
 | `gas_backfill.yml` | same for gas (side test) | **`data/gas/`** (only writer) | relay if no success in 20h |
 | `warehouse.yml` | EIA + Yahoo + Internet Archive AAA national → catalog + feed health | `data/lake/`, `data/warehouse_catalog.*`, `data/feed_health.csv` | relay if no success in 20h |
@@ -123,7 +161,7 @@ Losses come from the intraday info gap (market forecast moves 0.73¢ on losing d
 **Reconstructed formulas (2026-11-24, see `research/2026-11-24_formula-reconstruction.md`):**
 - N (crowd at 10 AM): mu_N ≈ AAA_today + 0.89×yesterday's change (R² 0.69), σ ≈ 0.35¢, + bias/spread/fee layer. Kalshi publishes no pricing model (order book + private market makers).
 - F (truth): AAA_tomorrow ≈ AAA_today + 0.73×yesterday's change (R² 0.66) + fundamentals + unmeasured station-price moves. Crowd at close ≈ 0.77× (miss 0.11¢).
-- Morning crowd over-extrapolates momentum (0.89 vs 0.73) = first candidate edge.
+- Morning crowd over-extrapolates momentum (0.89 vs 0.73). Tested later: not a tradable edge by itself (see `master.csv` M12, M15).
 - ⚠️ Update 2026-11-25: momentum-only fails after big wholesale moves (Nov 25: said 5.7804). Base F formula = fundamentals version: AAA_today − 6.72%×(Delivery − $0.90) + 1.83¢/$ HO today − 1.30¢/$ HO prior 5d → 5.7626 vs crowd 5.7625.
 
 **Risk formula (2026-11-25, `tools/risk_calc.py`):** c = price + fee. P&L = (B/n)·[(n−L)(1−c)/c − L]. Max losses L* = n(1−c). Win rate needed = c. Wins per loss = c/(1−c). Chance negative = P(Binomial(n,1−q) > L*).
@@ -136,20 +174,28 @@ Losses come from the intraday info gap (market forecast moves 0.73¢ on losing d
 
 ---
 
-## 6. Open questions / next steps
+## 6. Now: the one direction (updated 2026-11-26, Chat 6)
 
-| # | Item | Status |
+**No edge is proven yet.** The market beats our models at every horizon; the favorites rule was a November effect.
+Full reasoning and the 13 ranked gaps: `research/2026-11-26_gaps-and-direction.md`.
+
+**The question:** what does the 10 AM crowd miss, and when during the day does it learn it?
+
+| Order | Step | Status |
 |---|---|---|
-| 1 | Confirm backfill ran on GitHub; check row counts | ✅ 2026-11-24 |
-| 2 | Lag study: how many days for a ULSD move to reach AAA? Up vs. down speed (rockets & feathers)? | ⬜ |
-| 3 | Find the exact time AAA posts each day | ◐ flip tracker live since 11/25 (`aaa_flips`) — read after ~1 week |
-| 4 | Turn the forecast into odds per strike; compare with Kalshi prices (backtest on history) | ⬜ |
-| 5 | Gas twin | ✅ side test/analog (own DB + workbook) |
-| 6 | Real-time ULSD/HO source | ◐ TradingView ~10-min delayed, live since 11/25; EIA daily settles/spot for history |
-| 8 | Minute-level candles | ✅ top-3 lines daily (`kalshi_trades.py`) + all strikes every 5 min live |
-| 9 | Edge test: does our engine's morning forecast beat the market's morning ladder? | ⬜ |
-| 10 | Master research panel | ◐ `panel_daily` (10 AM + close); warehouse views for any snapshot time |
-| 7 | Longer AAA history | ◐ Internet Archive national (since 2019) + states running; EIA weekly 1994+ ✅ |
+| 1 | **Truckstop scorecard**: does the truckstop move on day X−1 line up with the crowd's surprise on day X? | ◐ runs by itself since 11/26; first read at 10 scored days (~Dec 6), PASS at 20+ |
+| 2 | **Size the prize (G1)**: dollars available near the best price at 10 AM / noon / 6 PM, from order-book recordings | ⬜ needs ~1 week of recordings |
+| 3 | **Pin the mystery moves to a clock (G4, G2)**: line up the 184 unexplained moves with rack times, the ~5 PM Love's batch reprice, the AAA flip time | ⬜ |
+| 4 | Models → strategies → Nautilus, only after 1–3 | ⬜ |
+
+**Key finding, parked (Dan, 2026-11-26):** limit orders on the favorite side (60–97¢) made +6.2% per $ in diesel
+(range +1.4% to +10.4%), the first result with a range above zero. It lost in October, gas doesn't confirm it, and
+fills are not guaranteed. Not being worked now; revisit after step 1. (`master.csv` M28, LOG 2026-11-26 1:40 AM.)
+
+**Paused until step 1 reads out:** new strategy ideas, gas beyond its daily pull, weekly/monthly ladders, Nautilus strategies.
+
+**Still-open older items:** lag study / rockets & feathers (G9) · exact AAA post time (G2, flip log recording) ·
+longer AAA history (Internet Archive national since 2019, running) · 10 AM futures history (Wishlist W1).
 
 ---
 

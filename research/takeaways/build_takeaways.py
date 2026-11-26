@@ -12,6 +12,7 @@ CHATS = {
     3: "Chat 3 - Initial excel",
     4: "Chat 4 - Nautilus Trader",
     5: "Chat 5 - Sample models & backtest",
+    6: "Chat 6 - Audit, structure & truckstop test",
 }
 
 # (chat, section, item, meaning, sketch, status, superseded_by)
@@ -91,6 +92,15 @@ BY_CHAT = [
     (5, "Strategy", "Model target", "Predict where the ladder will be at 10 PM using 10 AM data.", "", "Current", ""),
     (5, "Strategy", "Implied-variable method", "Back-solve hidden X = price - known inputs, then find outside data that predicts X before the ladder moves.", "price = known + X", "Current", ""),
     (5, "System", "Where it lives", "Build Board sheet (Drive), Sample Kalshi Models folder, GitHub research/sample_models + backtest write-up.", "", "Current", ""),
+    (6, "Results", "KEY FINDING: limit-order favorites (found in Chat 5)", "Posting limit orders on the favorite side (60-97c) made +6.2% per $ in diesel, range +1.4% to +10.4%. First result with a range above zero. Lost in October; gas doesn't confirm; fills not guaranteed.", "seller + favorite", "Parked", "Dan parked it 2026-11-26"),
+    (6, "Verdict", "No edge proven yet", "Data foundation and crowd benchmark are real. Every model loses to the market. The project kept adding fronts while the one deciding test only needs time.", "real base / no edge", "Current", ""),
+    (6, "Strategy", "The one direction", "What does the 10 AM crowd miss, and when does it learn it? Order: truckstop scorecard, size the prize, pin mystery moves to a clock. Everything else paused.", "miss -> when -> why", "Current", ""),
+    (6, "Results", "Truckstop day 1", "Nov 25: Love's cut about 15% of stores in one batch around 5 PM ET (about -6c each, -1c averaged). TA didn't move. The crowd's forecast didn't react. One day only.", "5 PM batch", "Open", ""),
+    (6, "Data", "No truckstop history", "A large backtest can't be built: truckstop prices aren't archived anywhere free and recording began Nov 25. The scorecard grows one day at a time; buying history is the only shortcut.", "forward test only", "Current", ""),
+    (6, "System", "Truckstop scorecard", "Scores itself every hour: truckstop move vs what the crowd missed at 10 AM and at close. First read at 10 scored days, PASS at 20+.", "ts move vs surprise", "Current", ""),
+    (6, "System", "Hourly truckstop saves", "The truckstop job used to save only after 5.5 hours; a crash lost the run. Now it saves after every snapshot.", "save each hour", "Current", ""),
+    (6, "System", "Session handoff", "CLAUDE.md section 0 = start and end checklist for every chat; section 6 = the one live direction. One home per fact; write the test before running it.", "read -> work -> log", "Current", ""),
+    (6, "Gaps", "13 understanding gaps", "Ranked list in research/2026-11-26_gaps-and-direction.md. Top 4: is the prize big enough, what window is in AAA's number, how much of AAA is truckstops, who are the informed takers.", "G1-G13", "Open", ""),
 ]
 
 # (section, item, meaning, sketch, source_chats, status)
@@ -122,6 +132,13 @@ MASTER = [
     ("System", "Sample models", "Weather, MLB and ryanfrigo bots (ryanfrigo has its own AAA model). Drive + GitHub.", "", "5", "Current"),
     ("Gaps", "Data gaps", "No HO price at 10 AM history, few truckstop days, no rack prices (Corpay = free candidate).", "", "2,4,5", "Open"),
     ("Gaps", "Blocked", "No Pilot feed. Live trading needs an always-on server (~$5-6/mo). Repo still public.", "", "2,4", "Open"),
+    # New rows go at the END so M-numbers never shift.
+    ("Results", "KEY FINDING: limit-order favorites (parked)", "Posting limit orders on the favorite side (60-97c) made +6.2% per $ in diesel, range +1.4% to +10.4%. First result with a range above zero. Lost in October, gas doesn't confirm, fills not guaranteed. Parked by Dan Nov 26; revisit after the truckstop test.", "seller + favorite", "5,6", "Parked"),
+    ("Strategy", "The one direction", "What does the 10 AM crowd miss, and when does it learn it? Order: truckstop scorecard, size the prize, pin mystery moves to a clock. Other fronts paused.", "miss -> when -> why", "6", "Current"),
+    ("Results", "Truckstop day 1", "Nov 25: Love's cut about 15% of stores in one batch around 5 PM ET (about -6c each, -1c averaged). TA didn't move. The crowd's forecast didn't react. One day only.", "5 PM batch", "6", "Open"),
+    ("System", "Truckstop scorecard", "Scores itself every hour: truckstop move vs what the crowd missed. No large backtest is possible (no free truckstop history). First read at 10 scored days, PASS at 20+.", "ts move vs surprise", "6", "Current"),
+    ("System", "Session handoff", "CLAUDE.md section 0 = start/end checklist for every chat; section 6 = the one live direction. One home per fact; write the test before running it.", "read -> work -> log", "6", "Current"),
+    ("Gaps", "13 understanding gaps", "Ranked in research/2026-11-26_gaps-and-direction.md. Top 4: is the prize big enough, what window is in AAA's number, how much of AAA is truckstops, who are the informed takers.", "G1-G13", "6", "Open"),
 ]
 
 

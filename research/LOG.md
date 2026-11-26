@@ -4,12 +4,24 @@ Moved out of CLAUDE.md on 2026-11-25 so new sessions load fast. **Add new entrie
 
 Template:
 ```
-### YYYY-MM-DD (time) · short title
+### YYYY-MM-DD (time) · Chat N · short title
 - **Did:** …
 - **Learned:** …
 - **Decided:** …
 - **Next:** …
 ```
+
+### 2026-11-26 (2:15 AM) · Chat 6 · Audit: structure, handoff, truckstop scorecard, gaps
+- **Did:** Read Chats 1–5 + the repo. Added `CLAUDE.md` §0 (start/end checklist, working rules, data-flow map) and rewrote §6 as the one live direction. Wrote `research/2026-11-26_gaps-and-direction.md` (13 ranked gaps). Built `tools/truckstop_test.py` → `research/engine_room/l3_truckstop_scorecard.csv`. `truckstops.yml` now saves after every hourly snapshot (was: once, after 5.5 h) and refreshes the scorecard. Takeaways: Chat 6 rows + master M28–M33.
+- **Learned:**
+  - **No large-sample truckstop backtest is possible.** No free archive of truckstop prices exists; recording began 11/25 (7 hourly snapshots so far). Only a forward test (grows daily) or bought history.
+  - Truckstop day 1 (11/25, 3 PM–10 PM ET): Love's repriced in **one batch around 5 PM ET**: 13.6% of truck lanes and 17.4% of auto-diesel lanes cut, store-weighted average −1.02¢ (885 lane-prices). TA: no change (110 sites). Crowd forecast for 11/26 held at 5.7226 (−4.2¢ vs 5.7645) all evening → no visible reaction. n = 1 day.
+  - The ~5 PM batch is a candidate for the 6 PM "mystery move" cluster (G4).
+  - Our own notes disagree on what AAA diesel is built from: "9,000+ truckstops" vs "120–150K stations" (G3). Decides how much truck-lane prices can matter.
+- **Decided (Dan):** limit-order / maker work is parked; keep it as a key finding (M28). Chat 6's job = question the work, fix structure, chart direction.
+- **Decided (proposed):** one direction = "what does the 10 AM crowd miss, and when does it learn it?" Order: truckstop scorecard → size the prize (G1) → pin mystery moves to a clock (G4/G2). Other fronts paused until the scorecard has 10 scored days (~Dec 6).
+- **Pre-registered test (L3.1):** primary number = correlation of `ts_move_c` with `surprise_10am_c` across scored days; needs ≥10 days to read, 20+ to PASS; compare with `surprise_close_c` to tell "new information" from "timing".
+- **Next:** G1 capacity check once the order book has ~1 week; first scorecard read ~Dec 6.
 
 ### 2026-11-26 (1:40 AM) · Maker vs taker on the real trade tape
 - **Did:** Scored both sides of every recorded trade (`kalshi_trades`, top-3 lines/day; diesel 29K trades / 59 days, gas 75K / 29 days) against the AAA print. Taker pays ask + 0.07·P·(1−P); maker assumed 0 fee (daily series fee_type "quadratic"; checked 0.0175 maker fee too).
