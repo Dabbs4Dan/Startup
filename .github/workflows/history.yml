@@ -30,8 +30,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Recover state pages
-        run: python3 tools/wayback_states.py "${{ github.event.inputs.since || '20260801' }}" --max-minutes 300
+      - name: Recover all-states pages (fast path, 51 states per page)
+        run: python3 tools/wayback_states.py "${{ github.event.inputs.since || '20260801' }}" --all-states --max-minutes 120
+      - name: Recover per-state pages (slow path, fills gaps)
+        continue-on-error: true
+        run: python3 tools/wayback_states.py "${{ github.event.inputs.since || '20260801' }}" --max-minutes 150
       - name: Re-score Engine Room (diesel)
         continue-on-error: true
         run: python3 tools/engine_room.py
