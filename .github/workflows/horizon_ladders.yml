@@ -1,0 +1,38 @@
+name: kalshi-twins horizon ladders (one-off)
+
+# Weekly + monthly diesel/gas ladders for the multi-horizon backtest. Writes CSVs under research/ only.
+on:
+  push:
+    branches: [kalshi-twins]
+    paths: ["tools/pull_horizon_ladders.py", ".github/workflows/horizon_ladders.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kalshi-twins-horizon-ladders
+  cancel-in-progress: false
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: kalshi-twins
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Pull weekly + monthly ladders
+        run: python3 tools/pull_horizon_ladders.py
+      - name: Commit result
+        if: always()
+        run: |
+          git config user.name "kalshi-twins-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add research/backtests/horizon_ladders/
+          git diff --cached --quiet && exit 0
+          git commit -m "horizon ladders: weekly + monthly pull $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3 4; do git pull --rebase -X theirs origin kalshi-twins && git push origin HEAD:kalshi-twins && break; sleep 15; done

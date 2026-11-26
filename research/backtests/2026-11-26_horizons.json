@@ -1,0 +1,646 @@
+{
+ "diesel": {
+  "A": {
+   "days": 112,
+   "A1": [
+    {
+     "price": "0-10c",
+     "bets": 174,
+     "win%": 1.7,
+     "cost%": 8.0,
+     "ret/$": -57.9,
+     "ci": [
+      -100.0,
+      -5.0
+     ]
+    },
+    {
+     "price": "10-20c",
+     "bets": 99,
+     "win%": 6.1,
+     "cost%": 15.2,
+     "ret/$": -64.8,
+     "ci": [
+      -94.0,
+      -26.8
+     ]
+    },
+    {
+     "price": "20-30c",
+     "bets": 74,
+     "win%": 16.2,
+     "cost%": 26.4,
+     "ret/$": -37.9,
+     "ci": [
+      -70.4,
+      0.8
+     ]
+    },
+    {
+     "price": "30-40c",
+     "bets": 55,
+     "win%": 25.5,
+     "cost%": 36.3,
+     "ret/$": -24.0,
+     "ci": [
+      -57.2,
+      12.1
+     ]
+    },
+    {
+     "price": "40-50c",
+     "bets": 46,
+     "win%": 39.1,
+     "cost%": 46.4,
+     "ret/$": -14.4,
+     "ci": [
+      -45.3,
+      16.7
+     ]
+    },
+    {
+     "price": "50-60c",
+     "bets": 36,
+     "win%": 55.6,
+     "cost%": 56.6,
+     "ret/$": -0.3,
+     "ci": [
+      -26.1,
+      24.4
+     ]
+    },
+    {
+     "price": "60-70c",
+     "bets": 48,
+     "win%": 64.6,
+     "cost%": 65.8,
+     "ret/$": 1.8,
+     "ci": [
+      -18.9,
+      20.8
+     ]
+    },
+    {
+     "price": "70-80c",
+     "bets": 66,
+     "win%": 80.3,
+     "cost%": 76.5,
+     "ret/$": 7.0,
+     "ci": [
+      -5.8,
+      18.8
+     ]
+    },
+    {
+     "price": "80-90c",
+     "bets": 84,
+     "win%": 88.1,
+     "cost%": 85.9,
+     "ret/$": 0.6,
+     "ci": [
+      -9.6,
+      9.8
+     ]
+    },
+    {
+     "price": "90-100c",
+     "bets": 104,
+     "win%": 98.1,
+     "cost%": 93.7,
+     "ret/$": 4.0,
+     "ci": [
+      -0.6,
+      6.9
+     ]
+    }
+   ],
+   "A2": {
+    "n": 82,
+    "mean_miss_c": -0.11,
+    "abs_miss_c": 0.6,
+    "falling_days": [
+     56,
+     0.24
+    ],
+    "rising_days": [
+     26,
+     -0.87
+    ]
+   },
+   "A3": {
+    "no change | edge>=5%": {
+     "bet_days": 69,
+     "bets": 358,
+     "ret/$": -14.0,
+     "ci": [
+      -63.3,
+      60.4
+     ]
+    },
+    "no change | edge>=8%": {
+     "bet_days": 66,
+     "bets": 331,
+     "ret/$": -39.6,
+     "ci": [
+      -72.3,
+      2.7
+     ]
+    },
+    "no change | miss": {
+     "days": 74,
+     "model_miss_c": 1.66,
+     "market_miss_c": 0.55
+    },
+    "momentum | edge>=5%": {
+     "bet_days": 67,
+     "bets": 258,
+     "ret/$": -28.5,
+     "ci": [
+      -59.2,
+      6.5
+     ]
+    },
+    "momentum | edge>=8%": {
+     "bet_days": 64,
+     "bets": 196,
+     "ret/$": -24.8,
+     "ci": [
+      -63.9,
+      24.4
+     ]
+    },
+    "momentum | miss": {
+     "days": 74,
+     "model_miss_c": 0.84,
+     "market_miss_c": 0.55
+    },
+    "wholesale gap | edge>=5%": {
+     "bet_days": 67,
+     "bets": 317,
+     "ret/$": -52.0,
+     "ci": [
+      -74.1,
+      -24.6
+     ]
+    },
+    "wholesale gap | edge>=8%": {
+     "bet_days": 66,
+     "bets": 282,
+     "ret/$": -50.0,
+     "ci": [
+      -76.6,
+      -14.8
+     ]
+    },
+    "wholesale gap | miss": {
+     "days": 74,
+     "model_miss_c": 1.18,
+     "market_miss_c": 0.55
+    },
+    "gap + momentum | edge>=5%": {
+     "bet_days": 66,
+     "bets": 244,
+     "ret/$": -25.7,
+     "ci": [
+      -55.8,
+      9.9
+     ]
+    },
+    "gap + momentum | edge>=8%": {
+     "bet_days": 65,
+     "bets": 195,
+     "ret/$": -36.4,
+     "ci": [
+      -64.4,
+      -2.2
+     ]
+    },
+    "gap + momentum | miss": {
+     "days": 74,
+     "model_miss_c": 0.7,
+     "market_miss_c": 0.55
+    }
+   },
+   "range": [
+    "2026-08-04",
+    "2026-11-26"
+   ]
+  },
+  "B_daily": {
+   "1": {
+    "no change": [
+     1.7,
+     145
+    ],
+    "momentum": [
+     0.95,
+     145
+    ],
+    "wholesale gap": [
+     1.29,
+     145
+    ],
+    "gap + momentum": [
+     0.89,
+     145
+    ]
+   },
+   "7": {
+    "no change": [
+     12.91,
+     95
+    ],
+    "momentum": [
+     10.63,
+     95
+    ],
+    "wholesale gap": [
+     11.69,
+     95
+    ],
+    "gap + momentum": [
+     9.87,
+     95
+    ]
+   },
+   "30": {
+    "no change": [
+     26.34,
+     59
+    ],
+    "momentum": [
+     37.17,
+     59
+    ],
+    "wholesale gap": [
+     29.82,
+     59
+    ],
+    "gap + momentum": [
+     35.8,
+     59
+    ]
+   }
+  },
+  "B_weekly": {
+   "1": {
+    "no change": [
+     4.28,
+     957
+    ],
+    "momentum": [
+     3.48,
+     957
+    ],
+    "wholesale gap": [
+     3.69,
+     957
+    ],
+    "gap + momentum": [
+     3.34,
+     957
+    ]
+   },
+   "4": {
+    "no change": [
+     13.08,
+     954
+    ],
+    "momentum": [
+     12.82,
+     954
+    ],
+    "wholesale gap": [
+     12.5,
+     954
+    ],
+    "gap + momentum": [
+     12.15,
+     954
+    ]
+   }
+  }
+ },
+ "gas": {
+  "A": {
+   "days": 239,
+   "A1": [
+    {
+     "price": "0-10c",
+     "bets": 710,
+     "win%": 2.1,
+     "cost%": 7.6,
+     "ret/$": -46.9,
+     "ci": [
+      -76.2,
+      -12.5
+     ]
+    },
+    {
+     "price": "10-20c",
+     "bets": 299,
+     "win%": 9.4,
+     "cost%": 15.5,
+     "ret/$": -42.7,
+     "ci": [
+      -64.4,
+      -18.0
+     ]
+    },
+    {
+     "price": "20-30c",
+     "bets": 163,
+     "win%": 19.0,
+     "cost%": 26.4,
+     "ret/$": -24.3,
+     "ci": [
+      -48.2,
+      1.1
+     ]
+    },
+    {
+     "price": "30-40c",
+     "bets": 114,
+     "win%": 42.1,
+     "cost%": 36.8,
+     "ret/$": 17.1,
+     "ci": [
+      -8.9,
+      42.9
+     ]
+    },
+    {
+     "price": "40-50c",
+     "bets": 113,
+     "win%": 41.6,
+     "cost%": 46.3,
+     "ret/$": -10.3,
+     "ci": [
+      -31.1,
+      10.6
+     ]
+    },
+    {
+     "price": "50-60c",
+     "bets": 100,
+     "win%": 49.0,
+     "cost%": 56.7,
+     "ret/$": -14.0,
+     "ci": [
+      -30.3,
+      1.7
+     ]
+    },
+    {
+     "price": "60-70c",
+     "bets": 119,
+     "win%": 58.8,
+     "cost%": 66.7,
+     "ret/$": -12.7,
+     "ci": [
+      -26.6,
+      1.8
+     ]
+    },
+    {
+     "price": "70-80c",
+     "bets": 124,
+     "win%": 73.4,
+     "cost%": 77.3,
+     "ret/$": -5.8,
+     "ci": [
+      -16.4,
+      4.3
+     ]
+    },
+    {
+     "price": "80-90c",
+     "bets": 227,
+     "win%": 86.8,
+     "cost%": 86.3,
+     "ret/$": -0.0,
+     "ci": [
+      -5.8,
+      5.5
+     ]
+    },
+    {
+     "price": "90-100c",
+     "bets": 239,
+     "win%": 90.8,
+     "cost%": 94.0,
+     "ret/$": -4.2,
+     "ci": [
+      -9.2,
+      0.2
+     ]
+    }
+   ],
+   "A2": {
+    "n": 206,
+    "mean_miss_c": 0.07,
+    "abs_miss_c": 0.62,
+    "falling_days": [
+     138,
+     0.22
+    ],
+    "rising_days": [
+     68,
+     -0.24
+    ]
+   },
+   "A3": {
+    "no change | edge>=5%": {
+     "bet_days": 215,
+     "bets": 1093,
+     "ret/$": -45.1,
+     "ci": [
+      -59.2,
+      -28.6
+     ]
+    },
+    "no change | edge>=8%": {
+     "bet_days": 212,
+     "bets": 987,
+     "ret/$": -42.6,
+     "ci": [
+      -58.5,
+      -24.7
+     ]
+    },
+    "no change | miss": {
+     "days": 206,
+     "model_miss_c": 1.5,
+     "market_miss_c": 0.62
+    },
+    "momentum | edge>=5%": {
+     "bet_days": 198,
+     "bets": 750,
+     "ret/$": -38.0,
+     "ci": [
+      -53.2,
+      -19.7
+     ]
+    },
+    "momentum | edge>=8%": {
+     "bet_days": 184,
+     "bets": 625,
+     "ret/$": -39.0,
+     "ci": [
+      -56.5,
+      -19.2
+     ]
+    },
+    "momentum | miss": {
+     "days": 206,
+     "model_miss_c": 0.88,
+     "market_miss_c": 0.62
+    },
+    "wholesale gap | edge>=5%": {
+     "bet_days": 211,
+     "bets": 941,
+     "ret/$": -27.4,
+     "ci": [
+      -48.3,
+      -3.6
+     ]
+    },
+    "wholesale gap | edge>=8%": {
+     "bet_days": 205,
+     "bets": 834,
+     "ret/$": -27.8,
+     "ci": [
+      -50.5,
+      -0.7
+     ]
+    },
+    "wholesale gap | miss": {
+     "days": 206,
+     "model_miss_c": 1.23,
+     "market_miss_c": 0.62
+    },
+    "gap + momentum | edge>=5%": {
+     "bet_days": 202,
+     "bets": 739,
+     "ret/$": -32.1,
+     "ci": [
+      -46.7,
+      -15.5
+     ]
+    },
+    "gap + momentum | edge>=8%": {
+     "bet_days": 190,
+     "bets": 606,
+     "ret/$": -29.1,
+     "ci": [
+      -46.7,
+      -9.4
+     ]
+    },
+    "gap + momentum | miss": {
+     "days": 206,
+     "model_miss_c": 0.84,
+     "market_miss_c": 0.62
+    }
+   },
+   "range": [
+    "2026-03-29",
+    "2026-11-25"
+   ]
+  },
+  "B_daily": {
+   "1": {
+    "no change": [
+     1.47,
+     290
+    ],
+    "momentum": [
+     0.89,
+     290
+    ],
+    "wholesale gap": [
+     1.2,
+     290
+    ],
+    "gap + momentum": [
+     0.85,
+     290
+    ]
+   },
+   "7": {
+    "no change": [
+     9.29,
+     238
+    ],
+    "momentum": [
+     7.69,
+     238
+    ],
+    "wholesale gap": [
+     7.5,
+     238
+    ],
+    "gap + momentum": [
+     6.77,
+     238
+    ]
+   },
+   "30": {
+    "no change": [
+     27.99,
+     200
+    ],
+    "momentum": [
+     29.48,
+     200
+    ],
+    "wholesale gap": [
+     25.45,
+     200
+    ],
+    "gap + momentum": [
+     26.43,
+     200
+    ]
+   }
+  },
+  "B_weekly": {
+   "1": {
+    "no change": [
+     3.53,
+     1743
+    ],
+    "momentum": [
+     2.88,
+     1743
+    ],
+    "wholesale gap": [
+     2.99,
+     1743
+    ],
+    "gap + momentum": [
+     2.73,
+     1743
+    ]
+   },
+   "4": {
+    "no change": [
+     10.97,
+     1740
+    ],
+    "momentum": [
+     10.56,
+     1740
+    ],
+    "wholesale gap": [
+     10.33,
+     1740
+    ],
+    "gap + momentum": [
+     9.99,
+     1740
+    ]
+   }
+  }
+ }
+}
