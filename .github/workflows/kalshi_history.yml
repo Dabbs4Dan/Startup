@@ -32,7 +32,11 @@ jobs:
           git config user.name "kalshi-twins-bot"
           git config user.email "actions@users.noreply.github.com"
           python3 tools/pull_kalshi_history.py DISCOVER || echo "discover failed"
-          for S in KXDIESELMON KXAAAGASM KXDIESELM KXDIESELW KXAAAGASW KXDIESELD KXAAAGASD; do
+          # core 7 first, then older / related fuel markets found by DISCOVER (2026-11-26), then the 100 state-level
+          # daily gas series (their settlements are AAA state prices). Raw only: the master maps a series when vetted.
+          STATES=$(python3 -c "import csv; print(' '.join(sorted(r['ticker'] for r in csv.DictReader(open('data/lake/kalshi/_series_discovered.csv')) if r['ticker'].startswith(('KXAAAGASD','KXAAAGASCD')) and len(r['ticker']) in (11, 12))))" 2>/dev/null || true)
+          for S in KXDIESELMON KXAAAGASM KXDIESELM KXDIESELW KXAAAGASW KXDIESELD KXAAAGASD \
+                   KXDIESEL KXGAS KXGAS-MONTH KXGASD KXAAAGASWNJ KXAAAGASMTX KXDIESELMONAK KXHOILW KXHOILMON KXJETFUEL $STATES; do
             python3 tools/pull_kalshi_history.py "$S" || echo "$S failed"
             git add data/lake/kalshi/
             if ! git diff --cached --quiet; then

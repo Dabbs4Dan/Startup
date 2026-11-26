@@ -1,6 +1,6 @@
 # Backtest master: coverage and vetting
 
-Built by `tools/backtest_master.py` on 2026-11-26 23:31 UTC. Rules: see the docstring of that file.
+Built by `tools/backtest_master.py` on 2026-11-26 23:36 UTC. Rules: see the docstring of that file.
 
 ## Market canvas (Kalshi ladders)
 

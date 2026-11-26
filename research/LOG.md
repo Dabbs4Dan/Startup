@@ -11,6 +11,24 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-26 (6:45 PM) · Chat 6 · Backtest master: both fuels × daily/weekly/monthly, Kalshi historical tier, wider inputs
+- **Asked (Dan):** now is the raw data collection stage. Rebuild for weekly and monthly, go below AAA into the sub-components, reconcile into ONE backtest master for gas + diesel × 3 time slices with the 3 most liquid lines; source, reconcile and vet proactively. Also earlier this session: a phone command system (saved skill `kalshi`) and the two-pillar framing (phone playbook + market system).
+- **Did:**
+  - `tools/pull_kalshi_history.py` + `kalshi_history.yml`: every settled market + hourly candles from Kalshi's live AND historical tiers (`/historical/markets`, `/historical/markets/{t}/candlesticks`). Replaces `pull_horizon_ladders.py` (deleted with its workflow).
+  - `tools/history_pull.py`: +50 EIA series (regional/state pump prices, storage by region, refinery runs, production, demand, imports/exports, LA gasoline, heating oil, jet, refiner resale) and a full-history daily futures pull.
+  - `tools/backtest_master.py` → `data/lake/master/`: master table, per-line ladder snapshots, as-of-safe inputs, reconciled AAA, `COVERAGE.md`. The RULEBOOK is its docstring. Auto-rebuilds at the end of `kalshi_history.yml`.
+  - Sheet: new tab "Backtest Master" (coverage copy). `CLAUDE.md` §4 + §6 updated (stage = raw data collection).
+- **Learned:**
+  - **The historical tier was the missing history.** Cutoff = 2026-09-27. Gas weekly 10 → 139 events (Oct 2023 on), gas monthly 2 → 34 (Dec 2023 on). Diesel started Aug 2026: 116 daily, 16 weekly, 3 monthly; that is everything. Gas daily: 23 days in 2023, 1 in 2024, none in 2025, 247 in 2026 (Kalshi did not run it).
+  - Master v1: 574 events, 6,908 snapshots (10 AM / 6 PM / 10 PM ET on every open day), 152 columns, 77,329 line-rows, 73 inputs with data.
+  - **Vetting:** vs the old daily panels, 113 diesel + 241 gas shared days: settle values identical, 10 AM crowd center median gap 0.00¢, none over 0.5¢. Internet Archive AAA rows (Current / Yesterday / Week Ago) match official settlements 100%. The sample bot's AAA file matches only ~50% (off by a day on many rows) → dropped. One weekly gas event (2026-07-13) settled 0.4¢ from the daily print.
+  - Older gas weekly ladders are thin: crowd center found on 32% of snapshots, 3 liquid lines on 26%.
+  - Yahoo blocks the browser-like user agent in `history_pull.py` (no `yahoo_*` file ever landed); the plain one in `backfill.py` works. Fixed for the new daily pull; the intraday pull still uses the old one.
+  - The DBs' fill-blanks-only rule can freeze a partial-day futures bar (Brent 11/25: 87.43 in the diesel DB vs 90.47 in the gas DB). The master drops the newest 2 DB bars.
+  - **Kalshi has 289 fuel-related series** (`data/lake/kalshi/_series_discovered.csv`): 100 state-level daily gas markets (`KXAAAGASD<ST>`, `KXAAAGASCD<ST>`), older `KXDIESEL` / `KXGAS` / `KXGAS-MONTH` / `KXGASD`, NJ weekly, TX monthly, AK diesel monthly, heating oil, jet fuel, Brent/WTI/natgas ladders, EIA inventory markets, a gas-station card-spend market.
+- **Decided (Dan):** stage = raw data collection; gas and weekly/monthly are back in scope for data. After collection: custom arrays (regimes, Sharpe-style scoring, correlations).
+- **Next:** (1) raw pull of the related + state series is queued in `kalshi_history.yml`; vet, then map the useful ones into the master. (2) `/historical/trades` for the trade tape before Sep 27. (3) State AAA history from the Internet Archive. (4) Fix the intraday Yahoo user agent. (5) Dan's open questions: what "3 high liquidity points" means beyond the 3 busiest lines; free-only data or paid station history.
+
 ### 2026-11-26 (3:45 AM) · Chat 6 · RESULTS: deep scan of every parameter (plan = the 3:10 AM entry below)
 - **Did:** `tools/deep_scan.py` on diesel (114 days, 38 parameters, 13,891 priced bets) and gas (216 days Apr 7–Nov 25, 37 parameters, 31,564 bets). ~1,980 tests. Write-up: `research/2026-11-26_deep-scan.md`; tables: `research/backtests/deep_scan/`.
 - **Learned:**
