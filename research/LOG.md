@@ -11,6 +11,11 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-26 (1:00 AM) · Which time band? Daily has the biggest provable timing ceiling
+- **Did:** Measured how much each band's ladder sharpens before settlement, and the "ceiling" return if you knew the later ladder early (bet at early ask + fee when late mid − cost ≥ 5¢).
+- **Learned:** Daily: knowing the 10 PM ladder at 10 AM → **+70% per $ diesel (67 days, CI +42 to +105), +79% gas (187 days, CI +59 to +103)**. Weekly: knowing the 1–2-days-out ladder at 5–7 days → +54% diesel (8 events), +41% gas (3). Monthly: +126% diesel on 2 events (driven by crude moves; nobody's model predicts 30 days: our best = "no change"). Share of the move the market already explains: daily ~67%, weekly 5–7d ~76%, monthly ~9–23%.
+- **Decided (proposed to Dan):** focus band = **daily**. Model target = predict the **evening ladder** at 10 AM from station/rack data (not tomorrow's AAA directly). Weekly = second venue later; monthly = skip.
+
 ### 2026-11-26 (12:45 AM) · Backtest across horizons: the market beats our simple models everywhere
 - **Did:** `tools/backtest_horizons.py` (daily ladders + 1/7/30-day history + EIA weekly 1994+) and `tools/backtest_horizon_ladders.py` (weekly/monthly ladders pulled by new one-off `horizon_ladders.yml`). Walk-forward models, bets at ask + fee, clustered CIs. Notes: `research/2026-11-26_backtest-horizons.md`.
 - **Learned:** Daily: market median miss 0.55¢ (diesel) vs best model 0.70¢; all model bets lose. History: gap + momentum beats "no change" by ~24% at 7 days, ~0–9% at 30 days. Weekly ladders (10 events each): market misses 2.5¢ (diesel) / 1.8¢ (gas) 5–7 days out vs our 7.8¢ / 5.6¢. Monthly: only 2 events each.
