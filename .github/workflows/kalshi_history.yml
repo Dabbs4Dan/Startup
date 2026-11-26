@@ -6,7 +6,7 @@ name: kalshi-twins kalshi full history
 on:
   push:
     branches: [kalshi-twins]
-    paths: ["tools/pull_kalshi_history.py", ".github/workflows/kalshi_history.yml"]
+    paths: ["tools/pull_kalshi_history.py", "tools/backtest_master.py", ".github/workflows/kalshi_history.yml"]
   workflow_dispatch:
 
 permissions:
@@ -40,3 +40,13 @@ jobs:
               for i in 1 2 3 4; do git pull -q --rebase -X theirs origin kalshi-twins && git push -q origin HEAD:kalshi-twins && break; sleep 15; done
             fi
           done
+      - name: Rebuild the backtest master (one table for both fuels, all three time slices)
+        if: always()
+        run: |
+          pip install -q pandas numpy tabulate
+          python3 tools/backtest_master.py || echo "master build failed"
+          git add data/lake/master/
+          if ! git diff --cached --quiet; then
+            git commit -q -m "backtest master: rebuilt $(date -u +%Y-%m-%dT%H:%MZ)"
+            for i in 1 2 3 4; do git pull -q --rebase -X theirs origin kalshi-twins && git push -q origin HEAD:kalshi-twins && break; sleep 15; done
+          fi

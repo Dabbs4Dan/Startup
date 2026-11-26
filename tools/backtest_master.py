@@ -52,11 +52,12 @@ def aaa_daily():
     parts = []
     for series, (fuel, hz) in SERIES.items():                      # 1) Kalshi daily settlements = the official print
         f = LAKE / "kalshi" / series / "markets.csv"
-        if hz == "daily" and f.exists():
+        if f.exists():       # weekly / monthly settlements are AAA prints too (lowest rank: one was 0.4c off the daily print)
             m = pd.read_csv(f)
             m["date"] = pd.to_datetime(m.event_ticker.str.split("-").str[1], format="%y%b%d", errors="coerce")
             g = m.dropna(subset=["date", "expiration_value"]).groupby("date").expiration_value.first()
-            parts.append(pd.DataFrame({"date": g.index, "fuel": fuel, "value": pd.to_numeric(g.values, errors="coerce"), "source": "kalshi_settlement", "rank": 1}))
+            parts.append(pd.DataFrame({"date": g.index, "fuel": fuel, "value": pd.to_numeric(g.values, errors="coerce"),
+                                       "source": "kalshi_settlement" if hz == "daily" else f"kalshi_{hz}_settlement", "rank": 1 if hz == "daily" else 7}))
     for db, fuel in ((ROOT / "data" / "kalshi_twins.db", "diesel"), (ROOT / "data" / "gas" / "kalshi_gas.db", "gas")):
         if db.exists():                                             # 2) the project DBs (settlements + hand-verified rows)
             d = pd.read_sql("SELECT date, aaa_diesel AS value, aaa_source AS source FROM diesel_daily WHERE aaa_diesel IS NOT NULL", sqlite3.connect(db))
