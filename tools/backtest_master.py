@@ -328,6 +328,7 @@ def main():
     mst["settle_month"] = pd.to_datetime(mst.settle_date).dt.strftime("%Y-%m")
     mst = mst.dropna(axis=1, how="all")
     mst.round(5).to_csv(OUT / "backtest_master.csv.gz", index=False)
+    (OUT / "backtest_master.csv").unlink(missing_ok=True)          # old uncompressed name (before 2026-11-26 evening)
     lines.round(4).to_csv(OUT / "ladder_snapshots.csv.gz", index=False)
 
     # ---------------- vetting ----------------
