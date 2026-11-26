@@ -11,6 +11,11 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-25 (11:50 PM) · L2 on 11 exact days: EIA weights 0.41¢, fitted regional weights 0.14–0.37¢ (not yet 0.10¢)
+- **Did:** Fast all-states archive pass finished (1h): only **9 archived days** exist since Aug for that page (Aug 3, Aug 19, Oct 15–31) + 2 live days = 11 exact days. Re-scored; tested 5 regional (PADD) weights fit on half the days, tested on the other half (non-negative, sum to 1).
+- **Learned:** L2.1 (EIA 2024 weights, 0 fitted): median miss **0.41¢**, 2/11 within 0.10¢. Misses drift with time (Aug −0.7 to −1.1¢, Oct +0.2 to +1.0¢, Nov ~0) → fixed weights can't nail it. Fitted regional weights out-of-sample: **0.37¢ / 0.14¢** (two splits) vs EIA 0.66¢ / 0.41¢. Weights stable across splits: East ~0.29, Midwest ~0.29, Gulf ~0.26 (≫ EIA share), Rockies ~0.02, West ~0.15.
+- **Next:** add L2.2 (fitted regional weights, walk-forward) to engine_room.py; 1 new exact day/day from the recorder; consider state-level station-count weights.
+
 ### 2026-11-25 (9:10 PM) · L2 history: per-state archive throttled → one-page fast path; first August test misses
 - **Did:** First `history.yml` run (5h) recovered only ~80 per-state pages for 17 states (Internet Archive throttling). Added `wayback_states.py --all-states`: archived `gasprices.aaa.com/state-gas-price-averages/` = all 51 states per fetch → `research/engine_room/wayback_states/_all_states.csv`. `history.yml` now runs the fast pass by default (slow per-state pass opt-in: input `slow=yes`).
 - **Learned:** First archived full day (Aug 3, 2026): L2.1 volume-weighted blend **misses −1.14¢** (plain mean −2.74¢), vs 0.06–0.09¢ on Nov 24–25. Fixed EIA-2024 weights are not the whole story → weights likely vary (season / station mix) or need fitting.
