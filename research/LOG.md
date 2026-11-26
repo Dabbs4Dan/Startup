@@ -21,6 +21,8 @@ Template:
 - **Decided (Dan):** limit-order / maker work is parked; keep it as a key finding (M28). Chat 6's job = question the work, fix structure, chart direction.
 - **Decided (proposed):** one direction = "what does the 10 AM crowd miss, and when does it learn it?" Order: truckstop scorecard → size the prize (G1) → pin mystery moves to a clock (G4/G2). Other fronts paused until the scorecard has 10 scored days (~Dec 6).
 - **Pre-registered test (L3.1):** primary number = correlation of `ts_move_c` with `surprise_10am_c` across scored days; needs ≥10 days to read, 20+ to PASS; compare with `surprise_close_c` to tell "new information" from "timing".
+- **Found + fixed:** truckstop feed had a 4-hour hole (last snapshot 9:45 PM ET 11/25 → next 1:55 AM ET 11/26): the hand-started run ended and no new run was queued until the next shift change. Restarted by hand at 1:49 AM; verified the new job saved a snapshot + scorecard within minutes. Watch: if holes repeat between runs, have `truckstops.yml` start its own next run instead of waiting for the relay.
+- **Note:** repo must stay PUBLIC for now: free GitHub minutes are unlimited only on public repos and the recorders use ~41,000 min/month (`live_recorder.yml` header).
 - **Next:** G1 capacity check once the order book has ~1 week; first scorecard read ~Dec 6.
 
 ### 2026-11-26 (1:40 AM) · Maker vs taker on the real trade tape
