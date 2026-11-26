@@ -86,6 +86,8 @@ AAA diesel number and find gaps vs. Kalshi's odds. Demo money only until a strat
 | This brain | `CLAUDE.md` | §0 = how to work, §6 = what's next. The dated log is `research/LOG.md`. |
 | **Gaps + direction** ⭐ | `research/2026-11-26_gaps-and-direction.md` | 13 ranked gaps in our understanding and the one direction. Update statuses in place. |
 | **Truckstop test (L3)** ⭐ | `tools/truckstop_test.py` → `research/engine_room/l3_truckstop_scorecard.csv` | One row per day: truckstop move vs what the crowd missed. Refreshed hourly by `truckstops.yml`. Verdict at 10 scored days; PASS needs 20+. |
+| **Backtest master** ⭐⭐ | `tools/backtest_master.py` → `data/lake/master/` (`backtest_master.csv`, `ladder_snapshots.csv.gz`, `inputs_daily.csv`, `aaa_daily.csv`, `COVERAGE.md`) | **The one table every backtest reads.** Both fuels × daily / weekly / monthly × snapshots (10 AM, 6 PM, 10 PM ET each open day), with the 3 most liquid lines, crowd center, ~75 as-of-safe inputs, regime labels. The RULEBOOK is the docstring of the tool. Read `COVERAGE.md` first: it shows how far back everything goes and what was vetted. |
+| **Kalshi full history** | `tools/pull_kalshi_history.py` → `data/lake/kalshi/<SERIES>/` | Every settled market + hourly candles for 7 series from Kalshi's live AND historical tiers (older markets only exist on `/historical/*`). Resumable. `_series_discovered.csv` lists every fuel-like series Kalshi has. |
 | **Deep scan** ⭐ | `tools/deep_scan.py` → `research/backtests/deep_scan/`, write-up `research/2026-11-26_deep-scan.md` | Every stored parameter × price band × side × hour, diesel + gas, with false-discovery filter + holdout + cross-product check. Re-run when a new parameter is added to `panel_daily`. |
 | **Engine Room** | `tools/engine_room.py` → tables `algo_registry` / `inputs_asof` / `algo_predictions` / `algo_scorecard` (both DBs) | Proves each pricing algo layer (L0 market maker → L1 AAA → L2 OPIS state roll-up → L3 inputs) before patterns. Sheet tab **Engine Room** (diesel + gas). Only ✅ PASS algos (20+ points) may feed slices/bricks. |
 | **Strategy engine** | `nautilus/` (read `nautilus/README.md`) | NautilusTrader **2.0.0rc9, locked**. Same strategy code → backtest → Kalshi demo → live. Strategy IDs = sheet tab **Strategies** (S00 = replay check, no orders). |
@@ -114,7 +116,8 @@ Quick query example: `sqlite3 data/kalshi_twins.db "SELECT * FROM v_diesel_break
 | `truckstops.yml` | Love's + TA posted prices, hourly, **saved after every snapshot**; then refreshes the L3 scorecard | `data/live/truckstops/`, `research/engine_room/l3_truckstop_scorecard.csv` | relay each shift |
 | `backfill.yml` | diesel daily pull: Kalshi, trades, candles, panel, testing, Engine Room | **`data/kalshi_twins.db`** (only writer), `data/exports/` | relay if no success in 20h |
 | `gas_backfill.yml` | same for gas (side test) | **`data/gas/`** (only writer) | relay if no success in 20h |
-| `warehouse.yml` | EIA + Yahoo + Internet Archive AAA national → catalog + feed health | `data/lake/`, `data/warehouse_catalog.*`, `data/feed_health.csv` | relay if no success in 20h |
+| `warehouse.yml` | daily futures (full history) + ~70 EIA series (regional pump prices, stocks, refining, demand) + Yahoo intraday + Internet Archive AAA national → catalog + feed health | `data/lake/`, `data/warehouse_catalog.*`, `data/feed_health.csv` | relay if no success in 20h |
+| `kalshi_history.yml` | full Kalshi history, 7 fuel series, both tiers | `data/lake/kalshi/` | by hand / push |
 | `history.yml` | Internet Archive AAA **state** pages → Engine Room re-score | `research/engine_room/` (never the DB) | by hand / push |
 | `nautilus.yml` | engine replay + fee check | `nautilus/reports/` | relay |
 | `probe.yml`, `connectivity.yml` | one-off source probes | `research/` | push |
@@ -155,15 +158,7 @@ Strikes are $0.005 apart. Market opens 8:00 AM ET the day before (API open_time;
 - Daily market opens 8:00 AM ET the day before, closes 11:59 PM ET, settles on the next day's AAA number. ~16-hour market, not 24h.
 - Price tick 1¢. Strikes $0.005 apart. AAA daily move: median 1.43¢, max 3.9¢ (Sep–Nov 2026) → only ~3–6 strikes are ever "live".
 
-**N → F → Z framework (2026-11-24):** N = price of our side at bet (10 AM), F = 1 if it wins, Z = win rate. Profit iff Z > avg(N+fee).
-AAA engine fit (67 days, R² 0.65): ΔAAA ≈ 6.06¢ − 6.72¢×Delivery($) + 1.83¢×HO bet-day move($). Market already prices this by 10 AM.
-Losses come from the intraday info gap (market forecast moves 0.73¢ on losing days vs 0.31¢ on wins), not explained by futures → look at station-level prices. See `research/2026-11-24_N-F-Z-framework.md`.
-
-**Reconstructed formulas (2026-11-24, see `research/2026-11-24_formula-reconstruction.md`):**
-- N (crowd at 10 AM): mu_N ≈ AAA_today + 0.89×yesterday's change (R² 0.69), σ ≈ 0.35¢, + bias/spread/fee layer. Kalshi publishes no pricing model (order book + private market makers).
-- F (truth): AAA_tomorrow ≈ AAA_today + 0.73×yesterday's change (R² 0.66) + fundamentals + unmeasured station-price moves. Crowd at close ≈ 0.77× (miss 0.11¢).
-- Morning crowd over-extrapolates momentum (0.89 vs 0.73). Tested later: not a tradable edge by itself (see `master.csv` M12, M15).
-- ⚠️ Update 2026-11-25: momentum-only fails after big wholesale moves (Nov 25: said 5.7804). Base F formula = fundamentals version: AAA_today − 6.72%×(Delivery − $0.90) + 1.83¢/$ HO today − 1.30¢/$ HO prior 5d → 5.7626 vs crowd 5.7625.
+**Earlier formula work** (N → F → Z framework, reconstructed crowd and truth formulas, momentum 0.89× vs 0.73×): `research/2026-11-24_N-F-Z-framework.md`, `research/2026-11-24_formula-reconstruction.md`. Tested since: not a tradable edge by itself (`master.csv` M12, M15, M35).
 
 **Risk formula (2026-11-25, `tools/risk_calc.py`):** c = price + fee. P&L = (B/n)·[(n−L)(1−c)/c − L]. Max losses L* = n(1−c). Win rate needed = c. Wins per loss = c/(1−c). Chance negative = P(Binomial(n,1−q) > L*).
 
@@ -175,30 +170,31 @@ Losses come from the intraday info gap (market forecast moves 0.73¢ on losing d
 
 ---
 
-## 6. Now: the one direction (updated 2026-11-26, Chat 6)
+## 6. Now: the direction (updated 2026-11-26 evening, Chat 6)
 
-**No edge is proven yet.** The market beats our models at every horizon; the favorites rule was a November effect.
-Full reasoning and the 13 ranked gaps: `research/2026-11-26_gaps-and-direction.md`.
-
-**The question:** what does the 10 AM crowd miss, and when during the day does it learn it?
+**Stage: raw data collection (Dan, 2026-11-26).** Build the biggest clean canvas first, test later.
+Scope: **gas and diesel × daily, weekly, monthly**, every input we can break the Kalshi / AAA / OPIS-style pricing
+down into. This reopens gas and the weekly/monthly ladders (paused the night before) for data collection.
 
 | Order | Step | Status |
 |---|---|---|
-| 1 | **Truckstop scorecard**: does the truckstop move on day X−1 line up with the crowd's surprise on day X? | ◐ runs by itself since 11/26; first read at 10 scored days (~Dec 6), PASS at 20+ |
-| 2 | **Size the prize (G1)**: dollars available near the best price at 10 AM / noon / 6 PM, from order-book recordings | ◐ first read 11/26: ~$1K per bet fills clean; $5K fits half the time with slip; $10K no. Needs 10 AM depth + ~1 week |
-| 3 | **Pin the mystery moves to a clock (G4, G2)**: line up the 184 unexplained moves with rack times, the ~5 PM Love's batch reprice, the AAA flip time | ⬜ |
-| 4 | Models → strategies → Nautilus, only after 1–3 | ⬜ |
+| 1 | **Backtest master**: one table for both fuels and all three time slices (`data/lake/master/`) | ✅ v1 built 11/26; see `COVERAGE.md` |
+| 2 | **Fill what is still missing**: state-level AAA history (Internet Archive), older trade tape (`/historical/trades`), AAA national before mid-2023/2024, natural gas futures, rack prices (no free source) | ⬜ |
+| 3 | **Custom arrays on top of the master** (Dan's next stage): regime tables, Sharpe-style scoring, correlations | ⬜ not started; wait for Dan |
+| 4 | Live side keeps running by itself: truckstop scorecard (first read ~Dec 6), order-book depth (G1) | ◐ |
 
-**Key finding, parked (Dan, 2026-11-26):** limit orders on the favorite side (60–97¢) made +6.2% per $ in diesel
-(range +1.4% to +10.4%), the first result with a range above zero. It lost in October, gas doesn't confirm it, and
-fills are not guaranteed. Not being worked now; revisit after step 1. (`master.csv` M28, LOG 2026-11-26 1:40 AM.)
+**Still true:** no edge is proven. Deep scan (11/26): no stored parameter predicts the direction of the 10 AM miss
+(0 of 38); the all-parameter model makes forecasts worse. Gaps list: `research/2026-11-26_gaps-and-direction.md`.
 
-**Candidate from the deep scan (2026-11-26):** the evening crowd overshoots a rising trend. After the strongest 5-day rises, NO at 9–11 PM (lines ≥ 25¢) made +28% per $ in gas (63 days, range +17% to +39%; last 40% of days +20%, range +2% to +40%); diesel same sign on 13 days. Not tradable now (both markets falling all November); needs a forward test in the next rising stretch. The scan also showed **no stored parameter predicts the direction of the 10 AM miss** (0 of 38). (`master.csv` M35–M36.)
+**Parked findings (not being worked):** limit-order favorites, +6.2% per $ in diesel (`master.csv` M28) · evening
+crowd overshoots a rising trend, gas +28% per $ on 63 days (M36; needs a forward test in the next rising stretch).
 
-**Paused until step 1 reads out:** new strategy ideas, gas beyond its daily pull, weekly/monthly ladders, Nautilus strategies.
+**Rules for the next tests:** read the master, follow its RULEBOOK, write the test in the LOG first, cluster weekly
+and monthly results by event, and keep the false-discovery filter + holdout from `tools/deep_scan.py`.
 
-**Still-open older items:** lag study / rockets & feathers (G9) · exact AAA post time (G2, flip log recording) ·
-longer AAA history (Internet Archive national since 2019, running) · 10 AM futures history (Wishlist W1).
+**Older open items:** rockets & feathers lag study (G9) · exact AAA post time (G2, flip log recording) · 10 AM
+futures history (Wishlist W1). Older backtest scripts (`backtest_horizons*.py`, `edge_check.py`, `favorite_test.py`,
+`sim_favorites.py`, `signal_scan.py`) are legacy: new work reads the master instead.
 
 ---
 
