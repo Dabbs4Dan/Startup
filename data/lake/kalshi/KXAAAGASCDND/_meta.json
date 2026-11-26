@@ -1,0 +1,31 @@
+{
+ "series": "KXAAAGASCDND",
+ "pulled_utc": "2026-11-26 23:55",
+ "found": true,
+ "title": "North Dakota gas price",
+ "frequency": "daily",
+ "fee_type": "quadratic",
+ "fee_multiplier": 1,
+ "cutoff": {
+  "market_positions_last_updated_ts": "2026-09-27T00:00:00Z",
+  "market_settled_ts": "2026-09-27T00:00:00Z",
+  "orders_updated_ts": "2026-11-12T00:00:00Z",
+  "trades_created_ts": "2026-09-27T00:00:00Z"
+ },
+ "first_page_live": {
+  "cursor": "",
+  "markets": "list[60]"
+ },
+ "first_page_historical": {
+  "cursor": "",
+  "markets": "list[0]"
+ },
+ "markets_live": 60,
+ "markets_historical": 0,
+ "markets_total": 60,
+ "events": 12,
+ "first_close": "2026-11-15T08:22:54Z",
+ "last_close": "2026-11-26T10:08:39Z",
+ "candle_rows_added": 566,
+ "markets_no_candles": 0
+}
