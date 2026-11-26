@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASM",
- "pulled_utc": "2026-11-26 22:37",
+ "pulled_utc": "2026-11-26 23:30",
  "found": true,
  "title": "US gas price",
  "frequency": "monthly",
@@ -76,6 +76,6 @@
  "events": 35,
  "first_close": "2023-12-31T14:55:00Z",
  "last_close": "2026-10-31T03:59:00Z",
- "candle_rows_added": 164028,
+ "candle_rows_added": 0,
  "markets_no_candles": 0
 }
