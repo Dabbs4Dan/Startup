@@ -11,6 +11,9 @@ on:
       since:
         description: "Oldest snapshot date (YYYYMMDD)"
         default: "20260801"
+      slow:
+        description: "Also run the slow per-state pass (yes/no)"
+        default: "no"
 
 permissions:
   contents: write
@@ -32,7 +35,8 @@ jobs:
           python-version: "3.12"
       - name: Recover all-states pages (fast path, 51 states per page)
         run: python3 tools/wayback_states.py "${{ github.event.inputs.since || '20260801' }}" --all-states --max-minutes 120
-      - name: Recover per-state pages (slow path, fills gaps)
+      - name: Recover per-state pages (slow path, only if asked)
+        if: ${{ github.event.inputs.slow == 'yes' }}
         continue-on-error: true
         run: python3 tools/wayback_states.py "${{ github.event.inputs.since || '20260801' }}" --max-minutes 150
       - name: Re-score Engine Room (diesel)
