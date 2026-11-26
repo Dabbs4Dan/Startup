@@ -1,0 +1,28 @@
+id,section,item,what_it_means,sketch,source_chats,status,last_updated
+M01,Strategy,North star,Rebuild the market maker's model from inputs anyone can know. A price move our inputs can't explain points to missing data.,ladder = f(inputs) + spread,"1,2,3,4,5",Current,2026-11-26
+M02,Strategy,Two engines,Engine 1 = what it's worth. Engine 2 = what Kalshi charges. Trade only when the gap beats costs plus a buffer. Add a safety belt.,E1 - E2 > cost + buffer,"1,2,3,5",Current,2026-11-26
+M03,Strategy,Focus band: daily,"Knowing the 10 PM price at 10 AM = +70-79% per $. Weekly second, monthly skip.",10 AM -> 10 PM,5,Current,2026-11-26
+M04,Strategy,Model target,"Predict where the ladder will be at 10 PM using 10 AM data, not tomorrow's AAA directly.",,5,Current,2026-11-26
+M05,Strategy,Implied variable X,Back-solve the hidden piece: X = price - known inputs. Then find data that predicts X early.,price = known + X,5,Current,2026-11-26
+M06,Strategy,Edge to chase: timing,"Today's truckstop, state and rack prices might predict tomorrow's AAA before the crowd does.",pumps X-1 -> AAA X,"3,4,5",Current,2026-11-26
+M07,Diesel engine,Price slices,"Pump price = crude + refining + taxes + delivery. Delivery slice swollen, so prices have room to fall.",37 / 27 / 10 / 26 %,1,Current,2026-11-26
+M08,Diesel engine,Retail lags wholesale,Futures move first; pumps catch up over 4-7 days at about 2c/day (rockets & feathers).,HO down -> AAA down over days,"1,2,5",Current,2026-11-26
+M09,Diesel engine,State blend (L2),51 state prices -> national AAA. Fitted weights miss 0.14-0.37c (goal 0.10c).,sum(weight x state),"1,3,4",Current,2026-11-26
+M10,Market,The crowd is sharp,Misses about 0.3-0.55c at 10 AM and 0.1-0.17c by close. Our formula misses about 0.6-0.7c.,crowd > us,"1,2,3,5",Current,2026-11-26
+M11,Market,Mystery moves,184 hours where the crowd moved and nothing we track explains it; cluster around noon and 6 PM.,move - known = gap,"1,4",Current,2026-11-26
+M12,Results,Favorites edge: not proven,"Chat 2 said +8 per $100; stricter test: +3.3%, range -1.6% to +7.7%. Newest wins: not an edge.",Aug + / Sep - / Oct - / Nov ++,"2,3,5",Current,2026-11-26
+M13,Results,Gas avoid rule B14,Cheap 'price goes up' gas bets (YES <= 83.5c) lose in every window tested.,YES <= 83.5c -> skip,2,Current,2026-11-26
+M14,Results,Regime matters,Rules that work in slow drops fail in fast rises; watch the multi-week trend.,rising vs falling,"1,2",Current,2026-11-26
+M15,Results,Horizon backtest,"Kalshi beats our simple models daily, weekly and monthly.",market > us,5,Current,2026-11-26
+M16,Results,Our signal is real,"Beats 'no change' by about 24% at 1 week (since 1994), but traders already price it.",,5,Current,2026-11-26
+M17,Risk,Risk math,At 75-80c one loss wipes out about 3-4 wins. Break-even win rate = price paid + fee.,1 loss = 3 wins,"1,2",Current,2026-11-26
+M18,Risk,Edge target,Aim for 8-10% per bet (provable in about 4-5 months). Under 3% isn't worth it.,,5,Current,2026-11-26
+M19,Rules,No peeking,Only use data known at bet time.,known-by-10 AM only,1,Current,2026-11-26
+M20,Rules,Insider rule,Check whether paid OPIS data counts as insider info before using it.,check first,1,Current,2026-11-26
+M21,System,Data foundation,"Warehouse, live recorders (5-min Kalshi, order book, AAA flips, futures), relay scheduler, feed health.",GitHub -> DB -> Sheets,"2,3,4",Current,2026-11-26
+M22,System,Truckstop recorder (L3),Love's (624) and TA (120) hourly since Nov 25. Test: do they lead AAA?,pumps X-1 -> AAA X,"2,3,4",Current,2026-11-26
+M23,System,Engine Room,An algo only counts after passing 20+ days.,prove -> then patterns,"2,3,4",Current,2026-11-26
+M24,System,NautilusTrader,"One strategy file: backtest -> demo -> live. Installed, no strategies coded.",test -> demo -> live,4,Current,2026-11-26
+M25,System,Sample models,"Weather, MLB and ryanfrigo bots (ryanfrigo has its own AAA model). Drive + GitHub.",,5,Current,2026-11-26
+M26,Gaps,Data gaps,"No HO price at 10 AM history, few truckstop days, no rack prices (Corpay = free candidate).",,"2,4,5",Open,2026-11-26
+M27,Gaps,Blocked,No Pilot feed. Live trading needs an always-on server (~$5-6/mo). Repo still public.,,"2,4",Open,2026-11-26
