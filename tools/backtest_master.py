@@ -118,17 +118,21 @@ def inputs_daily(aaa):
         cols[name] = shifted.reindex(cal, method="ffill", limit=45 if kind != "monthly" else 120)
         meta.append((name, kind, len(s), str(s.index.min().date()), str(s.index.max().date()), lag_days))
 
-    # futures: Yahoo daily full history, spliced with EIA settlements for the early years
-    for name, eia in (("ho", "eia_ho_futures_m1.csv"), ("rbob", "eia_rbob_futures_m1.csv"), ("brent", None), ("wti", None), ("natgas", None)):
+    # futures: EIA settlements (early years) < project DBs (Yahoo, last 5 years) < Yahoo daily full history (best)
+    dbf = {}
+    for db, col, name in ((ROOT / "data" / "kalshi_twins.db", "ulsd_nyh_usd_gal", "ho"), (ROOT / "data" / "gas" / "kalshi_gas.db", "ulsd_nyh_usd_gal", "rbob"),
+                          (ROOT / "data" / "kalshi_twins.db", "brent_usd_bbl", "brent")):
+        if db.exists():
+            d = pd.read_sql(f"SELECT date, {col} AS v FROM diesel_daily WHERE {col} IS NOT NULL", sqlite3.connect(db))
+            d = d.assign(date=pd.to_datetime(d.date)).set_index("date").v.sort_index()
+            dbf[name] = d.iloc[:-2]          # the newest bars can be partial-day values frozen by the fill-blanks-only rule
+    for name, eia in (("ho", "eia_ho_futures_m1.csv"), ("rbob", "eia_rbob_futures_m1.csv"), ("brent", "eia_brent_spot.csv"), ("wti", "eia_wti_spot.csv"), ("natgas", None)):
         y, e = read_hist(f"fut_{name}_1d.csv"), read_hist(eia) if eia else None
-        s = pd.concat([x for x in (e, y) if x is not None]).sort_index() if (y is not None or e is not None) else None
+        got = [x for x in (e, dbf.get(name), y) if x is not None]
+        s = pd.concat(got).sort_index() if got else None
         if s is not None:
             s = s[~s.index.duplicated(keep="last")]
         add(f"fut_{name}", s, 1, "daily")
-    if "fut_brent" not in cols or cols["fut_brent"].notna().sum() < 3000:     # Brent spot is the long stand-in
-        b = read_hist("eia_brent_spot.csv")
-        if b is not None:
-            add("fut_brent", b if "fut_brent" not in cols else pd.concat([b, read_hist("fut_brent_1d.csv")]).sort_index(), 1, "daily")
     for f in sorted(glob.glob(str(LAKE / "history" / "eia_*.csv"))):
         name = pathlib.Path(f).stem[4:]
         s = read_hist(pathlib.Path(f).name)

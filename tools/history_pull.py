@@ -216,7 +216,12 @@ def pull_daily():
             body = None
             for host in ("query1", "query2"):
                 try:
-                    body = json.loads(fetch(f"https://{host}.finance.yahoo.com/v8/finance/chart/{sym}?interval=1d&range=max", tries=2, timeout=30))
+                    # plain user agent: the browser-like one used elsewhere in this file gets blocked by Yahoo (no yahoo_*
+                    # files ever landed), while tools/backfill.py's plain one works every day.
+                    req = urllib.request.Request(f"https://{host}.finance.yahoo.com/v8/finance/chart/{sym}?interval=1d&range=max",
+                                                 headers={"User-Agent": "Mozilla/5.0 (kalshi-twins-research)"})
+                    with urllib.request.urlopen(req, timeout=60) as r:
+                        body = json.loads(r.read().decode())
                     break
                 except Exception as e:  # noqa
                     last = e
