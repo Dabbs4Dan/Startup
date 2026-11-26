@@ -1,0 +1,41 @@
+name: kalshi-twins kalshi full history
+
+# Every settled market + hourly candles for the 6 fuel series (daily / weekly / monthly x diesel / gas), from the
+# live AND historical Kalshi tiers. Writes CSVs under data/lake/kalshi/ only (never a database). Resumable.
+# Small series first; one commit per series so partial results land early.
+on:
+  push:
+    branches: [kalshi-twins]
+    paths: ["tools/pull_kalshi_history.py", ".github/workflows/kalshi_history.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kalshi-twins-kalshi-history
+  cancel-in-progress: false
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: kalshi-twins
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Pull each series, commit after each
+        run: |
+          git config user.name "kalshi-twins-bot"
+          git config user.email "actions@users.noreply.github.com"
+          for S in KXDIESELMON KXAAAGASM KXDIESELM KXDIESELW KXAAAGASW KXDIESELD KXAAAGASD; do
+            python3 tools/pull_kalshi_history.py "$S" || echo "$S failed"
+            git add data/lake/kalshi/
+            if ! git diff --cached --quiet; then
+              git commit -q -m "kalshi history: $S $(date -u +%Y-%m-%dT%H:%MZ)"
+              for i in 1 2 3 4; do git pull -q --rebase -X theirs origin kalshi-twins && git push -q origin HEAD:kalshi-twins && break; sleep 15; done
+            fi
+          done
