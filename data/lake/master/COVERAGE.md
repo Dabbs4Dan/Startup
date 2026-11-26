@@ -1,18 +1,18 @@
 # Backtest master: coverage and vetting
 
-Built by `tools/backtest_master.py` on 2026-11-26 23:29 UTC. Rules: see the docstring of that file.
+Built by `tools/backtest_master.py` on 2026-11-26 23:31 UTC. Rules: see the docstring of that file.
 
 ## Market canvas (Kalshi ladders)
 
-| series      | fuel   | horizon   |   events |   markets |   snapshots | first_settle   | last_settle   |   historical_tier_markets | note                   |
-|:------------|:-------|:----------|---------:|----------:|------------:|:---------------|:--------------|--------------------------:|:-----------------------|
-| KXDIESELD   | diesel | daily     |      116 |      2590 |         346 | 2026-08-03     | 2026-11-26    |                      1131 |                        |
-| KXDIESELW   | diesel | weekly    |       16 |       436 |         327 | 2026-08-09     | 2026-11-23    |                       196 |                        |
-| KXDIESELMON | diesel | monthly   |        3 |        77 |         271 | 2026-08-31     | 2026-10-31    |                        21 |                        |
-| KXDIESELM   | diesel | monthly   |        0 |           |             |                |               |                           | no usable markets      |
-| KXAAAGASD   | gas    | daily     |        0 |           |             |                |               |                           | not pulled / not found |
-| KXAAAGASW   | gas    | weekly    |      139 |      1110 |        2462 | 2023-10-09     | 2026-11-23    |                       852 |                        |
-| KXAAAGASM   | gas    | monthly   |       34 |       485 |        2725 | 2023-12-31     | 2026-10-31    |                       417 |                        |
+| series      | fuel   | horizon   |   events |   markets |   snapshots | first_settle   | last_settle   |   historical_tier_markets | note              |
+|:------------|:-------|:----------|---------:|----------:|------------:|:---------------|:--------------|--------------------------:|:------------------|
+| KXDIESELD   | diesel | daily     |      116 |      2590 |         346 | 2026-08-03     | 2026-11-26    |                      1131 |                   |
+| KXDIESELW   | diesel | weekly    |       16 |       436 |         327 | 2026-08-09     | 2026-11-23    |                       196 |                   |
+| KXDIESELMON | diesel | monthly   |        3 |        77 |         271 | 2026-08-31     | 2026-10-31    |                        21 |                   |
+| KXDIESELM   | diesel | monthly   |        0 |           |             |                |               |                           | no usable markets |
+| KXAAAGASD   | gas    | daily     |      268 |      4413 |         777 | 2023-09-18     | 2026-11-26    |                      3200 |                   |
+| KXAAAGASW   | gas    | weekly    |      139 |      1110 |        2462 | 2023-10-09     | 2026-11-23    |                       852 |                   |
+| KXAAAGASM   | gas    | monthly   |       34 |       485 |        2725 | 2023-12-31     | 2026-10-31    |                       417 |                   |
 
 ## Master table by fuel and time slice
 
@@ -21,6 +21,7 @@ Built by `tools/backtest_master.py` on 2026-11-26 23:29 UTC. Rules: see the docs
 | diesel | daily     |      116 |         346 | 2026-08-03     | 2026-11-26    | 84%          | 60%            | 100%            | 100%              |
 | diesel | monthly   |        3 |         271 | 2026-08-31     | 2026-10-31    | 69%          | 61%            | 100%            | 100%              |
 | diesel | weekly    |       16 |         327 | 2026-08-09     | 2026-11-23    | 84%          | 75%            | 100%            | 100%              |
+| gas    | daily     |      266 |         777 | 2023-09-18     | 2026-11-26    | 87%          | 70%            | 99%             | 100%              |
 | gas    | monthly   |       34 |        2725 | 2023-12-31     | 2026-10-31    | 80%          | 69%            | 95%             | 100%              |
 | gas    | weekly    |      139 |        2462 | 2023-10-09     | 2026-11-23    | 32%          | 26%            | 98%             | 100%              |
 
@@ -30,18 +31,18 @@ Built by `tools/backtest_master.py` on 2026-11-26 23:29 UTC. Rules: see the docs
 |-------:|---------------------:|------------------:|
 |   2022 |                    1 |                 0 |
 |   2023 |                    0 |                35 |
-|   2024 |                  175 |               193 |
+|   2024 |                  175 |               194 |
 |   2025 |                  275 |               294 |
 |   2026 |                  259 |               323 |
 
-Source used per day: {"wayback_current": 627, "wayback_week_ago": 301, "db:kalshi_settlement": 270, "wayback_yesterday": 188, "kalshi_settlement": 116, "kalshi_weekly_settlement": 42, "kalshi_monthly_settlement": 10, "db:aaa_site": 1}
+Source used per day: {"wayback_current": 627, "kalshi_settlement": 387, "wayback_week_ago": 300, "wayback_yesterday": 189, "kalshi_weekly_settlement": 42, "kalshi_monthly_settlement": 10, "db:aaa_site": 1}
 
 ## Inputs (engine canvas)
 
 | input                            | kind    |   rows | first      | last       |   usable_after_days |
 |:---------------------------------|:--------|-------:|:-----------|:-----------|--------------------:|
 | aaa_diesel                       | daily   |    710 | 2022-11-28 | 2026-11-26 |                   0 |
-| aaa_gas                          | daily   |    845 | 2023-09-18 | 2026-11-26 |                   0 |
+| aaa_gas                          | daily   |    846 | 2023-09-18 | 2026-11-26 |                   0 |
 | brent_spot                       | daily   |   9137 | 1987-05-20 | 2026-11-24 |                   1 |
 | fut_brent                        | daily   |   9321 | 1987-05-20 | 2026-11-24 |                   1 |
 | fut_ho                           | daily   |  10631 | 1980-01-02 | 2026-11-24 |                   1 |
@@ -119,36 +120,36 @@ Source used per day: {"wayback_current": 627, "wayback_week_ago": 301, "db:kalsh
 
 |                                         | filled   |
 |:----------------------------------------|:---------|
-| ulsd_spot_la_carb                       | 15%      |
-| ulsd_spot_nyh                           | 15%      |
-| weekly_distillate_demand_kbd            | 15%      |
-| weekly_distillate_exports_kbd           | 15%      |
-| weekly_distillate_imports_kbd           | 15%      |
-| weekly_distillate_production_kbd        | 15%      |
-| ulsd_spot_gulf                          | 15%      |
-| eia_retail_diesel_west_coast_ex_ca      | 15%      |
-| eia_retail_diesel_new_england           | 15%      |
-| eia_retail_diesel_lower_atlantic        | 15%      |
-| eia_retail_diesel_us                    | 15%      |
-| eia_retail_diesel_padd5                 | 15%      |
-| eia_retail_diesel_padd4                 | 15%      |
-| eia_retail_diesel_padd3                 | 15%      |
-| eia_retail_diesel_padd2                 | 15%      |
-| eia_retail_diesel_padd1                 | 15%      |
-| distillate_stocks_us_kbbl               | 15%      |
-| distillate_stocks_us_kbbl_chg_1w_pct    | 15%      |
-| heating_oil_spot_nyh                    | 15%      |
-| jet_spot_gulf                           | 15%      |
-| eia_retail_diesel_california            | 15%      |
-| eia_retail_diesel_central_atlantic      | 15%      |
-| distillate_stocks_padd5_kbbl_chg_1w_pct | 15%      |
-| distillate_stocks_padd5_kbbl            | 15%      |
-| distillate_stocks_padd2_kbbl            | 15%      |
+| ulsd_spot_la_carb                       | 14%      |
+| ulsd_spot_nyh                           | 14%      |
+| weekly_distillate_demand_kbd            | 14%      |
+| weekly_distillate_exports_kbd           | 14%      |
+| weekly_distillate_imports_kbd           | 14%      |
+| weekly_distillate_production_kbd        | 14%      |
+| ulsd_spot_gulf                          | 14%      |
+| eia_retail_diesel_west_coast_ex_ca      | 14%      |
+| eia_retail_diesel_new_england           | 14%      |
+| eia_retail_diesel_lower_atlantic        | 14%      |
+| eia_retail_diesel_us                    | 14%      |
+| eia_retail_diesel_padd5                 | 14%      |
+| eia_retail_diesel_padd4                 | 14%      |
+| eia_retail_diesel_padd3                 | 14%      |
+| eia_retail_diesel_padd2                 | 14%      |
+| eia_retail_diesel_padd1                 | 14%      |
+| distillate_stocks_us_kbbl               | 14%      |
+| distillate_stocks_us_kbbl_chg_1w_pct    | 14%      |
+| heating_oil_spot_nyh                    | 14%      |
+| jet_spot_gulf                           | 14%      |
+| eia_retail_diesel_california            | 14%      |
+| eia_retail_diesel_central_atlantic      | 14%      |
+| distillate_stocks_padd5_kbbl_chg_1w_pct | 14%      |
+| distillate_stocks_padd5_kbbl            | 14%      |
+| distillate_stocks_padd2_kbbl            | 14%      |
 
 ## Checks
 
 - **Kalshi quotes never newer than the snapshot:** PASS (built from candles ending at or before each snapshot)
 - **diesel daily vs old panel (113 shared days):** settle values differ on 0 days; 10 AM crowd center: median gap 0.00c, 0 days over 0.5c
-- **gas daily vs old panel (0 shared days):** settle values differ on 0 days; 10 AM crowd center: median gap nanc, 0 days over 0.5c
-- **Kalshi settle value vs reconciled AAA:** 308 of 308 events have an AAA print for that date; 1 disagree by more than 0.05c
-- **AAA sources that disagree (>0.2c) on the same day:** 1 fuel-days out of 1555
+- **gas daily vs old panel (241 shared days):** settle values differ on 0 days; 10 AM crowd center: median gap 0.00c, 0 days over 0.5c
+- **Kalshi settle value vs reconciled AAA:** 574 of 574 events have an AAA print for that date; 1 disagree by more than 0.05c
+- **AAA sources that disagree (>0.2c) on the same day:** 1 fuel-days out of 1556
