@@ -1,9 +1,9 @@
 algo,layer,name,window,n,median_abs_miss_c,share_within_tol,verdict,pass_rule,note
 L0.1,L0,Ladder rebuild (normal curve),all hourly snapshots,1287,2.0937,0.485,❌ not yet,median line miss <= 2.0c over all snapshots,"median line miss per snapshot, cents"
 L0.2,L0,Ladder moves log,all hours,184,,0.0,🔎 info,info only: share of moves explained by inputs (target 80%+),184 moves >= 0.3c; 0 explained yet (needs intraday HO / rack / truckstop inputs)
-L2.0,L2,State plain average (baseline),all points,3,3.68,0.0,❌ not yet,baseline only,incl. week / month / year-ago columns (dates approximate)
+L2.0,L2,State plain average (baseline),all points,4,3.21,0.0,❌ not yet,baseline only,incl. week / month / year-ago columns (dates approximate)
 L2.0,L2,State plain average (baseline),"exact, 48-50 states",0,,,⬜ no data,baseline only,"a few states missing, weights re-scaled"
-L2.0,L2,State plain average (baseline),exact-date points,2,3.735,0.0,❌ not yet,baseline only,all 51 states known for that exact date
-L2.1,L2,"State blend, EIA volume-weighted",all points,3,0.09,0.667,❌ not yet,"|miss| <= 0.10c on exact-date points (current + yesterday), >= 90% of points",incl. week / month / year-ago columns (dates approximate)
+L2.0,L2,State plain average (baseline),exact-date points,3,3.68,0.0,❌ not yet,baseline only,all 51 states known for that exact date
+L2.1,L2,"State blend, EIA volume-weighted",all points,4,0.335,0.5,❌ not yet,"|miss| <= 0.10c on exact-date points (current + yesterday), >= 90% of points",incl. week / month / year-ago columns (dates approximate)
 L2.1,L2,"State blend, EIA volume-weighted","exact, 48-50 states",0,,,⬜ no data,"|miss| <= 0.10c on exact-date points (current + yesterday), >= 90% of points","a few states missing, weights re-scaled"
-L2.1,L2,"State blend, EIA volume-weighted",exact-date points,2,0.075,1.0,"◐ promising (n=2, need 20)","|miss| <= 0.10c on exact-date points (current + yesterday), >= 90% of points",all 51 states known for that exact date
+L2.1,L2,"State blend, EIA volume-weighted",exact-date points,3,0.09,0.667,❌ not yet,"|miss| <= 0.10c on exact-date points (current + yesterday), >= 90% of points",all 51 states known for that exact date
