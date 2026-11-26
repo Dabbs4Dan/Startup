@@ -1,0 +1,2 @@
+ticker,event_ticker,strike_type,floor_strike,cap_strike,result,expiration_value,open_time,close_time,expiration_time,settlement_ts,volume,open_interest,yes_sub_title,tier
+GASD-22MAY02-T3.50,GASD-22MAY02,,,,yes,4.105,2022-01-14T15:00:00Z,2022-05-02T20:59:00Z,,2022-05-03T20:14:00.339617Z,19788.00,0.00,Above $3.50,historical
