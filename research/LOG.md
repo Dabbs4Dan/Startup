@@ -11,6 +11,12 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-26 (12:45 AM) · Backtest across horizons: the market beats our simple models everywhere
+- **Did:** `tools/backtest_horizons.py` (daily ladders + 1/7/30-day history + EIA weekly 1994+) and `tools/backtest_horizon_ladders.py` (weekly/monthly ladders pulled by new one-off `horizon_ladders.yml`). Walk-forward models, bets at ask + fee, clustered CIs. Notes: `research/2026-11-26_backtest-horizons.md`.
+- **Learned:** Daily: market median miss 0.55¢ (diesel) vs best model 0.70¢; all model bets lose. History: gap + momentum beats "no change" by ~24% at 7 days, ~0–9% at 30 days. Weekly ladders (10 events each): market misses 2.5¢ (diesel) / 1.8¢ (gas) 5–7 days out vs our 7.8¢ / 5.6¢. Monthly: only 2 events each.
+- **Decided:** simple price-history features are already priced at every horizon. Edge must come from new inputs (truckstops, rack, timing).
+- **Next:** try Kalshi's historical endpoint for older weekly/monthly markets; re-run after 2–3 weeks of truckstop + rack data.
+
 ### 2026-11-26 (12:20 AM) · Imported an outside Kalshi bot that already models AAA diesel
 - **Did:** Copied MIT-licensed `ryanfrigo/kalshi-ai-trading-bot` (commit 5d7b70a) into `research/sample_models/` with an analysis file. Two unlicensed bots (weather, MLB) are link-only in `research/sample_models/README.md` (copies in Dan's Drive "Sample Kalshi Models").
 - **Learned:** It has its own KXDIESELD/KXAAAGASD model. Retail lags wholesale futures ~4–7 days (lag-7 R² ≈ 0.42); an "excess gap" (retail − wholesale vs trailing baseline) closes at ~2¢/day. Its streak-only model showed a fake 40-pt edge on 2026-09-26; the ladder was efficient once wholesale was included. It expects any real edge in the convergence rate and in weekly/monthly ladders. Its own live account shows NO measured edge (n=55, −1.9 pts).
