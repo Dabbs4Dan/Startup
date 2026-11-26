@@ -86,6 +86,7 @@ AAA diesel number and find gaps vs. Kalshi's odds. Demo money only until a strat
 | This brain | `CLAUDE.md` | §0 = how to work, §6 = what's next. The dated log is `research/LOG.md`. |
 | **Gaps + direction** ⭐ | `research/2026-11-26_gaps-and-direction.md` | 13 ranked gaps in our understanding and the one direction. Update statuses in place. |
 | **Truckstop test (L3)** ⭐ | `tools/truckstop_test.py` → `research/engine_room/l3_truckstop_scorecard.csv` | One row per day: truckstop move vs what the crowd missed. Refreshed hourly by `truckstops.yml`. Verdict at 10 scored days; PASS needs 20+. |
+| **Deep scan** ⭐ | `tools/deep_scan.py` → `research/backtests/deep_scan/`, write-up `research/2026-11-26_deep-scan.md` | Every stored parameter × price band × side × hour, diesel + gas, with false-discovery filter + holdout + cross-product check. Re-run when a new parameter is added to `panel_daily`. |
 | **Engine Room** | `tools/engine_room.py` → tables `algo_registry` / `inputs_asof` / `algo_predictions` / `algo_scorecard` (both DBs) | Proves each pricing algo layer (L0 market maker → L1 AAA → L2 OPIS state roll-up → L3 inputs) before patterns. Sheet tab **Engine Room** (diesel + gas). Only ✅ PASS algos (20+ points) may feed slices/bricks. |
 | **Strategy engine** | `nautilus/` (read `nautilus/README.md`) | NautilusTrader **2.0.0rc9, locked**. Same strategy code → backtest → Kalshi demo → live. Strategy IDs = sheet tab **Strategies** (S00 = replay check, no orders). |
 | DIY scheduler | `.github/workflows/live_recorder.yml` (relay step) | ⚠️ GitHub ignores `schedule:` off `main`. Each recorder shift starts the next, then runs `nautilus.yml` + daily backfill if none in 20h. Pause: commit `data/live/STOP`. |
@@ -191,6 +192,8 @@ Full reasoning and the 13 ranked gaps: `research/2026-11-26_gaps-and-direction.m
 **Key finding, parked (Dan, 2026-11-26):** limit orders on the favorite side (60–97¢) made +6.2% per $ in diesel
 (range +1.4% to +10.4%), the first result with a range above zero. It lost in October, gas doesn't confirm it, and
 fills are not guaranteed. Not being worked now; revisit after step 1. (`master.csv` M28, LOG 2026-11-26 1:40 AM.)
+
+**Candidate from the deep scan (2026-11-26):** the evening crowd overshoots a rising trend. After the strongest 5-day rises, NO at 9–11 PM (lines ≥ 25¢) made +28% per $ in gas (63 days, range +17% to +39%; last 40% of days +20%, range +2% to +40%); diesel same sign on 13 days. Not tradable now (both markets falling all November); needs a forward test in the next rising stretch. The scan also showed **no stored parameter predicts the direction of the 10 AM miss** (0 of 38). (`master.csv` M35–M36.)
 
 **Paused until step 1 reads out:** new strategy ideas, gas beyond its daily pull, weekly/monthly ladders, Nautilus strategies.
 

@@ -11,6 +11,19 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-26 (3:45 AM) · Chat 6 · RESULTS: deep scan of every parameter (plan = the 3:10 AM entry below)
+- **Did:** `tools/deep_scan.py` on diesel (114 days, 38 parameters, 13,891 priced bets) and gas (216 days Apr 7–Nov 25, 37 parameters, 31,564 bets). ~1,980 tests. Write-up: `research/2026-11-26_deep-scan.md`; tables: `research/backtests/deep_scan/`.
+- **Learned:**
+  - **Direction of the 10 AM miss: 0 parameters pass, both products.** Diesel had 6 pass the false-discovery filter on the first 60% of days; all 6 failed the last 40% (e.g. `ho_chg_3d` rho +0.47 → 0.00). One hint: `prev_info_gap_c` (yesterday's intraday drift), rho +0.31 / +0.42, gas +0.17.
+  - **Size of the miss is predictable** (crowd's own range, expected change, momentum, rising regime ↑; weekends ↓ in gas). The crowd's range already carries it → sizing/skip tool, not an edge.
+  - **Walk-forward model (all parameters):** predictions correlate with the miss out of sample (rho 0.26 both products) but adding them makes the error worse (diesel 0.73¢ → 0.90¢, gas 0.60¢ → 0.70¢). Bets: diesel −29%/$ (p 0.16), gas +2%/$ (p 0.87).
+  - **Reliable losers:** 45 losing finds, 36 of them 3–25¢ long shots (about −70%). Gas YES at 10 AM loses in every band.
+  - **Winners that passed:** 5, of which 3 are heavy-favorite loss-free streaks (+6–7%), 1 isolated hour cell. 6 more heavy-favorite cells were dropped by the binomial rule (streak only).
+  - **Candidate (Part E, follow-up):** evening crowd overshoots a rising trend. Rising-most 5-day tercile, NO at 9–11 PM, lines ≥ 25¢: gas **+28%/$ (CI +17 to +39, 63 days, 184 bets, win 90% at 74¢)**; first 60% +33%, last 40% +20% (CI +2 to +40, 22 days); 5 of 6 months positive; YES mirror −38%. Diesel +27% (CI −8 to +64, 13 days, all Sep); YES −34% (CI −57 to −11).
+- **Limits:** Part E came from the same days that suggested it; rising days clump (May, Jul, Sep); hourly candle quotes, fill size unknown; nothing to trade now (0 rising-most days in November).
+- **Correction:** gap G5 said "only one regime". Diesel has ~21 strongly rising days (Aug–Sep). Fixed in the gaps file.
+- **Decided (proposed):** current inputs cannot beat the 10 AM crowd; that question is closed until new inputs arrive. Keep the trend-fade as an open candidate and forward-test it at the next rising stretch.
+
 ### 2026-11-26 (3:10 AM) · Chat 6 · PLAN (written before running): deep scan of every parameter, diesel then gas
 - **Asked (Dan):** as deep a backtest as possible on all parameters we have, all diesel days, then gas.
 - **Risk:** a scan this wide WILL throw up lucky winners. So the rules are fixed here first.
@@ -19,6 +32,7 @@ Template:
 - **Part B:** bet-level grid = parameter tercile × price band × side at 10 AM. **Part C:** hour of day × price band × side.
 - **Part D:** walk-forward model using all parameters to shift the crowd's center; bet when model chance − cost ≥ 5¢.
 - **What counts as a find:** (1) passes a false-discovery filter (Benjamini–Hochberg 10%) on the first 60% of days, AND (2) same sign with p < 0.05 on the last 40% (never used for selection), AND (3) same sign in the other product. Anything less = "hint". Primary number reported: how many cells pass vs how many luck alone would give.
+- **Added 3:25 AM after the first run, before running it (follow-up, not independent):** Part A showed the crowd's CLOSE forecast overshoots the recent trend in gas (settled AAA lands back toward 'less change'), same sign in diesel. **Part E** = bet-level check at 9–11 PM: trend tercile (`aaa_chg_5d`) × price band × side, same find rules. Also: for bands ≥ 85¢ a t-test is fooled by loss-free streaks, so those cells must ALSO beat their own price on a day-level binomial test (p < 0.05). This rule is stricter, never looser.
 
 ### 2026-11-26 (3:00 AM) · Chat 6 · G1 first read: how big can a bet be?
 - **Question (Dan):** what's the max bet; would $5–10K work? Deciding number: share of favorite-side quotes (ask 60–97¢) where the full amount fills, and the slip in cents.
