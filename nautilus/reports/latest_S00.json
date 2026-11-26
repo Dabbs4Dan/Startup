@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-11-26T01:27:18Z",
+  "run_utc": "2026-11-26T07:02:38Z",
   "engine_version": "2.0.0rc9",
   "pinned": "2.0.0rc9",
   "version_ok": true,
@@ -10,7 +10,7 @@
     "instruments": 84,
     "trades": 2303,
     "candle_quotes": 2933,
-    "live_quotes": 1596,
+    "live_quotes": 2499,
     "fee_mode": "kalshi_quadratic"
   },
   "replayed": {
@@ -33,15 +33,15 @@
       "last": "2026-11-25T04:59Z"
     },
     "KXDIESELD-26NOV26": {
-      "quotes": 2015,
+      "quotes": 2918,
       "trades": 341,
       "first": "2026-11-25T13:00Z",
-      "last": "2026-11-26T01:26Z"
+      "last": "2026-11-26T04:57Z"
     }
   },
   "check": {
-    "quotes_in": 4529,
-    "quotes_replayed": 4529,
+    "quotes_in": 5432,
+    "quotes_replayed": 5432,
     "trades_in": 2303,
     "trades_replayed": 2303,
     "pass": true
