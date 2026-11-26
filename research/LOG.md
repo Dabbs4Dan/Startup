@@ -11,6 +11,11 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-26 (12:20 AM) · Imported an outside Kalshi bot that already models AAA diesel
+- **Did:** Copied MIT-licensed `ryanfrigo/kalshi-ai-trading-bot` (commit 5d7b70a) into `research/sample_models/` with an analysis file. Two unlicensed bots (weather, MLB) are link-only in `research/sample_models/README.md` (copies in Dan's Drive "Sample Kalshi Models").
+- **Learned:** It has its own KXDIESELD/KXAAAGASD model. Retail lags wholesale futures ~4–7 days (lag-7 R² ≈ 0.42); an "excess gap" (retail − wholesale vs trailing baseline) closes at ~2¢/day. Its streak-only model showed a fake 40-pt edge on 2026-09-26; the ladder was efficient once wholesale was included. It expects any real edge in the convergence rate and in weekly/monthly ladders. Its own live account shows NO measured edge (n=55, −1.9 pts).
+- **Next:** merge its `data/aaa/aaa_daily.csv` (Jan 2025→) into the warehouse; build an `excess_gap` column and test it against our F formula; reuse its forward-only Brier scoring in edge test #9.
+
 ### 2026-11-25 (11:50 PM) · L2 on 11 exact days: EIA weights 0.41¢, fitted regional weights 0.14–0.37¢ (not yet 0.10¢)
 - **Did:** Fast all-states archive pass finished (1h): only **9 archived days** exist since Aug for that page (Aug 3, Aug 19, Oct 15–31) + 2 live days = 11 exact days. Re-scored; tested 5 regional (PADD) weights fit on half the days, tested on the other half (non-negative, sum to 1).
 - **Learned:** L2.1 (EIA 2024 weights, 0 fitted): median miss **0.41¢**, 2/11 within 0.10¢. Misses drift with time (Aug −0.7 to −1.1¢, Oct +0.2 to +1.0¢, Nov ~0) → fixed weights can't nail it. Fitted regional weights out-of-sample: **0.37¢ / 0.14¢** (two splits) vs EIA 0.66¢ / 0.41¢. Weights stable across splits: East ~0.29, Midwest ~0.29, Gulf ~0.26 (≫ EIA share), Rockies ~0.02, West ~0.15.
