@@ -1,6 +1,6 @@
 {
  "series": "KXDIESELD",
- "pulled_utc": "2026-11-26 22:50",
+ "pulled_utc": "2026-11-26 23:30",
  "found": true,
  "title": "Daily Diesel Price",
  "frequency": "daily",
@@ -77,6 +77,6 @@
  "events": 116,
  "first_close": "2026-08-03T05:59:00Z",
  "last_close": "2026-11-26T04:59:00Z",
- "candle_rows_added": 33880,
+ "candle_rows_added": 0,
  "markets_no_candles": 0
 }
