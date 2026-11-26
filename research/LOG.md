@@ -4,17 +4,17 @@ Moved out of CLAUDE.md on 2026-11-25 so new sessions load fast. **Add new entrie
 
 Template:
 ```
-### 2026-11-25 (9:10 PM) · L2 history: per-state archive throttled → one-page fast path; first August test misses
-- **Did:** First `history.yml` run (5h) recovered only ~80 per-state pages for 17 states (Internet Archive throttling). Added `wayback_states.py --all-states`: archived `gasprices.aaa.com/state-gas-price-averages/` = all 51 states per fetch → `research/engine_room/wayback_states/_all_states.csv`. `history.yml` now runs the fast pass by default (slow per-state pass opt-in: input `slow=yes`).
-- **Learned:** First archived full day (Aug 3, 2026): L2.1 volume-weighted blend **misses −1.14¢** (plain mean −2.74¢), vs 0.06–0.09¢ on Nov 24–25. Fixed EIA-2024 weights are not the whole story → weights likely vary (season / station mix) or need fitting.
-- **Next:** collect ≥15 exact days → fit state weights on half, test on the other half (no peeking); compare fitted vs EIA weights.
-
 ### YYYY-MM-DD (time) · short title
 - **Did:** …
 - **Learned:** …
 - **Decided:** …
 - **Next:** …
 ```
+
+### 2026-11-25 (9:10 PM) · L2 history: per-state archive throttled → one-page fast path; first August test misses
+- **Did:** First `history.yml` run (5h) recovered only ~80 per-state pages for 17 states (Internet Archive throttling). Added `wayback_states.py --all-states`: archived `gasprices.aaa.com/state-gas-price-averages/` = all 51 states per fetch → `research/engine_room/wayback_states/_all_states.csv`. `history.yml` now runs the fast pass by default (slow per-state pass opt-in: input `slow=yes`).
+- **Learned:** First archived full day (Aug 3, 2026): L2.1 volume-weighted blend **misses −1.14¢** (plain mean −2.74¢), vs 0.06–0.09¢ on Nov 24–25. Fixed EIA-2024 weights are not the whole story → weights likely vary (season / station mix) or need fitting.
+- **Next:** collect ≥15 exact days → fit state weights on half, test on the other half (no peeking); compare fitted vs EIA weights.
 
 ### 2026-11-25 (6:20 PM) · Quant-standard edge check: the favorite edge is NOT proven
 - **Did:** `tools/edge_check.py`: every 10 AM ET line/side priced 60–97¢ (spread ≤10¢), bought at ask + fee, settled on AAA; returns **clustered by day** + bootstrap CI + monthly split.
