@@ -11,6 +11,13 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-26 (3:00 AM) · Chat 6 · G1 first read: how big can a bet be?
+- **Question (Dan):** what's the max bet; would $5–10K work? Deciding number: share of favorite-side quotes (ask 60–97¢) where the full amount fills, and the slip in cents.
+- **Did:** Walked the recorded order book (KXDIESELD-26NOV26, 40 snapshots, 2:31 PM–11:57 PM ET 11/25, 78 favorite quotes) for $1K / $5K / $10K; summarized the trade tape (29.5K trades, 60 event days, top-3 lines).
+- **Learned:** Book: median **$2,750 at the best price**, $3,770 within 2¢. $1K fills on 96% of quotes with 0 slip (median); $5K fits on 54% (median slip 0.7¢, mean 4.2¢); $10K on 17% (median 10.6¢). Depth is patchy: 7–9 PM the main favorite had almost nothing at the best price. Tape: median **$35K/day** traded (mean $38K, range $0.2K–$120K); favorite-side taker flow median $16K/day; median trade $2, 99th pct $990; 218 trades ≥ $1K on 35 days, only 3 ≥ $5K. Busiest hours 8–10 AM ET (36% of dollars) and 9–11 PM (20%).
+- **Decided (proposed):** working cap ≈ **$1K per bet** (maybe $2–3K split across the day). $5–10K works as a bankroll, not as a bet.
+- **Limits:** one afternoon/evening; that day's favorites sat at 92–94¢; no 10 AM book yet (recorder started 2:21 PM). Re-run after ~1 week.
+
 ### 2026-11-26 (2:15 AM) · Chat 6 · Audit: structure, handoff, truckstop scorecard, gaps
 - **Did:** Read Chats 1–5 + the repo. Added `CLAUDE.md` §0 (start/end checklist, working rules, data-flow map) and rewrote §6 as the one live direction. Wrote `research/2026-11-26_gaps-and-direction.md` (13 ranked gaps). Built `tools/truckstop_test.py` → `research/engine_room/l3_truckstop_scorecard.csv`. `truckstops.yml` now saves after every hourly snapshot (was: once, after 5.5 h) and refreshes the scorecard. Takeaways: Chat 6 rows + master M28–M33.
 - **Learned:**

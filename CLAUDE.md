@@ -184,7 +184,7 @@ Full reasoning and the 13 ranked gaps: `research/2026-11-26_gaps-and-direction.m
 | Order | Step | Status |
 |---|---|---|
 | 1 | **Truckstop scorecard**: does the truckstop move on day X−1 line up with the crowd's surprise on day X? | ◐ runs by itself since 11/26; first read at 10 scored days (~Dec 6), PASS at 20+ |
-| 2 | **Size the prize (G1)**: dollars available near the best price at 10 AM / noon / 6 PM, from order-book recordings | ⬜ needs ~1 week of recordings |
+| 2 | **Size the prize (G1)**: dollars available near the best price at 10 AM / noon / 6 PM, from order-book recordings | ◐ first read 11/26: ~$1K per bet fills clean; $5K fits half the time with slip; $10K no. Needs 10 AM depth + ~1 week |
 | 3 | **Pin the mystery moves to a clock (G4, G2)**: line up the 184 unexplained moves with rack times, the ~5 PM Love's batch reprice, the AAA flip time | ⬜ |
 | 4 | Models → strategies → Nautilus, only after 1–3 | ⬜ |
 

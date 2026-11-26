@@ -100,6 +100,7 @@ BY_CHAT = [
     (6, "System", "Truckstop scorecard", "Scores itself every hour: truckstop move vs what the crowd missed at 10 AM and at close. First read at 10 scored days, PASS at 20+.", "ts move vs surprise", "Current", ""),
     (6, "System", "Hourly truckstop saves", "The truckstop job used to save only after 5.5 hours; a crash lost the run. Now it saves after every snapshot.", "save each hour", "Current", ""),
     (6, "System", "Session handoff", "CLAUDE.md section 0 = start and end checklist for every chat; section 6 = the one live direction. One home per fact; write the test before running it.", "read -> work -> log", "Current", ""),
+    (6, "Risk", "Max bet size (first read)", "A $1K bet fills at the shown price (96% of favorite quotes). $5K fits only about half the time and moves the price; $10K rarely fits (17%). Whole market trades about $35K a day; only 3 trades over $5K in 60 days. One afternoon of order book so far; no 10 AM read yet.", "$1K ok / $5K hard / $10K no", "Open", ""),
     (6, "Gaps", "13 understanding gaps", "Ranked list in research/2026-11-26_gaps-and-direction.md. Top 4: is the prize big enough, what window is in AAA's number, how much of AAA is truckstops, who are the informed takers.", "G1-G13", "Open", ""),
 ]
 
@@ -139,6 +140,7 @@ MASTER = [
     ("System", "Truckstop scorecard", "Scores itself every hour: truckstop move vs what the crowd missed. No large backtest is possible (no free truckstop history). First read at 10 scored days, PASS at 20+.", "ts move vs surprise", "6", "Current"),
     ("System", "Session handoff", "CLAUDE.md section 0 = start/end checklist for every chat; section 6 = the one live direction. One home per fact; write the test before running it.", "read -> work -> log", "6", "Current"),
     ("Gaps", "13 understanding gaps", "Ranked in research/2026-11-26_gaps-and-direction.md. Top 4: is the prize big enough, what window is in AAA's number, how much of AAA is truckstops, who are the informed takers.", "G1-G13", "6", "Open"),
+    ("Risk", "Max bet size (first read)", "A $1K bet fills at the shown price (96% of favorite quotes). $5K fits only about half the time and moves the price; $10K rarely fits (17%). Whole market trades about $35K a day; only 3 trades over $5K in 60 days. One afternoon of order book so far; no 10 AM read yet.", "$1K ok / $5K hard / $10K no", "6", "Open"),
 ]
 
 
