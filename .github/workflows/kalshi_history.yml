@@ -31,6 +31,7 @@ jobs:
         run: |
           git config user.name "kalshi-twins-bot"
           git config user.email "actions@users.noreply.github.com"
+          python3 tools/pull_kalshi_history.py DISCOVER || echo "discover failed"
           for S in KXDIESELMON KXAAAGASM KXDIESELM KXDIESELW KXAAAGASW KXDIESELD KXAAAGASD; do
             python3 tools/pull_kalshi_history.py "$S" || echo "$S failed"
             git add data/lake/kalshi/

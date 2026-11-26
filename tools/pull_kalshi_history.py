@@ -157,5 +157,27 @@ def main(series):
     print(json.dumps({k: meta[k] for k in ("markets_live", "markets_historical", "events", "first_close", "last_close", "candle_rows_added", "markets_no_candles")}))
 
 
+def discover():
+    """List every Kalshi series whose name smells like fuel, so we can vet that no related market was missed."""
+    words = ("gas", "diesel", "fuel", "oil", "wti", "brent", "petrol", "energy", "aaa")
+    found, tried = {}, []
+    for q in ("", "?category=Economics", "?category=Commodities", "?category=Financials", "?category=Energy", "?category=Climate%20and%20Weather"):
+        data = get(f"{KALSHI}/series{q}", tries=2)
+        lst = data.get("series") or []
+        tried.append({"query": q or "(all)", "series_returned": len(lst), "http": data.get("_http")})
+        for se in lst:
+            text = f"{se.get('ticker', '')} {se.get('title', '')}".lower()
+            if any(w in text for w in words):
+                found[se.get("ticker")] = {"ticker": se.get("ticker"), "title": se.get("title"), "category": se.get("category"),
+                                           "frequency": se.get("frequency"), "fee_type": se.get("fee_type")}
+    os.makedirs(ROOT, exist_ok=True)
+    with open(os.path.join(ROOT, "_series_discovered.csv"), "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=["ticker", "title", "category", "frequency", "fee_type"])
+        w.writeheader()
+        w.writerows(sorted(found.values(), key=lambda r: r["ticker"] or ""))
+    json.dump(tried, open(os.path.join(ROOT, "_series_discovery_log.json"), "w"), indent=1)
+    print(f"discover: {len(found)} fuel-like series; queries: {tried}")
+
+
 if __name__ == "__main__":
-    main(sys.argv[1])
+    discover() if sys.argv[1] == "DISCOVER" else main(sys.argv[1])
