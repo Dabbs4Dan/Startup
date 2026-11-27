@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASDSC",
- "pulled_utc": "2026-11-27 03:47",
+ "pulled_utc": "2026-11-27 04:57",
  "found": true,
  "title": "South Carolina gas price",
  "frequency": "daily",
@@ -76,6 +76,6 @@
  "events": 59,
  "first_close": "2026-09-17T03:59:00Z",
  "last_close": "2026-11-14T04:59:00Z",
- "candle_rows_added": 14537,
+ "candle_rows_added": 0,
  "markets_no_candles": 0
 }
