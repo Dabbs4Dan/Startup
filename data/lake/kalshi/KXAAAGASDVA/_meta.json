@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASDVA",
- "pulled_utc": "2026-11-27 04:17",
+ "pulled_utc": "2026-11-27 04:58",
  "found": true,
  "title": "Virginia gas price",
  "frequency": "daily",
@@ -76,6 +76,6 @@
  "events": 66,
  "first_close": "2026-09-10T03:59:00Z",
  "last_close": "2026-11-14T04:59:00Z",
- "candle_rows_added": 16102,
+ "candle_rows_added": 0,
  "markets_no_candles": 0
 }
