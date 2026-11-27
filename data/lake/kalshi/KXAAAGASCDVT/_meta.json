@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASCDVT",
- "pulled_utc": "2026-11-27 00:03",
+ "pulled_utc": "2026-11-27 04:53",
  "found": true,
  "title": "Vermont gas price",
  "frequency": "daily",
@@ -26,6 +26,6 @@
  "events": 12,
  "first_close": "2026-11-15T08:22:58Z",
  "last_close": "2026-11-26T10:08:42Z",
- "candle_rows_added": 676,
+ "candle_rows_added": 0,
  "markets_no_candles": 0
 }
