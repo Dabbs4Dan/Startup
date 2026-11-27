@@ -19,6 +19,7 @@ Template:
 - **Deciding numbers:** out-of-sample share explained (log scale) and typical % error, vs the baseline "always the usual width".
 - **Step 3, how the six differ (description):** time exponent (0.5 = uncertainty grows like a random walk), width per day in ¢ and in strike steps, sensitivity to jumpiness, and calibration: share of settles inside ±1 width (a well-sized bell curve gives 68%).
 - **Assumed:** a bell curve is a fair shape for measuring width (Layer C says it is ~3 points off per line).
+- **Added 4:35 PM, before running (Dan: "if you can't solve monthly for diesel you gotta solve it for gas"):** Layer A for **gas monthly** scored 0.29 in v0. Candidate A1 = a pass-through form built for long horizons: yesterday's AAA move × how long momentum lasts (decay ρ), plus the retail-vs-wholesale gap and the 5-day and 20-day futures moves × how much of them reaches the pump by settlement (1 − e^(−days/τ)), plus a per-day drift. ρ ∈ {0.6, 0.8, 0.9} and τ ∈ {5, 10, 20, 40} are picked on an inner split of the first 60% of events; scored once on the last 40%. A1 is also run on the other five for comparison. Deciding number: out-of-sample share of the center explained vs v0's.
 
 ### 2026-11-27 (4:20 PM) · Chat 6 · RESULTS: market-maker equation v0, all six markets (plan = the 4:00 PM entry below)
 - **Did:** `tools/mm_model.py` → `research/engine_room/mm_model_scorecard.csv` + `mm_model_coefficients.csv`. Fit on the first 60% of events, scored on the last 40%.
