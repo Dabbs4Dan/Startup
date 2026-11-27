@@ -1,0 +1,47 @@
+page,days_2023,days_2024,days_2025,days_2026,days_saved,first,hours_of_day_seen_2026,hours_saved_per_day_2026,last,note,sample_new,sample_new_bytes,sample_new_ts,sample_old,sample_old_bytes,sample_old_ts
+gasbuddy.com/usa,17,72,37,40,166,20230307,21,1.2,20261108,,no price near 'average',12414,20261108150856,no price near 'average',93657,20240723002227
+gasbuddy.com/,287,294,248,259,1088,20230101,24,1.6,20261117,,no price near 'average',19122,20261117010732,no price near 'average',100533,20240415115559
+gasbuddy.com/charts,79,142,57,79,357,20230109,23,1.2,20261111,,no price near 'average',17200,20261111073427,no price near 'average',135302,20240404170928
+gasbuddy.com/gasprices,18,28,93,233,372,20230120,24,1.3,20261116,,no price near 'average',9946,20261116170831,no price near 'average',9880,20251205050751
+gasbuddy.com/gaspricemap,41,28,36,48,153,20230201,18,1.1,20261103,,no price near 'average',84820,20261103110341,no price near 'average',74486,20240619163026
+fuelinsights.gasbuddy.com/,28,76,84,98,286,20230124,24,1.4,20261115,,no price near 'average',993,20261115041205,no price near 'average',2295,20241213115712
+fuelinsights.gasbuddy.com/charts,,,,,0,,,,,,,,,,,
+fuelinsights.gasbuddy.com/Home/US,,,,,0,,,,,,,,,,,
+gasbuddy.com/gasprices/california,10,20,31,31,92,20230214,18,1.1,20261116,,no price near 'average',31229,20261116170831,no price near 'average',309746,20250110101015
+gasbuddy.com/gasprices/texas,9,24,24,20,77,20230214,13,1.0,20261111,,no price near 'average',36630,20261111170959,no price near 'average',399371,20241204190239
+twitter.com/GasBuddyGuy,19,10,7,1,37,20230124,1,1.0,20260723,,no price near 'average',3872,20260723215322,no price near 'average',43250,20230514011236
+x.com/GasBuddyGuy,,,,,,,,,,lookup failed,,,,,,
+tradingeconomics.com/united-states/gasoline-prices,7,11,113,98,229,20230130,10,1.0,20261116,,no price near 'average',58755,20261116135852,"ter in August of 2025. Gasoline Prices in the United States averaged 0.60 USD/Liter from 1991 until 2025, reaching an all time high of 1.30 USD/Liter in June of 2022 and a record low of 0.24 USD/Liter in February of 1999",326803,20251007062829
+ycharts.com/indicators/us_gas_price,112,21,15,13,161,20230101,11,1.0,20260717,,"nd 22.64% from one year ago. The US Retail Gas Price is the average price that retail consumers pay per gallon, for all grades and formulations. Retail gas prices are important to view in regards to how the energy indust",100584,20260717212416,"d -25.52% from one year ago. The US Retail Gas Price is the average price that retail consumers pay per gallon, for all grades and formulations. Retail gas prices are important to view in regards to how the energy indust",63287,20230613203115
+ycharts.com/indicators/us_retail_diesel_price_aaa,,,,,0,,,,,,,,,,,
+mapquest.com/gas-prices,,,,,0,,,,,,,,,,,
+gasprices.aaa.com/,,,,,,,,,,lookup failed,,,,,,
+gasprices.aaa.com/state-gas-price-averages/,265,291,330,269,1155,20230101,24,3.1,20261127,,no price near 'average',15682,20261127024620,ty Premium Fuel Research Top Trends Contact AAA Today’s AAA National Average $3.456 Price as of 6/21/24 Today’s AAA National Average $3.456 Price as of 6/21/24 USA Map National Retail Prices 4.811 to 3.612 3.611 to 3.430,82989,20240622003408
+promiles.com/,11,27,21,12,71,20230204,9,1.0,20261012,,no price near 'average',181908,20261012032600,ERR <urlopen error timed out>,0,20240703014002
+www.loves.com/api/fetch_stores,0,0,4,2,6,20250725,2,1.0,20260425,,,,,,,
+www.loves.com/en/location-and-fuel-price-search,14,30,14,5,63,20230128,5,1.0,20261024,,no price near 'average',189691,20261024223104,no price near 'average',70550,20240224061800
+www.ta-petro.com/location-and-fuel-prices,,,,,0,,,,,,,,,,,
+pilotflyingj.com/fuel-prices,9,13,8,0,30,20230203,0,0.0,20250825,,no price near 'average',24175,20250825032327,ERR <urlopen error timed out>,0,20240325050632
+www.eia.gov/petroleum/gasdiesel/,329,313,239,299,1180,20230101,24,4.1,20261125,,no price near 'average',23847,20261125201404,no price near 'average',129226,20240307090746
+www.cspdailynews.com/fuels,12,14,8,8,42,20230121,8,1.1,20260921,,ERR <urlopen error timed out>,0,20260921163654,no price near 'average',72053,20240514181948
+www.opis.com/,1,0,56,61,118,20230526,24,1.3,20261115,,no price near 'average',39146,20261115000248,no price near 'average',182737,20251022012215
+fuelgaugereport.aaa.com/,,,,,0,,,,,,,,,,,
+www.gasprices.com/,5,2,2,1,10,20230209,0,0.0,20260216,,,,,,,
+www.autoblog.com/gas-prices,,,,,0,,,,,,,,,,,
+www.geico.com/save/gas-prices/,,,,,0,,,,,,,,,,,
+www.truckstop.com/fuel-prices/,,,,,0,,,,,,,,,,,
+www.dtn.com/,100,121,128,66,415,20230101,22,1.2,20261117,,no price near 'average',103941,20261117055410,no price near 'average',280179,20240619000342
+www.fuelbuddy.com/,,,,,,,,,,lookup failed,,,,,,
+gasprices.mapquest.com/,,,,,0,,,,,,,,,,,
+www.costco.com/gasoline.html,262,240,19,0,521,20230101,0,0.0,20250815,,no price near 'average',1222,20250815010325,no price near 'average',477083,20230920113109
+www.samsclub.com/fuel,,,,,0,,,,,,,,,,,
+www.buc-ees.com/,133,199,112,74,518,20230103,24,1.2,20261117,,no price near 'average',74720,20261117100639,no price near 'average',67477,20240418012057
+www.wawa.com/fuel,,,,,,,,,,lookup failed,,,,,,
+www.speedway.com/,48,127,115,54,344,20230102,21,1.1,20261029,,no price near 'average',20361,20261029162036,no price near 'average',539381,20240801193427
+www.circlek.com/fuel,,,,,,,,,,lookup failed,,,,,,
+www.caseys.com/fuel,,,,,0,,,,,,,,,,,
+www.kwiktrip.com/fuel,,,,,,,,,,lookup failed,,,,,,
+www.sheetz.com/fuel,,,,,,,,,,lookup failed,,,,,,
+www.racetrac.com/,45,73,59,28,205,20230106,16,1.0,20261114,,no price near 'average',27076,20261114234217,no price near 'average',1048574,20240613001537
+www.quiktrip.com/,51,120,95,58,324,20230104,23,1.2,20261117,,ERR <urlopen error timed out>,0,20261117165010,no price near 'average',74260,20240806004329
+www.murphyusa.com/,,,,,0,,,,,,,,,,,
