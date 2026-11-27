@@ -195,6 +195,15 @@ def features(x, fuel):
         if "fut_brent" in x:
             f["crude_slice"] = x.fut_brent / 42
             f["refining_slice"] = main - x.fut_brent / 42
+    other = "rbob" if fuel == "diesel" else "ho"                     # the sister fuel's wholesale price
+    if f"fut_{other}" in x:
+        f["fut_sister"] = x[f"fut_{other}"]
+        f["fut_sister_chg_5d_c"] = (x[f"fut_{other}"] - x[f"fut_{other}"].shift(5)) * 100
+    hubs = {"diesel": ("ulsd_spot_gulf", "ulsd_spot_nyh", "ulsd_spot_la_carb"), "gas": ("gasoline_spot_gulf", "gasoline_spot_nyh", "gasoline_spot_la_rbob")}[fuel]
+    if hubs[0] in x and hubs[1] in x:
+        f["hub_gap_gulf_minus_nyh_c"] = (x[hubs[0]] - x[hubs[1]]) * 100
+    if hubs[2] in x and hubs[0] in x:
+        f["hub_gap_la_minus_gulf_c"] = (x[hubs[2]] - x[hubs[0]]) * 100
     for c in ("fut_brent", "fut_wti", "fut_natgas"):
         if c in x:
             f[c] = x[c]
@@ -241,9 +250,11 @@ def ladders():
             continue
         m["settle_date"] = pd.to_datetime(m.event_ticker.str.split("-").str[1], format="%y%b%d", errors="coerce")
         m["settle_value"] = pd.to_numeric(m.expiration_value, errors="coerce")
-        m["open_ts"] = pd.to_datetime(m.open_time, utc=True, errors="coerce")
-        m["close_ts"] = pd.to_datetime(m.close_time, utc=True, errors="coerce")
+        m["open_ts"] = pd.to_datetime(m.open_time, utc=True, errors="coerce", format="ISO8601")
+        m["close_ts"] = pd.to_datetime(m.close_time, utc=True, errors="coerce", format="ISO8601")
         m = m.dropna(subset=["settle_date", "settle_value", "open_ts", "close_ts"])
+        meta = json.load(open(d / "_meta.json")) if (d / "_meta.json").exists() else {}
+        steps = m.groupby("event_ticker").floor_strike.apply(lambda v: np.median(np.diff(np.sort(v.unique()))) if v.nunique() > 1 else np.nan)
         c = pd.read_csv(d / "candles_60m.csv.gz")
         c = c[c.ticker.isin(m.ticker)].dropna(subset=["yes_bid", "yes_ask"]).drop_duplicates(["ticker", "end_ts"])
         c["end"] = pd.to_datetime(c.end_ts, unit="s", utc=True)
@@ -271,12 +282,30 @@ def ladders():
                 good = q[q.spread <= 0.10 + 1e-9]
                 center = crossing(good.floor_strike.values, good.mid.values, 0.5) if len(good) > 1 else np.nan
                 lo, hi = (crossing(good.floor_strike.values, good.mid.values, 0.84), crossing(good.floor_strike.values, good.mid.values, 0.16)) if len(good) > 2 else (np.nan, np.nan)
-                trad = good[(good.mid >= 0.03) & (good.mid <= 0.97)].sort_values("cum_vol", ascending=False).head(3)
+                tr_all = good[(good.mid >= 0.03) & (good.mid <= 0.97)]
+                trad = tr_all.sort_values("cum_vol", ascending=False).head(3)
+                fav = {}
+                if len(tr_all):                                  # the line + side the crowd likes most (highest price it can still buy)
+                    yes_cost, no_cost = tr_all.yes_ask, 1 - tr_all.yes_bid
+                    best_yes, best_no = yes_cost[yes_cost <= 0.97], no_cost[no_cost <= 0.97]
+                    cand = []
+                    if len(best_yes):
+                        cand.append(("YES", best_yes.idxmax(), best_yes.max()))
+                    if len(best_no):
+                        cand.append(("NO", best_no.idxmax(), best_no.max()))
+                    if cand:
+                        side, ix, cost = max(cand, key=lambda z: z[2])
+                        k = tr_all.loc[ix, "floor_strike"]
+                        fav = {"fav_side": side, "fav_strike": k, "fav_cost": round(float(cost), 4),
+                               "fav_won": int((e.settle_value > k) == (side == "YES"))}
                 row = {"fuel": fuel, "horizon": hz, "series": series, "event": ev, "settle_date": e.settle_date.date(),
                        "snapshot": label, "snapshot_et": t.tz_localize(None), "snapshot_date": t.date(), "snapshot_hour": t.hour,
                        "asof_date": (t - pd.Timedelta(days=1)).date() if t.hour < AAA_POSTED_BY_HOUR else t.date(),
                        "days_to_settle": (e.settle_date.date() - t.date()).days,
                        "hours_to_close": round((e.close_ts - t).total_seconds() / 3600, 1), "tier": e.tier,
+                       "fee_type": meta.get("fee_type"), "strike_step_c": round(float(steps.get(ev, np.nan)) * 100, 2) if pd.notna(steps.get(ev, np.nan)) else np.nan,
+                       "open_et": e.open_ts.tz_convert(ET).tz_localize(None), "close_et": e.close_ts.tz_convert(ET).tz_localize(None),
+                       "open_days": round((e.close_ts - e.open_ts).total_seconds() / 86400, 2),
                        "n_lines": int(e.n_lines), "n_quoted": len(q), "n_tight": len(good), "n_tradeable": int(((good.mid >= 0.03) & (good.mid <= 0.97)).sum()),
                        "volume_so_far": q.cum_vol.sum(), "event_volume_total": e.event_volume,
                        "crowd_center": center, "crowd_sigma_c": (hi - lo) / 2 * 100 if pd.notna(lo) and pd.notna(hi) else np.nan,
@@ -285,6 +314,7 @@ def ladders():
                     row.update({f"liq{i}_strike": r.floor_strike, f"liq{i}_yes_bid": r.yes_bid, f"liq{i}_yes_ask": r.yes_ask,
                                 f"liq{i}_no_ask": round(1 - r.yes_bid, 4), f"liq{i}_spread": round(r.spread, 4), f"liq{i}_volume": r.cum_vol,
                                 f"liq{i}_settled_yes": int(e.settle_value > r.floor_strike)})
+                row.update(fav)
                 snaps.append(row)
                 n_snap += 1
                 ql = q[["ticker", "floor_strike", "yes_bid", "yes_ask", "last", "cum_vol", "open_interest"]].copy()
@@ -298,6 +328,44 @@ def ladders():
                     "historical_tier_markets": int((m.tier == "historical").sum()), "note": ""})
         log(f"{series}: {n_ev} events, {n_snap} snapshots")
     return pd.DataFrame(snaps), (pd.concat(lines, ignore_index=True) if lines else pd.DataFrame()), pd.DataFrame(cov)
+
+
+# ------------------------------------------------------------------ contract cards (are the six markets the same thing?)
+def contract_cards(aaa):
+    """One row per series and year, straight from the raw files: how the contract is built and whether it settles
+    on the same single-day AAA number as the daily market. Uses only AAA prints that do NOT come from that series."""
+    ind = aaa[~aaa.source.str.contains("weekly_settlement|monthly_settlement")]
+    rows = []
+    for series, (fuel, hz) in SERIES.items():
+        d = LAKE / "kalshi" / series
+        if not (d / "markets.csv").exists():
+            continue
+        meta = json.load(open(d / "_meta.json")) if (d / "_meta.json").exists() else {}
+        m = pd.read_csv(d / "markets.csv")
+        m["sv"] = pd.to_numeric(m.expiration_value, errors="coerce")
+        m = m[(m.strike_type == "greater") & m.sv.notna()].copy()
+        if m.empty:
+            continue
+        m["sd"] = pd.to_datetime(m.event_ticker.str.split("-").str[1], format="%y%b%d", errors="coerce")
+        m["o"] = pd.to_datetime(m.open_time, utc=True, errors="coerce", format="ISO8601")
+        m["c"] = pd.to_datetime(m.close_time, utc=True, errors="coerce", format="ISO8601")
+        m = m.dropna(subset=["sd", "o", "c"])
+        for yr, g in m.groupby(m.sd.dt.year):
+            ev = g.groupby("event_ticker").agg(sd=("sd", "first"), o=("o", "min"), c=("c", "max"), n=("ticker", "size"), v=("volume", "sum"), sv=("sv", "first"),
+                                               step=("floor_strike", lambda v: np.median(np.diff(np.sort(v.unique()))) if v.nunique() > 1 else np.nan))
+            close_rel = (ev.c.dt.tz_convert(ET).dt.tz_localize(None) - ev.sd).dt.total_seconds() / 3600
+            j = ev.reset_index().merge(ind[ind.fuel == fuel][["date", "value"]], left_on="sd", right_on="date", how="left")
+            gap = ((j.sv - j.value) * 100).abs()
+            rows.append({"fuel": fuel, "slice": hz, "series": series, "year": int(yr), "events": len(ev),
+                         "days_open": round(((ev.c - ev.o).dt.total_seconds() / 86400).median(), 1), "lines_per_event": int(ev.n.median()),
+                         "strike_step_c": round(ev.step.median() * 100, 1) if ev.step.notna().any() else "",
+                         "closes_hours_after_settle_midnight_et": round(close_rel.median(), 1),
+                         "settles_on": f"{ev.sd.dt.day_name().mode().iat[0][:3]}" if hz == "weekly" else ("last day of month" if hz == "monthly" else "every day"),
+                         "contracts_per_event": int(ev.v.median()), "settle_decimals": int(ev.sv.map(lambda v: len(repr(float(v)).split(".")[-1])).max()),
+                         "fee_type": meta.get("fee_type", ""), "checkable_vs_daily_aaa": int(j.value.notna().sum()),
+                         "same_number": int((gap < 0.011).sum()), "different": int((gap >= 0.011).sum()),
+                         "max_gap_c": round(gap.max(), 2) if gap.notna().any() else ""})
+    return pd.DataFrame(rows)
 
 
 # ------------------------------------------------------------------ main
@@ -323,6 +391,20 @@ def main():
     mst["change_to_settle_c"] = (mst.settle_value - mst.aaa_known_filled) * 100
     mst["crowd_expected_change_c"] = (mst.crowd_center - mst.aaa_known_filled) * 100
     mst["crowd_miss_c"] = (mst.settle_value - mst.crowd_center) * 100
+    from pandas.tseries.holiday import USFederalHolidayCalendar
+    hol = set(USFederalHolidayCalendar().holidays("2019-01-01", "2030-12-31").date)
+    sd, st = pd.to_datetime(mst.snapshot_date).dt.date, pd.to_datetime(mst.settle_date).dt.date
+    mst["snapshot_is_holiday"] = sd.map(lambda d: int(d in hol))
+    mst["settle_is_holiday"] = st.map(lambda d: int(d in hol))
+    mst["holiday_within_3d"] = sd.map(lambda d: int(any((d + pd.Timedelta(days=k)) in hol for k in range(-3, 4))))
+    # the previous ladder of the same series: how far off was the crowd at its close? (known once that ladder has settled)
+    cl = mst[mst.snapshot == "close"].drop_duplicates(["series", "event"]).sort_values(["series", "settle_date"])
+    cl["prev_event_close_miss_c"] = cl.groupby("series").crowd_miss_c.shift(1)
+    cl["prev_settle_date"] = cl.groupby("series").settle_date.shift(1)
+    mst = mst.merge(cl[["series", "event", "prev_event_close_miss_c", "prev_settle_date"]], on=["series", "event"], how="left")
+    known = pd.to_datetime(mst.asof_date) >= pd.to_datetime(mst.prev_settle_date)
+    mst.loc[~known, "prev_event_close_miss_c"] = np.nan
+    mst = mst.drop(columns=["prev_settle_date"])
     dts = pd.to_datetime(mst.snapshot_date)
     mst["weekday"], mst["month"] = dts.dt.day_name().str[:3], dts.dt.month
     mst["settle_month"] = pd.to_datetime(mst.settle_date).dt.strftime("%Y-%m")
@@ -358,6 +440,19 @@ def main():
         fh.write("# Backtest master: coverage and vetting\n\nBuilt by `tools/backtest_master.py` on "
                  f"{pd.Timestamp.utcnow().strftime('%Y-%m-%d %H:%M')} UTC. Rules: see the docstring of that file.\n\n")
         fh.write("## Market canvas (Kalshi ladders)\n\n" + cov.fillna("").to_markdown(index=False) + "\n\n")
+        cards = contract_cards(aaa)
+        cards.to_csv(OUT / "contract_cards.csv", index=False)
+        fh.write("## Contract cards: is each market the same thing? (rebuilt from raw files every run)\n\n"
+                 "Settlement: every series settles on AAA's national average for ONE date (rule text: \"If the Diesel Price on <date> is above $K\" / "
+                 "\"average regular gas prices ... on <date> according to AAA\"). `same_number` counts events whose settle value equals an AAA print for "
+                 "that date that came from another source. The market design is what differs: days open, strike spacing, lines per event, close time, fees.\n\n"
+                 + cards.to_markdown(index=False) + "\n\n")
+        ten = mst[(mst.snapshot == "10am") & (mst.answer_may_be_public == 0)].copy()
+        ten["days_out"] = pd.cut(ten.days_to_settle, [0, 1, 3, 7, 14, 40], labels=["1", "2-3", "4-7", "8-14", "15+"])
+        hz = ten.groupby(["fuel", "days_out"], observed=True).agg(events=("event", "nunique"), rows=("event", "size"),
+                                                                 crowd_range_c=("crowd_sigma_c", "median"), crowd_expected_move_c=("crowd_expected_change_c", lambda v: v.abs().median()),
+                                                                 actual_move_c=("change_to_settle_c", lambda v: v.abs().median()), crowd_miss_c=("crowd_miss_c", lambda v: v.abs().median())).round(2)
+        fh.write("## How the crowd prices by days to settlement (10 AM snapshots; description, not a test)\n\n" + hz.reset_index().to_markdown(index=False) + "\n\n")
         g = mst.groupby(["fuel", "horizon"]).agg(events=("event", "nunique"), snapshots=("event", "size"),
                                                  first_settle=("settle_date", "min"), last_settle=("settle_date", "max"),
                                                  has_center=("crowd_center", lambda s: f"{s.notna().mean():.0%}"),
