@@ -31,8 +31,8 @@ DOMAINS = {"gasbuddy.com": "(average|chart|usa|insight|trend|national|graphql|pr
            "truckersreport.com": "(fuel|diesel)", "truckmiles.com": "(fuel|diesel|price)", "fleetowner.com": "(fuel-price|diesel-price)"}
 
 
-def get(url, timeout=60):
-    for i in range(3):
+def get(url, timeout=40):
+    for i in range(2):
         try:
             with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=timeout) as r:
                 return r.read().decode("utf-8", "replace")
@@ -69,34 +69,38 @@ def sample(ts, url):
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     rows = []
+
+    def save():
+        cols = sorted({k for r in rows for k in r}, key=lambda k: (k != "page", k))
+        with (OUT / "archive_probe.csv").open("w", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=cols)
+            w.writeheader()
+            w.writerows(rows)
     for url in PAGES:
-        snaps = cdx({"url": url, "output": "json", "fl": "timestamp", "from": "2023", "filter": "statuscode:200", "limit": "150000"})
+        # light lookups: one row per saved DAY since 2023, then one row per saved HOUR in 2026 (v2: v1 asked for every save and timed out)
+        dd = cdx({"url": url, "output": "json", "fl": "timestamp", "from": "2023", "filter": "statuscode:200", "collapse": "timestamp:8", "limit": "2000"})
         r = {"page": url}
-        if snaps is None:
+        if dd is None:
             r["note"] = "lookup failed"
-        elif not snaps:
+        elif not dd:
             r["days_saved"] = 0
         else:
-            ts = [s[0] for s in snaps]
-            days = sorted({t[:8] for t in ts})
-            r.update({"saves": len(ts), "days_saved": len(days), "first": days[0], "last": days[-1],
-                      "days_2026": sum(d.startswith("2026") for d in days), "days_2025": sum(d.startswith("2025") for d in days),
-                      "days_2024": sum(d.startswith("2024") for d in days), "days_2023": sum(d.startswith("2023") for d in days),
-                      "saves_per_day_2026": round(sum(t.startswith("2026") for t in ts) / max(1, sum(d.startswith("2026") for d in days)), 1),
-                      "hours_seen_2026": len({t[8:10] for t in ts if t.startswith("2026")})})
+            days = sorted({s[0][:8] for s in dd})
+            hh = cdx({"url": url, "output": "json", "fl": "timestamp", "from": "2026", "filter": "statuscode:200", "collapse": "timestamp:10", "limit": "9000"}) or []
+            d26 = sum(d.startswith("2026") for d in days)
+            r.update({"days_saved": len(days), "first": days[0], "last": days[-1], "days_2026": d26,
+                      "days_2025": sum(d.startswith("2025") for d in days), "days_2024": sum(d.startswith("2024") for d in days),
+                      "days_2023": sum(d.startswith("2023") for d in days),
+                      "hours_saved_per_day_2026": round(len(hh) / max(1, d26), 1), "hours_of_day_seen_2026": len({h[0][8:10] for h in hh})})
             if len(days) >= 30:
-                for k, t in (("sample_new", ts[-1]), ("sample_old", ts[len(ts) // 3])):
+                for k, t in (("sample_new", dd[-1][0]), ("sample_old", dd[len(dd) // 3][0])):
                     seg, size = sample(t, url)
                     r[k], r[k + "_ts"], r[k + "_bytes"] = seg[:240], t, size
-                    time.sleep(3)
+                    time.sleep(2)
         rows.append(r)
+        save()
         print(r, flush=True)
-        time.sleep(2.5)
-    cols = sorted({k for r in rows for k in r}, key=lambda k: (k != "page", k))
-    with (OUT / "archive_probe.csv").open("w", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=cols)
-        w.writeheader()
-        w.writerows(rows)
+        time.sleep(1.5)
     urls = []
     for dom, pat in DOMAINS.items():
         got = cdx({"url": dom, "matchType": "domain", "output": "json", "fl": "original,timestamp", "from": "2024", "collapse": "urlkey",
