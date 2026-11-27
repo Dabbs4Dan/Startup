@@ -1,9 +1,9 @@
 algo,layer,name,window,n,median_abs_miss_c,share_within_tol,verdict,pass_rule,note
-L0.1,L0,Ladder rebuild (normal curve),all hourly snapshots,1293,2.0845,0.486,❌ not yet,median line miss <= 2.0c over all snapshots,"median line miss per snapshot, cents"
+L0.1,L0,Ladder rebuild (normal curve),all hourly snapshots,1298,2.0825,0.488,❌ not yet,median line miss <= 2.0c over all snapshots,"median line miss per snapshot, cents"
 L0.2,L0,Ladder moves log,all hours,184,,0.0,🔎 info,info only: share of moves explained by inputs (target 80%+),184 moves >= 0.3c; 0 explained yet (needs intraday HO / rack / truckstop inputs)
-L2.0,L2,State plain average (baseline),all points,14,1.49,0.071,❌ not yet,baseline only,incl. week / month / year-ago columns (dates approximate)
+L2.0,L2,State plain average (baseline),all points,17,2.05,0.059,❌ not yet,baseline only,incl. week / month / year-ago columns (dates approximate)
 L2.0,L2,State plain average (baseline),"exact, 48-50 states",0,,,⬜ no data,baseline only,"a few states missing, weights re-scaled"
-L2.0,L2,State plain average (baseline),exact-date points,12,0.905,0.083,❌ not yet,baseline only,all 51 states known for that exact date
-L2.1,L2,"State blend, EIA volume-weighted",all points,14,0.41,0.214,❌ not yet,"|miss| <= 0.10c on exact-date points (current + yesterday), >= 90% of points",incl. week / month / year-ago columns (dates approximate)
+L2.0,L2,State plain average (baseline),exact-date points,13,0.93,0.077,❌ not yet,baseline only,all 51 states known for that exact date
+L2.1,L2,"State blend, EIA volume-weighted",all points,17,0.41,0.235,❌ not yet,"|miss| <= 0.10c on exact-date points (current + yesterday), >= 90% of points",incl. week / month / year-ago columns (dates approximate)
 L2.1,L2,"State blend, EIA volume-weighted","exact, 48-50 states",0,,,⬜ no data,"|miss| <= 0.10c on exact-date points (current + yesterday), >= 90% of points","a few states missing, weights re-scaled"
-L2.1,L2,"State blend, EIA volume-weighted",exact-date points,12,0.385,0.25,❌ not yet,"|miss| <= 0.10c on exact-date points (current + yesterday), >= 90% of points",all 51 states known for that exact date
+L2.1,L2,"State blend, EIA volume-weighted",exact-date points,13,0.36,0.308,❌ not yet,"|miss| <= 0.10c on exact-date points (current + yesterday), >= 90% of points",all 51 states known for that exact date
