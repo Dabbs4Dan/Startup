@@ -11,6 +11,15 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-27 (4:40 PM real clock; today's earlier stamps ran about an hour fast) · Chat 6 · PLAN (written before running): anchor engine, big real-world data first, Kalshi sets 2 dials
+- **Dan's ask:** crack all six by using the big real-world gas and diesel wholesale + pump-price history to carry the small Kalshi samples.
+- **Question:** if the pump-price engine (center and range of the next move) is fit on the big outside data only, can 2 dials per market per layer match the crowd on dates never seen?
+- **Step 1 (no Kalshi data):** long engine = EIA weekly pump price vs NY Harbor wholesale spot, 2006 on (~1,060 weeks), direct fits at 1 to 6 weeks ahead on: last week's pump move, pump-minus-wholesale gap vs its 26-week norm (split up / down = rockets and feathers), wholesale move 1 week (split up / down) and 4 weeks. Short engine = AAA daily (700 to 850 days), 1 to 6 days ahead, same inputs at day scale. Range = size of the engine's own misses at each horizon, scaled by recent wholesale jumpiness (20-day average daily move). Engines fit only on dates before each market's scored events.
+- **Step 2 (Kalshi, 2 dials each):** crowd expected move = k0 + k1 × engine move. log(crowd range) = c0 + c1 × log(engine range).
+- **Deciding numbers:** share explained on the last 40% of events (and odd/even), vs v1: center 0.76 / 0.66 / 0.70 / 0.28 / 0.71, width −2.13 / −0.44 / −0.81 / −0.04 / +0.55 (diesel daily, diesel weekly, gas daily, gas monthly, gas weekly). "Cracked" = 0.5 or more on both scores. Diesel monthly (3 events): cannot be scored; it gets gas monthly's dials and is shown as borrowed, not proven.
+- **Side number (hint only, no costs):** engine vs crowd, typical miss to the final AAA number on the scored events.
+- **Verified:** inputs_daily futures are already lagged a day; AAA is keyed by its own date and joined on the master's asof_date. **Assumed:** wholesale spot (training) and front futures (applied) move alike; EIA weekly pump price behaves like AAA at week scale.
+
 ### 2026-11-27 (5:30 PM) · Chat 6 · RESULTS: Layer B (width) on all six + gas monthly center (mm_model v1)
 - **Did:** Master +4 columns (`crowd_center_fit`, `crowd_sigma_fit_c`, `aaa_absmove_5d_c`, `aaa_absmove_20d_c`; 12,896 × 178). `tools/mm_model.py` v1: center forms A0 linear / A1 pass-through / A2 scale-free; width forms S1–S4; calibration; two scores per market (last 40% in time order, and odd/even events).
 - **Learned (width, last-40% score / odd-even score):** gas weekly **+0.55** / 0.60 (error 43% vs 69% no model) = cracked. Gas daily −0.81 (S3; error 47% vs 83%) / 0.37 = half way. Diesel daily −2.13 / 0.52, diesel weekly −0.44 / 0.61, gas monthly −0.04 / 0.67 = fail in time order, fit with eras mixed. Diesel monthly: 3 events, no fit.
