@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASCDCA",
- "pulled_utc": "2026-11-26 23:45",
+ "pulled_utc": "2026-11-27 04:52",
  "found": true,
  "title": "California gas price",
  "frequency": "daily",
@@ -26,6 +26,6 @@
  "events": 16,
  "first_close": "2026-11-11T08:19:59Z",
  "last_close": "2026-11-26T10:08:28Z",
- "candle_rows_added": 1083,
+ "candle_rows_added": 0,
  "markets_no_candles": 0
 }
