@@ -1,0 +1,31 @@
+{
+ "series": "KXAAAGASDKS",
+ "pulled_utc": "2026-11-27 01:32",
+ "found": true,
+ "title": "Kansas gas price",
+ "frequency": "daily",
+ "fee_type": "quadratic",
+ "fee_multiplier": 1,
+ "cutoff": {
+  "market_positions_last_updated_ts": "2026-09-27T00:00:00Z",
+  "market_settled_ts": "2026-09-27T00:00:00Z",
+  "orders_updated_ts": "2026-11-12T00:00:00Z",
+  "trades_created_ts": "2026-09-27T00:00:00Z"
+ },
+ "first_page_live": {
+  "cursor": "",
+  "markets": "list[788]"
+ },
+ "first_page_historical": {
+  "cursor": "",
+  "markets": "list[0]"
+ },
+ "markets_live": 788,
+ "markets_historical": 0,
+ "markets_total": 788,
+ "events": 44,
+ "first_close": "2026-10-01T03:59:00Z",
+ "last_close": "2026-11-13T04:59:00Z",
+ "candle_rows_added": 8675,
+ "markets_no_candles": 4
+}
