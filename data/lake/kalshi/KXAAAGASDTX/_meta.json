@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASDTX",
- "pulled_utc": "2026-11-27 04:04",
+ "pulled_utc": "2026-11-27 04:57",
  "found": true,
  "title": "TX gas price",
  "frequency": "daily",
@@ -76,6 +76,6 @@
  "events": 83,
  "first_close": "2026-08-24T03:59:00Z",
  "last_close": "2026-11-14T04:59:00Z",
- "candle_rows_added": 20990,
+ "candle_rows_added": 0,
  "markets_no_candles": 0
 }
