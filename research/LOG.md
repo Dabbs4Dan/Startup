@@ -11,6 +11,14 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-27 (4:50 PM real clock) · Chat 6 · PLAN (written before running): hunt the input the daily crowd has at the 8 AM open, on history
+- **Dan's ask:** find the missing input and prove it on a backtest before any live test.
+- **Question:** which input, known by 8 AM, takes our next-day AAA miss from ~0.65¢ down to the crowd's 0.31¢ (diesel) / 0.40¢ (gas)?
+- **Suspects that have history (tested in this order, each added on top of the last):** S1 longer AAA memory (the last 7 daily moves, not just yesterday's; AAA may be a rolling average) · S2 day of the week · S3 wholesale (futures moves 1 / 3 / 7 days, pump-vs-wholesale gap, split up / down) · S4 state-level AAA from Kalshi's own state markets (if their settle values line up with dates before the scored block).
+- **Suspects with no history (cannot be backtested, live only):** same-morning station prices (truckstops, GasBuddy-type). If S1–S4 fail, this is what is left, and the truckstop scorecard is its test.
+- **Method:** fit on AAA days before the scored block (last 40% of each daily market's events), score on the open snapshot of those events. **Deciding number:** typical miss to the next AAA number. "Found" = within 0.05¢ of the crowd's miss AND explains 85%+ of the crowd's expected move at the open. Costs do not apply (this is a copy test, not a trade).
+- **Verified:** at the open the master's AAA is that morning's number (asof = snapshot date when the snapshot is after 6 AM). **Assumed:** the open snapshot (first hourly candle) is close enough to 8 AM.
+
 ### 2026-11-27 (5:20 PM) · Chat 6 · RESULTS: anchor engine on all six (`tools/mm_anchor.py`)
 - **Did:** new tool `tools/mm_anchor.py` → `research/engine_room/mm_anchor_scorecard.csv`, `mm_anchor_engine.csv`. Engine fit on outside data only (long: ~1,050 EIA weeks since 2006; short: 380–630 AAA days), always on dates before the scored events. Kalshi sets 2 dials per layer.
 - **Learned (center, last 40% / odd-even; v1 in brackets):** diesel daily 0.84 / 0.78 (0.76) · diesel weekly 0.76 / 0.68 (0.66) · gas weekly 0.68 / 0.73 (0.71) · gas daily 0.63 / 0.72 (0.70) · gas monthly 0.32 / 0.30 (0.28) · diesel monthly 0.08 with borrowed gas dials (3 events, not proven).
