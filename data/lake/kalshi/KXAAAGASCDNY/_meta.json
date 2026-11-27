@@ -1,31 +1,31 @@
 {
  "series": "KXAAAGASCDNY",
- "pulled_utc": "2026-11-27 04:53",
+ "pulled_utc": "2026-11-27 20:22",
  "found": true,
  "title": "New York gas price",
  "frequency": "daily",
  "fee_type": "quadratic",
  "fee_multiplier": 1,
  "cutoff": {
-  "market_positions_last_updated_ts": "2026-09-27T00:00:00Z",
-  "market_settled_ts": "2026-09-27T00:00:00Z",
-  "orders_updated_ts": "2026-11-12T00:00:00Z",
-  "trades_created_ts": "2026-09-27T00:00:00Z"
+  "market_positions_last_updated_ts": "2026-09-28T00:00:00Z",
+  "market_settled_ts": "2026-09-28T00:00:00Z",
+  "orders_updated_ts": "2026-11-13T00:00:00Z",
+  "trades_created_ts": "2026-09-28T00:00:00Z"
  },
  "first_page_live": {
   "cursor": "",
-  "markets": "list[60]"
+  "markets": "list[65]"
  },
  "first_page_historical": {
   "cursor": "",
   "markets": "list[0]"
  },
- "markets_live": 60,
+ "markets_live": 65,
  "markets_historical": 0,
- "markets_total": 60,
- "events": 12,
+ "markets_total": 65,
+ "events": 13,
  "first_close": "2026-11-15T08:22:54Z",
- "last_close": "2026-11-26T10:08:39Z",
- "candle_rows_added": 0,
+ "last_close": "2026-11-27T08:32:55Z",
+ "candle_rows_added": 78,
  "markets_no_candles": 0
 }
