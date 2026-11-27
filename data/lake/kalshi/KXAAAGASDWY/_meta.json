@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASDWY",
- "pulled_utc": "2026-11-27 04:45",
+ "pulled_utc": "2026-11-27 04:58",
  "found": true,
  "title": "Wyoming gas price",
  "frequency": "daily",
@@ -26,6 +26,6 @@
  "events": 38,
  "first_close": "2026-10-08T03:59:00Z",
  "last_close": "2026-11-14T04:59:00Z",
- "candle_rows_added": 8257,
+ "candle_rows_added": 0,
  "markets_no_candles": 16
 }
