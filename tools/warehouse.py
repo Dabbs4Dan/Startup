@@ -28,6 +28,14 @@ SKIP_TABLES = {"sqlite_sequence"}
 ERA = f"CASE WHEN ts_utc >= TIMESTAMP '{GO_LIVE}' THEN 'since_live' ELSE 'history' END"
 
 
+LAB = {"backtest_master": "data/lake/master/backtest_master.csv.gz", "ladder_snapshots": "data/lake/master/ladder_snapshots.csv.gz",
+       "inputs_daily": "data/lake/master/inputs_daily.csv", "aaa_reconciled": "data/lake/master/aaa_daily.csv",
+       "slices": "data/lake/master/slices.csv.gz", "favorite_ledger": "research/engine_room/favorite_ledger.csv",
+       "favorite_ledger_by_time_and_line": "research/engine_room/favorite_ledger_by_time_and_line.csv",
+       "slice_scan": "research/engine_room/slice_scan.csv", "mm_model_scorecard": "research/engine_room/mm_model_scorecard.csv",
+       "mm_anchor_scorecard": "research/engine_room/mm_anchor_scorecard.csv", "spine": "data/lake/master/spine.csv"}
+
+
 def _files(pattern):
     return sorted(glob.glob(str(ROOT / pattern)))
 
@@ -107,6 +115,11 @@ def connect():
     if _files("research/engine_room/aaa_states_gas/*.csv"):
         con.execute(f"CREATE VIEW er.aaa_states_gas AS SELECT * FROM {_csv('research/engine_room/aaa_states_gas/*.csv')}")
     _unified(con, products)
+    # lab zone (added 2026-11-27): the research tables every backtest reads, typed (not all-text). Map: data/lake/master/SPINE.md
+    con.execute("CREATE SCHEMA IF NOT EXISTS lab")
+    for name, rel in LAB.items():
+        if (ROOT / rel).exists():
+            con.execute(f"CREATE VIEW lab.\"{name}\" AS SELECT * FROM read_csv('{ROOT / rel}', header=true, sample_size=-1)")
     _live_extras(con)
     return con
 

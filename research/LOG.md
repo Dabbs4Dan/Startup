@@ -11,6 +11,15 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-27 (7:15 PM real clock) · Chat 6 · Spine + database layer + ledger by time and line
+- **Dan's direction:** (1) the grid is 4 boxes × 3 busy lines × 6 markets × every time slot; (2) two engines: the settle outcome vs the market maker, and the intraday price path (next step, once tracking datasets are solid); (3) build a spine that connects all tables, tests, the phone workflow and session memory; (4) the database is where things are built and tested, sheets are only an outline.
+- **Did:** `tools/spine.py` → `data/lake/master/SPINE.md` + `spine.csv` (tables, layers L0–L4, keys, engine E1 / E2, join checks, known issues, planned `paths` table for E2). `tools/warehouse.py`: new schema `lab` with typed views of master, ladder, inputs, slices, ledgers, scan, scorecards, spine (tested: `lab.slices` 23,757 rows). `favorite_ledger_by_time_and_line.csv` (137 rows). CLAUDE.md §4 Spine row, §6 step 3 = Dan's build order.
+- **Learned (ledger by time):** gas daily No-favorite edge −1.5 (open), +1.7, +3.6, +0.6, +4.7, +5.8, +7.8 (close); gas daily Yes-favorite negative at all 7 slots (−1.6 to −7.7); gas weekly No about +4.5 at every clock slot. Line rank 1 / 2 / 3: no clear difference. Instances per event: 14–17 daily, 41 gas weekly, 91 diesel weekly, 270–320 monthly.
+- **Join checks:** all 100% once `snapshot_et` is compared as a time (the builder writes two text styles). Settle value = AAA number on 580 of 581 events.
+- **Oddities found (open, builder fixes):** clock marks sit one hour early on clock-change days (60 of 11,747 rows); an open that lands on a clock mark is counted twice (108 master rows, 133 slice rows = 0.6%).
+- **Not done:** archive probe results not read yet (Dan stopped the wait); E2 `paths` table not built (his call: later).
+- **Next:** fix the three builder issues and rebuild downstream; read the archive probe; then E2.
+
 ### 2026-11-27 (6:50 PM real clock) · Chat 6 · RESULTS: favorite ledger
 - **Did:** `research/engine_room/favorite_ledger.csv` (84 rows: 6 markets + all-six × favorite side × price band) from `tools/slice_scan.py`; mirrored to new Build Board tab **Favorite Ledger**.
 - **Learned (edge = win % − break-even %, per instance):** all six: Yes-favorites −3.8 pts (79.7% wins vs 83.5% needed), No-favorites +3.1 (86.7% vs 83.5%), No positive in every band early and late. Gas daily: Yes −4.6 / No +3.3. Gas weekly: Yes −6.3 / No +4.8 (No at 60–70¢ +12.8, at 70–80¢ +9.3). Gas monthly: Yes −4.4 / No +2.5 (too few events to flag). Diesel daily: Yes +3.2 / No +3.7 (No at 60–80¢ +10 to +12). Diesel weekly / monthly: too few events.
