@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASDNM",
- "pulled_utc": "2026-11-27 02:56",
+ "pulled_utc": "2026-11-27 04:56",
  "found": true,
  "title": "New Mexico gas price",
  "frequency": "daily",
@@ -26,6 +26,6 @@
  "events": 45,
  "first_close": "2026-10-01T03:59:00Z",
  "last_close": "2026-11-14T04:59:00Z",
- "candle_rows_added": 9267,
- "markets_no_candles": 15
+ "candle_rows_added": 47,
+ "markets_no_candles": 12
 }
