@@ -1,12 +1,12 @@
 [
  {
   "query": "(all)",
-  "series_returned": 17148,
+  "series_returned": 17191,
   "http": null
  },
  {
   "query": "?category=Economics",
-  "series_returned": 952,
+  "series_returned": 956,
   "http": null
  },
  {
