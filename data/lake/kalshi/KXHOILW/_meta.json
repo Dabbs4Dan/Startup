@@ -1,6 +1,6 @@
 {
  "series": "KXHOILW",
- "pulled_utc": "2026-11-26 23:41",
+ "pulled_utc": "2026-11-27 04:51",
  "found": true,
  "title": "Heating Oil Weekly",
  "frequency": "weekly",
@@ -79,6 +79,6 @@
  "events": 4,
  "first_close": "2026-04-10T21:00:00Z",
  "last_close": "2026-05-01T21:00:00Z",
- "candle_rows_added": 10985,
+ "candle_rows_added": 0,
  "markets_no_candles": 0
 }
