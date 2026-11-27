@@ -1,12 +1,12 @@
 {
-  "event": "KXDIESELD-26NOV26",
+  "event": "KXDIESELD-26NOV27",
   "fee_mode": "kalshi_quadratic",
   "fills": [
     {
-      "px": 0.88,
+      "px": 0.37,
       "qty": 10.0,
-      "fee": 0.08,
-      "expected": 0.08
+      "fee": 0.17,
+      "expected": 0.17
     }
   ],
   "pass": true
