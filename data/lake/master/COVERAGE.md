@@ -1,6 +1,6 @@
 # Backtest master: coverage and vetting
 
-Built by `tools/backtest_master.py` on 2026-11-27 04:50 UTC. Rules: see the docstring of that file.
+Built by `tools/backtest_master.py` on 2026-11-27 05:00 UTC. Rules: see the docstring of that file.
 
 ## Market canvas (Kalshi ladders)
 
@@ -35,7 +35,7 @@ Built by `tools/backtest_master.py` on 2026-11-27 04:50 UTC. Rules: see the docs
 |   2025 |                  275 |               294 |
 |   2026 |                  259 |               323 |
 
-Source used per day: {"wayback_current": 627, "kalshi_settlement": 387, "wayback_week_ago": 300, "wayback_yesterday": 189, "kalshi_weekly_settlement": 42, "kalshi_monthly_settlement": 10, "db:aaa_site": 1}
+Source used per day: {"wayback_current": 627, "kalshi_settlement": 387, "wayback_week_ago": 301, "wayback_yesterday": 188, "kalshi_weekly_settlement": 42, "kalshi_monthly_settlement": 10, "db:aaa_site": 1}
 
 ## Inputs (engine canvas)
 
