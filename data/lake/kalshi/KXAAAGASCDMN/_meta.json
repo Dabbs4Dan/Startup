@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASCDMN",
- "pulled_utc": "2026-11-27 20:22",
+ "pulled_utc": "2026-11-27 21:09",
  "found": true,
  "title": "Minnesota gas price",
  "frequency": "daily",
@@ -26,6 +26,6 @@
  "events": 14,
  "first_close": "2026-11-14T08:27:37Z",
  "last_close": "2026-11-27T08:22:48Z",
- "candle_rows_added": 37,
+ "candle_rows_added": 0,
  "markets_no_candles": 0
 }
