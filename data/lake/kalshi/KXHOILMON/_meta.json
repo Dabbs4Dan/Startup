@@ -1,6 +1,6 @@
 {
  "series": "KXHOILMON",
- "pulled_utc": "2026-11-26 23:42",
+ "pulled_utc": "2026-11-27 04:51",
  "found": true,
  "title": "Heating Oil Monthly",
  "frequency": "monthly",
@@ -75,6 +75,6 @@
  "events": 1,
  "first_close": "2026-04-30T21:00:00Z",
  "last_close": "2026-04-30T21:00:00Z",
- "candle_rows_added": 8909,
+ "candle_rows_added": 0,
  "markets_no_candles": 0
 }
