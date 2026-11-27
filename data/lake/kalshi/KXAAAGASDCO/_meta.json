@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASDCO",
- "pulled_utc": "2026-11-27 00:32",
+ "pulled_utc": "2026-11-27 04:53",
  "found": true,
  "title": "Colorado gas price",
  "frequency": "daily",
@@ -76,6 +76,6 @@
  "events": 58,
  "first_close": "2026-09-17T03:59:00Z",
  "last_close": "2026-11-13T04:59:00Z",
- "candle_rows_added": 13620,
+ "candle_rows_added": 0,
  "markets_no_candles": 8
 }
