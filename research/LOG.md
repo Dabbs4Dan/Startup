@@ -11,6 +11,15 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-27 (4:30 PM) · Chat 6 · PLAN (written before running): Layer B (crowd's width) on all six markets
+- **Asked (Dan):** crack Layer B on all 6 and show how they differ. Goal: a baseline "perfect copy" of the market maker to tweak later.
+- **Step 1, measure width better:** v0 read width from two crossings (84% / 16%), which is coarse when strikes are far apart. Re-measure by fitting a bell curve to every tight line at each snapshot (`width_fit`), keep both.
+- **Step 2, three candidate equations for log(width), chosen on the first 60% of events only (inner split), scored once on the last 40%:**
+  S1 time only: log(days left). S2 = S1 + recent AAA jumpiness (5-day and 20-day average daily move). S3 = S2 + size of the move the crowd expects + size of yesterday's AAA move + size of the last ladder's closing miss + time-of-day marks.
+- **Deciding numbers:** out-of-sample share explained (log scale) and typical % error, vs the baseline "always the usual width".
+- **Step 3, how the six differ (description):** time exponent (0.5 = uncertainty grows like a random walk), width per day in ¢ and in strike steps, sensitivity to jumpiness, and calibration: share of settles inside ±1 width (a well-sized bell curve gives 68%).
+- **Assumed:** a bell curve is a fair shape for measuring width (Layer C says it is ~3 points off per line).
+
 ### 2026-11-27 (4:20 PM) · Chat 6 · RESULTS: market-maker equation v0, all six markets (plan = the 4:00 PM entry below)
 - **Did:** `tools/mm_model.py` → `research/engine_room/mm_model_scorecard.csv` + `mm_model_coefficients.csv`. Fit on the first 60% of events, scored on the last 40%.
 - **Learned:**
