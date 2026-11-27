@@ -1,16 +1,16 @@
 {
  "series": "KXJETFUEL",
- "pulled_utc": "2026-11-27 04:51",
+ "pulled_utc": "2026-11-27 20:21",
  "found": true,
  "title": "US Gulf Coast jet fuel price weekly",
  "frequency": "weekly",
  "fee_type": "quadratic",
  "fee_multiplier": 1,
  "cutoff": {
-  "market_positions_last_updated_ts": "2026-09-27T00:00:00Z",
-  "market_settled_ts": "2026-09-27T00:00:00Z",
-  "orders_updated_ts": "2026-11-12T00:00:00Z",
-  "trades_created_ts": "2026-09-27T00:00:00Z"
+  "market_positions_last_updated_ts": "2026-09-28T00:00:00Z",
+  "market_settled_ts": "2026-09-28T00:00:00Z",
+  "orders_updated_ts": "2026-11-13T00:00:00Z",
+  "trades_created_ts": "2026-09-28T00:00:00Z"
  },
  "first_page_live": {
   "cursor": "",
