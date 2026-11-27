@@ -1,10 +1,10 @@
 {
-  "run_utc": "2026-11-27T05:24:12Z",
+  "run_utc": "2026-11-27T10:59:37Z",
   "engine_version": "2.0.0rc9",
   "pinned": "2.0.0rc9",
   "version_ok": true,
   "strategy": "S00",
-  "seconds": 0.2,
+  "seconds": 0.1,
   "loaded": {
     "events": 4,
     "instruments": 84,
