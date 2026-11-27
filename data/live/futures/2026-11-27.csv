@@ -1,0 +1,11 @@
+ts_utc,ts_et,name,source,symbol,quote_time,open,high,low,last
+2026-11-27T05:03:54Z,2026-11-27 00:03,HO,tradingview,NYMEX:HO1!,delayed_streaming_600,3.6531,3.7417,3.6225,3.7342
+2026-11-27T05:03:54Z,2026-11-27 00:03,BRENT,tradingview,ICEEUR:BRN1!,delayed_streaming_600,91.84,92.51,91.84,92.32
+2026-11-27T05:03:54Z,2026-11-27 00:03,WTI,tradingview,NYMEX:CL1!,delayed_streaming_600,84.09,85.88,83.16,85.8
+2026-11-27T05:03:54Z,2026-11-27 00:03,RBOB,tradingview,NYMEX:RB1!,delayed_streaming_600,2.4119,2.465,2.4085,2.4646
+2026-11-27T05:03:54Z,2026-11-27 00:03,NATGAS,tradingview,NYMEX:NG1!,delayed_streaming_600,3.675,3.696,3.565,3.609
+2026-11-27T05:08:54Z,2026-11-27 00:08,HO,tradingview,NYMEX:HO1!,delayed_streaming_600,3.6531,3.7417,3.6225,3.7374
+2026-11-27T05:08:54Z,2026-11-27 00:08,BRENT,tradingview,ICEEUR:BRN1!,delayed_streaming_600,91.84,92.51,91.84,92.29
+2026-11-27T05:08:54Z,2026-11-27 00:08,WTI,tradingview,NYMEX:CL1!,delayed_streaming_600,84.09,85.88,83.16,85.8
+2026-11-27T05:08:54Z,2026-11-27 00:08,RBOB,tradingview,NYMEX:RB1!,delayed_streaming_600,2.4119,2.4663,2.4085,2.466
+2026-11-27T05:08:54Z,2026-11-27 00:08,NATGAS,tradingview,NYMEX:NG1!,delayed_streaming_600,3.675,3.696,3.565,3.61
