@@ -25,6 +25,28 @@ T = [  # name, path, layer, grain (key columns), built by, engine, what it is
     ("mm_anchor_scorecard", E / "mm_anchor_scorecard.csv", "L4 market-maker copy", ["fuel", "slice"], "tools/mm_anchor.py", "both", "copy built from big outside data + 2 dials; line price gap"),
     ("l3_truckstop_scorecard", E / "l3_truckstop_scorecard.csv", "live test", [], "tools/truckstop_test.py", "E1", "live: truckstop move vs what the crowd missed"),
 ]
+SHEETS = [  # workbook, tab, role, fed from (database file), verdict (audit 2026-11-27)
+    ("Build Board", "Takeaways – master", "what is true now", "research/takeaways/master.csv", "LIVE"),
+    ("Build Board", "Takeaways – by chat", "each chat's closing table", "research/takeaways/by_chat.csv", "LIVE"),
+    ("Build Board", "Favorite Ledger", "the 4 outcome boxes by price band", "research/engine_room/favorite_ledger.csv", "LIVE"),
+    ("Build Board", "Backtest Master", "how far back each market and input goes", "data/lake/master/COVERAGE.md", "LIVE, refresh after each master rebuild (last 11/26)"),
+    ("Build Board", "Board", "Dan's kanban of 21 build cards", "none (hand-kept)", "OVERLAPS CLAUDE.md section 6 and the Cards tab; not updated since the direction changed on 11/26"),
+    ("Build Board", "Cards", "same 21 cards as a list", "none (hand-kept)", "DUPLICATE of Board"),
+    ("Build Board", "Backtest – horizons", "old daily / weekly / monthly miss table", "legacy scripts (backtest_horizons*.py)", "SUPERSEDED by the master + mm_model scorecards"),
+    ("Build Board", "Example – weather bot", "outside example", "none", "NOT CONNECTED (off-limits market)"),
+    ("Build Board", "Example – MLB bot", "outside example", "none", "NOT CONNECTED (off-limits market)"),
+    ("Inputs Map", "Inputs Map", "the 83 inputs and whether we hold each (column O)", "data/lake/master/inputs_daily.csv + COVERAGE.md", "LIVE"),
+    ("Inputs Map", "Engine Room", "pricing layers L0-L3 scorecard", "tools/engine_room.py via tools/sheet_payload.py", "LIVE but missing L4 (market-maker copy: mm_model / mm_anchor scorecards)"),
+    ("Inputs Map", "Warehouse", "every dataset + feed health", "data/warehouse_catalog.csv via tools/sheet_payload.py", "STALE since 11/25 (catalog not rebuilt; open oddity)"),
+    ("Inputs Map", "Strategies", "strategy gates tied to nautilus code", "nautilus/", "LIVE, waits on proven bricks"),
+    ("Inputs Map", "Bricks", "idea hopper from the first 60-day work", "none (hand-kept)", "OVERLAPS slice_scan survivors + favorite ledger leads; should be fed from them"),
+    ("Inputs Map", "Testing", "old test tree (T1.1 ...)", "DB table from Chat 2-3", "SUPERSEDED by LOG plans + takeaways"),
+    ("Inputs Map", "60 Day", "the first 60-day panel", "panel_daily in data/kalshi_twins.db", "SUPERSEDED by the master (kept as history)"),
+    ("Inputs Map", "Connectivity", "one-day pipe test (Nov 23)", "none", "FROZEN history"),
+    ("Inputs Map", "Formulas", "the 18 formulas in plain words", "research/2026-11-25_formulas-and-panel-columns.md", "REFERENCE"),
+    ("Inputs Map", "Custom Build", "data that needs more than a daily job", "none (hand-kept)", "OVERLAPS Wishlist + CLAUDE.md section 6 step 2 + the gaps doc"),
+    ("Inputs Map", "Wishlist", "data or systems to add later", "none (hand-kept)", "OVERLAPS Custom Build + section 6 step 2 + the gaps doc"),
+]
 PLANNED = [("paths", "L2 for E2", "event x strike x (time slot in -> time slot out)", "buy at one slot's ask, sell at a later slot's bid: the intraday engine's raw table. Not built yet (Dan: after the tracking datasets are nailed).")]
 
 
@@ -103,6 +125,8 @@ def main():
         L.append(f"| **{r['table']}** | {r['layer']} | {r['engine']} | {r['grain']} | {g('rows')} | {g('events')} | {g('from')} | {g('to')} | {g('duplicate_keys')} | `{r['built_by']}` | `{r['file']}` |")
     L += ["", "## Planned (not built)", ""] + [f"- **{n}** ({lay}): one row is {grain}. {what}" for n, lay, grain, what in PLANNED]
     L += ["", "## Join checks (do the tables really connect?)", "", "| Check | Pass | Of | % |", "|---|---|---|---|"] + [f"| {r.check} | {r['pass']} | {r.of} | {r.pct} |" for _, r in c.iterrows()]
+    L += ["", "## Sheet tabs (read-only windows; audit 2026-11-27)", "", "| Workbook | Tab | Role | Fed from | Verdict |", "|---|---|---|---|---|"] + \
+         [f"| {w} | {t} | {r} | `{f}` | {v} |" for w, t, r, f, v in SHEETS]
     L += ["", "## Rules", "", "- A new table must name its layer, its engine, and its key columns from the set above, and be added to `T` in `tools/spine.py`.",
           "- A new test writes its plan in `research/LOG.md` first, names the table and engine it reads, and lands its verdict in `research/takeaways/master.csv`.",
           "- Roll-ups (ledger, scan) are rebuilt from `slices`; never edited by hand.",

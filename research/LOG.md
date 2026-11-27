@@ -11,6 +11,12 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-27 (7:25 PM real clock) · Chat 6 · Sheet tab audit (20 tabs, 2 workbooks)
+- **Dan's question:** so many tabs, some his, some Claude's; is it all one connected drive?
+- **Did:** listed every tab and read its header. Verdicts saved in `data/lake/master/SPINE.md` → "Sheet tabs". No tab was changed, hidden or deleted.
+- **Learned:** 7 tabs are live copies of database files (Takeaways ×2, Favorite Ledger, Backtest Master, Inputs Map, Engine Room, Strategies); 1 is stale (Warehouse, since 11/25); 6 are superseded or frozen history (Backtest – horizons, Testing, 60 Day, Connectivity, 2 outside examples); 5 are hand-kept lists that overlap each other and CLAUDE.md §6 (Board, Cards, Bricks, Custom Build, Wishlist); 1 is reference (Formulas). Gaps: Engine Room does not show the L4 market-maker copy; Bricks is not fed from the ledger / scan leads.
+- **Proposed (waiting on Dan):** hide (not delete) the 6 superseded tabs; merge Cards into Board and Custom Build into Wishlist; feed Bricks from the ledger leads; add L4 to Engine Room.
+
 ### 2026-11-27 (7:15 PM real clock) · Chat 6 · Spine + database layer + ledger by time and line
 - **Dan's direction:** (1) the grid is 4 boxes × 3 busy lines × 6 markets × every time slot; (2) two engines: the settle outcome vs the market maker, and the intraday price path (next step, once tracking datasets are solid); (3) build a spine that connects all tables, tests, the phone workflow and session memory; (4) the database is where things are built and tested, sheets are only an outline.
 - **Did:** `tools/spine.py` → `data/lake/master/SPINE.md` + `spine.csv` (tables, layers L0–L4, keys, engine E1 / E2, join checks, known issues, planned `paths` table for E2). `tools/warehouse.py`: new schema `lab` with typed views of master, ladder, inputs, slices, ledgers, scan, scorecards, spine (tested: `lab.slices` 23,757 rows). `favorite_ledger_by_time_and_line.csv` (137 rows). CLAUDE.md §4 Spine row, §6 step 3 = Dan's build order.
