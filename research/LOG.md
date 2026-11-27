@@ -11,6 +11,13 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-27 (5:10 PM real clock) · Chat 6 · DECISION: free data only for now
+- **Decided (Dan):** build the database with as much free data as possible; no buying for now. No quote requests sent.
+- **Did:** CLAUDE.md §6 step 2 rewritten with the free-only order. Checked today's fix landed: `fut_*_1d.csv` now real daily bars (RBOB 6,550 rows) and 8 curve files (`curve_rb*/ho*_1d.csv`, Dec 2026 to Mar 2027 contracts). Live feeds fresh at 22:08 UTC.
+- **Oddity (open):** `data/warehouse_catalog.md` header still says 2026-11-25 21:29 UTC although the warehouse job has finished since; a run is in progress now. Re-check when it ends.
+- **Proposed order:** (a) state AAA history from Kalshi's own state markets (50 states, late Aug to Nov 10, numeric settle values already in `data/lake/kalshi/`) + Internet Archive; (b) widen our own live posted-price feed beyond Love's + TA, reading each chain's terms first; (c) curve into the master; (d) older trade tape.
+- **Next:** (a), then (b).
+
 ### 2026-11-27 (5:25 PM real clock) · Chat 6 · Source check: history for a live station-price average (web search only)
 - **Did:** searched for who holds daily / intraday station-average history. No data pulled, nothing scraped.
 - **Learned:** GasBuddy publishes a **live** national average that moves during the day (its analyst posted a live diesel number at 3:25 PM ET on 2026-09-03 and a "full-day official" number the next day). That fits the crowd's intraday pattern (M57). GasBuddy history (2001 on) is sold, price not public; a third-party audit says automated use needs a license from PDI Technologies (not checked against the terms text: the terms page fetch needed an approval nobody answered). OPIS sells retail history from 2007 and has a 10-day trial for spot/rack; OPIS is AAA's source, so the MNPI rule in CLAUDE.md §5 applies before any use.
