@@ -11,6 +11,14 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-27 (6:50 PM real clock) · Chat 6 · RESULTS: favorite ledger
+- **Did:** `research/engine_room/favorite_ledger.csv` (84 rows: 6 markets + all-six × favorite side × price band) from `tools/slice_scan.py`; mirrored to new Build Board tab **Favorite Ledger**.
+- **Learned (edge = win % − break-even %, per instance):** all six: Yes-favorites −3.8 pts (79.7% wins vs 83.5% needed), No-favorites +3.1 (86.7% vs 83.5%), No positive in every band early and late. Gas daily: Yes −4.6 / No +3.3. Gas weekly: Yes −6.3 / No +4.8 (No at 60–70¢ +12.8, at 70–80¢ +9.3). Gas monthly: Yes −4.4 / No +2.5 (too few events to flag). Diesel daily: Yes +3.2 / No +3.7 (No at 60–80¢ +10 to +12). Diesel weekly / monthly: too few events.
+- **Regime check (gas, same day):** No-favorite edge +2.3 / +3.6 / +5.1 and Yes-favorite −2.0 / −2.9 / −8.1 in falling / flat / rising stretches; same signs in 2023, 2024, 2025, 2026. So it is not just one falling stretch. Gas weekly settles below the crowd's center 73% of the time.
+- **Caveats:** instances repeat within an event (event counts shown beside); prices are hourly-candle asks; no forward test yet. Lead, not proof.
+- **Decided (Dan):** slices should start as a plain count in 4 boxes (favorite Yes won / lost, favorite No won / lost) with a price range in each, then win % tied to price.
+- **Next:** forward paper test of "gas No-favorites"; find why the gas crowd leans high (ties to the market-maker center layer).
+
 ### 2026-11-27 (6:35 PM real clock) · Chat 6 · PLAN: favorite ledger (Dan's cleaner slice design), written before building
 - **Dan's ask:** start from a plain historical count. Four boxes: favorite Yes won / favorite Yes lost / favorite No won / favorite No lost. A price range inside each. Then the win % tied to the price paid.
 - **Build (`tools/slice_scan.py` → `research/engine_room/favorite_ledger.csv`, Build Board tab "Favorite Ledger"):** per market × favorite side × price band (50–60, 60–70, 70–80, 80–90, 90+): instances, distinct events, wins, losses, win %, average price paid, break-even % (price + fee), **edge = win % − break-even %**, return per $, average bid-ask, and the same edge on the early 60% vs late 40% of events. Plus an "all six" roll-up.
