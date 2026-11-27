@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASCDRI",
- "pulled_utc": "2026-11-27 20:22",
+ "pulled_utc": "2026-11-27 21:09",
  "found": true,
  "title": "Rhode Island gas price",
  "frequency": "daily",
@@ -26,6 +26,6 @@
  "events": 13,
  "first_close": "2026-11-15T08:22:56Z",
  "last_close": "2026-11-27T08:32:57Z",
- "candle_rows_added": 73,
+ "candle_rows_added": 0,
  "markets_no_candles": 0
 }
