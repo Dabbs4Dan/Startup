@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASDPA",
- "pulled_utc": "2026-11-27 03:35",
+ "pulled_utc": "2026-11-27 04:57",
  "found": true,
  "title": "Pennsylvania gas price",
  "frequency": "daily",
@@ -76,6 +76,6 @@
  "events": 74,
  "first_close": "2026-09-02T03:59:00Z",
  "last_close": "2026-11-14T04:59:00Z",
- "candle_rows_added": 18026,
- "markets_no_candles": 5
+ "candle_rows_added": 80,
+ "markets_no_candles": 0
 }
