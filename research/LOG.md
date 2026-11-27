@@ -11,6 +11,17 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-27 (5:20 PM) · Chat 6 · RESULTS: anchor engine on all six (`tools/mm_anchor.py`)
+- **Did:** new tool `tools/mm_anchor.py` → `research/engine_room/mm_anchor_scorecard.csv`, `mm_anchor_engine.csv`. Engine fit on outside data only (long: ~1,050 EIA weeks since 2006; short: 380–630 AAA days), always on dates before the scored events. Kalshi sets 2 dials per layer.
+- **Learned (center, last 40% / odd-even; v1 in brackets):** diesel daily 0.84 / 0.78 (0.76) · diesel weekly 0.76 / 0.68 (0.66) · gas weekly 0.68 / 0.73 (0.71) · gas daily 0.63 / 0.72 (0.70) · gas monthly 0.32 / 0.30 (0.28) · diesel monthly 0.08 with borrowed gas dials (3 events, not proven).
+- **Learned (range):** gas weekly 0.59 / 0.62 (0.55) · gas monthly 0.40 / 0.70 (−0.04) · diesel weekly −0.07 / 0.52 · gas daily −0.88 / 0.08 · diesel daily −2.99 / 0.21. Third dial (time left to close) changed nothing (second look).
+- **Learned (price terms, the real yardstick):** line built from inputs only vs real mid: 16.5 / 11.2 / 10.6 / 14.6 / 6.1 points off (gas daily, gas weekly, gas monthly, diesel daily, diesel weekly) vs no-model 23.5 / 18.5 / 13.5 / 25.9 / 8.0 and spreads of 2–4 points. Inside the real bid-ask: 4 / 6 / 5 / 8 / 18% of lines. **Not a usable baseline yet in any market.**
+- **Learned (missing input):** at the 8 AM open the daily crowd's center is 0.31¢ (diesel) / 0.40¢ (gas) from the next AAA number; our engine 0.6–0.7¢; momentum alone 0.7¢. Monthly gas: engine 6.9¢ vs crowd 7.1¢ (a tie). Hint only, no costs.
+- **Engine facts:** rockets-and-feathers engine explains 44% (gas) / 32% (diesel) of next week's pump move, falling to 20% / 17% at 6 weeks; AAA-daily engine ~59% at 1 day.
+- **Caveats:** the price yardstick and the third dial were added after first scores. Spot (training) vs front futures (applied) assumed alike. Odd/even scores use an engine fit up to the start of the scored block.
+- **Decided:** nothing new from Dan. **Proposed:** hunt the input the daily crowd has at the open (same-morning station-level prices are the first suspect); add the futures curve (next month vs front) for monthly.
+- **Next:** see Proposed.
+
 ### 2026-11-27 (4:40 PM real clock; today's earlier stamps ran about an hour fast) · Chat 6 · PLAN (written before running): anchor engine, big real-world data first, Kalshi sets 2 dials
 - **Dan's ask:** crack all six by using the big real-world gas and diesel wholesale + pump-price history to carry the small Kalshi samples.
 - **Question:** if the pump-price engine (center and range of the next move) is fit on the big outside data only, can 2 dials per market per layer match the crowd on dates never seen?
