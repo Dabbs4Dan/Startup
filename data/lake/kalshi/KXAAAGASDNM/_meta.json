@@ -1,16 +1,16 @@
 {
  "series": "KXAAAGASDNM",
- "pulled_utc": "2026-11-27 04:56",
+ "pulled_utc": "2026-11-27 20:26",
  "found": true,
  "title": "New Mexico gas price",
  "frequency": "daily",
  "fee_type": "quadratic",
  "fee_multiplier": 1,
  "cutoff": {
-  "market_positions_last_updated_ts": "2026-09-27T00:00:00Z",
-  "market_settled_ts": "2026-09-27T00:00:00Z",
-  "orders_updated_ts": "2026-11-12T00:00:00Z",
-  "trades_created_ts": "2026-09-27T00:00:00Z"
+  "market_positions_last_updated_ts": "2026-09-28T00:00:00Z",
+  "market_settled_ts": "2026-09-28T00:00:00Z",
+  "orders_updated_ts": "2026-11-13T00:00:00Z",
+  "trades_created_ts": "2026-09-28T00:00:00Z"
  },
  "first_page_live": {
   "cursor": "",
@@ -26,6 +26,6 @@
  "events": 45,
  "first_close": "2026-10-01T03:59:00Z",
  "last_close": "2026-11-14T04:59:00Z",
- "candle_rows_added": 47,
+ "candle_rows_added": 0,
  "markets_no_candles": 12
 }
