@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASCDNE",
- "pulled_utc": "2026-11-26 23:56",
+ "pulled_utc": "2026-11-27 04:52",
  "found": true,
  "title": "Nebraska gas price",
  "frequency": "daily",
@@ -26,6 +26,6 @@
  "events": 12,
  "first_close": "2026-11-15T08:32:44Z",
  "last_close": "2026-11-26T10:08:37Z",
- "candle_rows_added": 683,
+ "candle_rows_added": 0,
  "markets_no_candles": 0
 }
