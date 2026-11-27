@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASDNJ",
- "pulled_utc": "2026-11-27 02:48",
+ "pulled_utc": "2026-11-27 04:56",
  "found": true,
  "title": "New Jersey gas prices",
  "frequency": "daily",
@@ -76,6 +76,6 @@
  "events": 77,
  "first_close": "2026-08-26T03:59:00Z",
  "last_close": "2026-11-10T04:59:00Z",
- "candle_rows_added": 18929,
- "markets_no_candles": 2
+ "candle_rows_added": 30,
+ "markets_no_candles": 0
 }
