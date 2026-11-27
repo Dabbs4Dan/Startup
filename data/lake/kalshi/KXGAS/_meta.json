@@ -1,6 +1,6 @@
 {
  "series": "KXGAS",
- "pulled_utc": "2026-11-26 23:36",
+ "pulled_utc": "2026-11-27 04:51",
  "found": true,
  "title": "Gas weekly",
  "frequency": "weekly",
@@ -76,6 +76,6 @@
  "events": 109,
  "first_close": "2021-08-02T21:00:00Z",
  "last_close": "2023-09-18T20:59:00Z",
- "candle_rows_added": 12714,
+ "candle_rows_added": 0,
  "markets_no_candles": 0
 }
