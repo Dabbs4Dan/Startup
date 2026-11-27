@@ -65,7 +65,7 @@
   {
    "productName": "AUTO DIESEL",
    "fuelType": "Auto Diesel",
-   "cashPrice": 5.199,
+   "cashPrice": 5.099,
    "displayName": "AUTO DIESEL",
    "displayOrder": "1",
    "group": 0,
@@ -74,7 +74,7 @@
   {
    "productName": "OXY UNL REG 10%",
    "fuelType": "Unleaded",
-   "cashPrice": 3.089,
+   "cashPrice": 2.999,
    "displayName": "UNLEADED",
    "displayOrder": "1",
    "group": 0,
@@ -83,7 +83,7 @@
   {
    "productName": "UNL-PLUS B 50/50",
    "fuelType": "Midgrade",
-   "cashPrice": 4.089,
+   "cashPrice": 3.999,
    "displayName": "MIDGRADE",
    "displayOrder": "2",
    "group": 0,
@@ -92,7 +92,7 @@
   {
    "productName": "UNL-SUPER",
    "fuelType": "Premium",
-   "cashPrice": 4.339,
+   "cashPrice": 4.249,
    "displayName": "PREMIUM",
    "displayOrder": "3",
    "group": 0,
