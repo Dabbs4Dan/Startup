@@ -11,6 +11,17 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-27 (4:00 PM) · Chat 6 · PLAN (written before running): market-maker equation v0 on all six markets
+- **Asked (Dan):** outline the market-making algorithm we are working backwards to solve, for all 6 markets, so each input can be isolated.
+- **What this is:** a description of how the ladder is priced, not an edge test. Extends Engine Room L0.1 (diesel daily only) to all six.
+- **Equation, four layers, fitted per fuel × time slice from `data/lake/master/`:**
+  A. **Center** (crowd's expected move in ¢) = f(AAA 1-day and 5-day change, main future 1-day and 5-day change, retail-minus-wholesale gap vs its 60-day normal), with each term allowed to grow with days to settlement.
+  B. **Width** (crowd range σ) = g(√days to settlement, recent AAA jumpiness).
+  C. **Shape**: price of each line = bell curve with that center and width; score = median miss per line in price points.
+  D. **Cost layer**: spread by price level.
+- **Scoring:** fit on the first 60% of events, score on the last 40% (never used to fit). Deciding numbers: out-of-sample share of the center explained, center miss in ¢ vs the strike step, line miss in price points. Rows flagged `answer_may_be_public` excluded.
+- **Assumed, not verified:** one equation per market is a fair summary of several market makers plus retail orders; hourly candle quotes are tradeable quotes.
+
 ### 2026-11-27 (3:45 PM) · Chat 6 · Are weekly and monthly different? Contract cards, Inputs Map reconciled, a miss owned
 - **Asked (Dan):** is the master carrying every input from the first Excel (Inputs Map), across the time slots, 3 liquid lines and 6 markets? Have we tracked how the open (market making) and close (settlement) algos differ for weekly and monthly? Concern: Claude is not scouting these risks, so work can be fake.
 - **Owned:** the master was built on the unverified assumption that all six markets settle like daily. The one 0.4¢ weekly mismatch was flagged on 11/26 and not chased. Checked today.
