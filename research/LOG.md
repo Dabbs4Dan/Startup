@@ -11,6 +11,13 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-27 (5:25 PM real clock) · Chat 6 · Source check: history for a live station-price average (web search only)
+- **Did:** searched for who holds daily / intraday station-average history. No data pulled, nothing scraped.
+- **Learned:** GasBuddy publishes a **live** national average that moves during the day (its analyst posted a live diesel number at 3:25 PM ET on 2026-09-03 and a "full-day official" number the next day). That fits the crowd's intraday pattern (M57). GasBuddy history (2001 on) is sold, price not public; a third-party audit says automated use needs a license from PDI Technologies (not checked against the terms text: the terms page fetch needed an approval nobody answered). OPIS sells retail history from 2007 and has a 10-day trial for spot/rack; OPIS is AAA's source, so the MNPI rule in CLAUDE.md §5 applies before any use.
+- **Free lead for a different gap:** GitHub `nathanqthai/gas_prices` holds daily AAA state-level prices from 2022-09-30 (fills "state-level AAA history" in §6 step 2). Needs vetting against our AAA national before joining the master.
+- **Decided (Dan):** go ahead on checking; wants more than a month of history. **Proposed:** ask PDI for a quote on daily national gas + diesel averages, 2023 on; do not scrape GasBuddy.
+- **Next:** Dan's call on sending the quote request; vet the free AAA state file.
+
 ### 2026-11-27 (5:15 PM real clock) · Chat 6 · RESULTS: 8 AM input hunt (not found in history) + futures pull fix
 - **Did:** tested S1–S3 on AAA history, scored on the open snapshot of the last 40% of daily events (40 diesel, 98 gas). Fixed `tools/history_pull.py pull_daily` (was writing monthly bars; now daily) and added the next 4 RBOB + heating-oil contract months (`data/lake/history/curve_*_1d.csv`, lands with the next `warehouse.yml` run).
 - **Learned (typical miss to next AAA at the open, diesel / gas):** S0 yesterday only 0.81 / 0.62¢ · S1 + 7 moves 0.76 / 0.56 · S2 + day of week 0.62 / 0.40 · S3 + wholesale 0.44 / 0.46 · **crowd 0.25 / 0.25**. Explains the crowd's expected move: 0.63–0.81 (needed 0.85). **Verdict by the plan's rule: not found.**
