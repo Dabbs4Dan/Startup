@@ -24,6 +24,8 @@ RULEBOOK (every backtest reads these tables; change the rules here, nowhere else
   Liquid 3    lines that are tradeable at the snapshot (spread <= 10c, mid 3%..97%), ranked by volume traded so far,
               top 3 kept (same rule as panel.py formula #19).
   Crowd       center = strike where the mid crosses 50%; sigma = half the distance between the 84% and 16% crossings.
+              crowd_center_fit / crowd_sigma_fit_c = the bell curve fitted to ALL tight lines (steadier when
+              strikes are far apart; use these for width work).
   Costs       not applied here. Tests add: taker fee 0.07 * p * (1-p), buy at ask, ~$1K per bet capacity (gap G1).
   Regimes     trend_10d: rising / falling / flat (AAA 10-day change beyond +-1c); vol_20d: calm / normal / jumpy
               (20-day std of daily AAA changes, terciles within each fuel).
@@ -178,6 +180,8 @@ def features(x, fuel):
     for n in (1, 3, 5, 7, 10, 20, 30):
         f[f"aaa_chg_{n}d_c"] = (af - af.shift(n)) * 100
     d1 = (a - a.shift(1)) * 100
+    f["aaa_absmove_5d_c"] = d1.abs().rolling(5, min_periods=3).mean()       # recent jumpiness: average size of a daily move
+    f["aaa_absmove_20d_c"] = d1.abs().rolling(20, min_periods=10).mean()
     sign = np.sign(d1.fillna(0))
     f["streak_days"] = sign.groupby((sign != sign.shift()).cumsum()).cumcount().add(1) * sign
     f["trend_10d"] = np.where(f.aaa_chg_10d_c > 1, "rising", np.where(f.aaa_chg_10d_c < -1, "falling", np.where(f.aaa_chg_10d_c.notna(), "flat", "")))
@@ -229,6 +233,31 @@ def features(x, fuel):
 
 
 # ------------------------------------------------------------------ Kalshi ladders -> snapshots
+def bell_fit(strikes, mids):
+    """Center and width of the bell curve that best fits ALL tight lines at one snapshot (probit line fit, weighted
+    toward lines near 50%). More stable than two crossings when strikes are far apart. Returns (center, sigma $)."""
+    from statistics import NormalDist
+    nd = NormalDist()
+    ok = (mids > 0.03) & (mids < 0.97)
+    if ok.sum() < 2:
+        return np.nan, np.nan
+    k, z = strikes[ok], np.array([nd.inv_cdf(float(v)) for v in mids[ok]])
+    w = np.array([nd.pdf(float(v)) for v in z]) ** 2
+    kb, zb = np.average(k, weights=w), np.average(z, weights=w)
+    den = (w * (k - kb) ** 2).sum()
+    if den <= 0:
+        return np.nan, np.nan
+    slope = (w * (k - kb) * (z - zb)).sum() / den                 # z = (center - k) / sigma  ->  slope = -1 / sigma
+    if slope >= 0:
+        return np.nan, np.nan
+    sigma = -1 / slope
+    center = kb + zb * sigma
+    span = strikes.max() - strikes.min()
+    if not (strikes.min() - span <= center <= strikes.max() + span) or sigma > 2 * span:
+        return np.nan, np.nan          # a near-flat ladder gives a meaningless fit (seen 2026-11-27: centers off by 1e20)
+    return center, sigma
+
+
 def crossing(strikes, mids, level):
     for i in range(len(strikes) - 1):
         if mids[i] >= level > mids[i + 1]:
@@ -282,6 +311,7 @@ def ladders():
                 good = q[q.spread <= 0.10 + 1e-9]
                 center = crossing(good.floor_strike.values, good.mid.values, 0.5) if len(good) > 1 else np.nan
                 lo, hi = (crossing(good.floor_strike.values, good.mid.values, 0.84), crossing(good.floor_strike.values, good.mid.values, 0.16)) if len(good) > 2 else (np.nan, np.nan)
+                cfit, sfit = bell_fit(good.floor_strike.values, good.mid.values) if len(good) > 1 else (np.nan, np.nan)
                 tr_all = good[(good.mid >= 0.03) & (good.mid <= 0.97)]
                 trad = tr_all.sort_values("cum_vol", ascending=False).head(3)
                 fav = {}
@@ -309,6 +339,7 @@ def ladders():
                        "n_lines": int(e.n_lines), "n_quoted": len(q), "n_tight": len(good), "n_tradeable": int(((good.mid >= 0.03) & (good.mid <= 0.97)).sum()),
                        "volume_so_far": q.cum_vol.sum(), "event_volume_total": e.event_volume,
                        "crowd_center": center, "crowd_sigma_c": (hi - lo) / 2 * 100 if pd.notna(lo) and pd.notna(hi) else np.nan,
+                       "crowd_center_fit": cfit, "crowd_sigma_fit_c": sfit * 100 if pd.notna(sfit) else np.nan,
                        "settle_value": e.settle_value}
                 for i, r in enumerate(trad.itertuples(), 1):
                     row.update({f"liq{i}_strike": r.floor_strike, f"liq{i}_yes_bid": r.yes_bid, f"liq{i}_yes_ask": r.yes_ask,

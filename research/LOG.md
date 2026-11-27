@@ -11,6 +11,15 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-27 (5:30 PM) · Chat 6 · RESULTS: Layer B (width) on all six + gas monthly center (mm_model v1)
+- **Did:** Master +4 columns (`crowd_center_fit`, `crowd_sigma_fit_c`, `aaa_absmove_5d_c`, `aaa_absmove_20d_c`; 12,896 × 178). `tools/mm_model.py` v1: center forms A0 linear / A1 pass-through / A2 scale-free; width forms S1–S4; calibration; two scores per market (last 40% in time order, and odd/even events).
+- **Learned (width, last-40% score / odd-even score):** gas weekly **+0.55** / 0.60 (error 43% vs 69% no model) = cracked. Gas daily −0.81 (S3; error 47% vs 83%) / 0.37 = half way. Diesel daily −2.13 / 0.52, diesel weekly −0.44 / 0.61, gas monthly −0.04 / 0.67 = fail in time order, fit with eras mixed. Diesel monthly: 3 events, no fit.
+- **Learned (how they differ):** width 1 day out 1.01¢ / 2.44¢ / 0.83¢ / 1.65¢ / 0.95¢ (diesel daily, diesel weekly, gas daily, gas monthly, gas weekly); 7 days out 2.0 / 7.39 / 1.7 / 6.31 / 4.59¢; time power 0.35 / 0.57 / 0.37 / 0.69 / 0.81; in strike steps at 1 day 2.02 / 1.22 / 1.67 / 0.33 / 0.47. Settle inside ±1 width: 86 / 83 / 80 / 78 / 78% (diesel monthly 88% on 3 events) vs 68% for a well-sized bell → crowd's range is too wide everywhere (hint; no costs).
+- **Learned (gas monthly center):** not solved. Last-40%: A0 0.28, A1 0.19 (picked by the inner split), A2 scale-free −0.09; odd/even 0.38. Cause: era drift (2026 ladders 16–44 lines vs 4–11; expected moves 2.5× larger), 29 events. Other centers unchanged: 0.76 diesel daily, 0.66 diesel weekly, 0.70 gas daily, 0.71 gas weekly (rows needing the new jumpiness column dropped a few events, hence 0.79 → 0.76).
+- **Caveats:** the scale-free forms (A2, S4) were added after seeing first scores, so their last-40% numbers are a second look. Daily width is noisy to measure at 0.5¢ strikes (two width measures correlate only ~0.33). Width is measured from mid prices, not trades.
+- **Decided:** nothing new from Dan. **Proposed:** treat weekly gas as the first market with a full baseline copy (center + width); re-fit moving numbers on a rolling window instead of one fixed fit.
+- **Next:** rolling-window re-fit for width and gas monthly center (plan line first); same-day futures at midday snapshots (largest missing input).
+
 ### 2026-11-27 (4:30 PM) · Chat 6 · PLAN (written before running): Layer B (crowd's width) on all six markets
 - **Asked (Dan):** crack Layer B on all 6 and show how they differ. Goal: a baseline "perfect copy" of the market maker to tweak later.
 - **Step 1, measure width better:** v0 read width from two crossings (84% / 16%), which is coarse when strikes are far apart. Re-measure by fitting a bell curve to every tight line at each snapshot (`width_fit`), keep both.

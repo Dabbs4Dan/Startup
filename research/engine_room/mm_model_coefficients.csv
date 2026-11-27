@@ -1,75 +1,97 @@
 fuel,slice,layer,term,value
-diesel,daily,A center,constant,0.1913
-diesel,daily,A center,aaa_chg_1d_c,0.7153
-diesel,daily,A center,aaa_chg_5d_c,0.0092
-diesel,daily,A center,fut_main_chg_1d_c,0.002
-diesel,daily,A center,fut_main_chg_5d_c,0.002
-diesel,daily,A center,retail_gap_c,-0.0126
-diesel,daily,B width,constant,0.9612
-diesel,daily,B width,sqrt(days),1.3827
-diesel,daily,B width,aaa_jumpiness_20d,-0.2625
-diesel,monthly,A center,constant,-0.3089
-diesel,monthly,A center,aaa_chg_1d_c,2.8475
-diesel,monthly,A center,aaa_chg_5d_c,-3.652
-diesel,monthly,A center,fut_main_chg_1d_c,2.5967
-diesel,monthly,A center,fut_main_chg_5d_c,3.2754
-diesel,monthly,A center,retail_gap_c,-4.0915
-diesel,monthly,A center,aaa_chg_1d_c x days,0.5041
-diesel,monthly,A center,aaa_chg_5d_c x days,-0.8096
-diesel,monthly,A center,fut_main_chg_1d_c x days,1.5739
-diesel,monthly,A center,fut_main_chg_5d_c x days,-0.6366
-diesel,monthly,A center,retail_gap_c x days,0.7439
-diesel,monthly,B width,constant,252.9761
-diesel,monthly,B width,sqrt(days),5.905
-diesel,monthly,B width,aaa_jumpiness_20d,-146.8765
-diesel,weekly,A center,constant,-0.4465
-diesel,weekly,A center,aaa_chg_1d_c,1.2614
-diesel,weekly,A center,aaa_chg_5d_c,-0.0814
-diesel,weekly,A center,fut_main_chg_1d_c,-0.165
-diesel,weekly,A center,fut_main_chg_5d_c,0.0444
-diesel,weekly,A center,retail_gap_c,0.0328
-diesel,weekly,A center,aaa_chg_1d_c x days,-0.2009
-diesel,weekly,A center,aaa_chg_5d_c x days,0.1011
-diesel,weekly,A center,fut_main_chg_1d_c x days,0.0405
-diesel,weekly,A center,fut_main_chg_5d_c x days,0.0105
-diesel,weekly,A center,retail_gap_c x days,-0.0172
-diesel,weekly,B width,constant,-2.0041
-diesel,weekly,B width,sqrt(days),4.0455
-diesel,weekly,B width,aaa_jumpiness_20d,0.2618
-gas,daily,A center,constant,0.0406
-gas,daily,A center,aaa_chg_1d_c,0.6441
-gas,daily,A center,aaa_chg_5d_c,0.0151
-gas,daily,A center,fut_main_chg_1d_c,0.0105
-gas,daily,A center,fut_main_chg_5d_c,0.0087
-gas,daily,A center,retail_gap_c,-0.0172
-gas,daily,B width,constant,0.0665
-gas,daily,B width,sqrt(days),0.8535
-gas,daily,B width,aaa_jumpiness_20d,0.0693
-gas,monthly,A center,constant,-0.8751
-gas,monthly,A center,aaa_chg_1d_c,0.0098
-gas,monthly,A center,aaa_chg_5d_c,0.2788
-gas,monthly,A center,fut_main_chg_1d_c,-0.0488
-gas,monthly,A center,fut_main_chg_5d_c,0.0405
-gas,monthly,A center,retail_gap_c,-0.1342
-gas,monthly,A center,aaa_chg_1d_c x days,0.0213
-gas,monthly,A center,aaa_chg_5d_c x days,0.0001
-gas,monthly,A center,fut_main_chg_1d_c x days,-0.0027
-gas,monthly,A center,fut_main_chg_5d_c x days,0.0013
-gas,monthly,A center,retail_gap_c x days,-0.0017
-gas,monthly,B width,constant,1.057
-gas,monthly,B width,sqrt(days),1.4991
-gas,monthly,B width,aaa_jumpiness_20d,-0.19
-gas,weekly,A center,constant,0.1493
-gas,weekly,A center,aaa_chg_1d_c,0.7288
-gas,weekly,A center,aaa_chg_5d_c,-0.0855
-gas,weekly,A center,fut_main_chg_1d_c,0.0112
-gas,weekly,A center,fut_main_chg_5d_c,-0.1092
-gas,weekly,A center,retail_gap_c,-0.0585
-gas,weekly,A center,aaa_chg_1d_c x days,-0.1096
-gas,weekly,A center,aaa_chg_5d_c x days,0.1148
-gas,weekly,A center,fut_main_chg_1d_c x days,-0.0112
-gas,weekly,A center,fut_main_chg_5d_c x days,0.0595
-gas,weekly,A center,retail_gap_c x days,-0.0004
-gas,weekly,B width,constant,-2.4331
-gas,weekly,B width,sqrt(days),2.692
-gas,weekly,B width,aaa_jumpiness_20d,0.4547
+diesel,daily,A center,constant,0.1724
+diesel,daily,A center,aaa_chg_1d_c,0.7443
+diesel,daily,A center,aaa_chg_5d_c,0.0142
+diesel,daily,A center,fut_main_chg_1d_c,0.0111
+diesel,daily,A center,fut_main_chg_5d_c,0.0036
+diesel,daily,A center,retail_gap_c,-0.0108
+diesel,daily,B width S4 (all rows),constant,0.7443
+diesel,daily,B width S4 (all rows),log(days left),0.3496
+diesel,daily,B width S4 (all rows),jumpiness 5d,-0.0455
+diesel,daily,B width S4 (all rows),crowd's own recent miss (last 5 ladders),0.6928
+diesel,daily,B width,constant,0.6151
+diesel,daily,B width,log(days left),0.2922
+diesel,daily,B width,jumpiness 5d,0.0204
+diesel,daily,B width,crowd's own recent miss (last 5 ladders),0.2767
+diesel,weekly,A center,constant,-0.8385
+diesel,weekly,A center,aaa_chg_1d_c,2.431
+diesel,weekly,A center,aaa_chg_5d_c,-0.1953
+diesel,weekly,A center,fut_main_chg_1d_c,-0.1996
+diesel,weekly,A center,fut_main_chg_5d_c,0.0626
+diesel,weekly,A center,retail_gap_c,0.0676
+diesel,weekly,A center,aaa_chg_1d_c x days,-0.4601
+diesel,weekly,A center,aaa_chg_5d_c x days,0.1266
+diesel,weekly,A center,fut_main_chg_1d_c x days,0.0545
+diesel,weekly,A center,fut_main_chg_5d_c x days,0.007
+diesel,weekly,A center,retail_gap_c x days,-0.023
+diesel,weekly,B width S4 (all rows),constant,0.4579
+diesel,weekly,B width S4 (all rows),log(days left),0.5559
+diesel,weekly,B width S4 (all rows),jumpiness 5d,0.1234
+diesel,weekly,B width S4 (all rows),crowd's own recent miss (last 5 ladders),-0.8872
+diesel,weekly,B width,constant,1.1089
+diesel,weekly,B width,log(days left),0.5688
+diesel,weekly,B width,jumpiness 5d,0.3184
+diesel,weekly,B width,crowd's own recent miss (last 5 ladders),0.1961
+gas,daily,A center,constant,0.0692
+gas,daily,A center,aaa_chg_1d_c (per unit of jumpiness),0.7026
+gas,daily,A center,aaa_chg_5d_c (per unit of jumpiness),0.0015
+gas,daily,A center,fut_main_chg_1d_c (per unit of jumpiness),0.0104
+gas,daily,A center,fut_main_chg_5d_c (per unit of jumpiness),0.0132
+gas,daily,A center,retail_gap_c (per unit of jumpiness),-0.0182
+gas,daily,B width S4 (all rows),constant,0.7763
+gas,daily,B width S4 (all rows),log(days left),0.3937
+gas,daily,B width S4 (all rows),jumpiness 5d,-0.0839
+gas,daily,B width S4 (all rows),crowd's own recent miss (last 5 ladders),0.7139
+gas,daily,B width,constant,5.554
+gas,daily,B width,log(days left),3.2578
+gas,daily,B width,jumpiness 5d,0.138
+gas,daily,B width,jumpiness 20d,0.392
+gas,daily,B width,size of expected move,0.2013
+gas,daily,B width,size of yesterday's move,-0.0784
+gas,daily,B width,size of last ladder's miss,0.1038
+gas,daily,B width,mark open,-4.6253
+gas,daily,B width,mark 10am,-4.6407
+gas,daily,B width,mark noon,-4.38
+gas,daily,B width,mark 3pm,-3.8532
+gas,daily,B width,mark 6pm,-3.138
+gas,daily,B width,mark 10pm,-1.4705
+gas,monthly,A center,constant,-0.2224
+gas,monthly,A center,yesterday's AAA move x momentum length,0.0863
+gas,monthly,A center,retail gap x reach,-0.0687
+gas,monthly,A center,futures 5d move x reach,0.0801
+gas,monthly,A center,futures 20d move x reach,0.0437
+gas,monthly,A center,drift per day,-0.0722
+gas,monthly,B width S4 (all rows),constant,0.7098
+gas,monthly,B width S4 (all rows),log(days left),0.6368
+gas,monthly,B width S4 (all rows),jumpiness 5d,0.5698
+gas,monthly,B width S4 (all rows),crowd's own recent miss (last 5 ladders),-0.2983
+gas,monthly,B width,constant,0.9042
+gas,monthly,B width,log(days left),0.3481
+gas,weekly,A center,constant,0.2202
+gas,weekly,A center,aaa_chg_1d_c,0.6014
+gas,weekly,A center,aaa_chg_5d_c,-0.057
+gas,weekly,A center,fut_main_chg_1d_c,0.0361
+gas,weekly,A center,fut_main_chg_5d_c,-0.1001
+gas,weekly,A center,retail_gap_c,-0.0569
+gas,weekly,A center,aaa_chg_1d_c x days,-0.0972
+gas,weekly,A center,aaa_chg_5d_c x days,0.1161
+gas,weekly,A center,fut_main_chg_1d_c x days,-0.0179
+gas,weekly,A center,fut_main_chg_5d_c x days,0.0612
+gas,weekly,A center,retail_gap_c x days,-0.0007
+gas,weekly,B width S4 (all rows),constant,0.2328
+gas,weekly,B width S4 (all rows),log(days left),0.8313
+gas,weekly,B width S4 (all rows),jumpiness 5d,0.1673
+gas,weekly,B width S4 (all rows),crowd's own recent miss (last 5 ladders),0.2842
+gas,weekly,B width,constant,1.0668
+gas,weekly,B width,log(days left),0.6281
+gas,weekly,B width,jumpiness 5d,0.1931
+gas,weekly,B width,jumpiness 20d,0.0342
+gas,weekly,B width,size of expected move,0.2534
+gas,weekly,B width,size of yesterday's move,-0.052
+gas,weekly,B width,size of last ladder's miss,0.1919
+gas,weekly,B width,mark open,-0.4781
+gas,weekly,B width,mark 10am,-0.8254
+gas,weekly,B width,mark noon,-0.8684
+gas,weekly,B width,mark 3pm,-0.9191
+gas,weekly,B width,mark 6pm,-0.8989
+gas,weekly,B width,mark 10pm,-0.9201

@@ -1,6 +1,6 @@
 # Backtest master: coverage and vetting
 
-Built by `tools/backtest_master.py` on 2026-11-27 20:29 UTC. Rules: see the docstring of that file.
+Built by `tools/backtest_master.py` on 2026-11-27 21:03 UTC. Rules: see the docstring of that file.
 
 ## Market canvas (Kalshi ladders)
 
@@ -156,6 +156,10 @@ Source used per day: {"wayback_current": 627, "kalshi_settlement": 389, "wayback
 
 |                                         | filled   |
 |:----------------------------------------|:---------|
+| distillate_stocks_padd3_kbbl_chg_1w_pct | 14%      |
+| distillate_stocks_padd4_kbbl            | 14%      |
+| distillate_stocks_padd4_kbbl_chg_1w_pct | 14%      |
+| distillate_stocks_padd5_kbbl            | 14%      |
 | distillate_stocks_padd5_kbbl_chg_1w_pct | 14%      |
 | distillate_stocks_us_kbbl               | 14%      |
 | distillate_stocks_us_kbbl_chg_1w_pct    | 14%      |
@@ -177,10 +181,6 @@ Source used per day: {"wayback_current": 627, "kalshi_settlement": 389, "wayback
 | ulsd_spot_nyh                           | 14%      |
 | weekly_distillate_demand_kbd            | 14%      |
 | weekly_distillate_exports_kbd           | 14%      |
-| weekly_distillate_imports_kbd           | 14%      |
-| weekly_distillate_production_kbd        | 14%      |
-| distillate_stocks_padd1_kbbl            | 14%      |
-| distillate_stocks_padd5_kbbl            | 14%      |
 
 ## Checks
 

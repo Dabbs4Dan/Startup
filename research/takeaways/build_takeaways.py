@@ -4,7 +4,7 @@ by_chat = frozen snapshot of each chat's closing takeaway table (append new chat
 master  = rolling, de-duplicated list (edit freely; newest evidence wins)."""
 import csv, json, os, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
-SAVED = "2026-11-26"
+SAVED = "2026-11-27"
 
 CHATS = {
     1: "Chat 1 - Setup & core research",
@@ -116,6 +116,10 @@ BY_CHAT = [
     (6, "Data", "Inputs Map vs master", "41 of the 83 Inputs Map items are columns in the master, 20 are partly there (mostly live-only since Nov 25), 22 are not collected. Biggest real gap: same-day futures at the noon / 3 PM / 6 PM snapshots. Status per input is in the Inputs Map sheet, column O.", "41 / 20 / 22", "Current", ""),
     (6, "System", "Check before building", "New rule in CLAUDE.md and the kalshi skill: read the market's own rules and write its fact card first; every plan lists what is verified and what is assumed.", "verified vs assumed", "Current", ""),
     (6, "Results", "Market-maker equation v0 (all 6)", "First market-maker equation on all 6 markets, scored on events it never saw. Center: explains 79% (diesel daily), 71% (gas daily), 68% (diesel weekly), 72% (gas weekly), 29% (gas monthly); diesel monthly has too few events. Daily center is about 0.7x yesterday's AAA move with almost no futures. Width: not cracked (simple time model fails in 5 of 6). Shape: a bell curve misses each line by about 3 price points everywhere, and long shots are priced 2-3 points richer in weekly and monthly.", "center ok, width no, shape close", "Open", ""),
+    (6, "Results", "Width layer (B) on all 6", "Tried 4 forms for the crowd's range (width). Cracked only for gas weekly: 55% explained on weeks it never saw (error 43% vs 69% with no model). Gas daily is half way (error 47% vs 83%). Diesel daily, diesel weekly and gas monthly fail on later dates, yet all fit fine when eras are mixed (52-67%). So the form is right but its numbers move over time.", "1 of 6 cracked", "Open", ""),
+    (6, "Results", "How the 6 widths differ", "Range one day out: about 1c in daily and gas weekly, 1.7c gas monthly, 2.4c diesel weekly. A week out: 2c daily, 4.6c gas weekly, 6-7c gas monthly and diesel weekly. Daily ranges barely grow with time (power 0.35); weekly and monthly grow fast (0.6-0.8). Daily ranges are about 2 lines wide, monthly gas only a third of one line, so monthly width is fuzzy to measure.", "daily flat, long ones grow", "Open", ""),
+    (6, "Results", "Crowd's range is too wide", "In all 6 markets the final AAA number lands inside the crowd's own range more often than a well-sized range would: 78-88% of the time vs 68%. The crowd is less sure than it should be. This is a hint, not a tested trade: costs are not in it.", "78-88% vs 68%", "Open", ""),
+    (6, "Verdict", "Gas monthly center not solved", "Gas monthly center is still not solved. Three forms (plain, slow pass-through, scale-free) explain only 19-28% on later months, and 38% with eras mixed. Cause: the market itself changed in 2026 (16-44 lines vs 4-11, and expected moves 2.5x larger), so old months do not teach the new ones. Only 29 events. Diesel monthly has 3 events: cannot be fit yet.", "era drift, 29 events", "Open", ""),
 ]
 
 # (section, item, meaning, sketch, source_chats, status)
@@ -169,6 +173,10 @@ MASTER = [
     ("Data", "Inputs Map vs master", "41 of the 83 Inputs Map items are columns in the master, 20 are partly there (mostly live-only since Nov 25), 22 are not collected. Biggest real gap: same-day futures at the noon / 3 PM / 6 PM snapshots. Status per input is in the Inputs Map sheet, column O.", "41 / 20 / 22", "6", "Current"),
     ("System", "Check before building", "New rule in CLAUDE.md and the kalshi skill: read the market's own rules and write its fact card first; every plan lists what is verified and what is assumed.", "verified vs assumed", "6", "Current"),
     ("Results", "Market-maker equation v0 (all 6)", "First market-maker equation on all 6 markets, scored on events it never saw. Center: explains 79% (diesel daily), 71% (gas daily), 68% (diesel weekly), 72% (gas weekly), 29% (gas monthly); diesel monthly has too few events. Daily center is about 0.7x yesterday's AAA move with almost no futures. Width: not cracked (simple time model fails in 5 of 6). Shape: a bell curve misses each line by about 3 price points everywhere, and long shots are priced 2-3 points richer in weekly and monthly.", "center ok, width no, shape close", "6", "Open"),
+    ("Results", "Width layer (B) on all 6", "Tried 4 forms for the crowd's range (width). Cracked only for gas weekly: 55% explained on weeks it never saw (error 43% vs 69% with no model). Gas daily is half way (error 47% vs 83%). Diesel daily, diesel weekly and gas monthly fail on later dates, yet all fit fine when eras are mixed (52-67%). So the form is right but its numbers move over time.", "1 of 6 cracked", "6", "Open"),
+    ("Results", "How the 6 widths differ", "Range one day out: about 1c in daily and gas weekly, 1.7c gas monthly, 2.4c diesel weekly. A week out: 2c daily, 4.6c gas weekly, 6-7c gas monthly and diesel weekly. Daily ranges barely grow with time (power 0.35); weekly and monthly grow fast (0.6-0.8). Daily ranges are about 2 lines wide, monthly gas only a third of one line, so monthly width is fuzzy to measure.", "daily flat, long ones grow", "6", "Open"),
+    ("Results", "Crowd's range is too wide", "In all 6 markets the final AAA number lands inside the crowd's own range more often than a well-sized range would: 78-88% of the time vs 68%. The crowd is less sure than it should be. This is a hint, not a tested trade: costs are not in it.", "78-88% vs 68%", "6", "Open"),
+    ("Verdict", "Gas monthly center not solved", "Gas monthly center is still not solved. Three forms (plain, slow pass-through, scale-free) explain only 19-28% on later months, and 38% with eras mixed. Cause: the market itself changed in 2026 (16-44 lines vs 4-11, and expected moves 2.5x larger), so old months do not teach the new ones. Only 29 events. Diesel monthly has 3 events: cannot be fit yet.", "era drift, 29 events", "6", "Open"),
 ]
 
 
