@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASD",
- "pulled_utc": "2026-11-27 20:20",
+ "pulled_utc": "2026-11-27 21:08",
  "found": true,
  "title": "US gas price up",
  "frequency": "daily",
@@ -76,6 +76,6 @@
  "events": 272,
  "first_close": "2023-09-18T13:55:00Z",
  "last_close": "2026-11-27T04:59:00Z",
- "candle_rows_added": 234,
+ "candle_rows_added": 0,
  "markets_no_candles": 1
 }
