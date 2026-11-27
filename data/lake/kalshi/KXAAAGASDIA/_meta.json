@@ -1,0 +1,31 @@
+{
+ "series": "KXAAAGASDIA",
+ "pulled_utc": "2026-11-27 01:09",
+ "found": true,
+ "title": "Iowa gas price",
+ "frequency": "daily",
+ "fee_type": "quadratic",
+ "fee_multiplier": 1,
+ "cutoff": {
+  "market_positions_last_updated_ts": "2026-09-27T00:00:00Z",
+  "market_settled_ts": "2026-09-27T00:00:00Z",
+  "orders_updated_ts": "2026-11-12T00:00:00Z",
+  "trades_created_ts": "2026-09-27T00:00:00Z"
+ },
+ "first_page_live": {
+  "cursor": "",
+  "markets": "list[679]"
+ },
+ "first_page_historical": {
+  "cursor": "",
+  "markets": "list[0]"
+ },
+ "markets_live": 679,
+ "markets_historical": 0,
+ "markets_total": 679,
+ "events": 37,
+ "first_close": "2026-10-08T03:59:00Z",
+ "last_close": "2026-11-13T04:59:00Z",
+ "candle_rows_added": 8212,
+ "markets_no_candles": 24
+}
