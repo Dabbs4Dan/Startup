@@ -9,8 +9,7 @@
  },
  "errors_sample": [
   "HTTP Error 400: Bad Request",
-  "HTTP Error 400: Bad Request",
-  "HTTP Error 500: Internal Server Error"
+  "HTTP Error 400: Bad Request"
  ],
  "store_keys": [
   "address",
