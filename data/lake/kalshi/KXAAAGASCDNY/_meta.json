@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASCDNY",
- "pulled_utc": "2026-11-27 20:22",
+ "pulled_utc": "2026-11-27 21:09",
  "found": true,
  "title": "New York gas price",
  "frequency": "daily",
@@ -26,6 +26,6 @@
  "events": 13,
  "first_close": "2026-11-15T08:22:54Z",
  "last_close": "2026-11-27T08:32:55Z",
- "candle_rows_added": 78,
+ "candle_rows_added": 0,
  "markets_no_candles": 0
 }
