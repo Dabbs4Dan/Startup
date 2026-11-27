@@ -106,11 +106,6 @@ AAA diesel number and find gaps vs. Kalshi's odds. Demo money only until a strat
 - `kalshi_markets` — every KXDIESELD strike: strike, result, settle value, last price, bid/ask, volume, OI, full raw JSON.
 - `kalshi_candles` — hour-by-hour yes bid/ask/mid/spread/volume for every market (18K rows). `v_event_hourly` = same joined with the final AAA answer.
 - `daily_story` ⭐ — one row per day: AAA before/after, market forecast at 10 AM (mu_N) and close (mu_C), the 75¢ bet (N_price, F_payout), HO moves, delivery slice. Built by `tools/story.py`.
-- `v_win_loss` — `daily_story` split into WIN / LOSS rows (export `win_loss.csv`) for trend extraction.
-- `sources` — where each number comes from.
-- `research_log` — queryable copy of findings (mirror of the log below).
-
-Quick query example: `sqlite3 data/kalshi_twins.db "SELECT * FROM v_diesel_breakdown ORDER BY date DESC LIMIT 10;"`
 
 ### Jobs (all started by the relay or by a push to their own files; none use `schedule:`)
 
@@ -124,7 +119,7 @@ Quick query example: `sqlite3 data/kalshi_twins.db "SELECT * FROM v_diesel_break
 | `kalshi_history.yml` | full Kalshi history, 7 fuel series, both tiers | `data/lake/kalshi/` | by hand / push |
 | `history.yml` | Internet Archive AAA **state** pages → Engine Room re-score | `research/engine_room/` (never the DB) | by hand / push |
 | `nautilus.yml` | engine replay + fee check | `nautilus/reports/` | relay |
-| `probe.yml`, `connectivity.yml` | one-off source probes | `research/` | push |
+| `probe.yml`, `connectivity.yml` | one-off source probes (11/27: `tools/probe_archive.py` = what the Internet Archive holds for live pump-price pages → `research/engine_room/archive_probe*.csv`) | `research/` | push |
 
 **Rules every session must keep:**
 1. **One writer per database.** Only `backfill.yml` commits the diesel DB; only `gas_backfill.yml` commits the gas DB. Anything else that touches a DB must `git checkout --` it before committing.
@@ -146,8 +141,6 @@ Taxes      = 24.4¢ federal + 35.86¢ avg state (EIA, Jan 2026)
 Delivery   = AAA − ULSD − Taxes   (trucks, station costs + profit; the "leftover")
 ```
 
-**Nov 24, 2026 snapshot:** crude $2.1610 (37.3%) · refining $1.5344 (26.5%) · delivery $1.5002 (25.9%) · taxes $0.6026 (10.4%) = **$5.7982**.
-
 **Edge thesis:** AAA retail is a slow, smoothed number; wholesale + crude move first. Retail "catches up" over days
 (EIA notes the refining and delivery slices swing because of this lag). So tomorrow's AAA is partly visible today.
 A swollen delivery slice (Nov 24: $1.50 vs ~$0.84 in Jan 2026) = pump prices still have room to fall.
@@ -167,8 +160,6 @@ Strikes are $0.005 apart. Market opens 8:00 AM ET the day before (API open_time;
 **Risk formula (2026-11-25, `tools/risk_calc.py`):** c = price + fee. P&L = (B/n)·[(n−L)(1−c)/c − L]. Max losses L* = n(1−c). Win rate needed = c. Wins per loss = c/(1−c). Chance negative = P(Binomial(n,1−q) > L*).
 
 **Official diesel rulebook (verified 2026-11-25):** KXDIESELD series `contract_terms_url` = ECONSTAT.pdf (same generic econ-stat terms). Source Agency = AAA (Trading Economics backup). First release counts, later revisions ignored. Market rule: "If the Diesel Price on <date> is above $K → Yes", strike_type greater, settlement timer 30 min, closes early "if the economic data is released". Fee type quadratic, multiplier 1. ⚠️ Prohibition: people with material non-public info on the Underlying (or employed by the Source Agency) may not trade → check any paid OPIS data for MNPI risk before using it.
-
-**Formula registry + master-panel column plan:** `research/2026-11-25_formulas-and-panel-columns.md` (18 formulas, ~50 columns with ease/parent/source).
 
 **Free AAA history hack:** Kalshi's settled KXDIESELD markets carry `expiration_value` = the exact AAA number (verified 5.7982 = AAA site).
 
@@ -196,9 +187,9 @@ crowd overshoots a rising trend, gas +28% per $ on 63 days (M36; needs a forward
 **Rules for the next tests:** read the master, follow its RULEBOOK, write the test in the LOG first, cluster weekly
 and monthly results by event, and keep the false-discovery filter + holdout from `tools/deep_scan.py`.
 
-**Older open items:** rockets & feathers lag study (G9) · exact AAA post time (G2, flip log recording) · 10 AM
-futures history (Wishlist W1). Older backtest scripts (`backtest_horizons*.py`, `edge_check.py`, `favorite_test.py`,
-`sim_favorites.py`, `signal_scan.py`) are legacy: new work reads the master instead.
+**Older open items:** rockets & feathers lag (G9) · exact AAA post time (G2) · 10 AM futures history (W1). Older backtest scripts (`backtest_horizons*.py`, `edge_check.py`, `favorite_test.py`, `sim_favorites.py`, `signal_scan.py`) are legacy: new work reads the master.
+
+**Waiting on Dan (11/27):** "clean it" = hide 6 replaced sheet tabs + merge overlapping lists (audit in SPINE.md) · "go" = demo paper test of gas No-favorites at 60–80¢ (M63).
 
 ---
 

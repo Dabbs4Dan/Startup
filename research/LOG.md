@@ -11,6 +11,14 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-27 (6:20 PM real clock; entries stamped 6:25–7:25 PM above were written 5:50–6:15 PM, stamps ran fast) · Chat 6 · SAVE: where the session stands
+- **Did today:** market-maker copy v1 + anchor engine (all six) · 8 AM input hunt (not found in history) · futures pull fixed to daily bars + curve · free-data-only decision · slice table (L2), ratio layer (L3), scan · favorite ledger (+ by time slot and line) · spine + database `lab` schema · sheet tab audit.
+- **Learned (top 3):** (1) the copy is 6–16 points off per line vs 2–4 spreads; the daily crowd holds an input we lack and knows 98–99% of tomorrow's AAA by midnight (M54–M57). (2) In gas, No-favorites win more than priced and Yes-favorites less, in every year and trend (M63); lead, not proof. (3) Underdogs lose 33–58% per $ everywhere (M60).
+- **Decided (Dan):** free data only for now; Internet Archive copies are fair to read for personal research; build order L2 slices → L3 ratios → L4 copy → own formula; favorite = side above 50%; all six equally; two engines (E1 settle now, E2 intraday after tracking data is solid); database is where work happens, sheets are an outline.
+- **Open / running:** archive probe v2 still running at save time (results → `research/engine_room/archive_probe*.csv`; not read yet). Three builder issues listed in SPINE.md (timestamp text styles, clock-change days, open counted twice) not fixed yet. Warehouse catalog stale since 11/25.
+- **Waiting on Dan:** "clean it" (hide 6 replaced tabs, merge lists) · "go" (demo paper test of gas No-favorites 60–80¢).
+- **Next:** read the probe and pull the best free source; fix the builder issues and rebuild downstream; then E2 `paths`.
+
 ### 2026-11-27 (7:25 PM real clock) · Chat 6 · Sheet tab audit (20 tabs, 2 workbooks)
 - **Dan's question:** so many tabs, some his, some Claude's; is it all one connected drive?
 - **Did:** listed every tab and read its header. Verdicts saved in `data/lake/master/SPINE.md` → "Sheet tabs". No tab was changed, hidden or deleted.
