@@ -211,14 +211,24 @@ def pull_yahoo():
 def pull_daily():
     """Front-month futures, one daily bar per day as far back as Yahoo has -> fut_<name>_1d.csv (fills the RBOB gap
     after EIA stopped publishing NYMEX settlements in April 2024)."""
-    for sym, name in YAHOO_DAILY.items():
+    # Futures curve (added 2026-11-27): the next 4 contract months of RBOB and heating oil, one file per contract
+    # (curve_<root><month code><yy>). Monthly ladders may be priced off next month vs this month; we only had the front.
+    today = datetime.date.today()
+    targets = dict(YAHOO_DAILY)
+    for k in range(1, 5):
+        mo, yr = (today.month - 1 + k) % 12 + 1, today.year + (today.month - 1 + k) // 12
+        for root in ("RB", "HO"):
+            c = f"{root}{'FGHJKMNQUVXZ'[mo - 1]}{yr % 100:02d}"
+            targets[f"{c}.NYM"] = f"curve_{c.lower()}"
+    now = int(time.time())
+    for sym, name in targets.items():
         try:
             body = None
             for host in ("query1", "query2"):
                 try:
                     # plain user agent: the browser-like one used elsewhere in this file gets blocked by Yahoo (no yahoo_*
                     # files ever landed), while tools/backfill.py's plain one works every day.
-                    req = urllib.request.Request(f"https://{host}.finance.yahoo.com/v8/finance/chart/{sym}?interval=1d&range=max",
+                    req = urllib.request.Request(f"https://{host}.finance.yahoo.com/v8/finance/chart/{sym}?interval=1d&period1=946684800&period2={now}",
                                                  headers={"User-Agent": "Mozilla/5.0 (kalshi-twins-research)"})
                     with urllib.request.urlopen(req, timeout=60) as r:
                         body = json.loads(r.read().decode())
@@ -236,7 +246,7 @@ def pull_daily():
                     continue
                 d = datetime.datetime.fromtimestamp(ts, datetime.timezone.utc).date().isoformat()
                 rows.append([d, q["open"][i], q["high"][i], q["low"][i], q["close"][i], q["volume"][i]])
-            write_rows(OUT / f"fut_{name}_1d.csv", ["date", "open", "high", "low", "close", "volume"], rows)
+            write_rows(OUT / (f"{name}_1d.csv" if name.startswith("curve_") else f"fut_{name}_1d.csv"), ["date", "open", "high", "low", "close", "volume"], rows)
             print(f"daily {sym}: {len(rows)} rows {rows[0][0] if rows else ''} -> {rows[-1][0] if rows else ''}", flush=True)
         except Exception as e:  # noqa
             print(f"daily {sym}: FAILED {str(e)[:120]}", flush=True)

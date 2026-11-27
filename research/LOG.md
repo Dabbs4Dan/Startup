@@ -11,6 +11,15 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-27 (5:15 PM real clock) · Chat 6 · RESULTS: 8 AM input hunt (not found in history) + futures pull fix
+- **Did:** tested S1–S3 on AAA history, scored on the open snapshot of the last 40% of daily events (40 diesel, 98 gas). Fixed `tools/history_pull.py pull_daily` (was writing monthly bars; now daily) and added the next 4 RBOB + heating-oil contract months (`data/lake/history/curve_*_1d.csv`, lands with the next `warehouse.yml` run).
+- **Learned (typical miss to next AAA at the open, diesel / gas):** S0 yesterday only 0.81 / 0.62¢ · S1 + 7 moves 0.76 / 0.56 · S2 + day of week 0.62 / 0.40 · S3 + wholesale 0.44 / 0.46 · **crowd 0.25 / 0.25**. Explains the crowd's expected move: 0.63–0.81 (needed 0.85). **Verdict by the plan's rule: not found.**
+- **Learned:** at the close the crowd explains 0.98 (diesel) / 0.99 (gas) of the next AAA move, miss 0.13 / 0.12¢, about 3 hours before AAA posts. All-days miss by snapshot (gas): 0.40 open, 0.36 noon, 0.27 3 PM, 0.21 6 PM, 0.19 close. Reads like a live station-price average that leads AAA.
+- **Not run:** S4 (state AAA from Kalshi state markets): numeric state history starts late Aug 2026, inside the scored block, so no clean fit window.
+- **Oddity chased:** `fut_*_1d.csv` had ~268 rows since 2000 = monthly bars. Master unaffected (it reads EIA + DB futures). State markets close 3:19 AM ET, matching the AAA post time in the flip log.
+- **Decided:** nothing new from Dan. **Proposed:** the remaining suspect needs history we do not hold. GasBuddy sells daily history (2001 on); terms and cost need a check before any use. Free path = our own live recording (truckstops now; a live national average if terms allow), which is a forward test, not a backtest.
+- **Next:** Dan's call on free-only vs buying history. Add day of week to the engine.
+
 ### 2026-11-27 (4:50 PM real clock) · Chat 6 · PLAN (written before running): hunt the input the daily crowd has at the 8 AM open, on history
 - **Dan's ask:** find the missing input and prove it on a backtest before any live test.
 - **Question:** which input, known by 8 AM, takes our next-day AAA miss from ~0.65¢ down to the crowd's 0.31¢ (diesel) / 0.40¢ (gas)?

@@ -181,7 +181,7 @@ down into. This reopens gas and the weekly/monthly ladders (paused the night bef
 | Order | Step | Status |
 |---|---|---|
 | 1 | **Backtest master**: one table for both fuels and all three time slices (`data/lake/master/`) | ✅ v1 built 11/26; see `COVERAGE.md` |
-| 2 | **Fill what is still missing**: state-level AAA history (Internet Archive), older trade tape (`/historical/trades`), AAA national before mid-2023/2024, natural gas futures, rack prices (no free source) | ⬜ |
+| 2 | **Fill what is still missing**: state-level AAA history (Internet Archive), older trade tape (`/historical/trades`), AAA national before mid-2023/2024, rack prices (no free source), **live station-price average history** (top suspect for what the daily crowd sees, M56–M57; no free history). Futures curve: pulling since 11/27 | ⬜ |
 | 3 | **Custom arrays on top of the master** (Dan's next stage): regime tables, Sharpe-style scoring, correlations | ⬜ not started; wait for Dan |
 | 4 | Live side keeps running by itself: truckstop scorecard (first read ~Dec 6), order-book depth (G1) | ◐ |
 
