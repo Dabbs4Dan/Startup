@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASDKY",
- "pulled_utc": "2026-11-27 01:36",
+ "pulled_utc": "2026-11-27 04:55",
  "found": true,
  "title": "Kentucky gas price",
  "frequency": "daily",
@@ -26,6 +26,6 @@
  "events": 36,
  "first_close": "2026-10-09T03:59:00Z",
  "last_close": "2026-11-13T04:59:00Z",
- "candle_rows_added": 7927,
+ "candle_rows_added": 0,
  "markets_no_candles": 17
 }
