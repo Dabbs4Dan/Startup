@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASDGA",
- "pulled_utc": "2026-11-27 00:58",
+ "pulled_utc": "2026-11-27 04:54",
  "found": true,
  "title": "Georgia gas price",
  "frequency": "daily",
@@ -76,6 +76,6 @@
  "events": 73,
  "first_close": "2026-09-02T03:59:00Z",
  "last_close": "2026-11-13T04:59:00Z",
- "candle_rows_added": 18799,
+ "candle_rows_added": 0,
  "markets_no_candles": 0
 }
