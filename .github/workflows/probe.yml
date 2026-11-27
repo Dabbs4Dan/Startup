@@ -4,7 +4,7 @@ name: kalshi-twins source probe
 on:
   push:
     branches: [kalshi-twins]
-    paths: ["tools/probe_sources.py", ".github/workflows/probe.yml"]
+    paths: ["tools/probe_sources.py", "tools/probe_archive.py", ".github/workflows/probe.yml"]
   workflow_dispatch:
 
 permissions:
@@ -17,7 +17,7 @@ concurrency:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with:
@@ -26,7 +26,11 @@ jobs:
         with:
           python-version: "3.12"
       - name: Probe
+        continue-on-error: true
         run: python3 tools/probe_sources.py --pilot
+      - name: Internet Archive probe (what history exists for live pump-price sources)
+        continue-on-error: true
+        run: python3 tools/probe_archive.py
       - name: Commit result
         if: always()
         run: |

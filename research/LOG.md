@@ -11,6 +11,11 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-27 (5:20 PM real clock) · Chat 6 · PROBE PLAN: what the Internet Archive holds for live pump-price sources
+- **Dan's direction:** keep pushing every free angle; saved copies on the Internet Archive are fair to read for personal research (his call; noted that this is not legal advice and that our repo is public, so we store only the few numbers we need, not pages).
+- **Probe (`tools/probe_archive.py`, reads web.archive.org only):** ~45 candidate pages (GasBuddy national / charts / fuel insights, AAA, Trading Economics, YCharts, truckstop and big-chain price pages, the Love's store feed we already record) → days saved per year since 2023, saves per day, hours of day seen, and a text sample near "average". Plus a list of saved URLs on 11 domains to find pages we did not think of.
+- **Deciding number:** a source is worth pulling if it has 200+ distinct days in 2025–26 with a readable national (or many-station) price in the saved copy. Several saves per day = intraday history, the prize.
+
 ### 2026-11-27 (5:10 PM real clock) · Chat 6 · DECISION: free data only for now
 - **Decided (Dan):** build the database with as much free data as possible; no buying for now. No quote requests sent.
 - **Did:** CLAUDE.md §6 step 2 rewritten with the free-only order. Checked today's fix landed: `fut_*_1d.csv` now real daily bars (RBOB 6,550 rows) and 8 curve files (`curve_rb*/ho*_1d.csv`, Dec 2026 to Mar 2027 contracts). Live feeds fresh at 22:08 UTC.
