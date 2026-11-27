@@ -1,6 +1,6 @@
 # Backtest master: coverage and vetting
 
-Built by `tools/backtest_master.py` on 2026-11-26 23:56 UTC. Rules: see the docstring of that file.
+Built by `tools/backtest_master.py` on 2026-11-27 04:50 UTC. Rules: see the docstring of that file.
 
 ## Market canvas (Kalshi ladders)
 
@@ -44,11 +44,11 @@ Source used per day: {"wayback_current": 627, "kalshi_settlement": 387, "wayback
 | aaa_diesel                       | daily   |    710 | 2022-11-28 | 2026-11-26 |                   0 |
 | aaa_gas                          | daily   |    846 | 2023-09-18 | 2026-11-26 |                   0 |
 | brent_spot                       | daily   |   9137 | 1987-05-20 | 2026-11-24 |                   1 |
-| fut_brent                        | daily   |   9321 | 1987-05-20 | 2026-11-24 |                   1 |
-| fut_ho                           | daily   |  10631 | 1980-01-02 | 2026-11-24 |                   1 |
-| fut_natgas                       | daily   |      0 |            |            |                   1 |
-| fut_rbob                         | daily   |   5346 | 2005-10-03 | 2026-11-24 |                   1 |
-| fut_wti                          | daily   |   9552 | 1986-01-02 | 2026-11-24 |                   1 |
+| fut_brent                        | daily   |   9371 | 1987-05-20 | 2026-11-27 |                   1 |
+| fut_ho                           | daily   |  10711 | 1980-01-02 | 2026-11-27 |                   1 |
+| fut_natgas                       | daily   |    269 | 2000-09-01 | 2026-11-27 |                   1 |
+| fut_rbob                         | daily   |   5455 | 2000-11-01 | 2026-11-27 |                   1 |
+| fut_wti                          | daily   |   9627 | 1986-01-02 | 2026-11-27 |                   1 |
 | gasoline_spot_gulf               | daily   |   9247 | 1986-06-02 | 2026-11-24 |                   1 |
 | gasoline_spot_la_rbob            | daily   |   5655 | 2003-03-17 | 2026-11-24 |                   1 |
 | gasoline_spot_nyh                | daily   |   9186 | 1986-06-02 | 2026-11-24 |                   1 |
@@ -120,6 +120,8 @@ Source used per day: {"wayback_current": 627, "kalshi_settlement": 387, "wayback
 
 |                                         | filled   |
 |:----------------------------------------|:---------|
+| eia_retail_diesel_padd5                 | 14%      |
+| eia_retail_diesel_us                    | 14%      |
 | eia_retail_diesel_west_coast_ex_ca      | 14%      |
 | ulsd_spot_gulf                          | 14%      |
 | ulsd_spot_la_carb                       | 14%      |
@@ -128,14 +130,14 @@ Source used per day: {"wayback_current": 627, "kalshi_settlement": 387, "wayback
 | weekly_distillate_exports_kbd           | 14%      |
 | weekly_distillate_imports_kbd           | 14%      |
 | weekly_distillate_production_kbd        | 14%      |
-| eia_retail_diesel_us                    | 14%      |
-| eia_retail_diesel_padd5                 | 14%      |
 | eia_retail_diesel_padd4                 | 14%      |
 | eia_retail_diesel_padd3                 | 14%      |
-| eia_retail_diesel_padd2                 | 14%      |
-| eia_retail_diesel_padd1                 | 14%      |
 | eia_retail_diesel_new_england           | 14%      |
 | eia_retail_diesel_lower_atlantic        | 14%      |
+| eia_retail_diesel_padd2                 | 14%      |
+| eia_retail_diesel_padd1                 | 14%      |
+| distillate_stocks_padd4_kbbl            | 14%      |
+| distillate_stocks_padd4_kbbl_chg_1w_pct | 14%      |
 | distillate_stocks_padd5_kbbl            | 14%      |
 | distillate_stocks_padd5_kbbl_chg_1w_pct | 14%      |
 | distillate_stocks_us_kbbl               | 14%      |
@@ -143,8 +145,6 @@ Source used per day: {"wayback_current": 627, "kalshi_settlement": 387, "wayback
 | heating_oil_spot_nyh                    | 14%      |
 | jet_spot_gulf                           | 14%      |
 | eia_retail_diesel_california            | 14%      |
-| eia_retail_diesel_central_atlantic      | 14%      |
-| distillate_stocks_padd1_kbbl            | 14%      |
 
 ## Checks
 
