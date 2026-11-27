@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASCDLA",
- "pulled_utc": "2026-11-27 20:22",
+ "pulled_utc": "2026-11-27 21:08",
  "found": true,
  "title": "Louisiana gas price",
  "frequency": "daily",
@@ -26,6 +26,6 @@
  "events": 14,
  "first_close": "2026-11-14T08:27:36Z",
  "last_close": "2026-11-27T08:32:51Z",
- "candle_rows_added": 72,
+ "candle_rows_added": 0,
  "markets_no_candles": 0
 }
