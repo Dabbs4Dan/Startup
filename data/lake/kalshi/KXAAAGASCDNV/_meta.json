@@ -1,6 +1,6 @@
 {
  "series": "KXAAAGASCDNV",
- "pulled_utc": "2026-11-26 23:57",
+ "pulled_utc": "2026-11-27 04:53",
  "found": true,
  "title": "Nevada gas price",
  "frequency": "daily",
@@ -26,6 +26,6 @@
  "events": 12,
  "first_close": "2026-11-15T08:32:44Z",
  "last_close": "2026-11-26T10:08:38Z",
- "candle_rows_added": 813,
+ "candle_rows_added": 0,
  "markets_no_candles": 0
 }
