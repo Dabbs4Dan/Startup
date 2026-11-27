@@ -170,8 +170,46 @@ def scan(s):
     return c
 
 
+def ledger(s):
+    """Plain historical count: favorite side x price band x won/lost, with win % against the break-even its price implies."""
+    s = s.copy()
+    s["fav_ask"] = np.where(s.fav_side == "yes", s.yes_ask, s.no_ask)
+    rows = []
+
+    def one(g, mk, side, band):
+        def edge(d):
+            return round((d.fav_won.mean() - d.fav_cost.mean()) * 100, 1) if len(d) else np.nan
+        n, w = len(g), int(g.fav_won.sum())
+        rows.append({"market": mk, "favorite": side.capitalize(), "price_band": band, "instances": n, "events": g.event.nunique(),
+                     "favorite_won": w, "favorite_lost": n - w, "win_pct": round(w / n * 100, 1),
+                     "avg_price_paid_c": round(g.fav_ask.mean() * 100, 1), "break_even_pct": round(g.fav_cost.mean() * 100, 1),
+                     "edge_pts": edge(g), "return_per_$_pct": round(g.ret_fav.mean() * 100, 1), "avg_bid_ask_pts": round(g.spread.mean() * 100, 1),
+                     "early_events": g[g.block == "fit"].event.nunique(), "edge_early_pts": edge(g[g.block == "fit"]),
+                     "late_events": g[g.block == "holdout"].event.nunique(), "edge_late_pts": edge(g[g.block == "holdout"])})
+        r = rows[-1]
+        r["lead"] = "yes" if min(r["early_events"], r["late_events"]) >= 20 and r["edge_early_pts"] > 0 and r["edge_late_pts"] > 0 else \
+            ("avoid" if min(r["early_events"], r["late_events"]) >= 20 and r["edge_early_pts"] < 0 and r["edge_late_pts"] < 0 else "")
+    bands = ["50-60", "60-70", "70-80", "80-90", "90+"]
+    for mk in ["ALL SIX"] + sorted(s.market.unique()):
+        gm = s if mk == "ALL SIX" else s[s.market == mk]
+        for side in ("yes", "no"):
+            gs = gm[gm.fav_side == side]
+            if gs.empty:
+                continue
+            one(gs, mk, side, "all")
+            for b in bands:
+                g = gs[gs.price_band == b]
+                if len(g):
+                    one(g, mk, side, b)
+    return pd.DataFrame(rows)
+
+
 def main():
     s = build()
+    led = ledger(s)
+    led.to_csv(OUT / "favorite_ledger.csv", index=False)
+    pd.set_option("display.width", 250)
+    print(led.to_string(index=False))
     s.to_csv(MASTER / "slices.csv.gz", index=False, compression="gzip")
     c = scan(s)
     OUT.mkdir(parents=True, exist_ok=True)
