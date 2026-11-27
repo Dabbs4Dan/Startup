@@ -11,6 +11,17 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-27 (4:20 PM) · Chat 6 · RESULTS: market-maker equation v0, all six markets (plan = the 4:00 PM entry below)
+- **Did:** `tools/mm_model.py` → `research/engine_room/mm_model_scorecard.csv` + `mm_model_coefficients.csv`. Fit on the first 60% of events, scored on the last 40%.
+- **Learned:**
+  - **A. Center (where the crowd puts the answer):** out-of-sample explained 0.79 diesel daily (45 scored events), 0.71 gas daily (98), 0.68 diesel weekly (6), 0.72 gas weekly (18), 0.29 gas monthly (12); diesel monthly not fittable (3 events). Miss vs strike step: daily 0.56¢ / 0.50¢ (vs 0.5¢ step), weekly 1.95¢ / 1.37¢ (vs 2¢), gas monthly 4.1¢ (vs 5¢) → about one line everywhere.
+  - Daily center ≈ **0.72× yesterday's AAA move (diesel), 0.64× (gas)**; futures and the retail gap add almost nothing. Weekly starts above 1× yesterday's move and adds futures as days-out grow.
+  - **B. Width (how unsure the crowd is): not cracked.** √time + jumpiness explains gas weekly (0.58) and fails out of sample on the other five (negative). Width shifts over time for reasons we have not modeled.
+  - **C. Shape:** a bell curve with the crowd's own center and width misses each line by 2.6–3.2 price points in all six. Low-chance lines are priced richer than the bell curve: +0.3–0.4 points daily, **+1.8 to +3.2 points weekly and monthly** (fat tails / long-shot premium; matches "cheap long shots lose" from the deep scan).
+  - **D. Cost:** median spread 2–3¢ daily, 2–4¢ weekly, 3–5¢ monthly.
+- **Limits:** one equation stands in for several market makers plus retail orders; weekly and monthly rows overlap inside an event; diesel weekly is 15 events, gas weekly ladders only exist in 2026.
+- **Next (proposed):** width layer (try time-of-day, days-out and recent miss size); skew-aware shape; then compare this equation with a truth equation term by term (where the crowd's weights differ from what actually happens = candidate edge).
+
 ### 2026-11-27 (4:00 PM) · Chat 6 · PLAN (written before running): market-maker equation v0 on all six markets
 - **Asked (Dan):** outline the market-making algorithm we are working backwards to solve, for all 6 markets, so each input can be isolated.
 - **What this is:** a description of how the ladder is priced, not an edge test. Extends Engine Room L0.1 (diesel daily only) to all six.

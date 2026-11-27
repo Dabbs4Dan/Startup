@@ -1,0 +1,7 @@
+fuel,slice,events_fit,events_scored,rows_fit,rows_scored,strike_step_c,center_explained_oos,center_miss_c,center_miss_if_no_model_c,width_explained_oos,width_typical_c,width_miss_c,shape_line_miss_pts,shape_lines_scored,shape_lean_low_lines_pts,shape_lean_high_lines_pts,spread_mid_lines_c,spread_edge_lines_c
+diesel,daily,67,45,348,303,0.5,0.79,0.56,1.66,-4.78,0.39,1.22,3.01,938,0.39,1.33,3.0,2.0
+diesel,monthly,1,2,14,302,10.0,-1524.46,220.96,11.18,-10.83,26.92,34.32,3.22,3165,3.24,-1.21,5.0,4.0
+diesel,weekly,9,6,268,218,2.0,0.68,1.95,4.31,-0.45,2.97,2.49,2.63,804,2.93,-0.75,4.0,4.0
+gas,daily,147,98,901,685,0.5,0.71,0.5,1.1,-0.47,0.41,0.3,3.02,2265,0.26,0.55,2.0,2.0
+gas,monthly,17,12,1719,1954,5.0,0.29,4.11,5.44,-0.31,11.57,5.44,2.83,13609,2.06,-0.7,3.0,3.0
+gas,weekly,25,18,734,647,2.0,0.72,1.37,2.22,0.58,1.7,1.03,2.74,3609,1.76,0.1,2.0,2.0
