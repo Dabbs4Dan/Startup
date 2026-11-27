@@ -1,31 +1,31 @@
 {
  "series": "KXAAAGASCDOH",
- "pulled_utc": "2026-11-27 04:53",
+ "pulled_utc": "2026-11-27 20:22",
  "found": true,
  "title": "Ohio gas price",
  "frequency": "daily",
  "fee_type": "quadratic",
  "fee_multiplier": 1,
  "cutoff": {
-  "market_positions_last_updated_ts": "2026-09-27T00:00:00Z",
-  "market_settled_ts": "2026-09-27T00:00:00Z",
-  "orders_updated_ts": "2026-11-12T00:00:00Z",
-  "trades_created_ts": "2026-09-27T00:00:00Z"
+  "market_positions_last_updated_ts": "2026-09-28T00:00:00Z",
+  "market_settled_ts": "2026-09-28T00:00:00Z",
+  "orders_updated_ts": "2026-11-13T00:00:00Z",
+  "trades_created_ts": "2026-09-28T00:00:00Z"
  },
  "first_page_live": {
   "cursor": "",
-  "markets": "list[80]"
+  "markets": "list[85]"
  },
  "first_page_historical": {
   "cursor": "",
   "markets": "list[0]"
  },
- "markets_live": 80,
+ "markets_live": 85,
  "markets_historical": 0,
- "markets_total": 80,
- "events": 16,
+ "markets_total": 85,
+ "events": 17,
  "first_close": "2026-11-11T08:20:00Z",
- "last_close": "2026-11-26T10:08:30Z",
- "candle_rows_added": 0,
+ "last_close": "2026-11-27T08:32:46Z",
+ "candle_rows_added": 31,
  "markets_no_candles": 0
 }
