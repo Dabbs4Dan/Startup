@@ -441,3 +441,4 @@ event,time_utc,hour_et,mu_from,mu_to,move_c,status
 2026-10-23,2026-10-22T18:00Z,14,4.2967,4.2935,-0.32,UNEXPLAINED (no intraday inputs stored for this hour yet)
 2026-10-24,2026-10-23T21:00Z,17,4.3011,4.298,-0.31,UNEXPLAINED (no intraday inputs stored for this hour yet)
 2026-10-30,2026-10-29T15:00Z,11,4.2056,4.2019,-0.37,UNEXPLAINED (no intraday inputs stored for this hour yet)
+2026-11-27,2026-11-26T15:00Z,10,3.5353,3.5398,0.45,UNEXPLAINED (no intraday inputs stored for this hour yet)
