@@ -11,6 +11,15 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-27 (6:25 PM real clock) · Chat 6 · RESULTS: slice table + ratio layer + scan (`tools/slice_scan.py`)
+- **Did:** built `data/lake/master/slices.csv.gz` (23,757 rows × 52, 542 events; layers 2 and 3) and `research/engine_room/slice_scan.csv` (1,328 cells) + `slice_scan_survivors.csv`.
+- **Learned (base rates, per $ after costs, all rows):** favorite win rate 90 / 87 / 76 / 84 / 85 / 82% (diesel daily, diesel weekly, diesel monthly, gas daily, gas weekly, gas monthly); favorite return +4.4 / +3.8 / −6.4 / −0.7 / −0.1 / −1.3%; underdog return −58 / −56 / −34 / −33 / −37 / −37%.
+- **Learned (scan):** 660 cells had 20+ fit events; 217 pass the 10% false-discovery filter, almost all of them "underdog loses". 18 survivors (positive in fit and holdout): gas daily No-favorite at night (+10.7% fit / +5.7% holdout, 91 holdout events, t 1.6; 80–90 band +9.6 / +7.9; 90+ band +3.5 / +3.2, t 2.0) · diesel daily Yes-favorite, morning, 90+ (37/37 and 28/28 wins, +3.2 / +5.1%; loss-free, so its t is inflated) · diesel daily No-favorite when crowd range ÷ jumpiness is low (+10.4 / +9.0, t 1.8) · diesel daily Yes-favorite when engine disagrees high (+12.4 / +7.1, t 1.5). Hint: gas weekly Yes-favorites −25% fit / −17% holdout (t −3.2).
+- **Not testable:** diesel weekly, gas monthly, diesel monthly (0 cells with 20+ fit events).
+- **Caveats:** asks from hourly candles assumed hittable for small size; fee rounding ignored; holdout t mostly under 2; with 660 tests about this many survivors can come from luck. Consistent with parked M28 (favorites) but not new proof.
+- **Decided (Dan, 6 PM):** build everything; favorite = side above 50%; all six equally.
+- **Next:** archive probe results (running); forward-test list from the 18 leads; more history for the long markets.
+
 ### 2026-11-27 (6:00 PM real clock) · Chat 6 · PLAN (written before running): slice table + ratio layer + scan, all six markets
 - **Dan's direction (6 PM):** build everything: (2) slice table of favorite outcomes, (3) our own ratio layer, and keep the free-data hunt going. Favorite = the side priced above 50% on each of the 3 busiest lines. All six markets get equal depth.
 - **Layer 2, `data/lake/master/slices.csv.gz`:** one row per market × event × snapshot × busy line (1–3). Favorite side, cost (ask + taker fee 0.07·p·(1−p)), outcome label (favorite won as Yes / won as No / lost as Yes / lost as No), return per $ for backing the favorite and for backing the underdog. Only lines with a bid-ask of 10 points or less, and only rows where the answer could not be public yet.

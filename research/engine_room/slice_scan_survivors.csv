@@ -1,0 +1,19 @@
+kind,market,fav_side,slice,bet,rows,fit_events,fit_ret_per_$,fit_t,fit_p,fit_win_rate,holdout_events,holdout_ret_per_$,holdout_t,sharpe_style_all,passes_filter,survivor,tested_cells_20plus
+ratio,diesel daily,no,r_range_vs_jumpiness = low third (cuts 0.34 / 0.53),favorite,261,21,0.1039,2.58,0.009877088238325005,0.942,34,0.0901,1.78,6.21,True,True,660
+base,diesel daily,yes,price_band = 90+,favorite,440,65,0.021,3.05,0.002272374674191946,0.989,41,0.0004,0.01,1.6,True,True,660
+base,diesel daily,yes,time_of_day = morning & price_band = 90+,favorite,113,37,0.0321,8.59,0.0,1.0,28,0.051,10.73,22.74,True,True,660
+ratio,diesel daily,yes,r_disagree = high third (cuts -0.32 / 0.46),favorite,336,31,0.1242,4.26,2.073722422624158e-05,0.97,32,0.0711,1.54,6.29,True,True,660
+ratio,diesel daily,yes,r_range_vs_jumpiness = low third (cuts 0.36 / 0.66),favorite,280,25,0.094,2.33,0.01973346005917831,0.932,35,0.0231,0.48,3.05,True,True,660
+ratio,diesel daily,yes,r_line_distance = middle third (cuts 0.70 / 1.33),favorite,269,52,0.0761,4.44,8.923785222991754e-06,0.979,43,0.0403,1.02,5.27,True,True,660
+ratio,diesel daily,yes,r_line_distance = high third (cuts 0.70 / 1.33),favorite,249,54,0.0246,4.36,1.3232834179977004e-05,0.995,34,0.0137,0.44,2.93,True,True,660
+base,gas daily,no,time_of_day = night,favorite,637,128,0.1068,3.99,6.624182428538461e-05,0.916,91,0.0573,1.63,2.26,True,True,660
+base,gas daily,no,price_band = 80-90,favorite,517,108,0.0609,2.28,0.02232735912380779,0.925,88,0.0381,1.16,1.38,True,True,660
+base,gas daily,no,time_of_day = night & price_band = 70-80,favorite,119,59,0.1622,3.15,0.001658194563723736,0.898,35,0.102,1.32,4.06,True,True,660
+base,gas daily,no,time_of_day = night & price_band = 80-90,favorite,154,65,0.0957,3.49,0.000478415703869306,0.959,43,0.0793,1.72,4.58,True,True,660
+base,gas daily,no,time_of_day = night & price_band = 90+,favorite,251,81,0.0345,2.62,0.008698777218389964,0.988,66,0.0321,2.0,1.84,True,True,660
+ratio,gas daily,no,r_range_engine_vs_crowd = middle third (cuts 1.03 / 1.57),favorite,611,98,0.0804,2.45,0.014290156167508616,0.885,58,0.0517,1.11,3.29,True,True,660
+ratio,gas daily,no,r_range_engine_vs_crowd = high third (cuts 1.03 / 1.57),favorite,1023,82,0.0736,2.34,0.01932100223936617,0.903,96,0.0104,0.29,2.05,True,True,660
+ratio,gas daily,no,r_disagree = low third (cuts 0.29 / 1.35),favorite,935,78,0.0868,2.17,0.030012405842652523,0.876,66,0.0119,0.28,2.19,True,True,660
+ratio,gas daily,no,r_range_vs_jumpiness = low third (cuts 0.33 / 0.51),favorite,802,81,0.0915,2.78,0.005415691020868252,0.908,81,0.0224,0.59,2.76,True,True,660
+base,gas daily,yes,time_of_day = morning & price_band = 60-70,underdog,65,27,0.5469,2.45,0.014158758088423262,0.37,26,0.2618,1.01,2.99,True,True,660
+base,gas weekly,no,time_of_day = night & price_band = 90+,favorite,296,38,0.0421,11.9,0.0,1.0,49,0.0239,1.77,2.34,True,True,660
