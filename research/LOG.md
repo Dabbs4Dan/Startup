@@ -11,6 +11,12 @@ Template:
 - **Next:** …
 ```
 
+### 2026-11-27 (6:35 PM real clock) · Chat 6 · PLAN: favorite ledger (Dan's cleaner slice design), written before building
+- **Dan's ask:** start from a plain historical count. Four boxes: favorite Yes won / favorite Yes lost / favorite No won / favorite No lost. A price range inside each. Then the win % tied to the price paid.
+- **Build (`tools/slice_scan.py` → `research/engine_room/favorite_ledger.csv`, Build Board tab "Favorite Ledger"):** per market × favorite side × price band (50–60, 60–70, 70–80, 80–90, 90+): instances, distinct events, wins, losses, win %, average price paid, break-even % (price + fee), **edge = win % − break-even %**, return per $, average bid-ask, and the same edge on the early 60% vs late 40% of events. Plus an "all six" roll-up.
+- **Reading rule:** edge counts as a lead only with 20+ events in the band and the same sign early and late. Win % here is per instance; the event count sits beside it because one event repeats across time slots and lines.
+- **Assumed (my reading of "% tied to the spread"):** the gap between how often the favorite wins and what its price says. Bid-ask width is shown too.
+
 ### 2026-11-27 (6:25 PM real clock) · Chat 6 · RESULTS: slice table + ratio layer + scan (`tools/slice_scan.py`)
 - **Did:** built `data/lake/master/slices.csv.gz` (23,757 rows × 52, 542 events; layers 2 and 3) and `research/engine_room/slice_scan.csv` (1,328 cells) + `slice_scan_survivors.csv`.
 - **Learned (base rates, per $ after costs, all rows):** favorite win rate 90 / 87 / 76 / 84 / 85 / 82% (diesel daily, diesel weekly, diesel monthly, gas daily, gas weekly, gas monthly); favorite return +4.4 / +3.8 / −6.4 / −0.7 / −0.1 / −1.3%; underdog return −58 / −56 / −34 / −33 / −37 / −37%.
