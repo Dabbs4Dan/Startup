@@ -8,12 +8,25 @@ after it also holds on new days. Dan's reading copy: Google Sheet "Kalshi – Qu
 event at each time slot). The event is the sample. Cost = ask + taker fee. Noise = 2 standard errors across events.
 
 **Guard rails (kept here, nowhere else):**
-- **Trial count:** about 3,300 cuts were run before this log (deep scan 1,980 + slice scan 1,328). Each question adds 1; the bet grid (Q004) added its 2,424 readable cells. **Count now: 5,840.**
+- **Trial count:** about 3,300 cuts were run before this log (deep scan 1,980 + slice scan 1,328). Each question adds 1; the bet grid (Q004) added its 2,424 readable cells. **Count now: 5,910.**
 - **Baselines any idea must beat:** (1) the crowd's own price, (2) "no change", (3) "skip the long shots".
 - **Vault:** events that settle after 2026-11-27 have never been looked at. Only they can turn a look-back into a lead.
 - **Read of a result:** "edge beyond noise" = bigger than its noise band; "inside noise" = luck not ruled out; under 30 events = too few.
 
 ---
+
+### Q008 · 2026-11-28 03:02 AM ET · Why are the big rises wrong? What was happening on those days?
+- **Asked by Dan:** "Yes why rises" (follow-up to Q007).
+- **Answer:** a big crowd rise is right when wholesale futures rose the day before, and wrong when they did not. Rises with no wholesale reason behind them are the crowd chasing.
+- **Gas daily, big rises (131 days):** futures rose the day before (44 days): crowd moved up 0.43c, truth ended 0.71c up, AAA rose the next day 69% of the time, betting with the rise +2.9 (noise 10.2). Futures did not rise (87 days): crowd up 0.35c, truth only 0.24c, AAA rose 44% of the time, betting with the rise -14.9 (noise 8.4), betting against it +9.2.
+- **Diesel daily, big rises (52 days):** futures rose (20 days): crowd up 0.60c, truth 0.97c, AAA rose 83%, with +2.7. Futures did not rise (35 days): with -16.7 (noise 12.2), against +11.3.
+- **Worst case:** gas daily, rising 10-day trend and no futures rise (31 days): crowd up 0.41c, truth 0.09c, with -30.4 (noise 12.0), against +24.3.
+- **Late night (10 PM and close) rises with no futures rise:** gas daily -19.3 (noise 12.9, 45 nights); diesel daily -22.6 (noise 18.3, 18 nights).
+- **Drops, for balance:** gas daily drops after futures fell (47 days): crowd down 0.36c, truth 0.59c down, betting with the drop +11.8 (noise 7.5). The crowd does not go far enough on backed drops.
+- **Not the cause:** whether AAA itself rose that morning (with-the-rise edge -5.5 vs -5.7 in gas).
+- **Why this is usable:** the futures number is the previous trading day's close, known before the market opens. It is a fundamental check on a crowd move, which fits the plan (forecast picks the bet, leans check it).
+- **Catch:** look-back; about 70 more cuts read; groups are 20 to 87 days. "Did not rise" includes weekends and holidays when futures did not trade.
+- **Data:** `python3 tools/swing_why.py` (reads `swing_cohort.csv`, the master, `inputs_daily.csv`). Master m20261128-0345b9a1.
 
 ### Q007 · 2026-11-28 02:59 AM ET · The biggest intraday price swings on the busy lines: is there a pattern?
 - **Asked by Dan:** "look into instances in the biggest spread swing across the 6 topics and 3 most liquid markets whether yes no fav not favorite, analyze a cohort of just the biggest spread swings intraday and identify some sort of trend or pattern." Read as: the biggest price moves of a line between two time slots.
