@@ -1,0 +1,45 @@
+name: becker fuel slice
+
+# One-time pull of the fuel slice from Jon Becker's public Kalshi data set (36 GiB, Jun 2021 - Nov 2025).
+# Streams the archive (never stored), keeps gas + diesel markets/trades + an all-Kalshi series summary.
+# Writes only data/lake/becker/. Started by a push to its own files or by hand.
+on:
+  push:
+    branches: [kalshi-twins]
+    paths: ["tools/becker_pull.py", ".github/workflows/becker.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kalshi-twins-becker
+  cancel-in-progress: false
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: kalshi-twins
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Stream archive and keep the fuel slice
+        run: |
+          pip install pyarrow zstandard
+          set -o pipefail
+          curl -sSL --retry 3 --fail https://s3.jbecker.dev/data.tar.zst | python3 tools/becker_pull.py
+          ls -la data/lake/becker/
+      - name: Commit
+        run: |
+          git config user.name "kalshi-twins-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/lake/becker/
+          git diff --cached --quiet || git commit -m "becker: fuel slice of public Kalshi data set $(date -u +%Y-%m-%d)"
+          for i in 1 2 3; do
+            git pull --rebase -X theirs origin kalshi-twins && git push origin HEAD:kalshi-twins && break
+            sleep 10
+          done

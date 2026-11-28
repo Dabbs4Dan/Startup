@@ -118,6 +118,7 @@ AAA diesel number and find gaps vs. Kalshi's odds. Demo money only until a strat
 | `gas_backfill.yml` | same for gas (side test) | **`data/gas/`** (only writer) | relay if no success in 20h |
 | `warehouse.yml` | daily futures (full history) + ~70 EIA series (regional pump prices, stocks, refining, demand) + Yahoo intraday + Internet Archive AAA national → catalog + feed health | `data/lake/`, `data/warehouse_catalog.*`, `data/feed_health.csv` | relay if no success in 20h |
 | `kalshi_history.yml` | full Kalshi history, 7 fuel series, both tiers | `data/lake/kalshi/` | by hand / push |
+| `becker.yml` | one-time: streams Becker's public Kalshi set (36 GiB), keeps gas + diesel markets/trades 2021–Nov 2025 + all-Kalshi series summary (`tools/becker_pull.py`) | `data/lake/becker/` | push to its files / by hand |
 | `history.yml` | Internet Archive AAA **state** pages → Engine Room re-score | `research/engine_room/` (never the DB) | by hand / push |
 | `nautilus.yml` | engine replay + fee check | `nautilus/reports/` | relay |
 | `probe.yml`, `connectivity.yml` | one-off source probes (11/27: `tools/probe_archive.py` = what the Internet Archive holds for live pump-price pages → `research/engine_room/archive_probe*.csv`) | `research/` | push |
@@ -186,7 +187,7 @@ the most edge. Simple counts on raw Kalshi data come before deep plays. Build la
 **Still true:** deep scan found no stored parameter that predicts the 10 AM miss; the market-maker copy is 6–16 points
 off per line. **Parked:** limit-order favorites (M28) · evening overshoot in a rising trend (M36).
 
-**Waiting on Dan (11/28):** (1) record all six but test on gas daily, gas weekly, diesel daily, vs "all six equally" · (2) Becker's gas trades by GitHub job, or extend our own trade pull · (3) "clean it" = hide 6 replaced sheet tabs · (4) Strategy shape (Dan, 11/28): **our AAA forecast picks the bet; crowd leans check it; size grows with the gap after spread + fee, capped.** Leans (Q001–Q005, e.g. gas NO-favorite at 10 PM) are not traded alone: each one tells a story about a trend or information the crowd misreads, so explain it and build it into the forecast.
+**Waiting on Dan (11/28):** (1) record all six but test on gas daily, gas weekly, diesel daily, vs "all six equally" · (2) ✅ Becker by GitHub job (Dan, 11/28): `becker.yml` → `data/lake/becker/` · (3) "clean it" = hide 6 replaced sheet tabs · (4) Strategy shape (Dan, 11/28): **our AAA forecast picks the bet; crowd leans check it; size grows with the gap after spread + fee, capped.** Leans (Q001–Q005, e.g. gas NO-favorite at 10 PM) are not traded alone: each one tells a story about a trend or information the crowd misreads, so explain it and build it into the forecast.
 
 **Older open items:** rockets & feathers (G9) · exact AAA post time (G2) · engine gaps in `nautilus/README.md`. Legacy scripts named in SPINE history: new work reads the master.
 
