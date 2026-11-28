@@ -4,6 +4,13 @@ Moved out of CLAUDE.md on 2026-11-25 so new sessions load fast. **Add new entrie
 
 Template:
 ```
+### 2026-11-28 (3:40 AM) · Chat 7 · Earlier answers re-tested, 4 dropped from the question log
+
+- **Did:** Dan asked to drop P02, P10, P16, P21 from the question log and re-test the rest. Re-ran the 18 kept earlier answers on master m20261128-0345b9a1 with `tools/retest_earlier.py`; each log entry now has Plain meaning / Then / Re-test / Verdict / Catch. Sheet "Kalshi – Question Log" matches (18 P rows). Trial count 5,950 → 6,010.
+- **Learned (all look-back, same days as before):** Held: gas evening overshoot after a 5-day rise (+25.7 per $100, noise 20.4, 43 days), gas YES at 83.5c or less loses, diesel favorites not proven (falling-market effect), daily markets have the most room (+68.7 → +42.3 after costs), pump prices trail futures (peak effect 2-3 days later, same day about zero), crowd beats our simple forecasts at the open. Changed: diesel morning crowd no longer over-follows yesterday's move (0.84 vs truth 0.91); bet size is smaller ($1K fits 66% of the time, $5K 1-2%, best price only, 3 days); limit-order result is a favorite effect (takers buying the same favorites did better); range-too-wide only confirmed for the two daily markets.
+- **Decided (Dan):** P02, P10, P16, P21 are out of the question log. They stay in `master.csv` (M10, M15, M35, M54).
+- **Next (proposed):** build the futures-delay input (2-3 day lag) into the AAA forecast; check the weekly range measure (gas weekly 21% looks like a measuring problem, not a finding).
+
 ### YYYY-MM-DD (time) · Chat N · short title
 - **Did:** …
 - **Learned:** …
