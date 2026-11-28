@@ -170,8 +170,12 @@ def pull_yahoo():
                 body, last = None, None
                 for host in ("query1", "query2"):
                     try:
-                        body = json.loads(fetch(f"https://{host}.finance.yahoo.com/v8/finance/chart/{sym}?interval={interval}&range={rng}",
-                                                tries=1, timeout=20))
+                        # plain user agent (fixed 2026-11-28): Yahoo blocks the browser-like UA used by fetch(), which is why no
+                        # yahoo_* file ever landed; the plain one already works for the daily pull below and in tools/backfill.py.
+                        req = urllib.request.Request(f"https://{host}.finance.yahoo.com/v8/finance/chart/{sym}?interval={interval}&range={rng}",
+                                                     headers={"User-Agent": "Mozilla/5.0 (kalshi-twins-research)"})
+                        with urllib.request.urlopen(req, timeout=60) as r:
+                            body = json.loads(r.read().decode())
                         break
                     except Exception as e:  # noqa
                         last = e
