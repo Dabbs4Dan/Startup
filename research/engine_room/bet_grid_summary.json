@@ -1,0 +1,84 @@
+{
+ "master_version": "m20261128-0345b9a1",
+ "replays": 1000,
+ "bets": 47262,
+ "events": 542,
+ "cells_with_data": 10748,
+ "cells_readable_30plus": 2424,
+ "data_by_market": [
+  {
+   "market": "gas daily",
+   "events": 253,
+   "cells_with_data": 1981,
+   "cells_30plus_events": 923,
+   "cells_100plus_events": 359,
+   "median_noise_pts_readable": 5.8,
+   "cells_that_can_see_3pt_edge": 87,
+   "cells_that_can_see_5pt_edge": 374
+  },
+  {
+   "market": "gas weekly",
+   "events": 128,
+   "cells_with_data": 1907,
+   "cells_30plus_events": 767,
+   "cells_100plus_events": 50,
+   "median_noise_pts_readable": 6.3,
+   "cells_that_can_see_3pt_edge": 65,
+   "cells_that_can_see_5pt_edge": 236
+  },
+  {
+   "market": "diesel daily",
+   "events": 110,
+   "cells_with_data": 1878,
+   "cells_30plus_events": 562,
+   "cells_100plus_events": 21,
+   "median_noise_pts_readable": 6.1,
+   "cells_that_can_see_3pt_edge": 55,
+   "cells_that_can_see_5pt_edge": 179
+  },
+  {
+   "market": "gas monthly",
+   "events": 33,
+   "cells_with_data": 1780,
+   "cells_30plus_events": 172,
+   "cells_100plus_events": 0,
+   "median_noise_pts_readable": 6.9,
+   "cells_that_can_see_3pt_edge": 26,
+   "cells_that_can_see_5pt_edge": 49
+  },
+  {
+   "market": "diesel weekly",
+   "events": 15,
+   "cells_with_data": 1727,
+   "cells_30plus_events": 0,
+   "cells_100plus_events": 0,
+   "median_noise_pts_readable": null,
+   "cells_that_can_see_3pt_edge": 0,
+   "cells_that_can_see_5pt_edge": 0
+  },
+  {
+   "market": "diesel monthly",
+   "events": 3,
+   "cells_with_data": 1475,
+   "cells_30plus_events": 0,
+   "cells_100plus_events": 0,
+   "median_noise_pts_readable": null,
+   "cells_that_can_see_3pt_edge": 0,
+   "cells_that_can_see_5pt_edge": 0
+  }
+ ],
+ "luck_check": {
+  "winner_looking_cells_real": 77,
+  "winner_looking_by_luck_mean": 44.0,
+  "winner_looking_by_luck_95pct": 111.0,
+  "share_of_replays_with_as_many_winners": 0.131,
+  "loser_cells_real": 276,
+  "loser_by_luck_mean": 52.0,
+  "loser_by_luck_95pct": 138.0,
+  "share_of_replays_with_as_many_losers": 0.002,
+  "top1pct_cells_real": 43,
+  "top1pct_by_luck_mean": 16.0,
+  "top1pct_by_luck_95pct": 51.0
+ },
+ "leads": 42
+}

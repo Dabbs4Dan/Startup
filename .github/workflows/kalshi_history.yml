@@ -52,8 +52,9 @@ jobs:
           # downstream tables + the spine's join checks, every rebuild (added 2026-11-28). A failed check is printed, not hidden.
           (cd tools && python3 slice_scan.py > /dev/null) || echo "slice build failed"
           python3 tools/market_scorecard.py > /dev/null || echo "scorecard failed"
+          python3 tools/bet_grid.py > /dev/null || echo "bet grid failed"
           python3 tools/spine.py > /dev/null || echo "SPINE CHECK FAILED: read data/lake/master/SPINE.md"
-          git add data/lake/master/ research/engine_room/favorite_ledger.csv research/engine_room/favorite_ledger_by_time_and_line.csv research/engine_room/slice_scan.csv research/engine_room/slice_scan_survivors.csv research/engine_room/market_scorecard.csv
+          git add data/lake/master/ research/engine_room/favorite_ledger.csv research/engine_room/favorite_ledger_by_time_and_line.csv research/engine_room/slice_scan.csv research/engine_room/slice_scan_survivors.csv research/engine_room/market_scorecard.csv research/engine_room/bet_grid.csv research/engine_room/bet_grid_highlights.csv research/engine_room/bet_grid_summary.json
           if ! git diff --cached --quiet; then
             git commit -q -m "backtest master: rebuilt $(date -u +%Y-%m-%dT%H:%MZ)"
             for i in 1 2 3 4; do git pull -q --rebase -X theirs origin kalshi-twins && git push -q origin HEAD:kalshi-twins && break; sleep 15; done

@@ -21,6 +21,7 @@ T = [  # name, path, layer, grain (key columns), built by, engine, what it is
     ("favorite_ledger", E / "favorite_ledger.csv", "L2 roll-up", ["market", "favorite", "price_band"], "tools/slice_scan.py", "E1", "plain count of the 4 boxes by price band, win % vs break-even"),
     ("favorite_ledger_by_time_and_line", E / "favorite_ledger_by_time_and_line.csv", "L2 roll-up", ["market", "favorite", "cut", "value"], "tools/slice_scan.py", "E1", "same count by time slot and by busy-line rank"),
     ("market_scorecard", E / "market_scorecard.csv", "L2 roll-up", ["market"], "tools/market_scorecard.py", "E1", "the six markets on one ruler: events, favorite edge vs noise, cost, crowd miss, taker vs maker, depth"),
+    ("bet_grid", E / "bet_grid.csv", "L3 scan", ["market", "side", "price_cut", "slot", "line"], "tools/bet_grid.py", "E1", "every simple bet: market x YES/NO x price cut x time slot x busy line, with noise and a luck check (1,000 replays). Superset of the two favorite ledgers"),
     ("slice_scan", E / "slice_scan.csv", "L3 scan", ["market", "fav_side", "bet", "slice"], "tools/slice_scan.py", "E1", "every slice tested early vs late, false-winner filter"),
     ("mm_model_scorecard", E / "mm_model_scorecard.csv", "L4 market-maker copy", ["fuel", "slice"], "tools/mm_model.py", "both", "how well we copy center / range / shape / cost"),
     ("mm_anchor_scorecard", E / "mm_anchor_scorecard.csv", "L4 market-maker copy", ["fuel", "slice"], "tools/mm_anchor.py", "both", "copy built from big outside data + 2 dials; line price gap"),

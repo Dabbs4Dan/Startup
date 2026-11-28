@@ -32,6 +32,7 @@ LAB = {"backtest_master": "data/lake/master/backtest_master.csv.gz", "ladder_sna
        "inputs_daily": "data/lake/master/inputs_daily.csv", "aaa_reconciled": "data/lake/master/aaa_daily.csv",
        "slices": "data/lake/master/slices.csv.gz", "favorite_ledger": "research/engine_room/favorite_ledger.csv",
        "favorite_ledger_by_time_and_line": "research/engine_room/favorite_ledger_by_time_and_line.csv",
+       "bet_grid": "research/engine_room/bet_grid.csv", "market_scorecard": "research/engine_room/market_scorecard.csv",
        "slice_scan": "research/engine_room/slice_scan.csv", "mm_model_scorecard": "research/engine_room/mm_model_scorecard.csv",
        "mm_anchor_scorecard": "research/engine_room/mm_anchor_scorecard.csv", "spine": "data/lake/master/spine.csv"}
 

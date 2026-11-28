@@ -1,6 +1,6 @@
 # The spine: how every research table connects
 
-Built by `tools/spine.py` on 2026-11-28 06:32 UTC. Re-run after any table is rebuilt. Read this before adding a table.
+Built by `tools/spine.py` on 2026-11-28 07:40 UTC. Re-run after any table is rebuilt. Read this before adding a table.
 
 **Master version: `m20261128-0345b9a1`** (built 2026-11-28 06:16 UTC; `data/lake/master/VERSION.json`). Every result names the version it read.
 
@@ -24,6 +24,7 @@ Built by `tools/spine.py` on 2026-11-28 06:32 UTC. Re-run after any table is reb
 | **favorite_ledger** | L2 roll-up | E1 | market x favorite x price_band | 84 |  |  |  | 0 | `tools/slice_scan.py` | `research/engine_room/favorite_ledger.csv` |
 | **favorite_ledger_by_time_and_line** | L2 roll-up | E1 | market x favorite x cut x value | 137 |  |  |  | 0 | `tools/slice_scan.py` | `research/engine_room/favorite_ledger_by_time_and_line.csv` |
 | **market_scorecard** | L2 roll-up | E1 | market | 6 |  |  |  | 0 | `tools/market_scorecard.py` | `research/engine_room/market_scorecard.csv` |
+| **bet_grid** | L3 scan | E1 | market x side x price_cut x slot x line | 10748 |  |  |  | 0 | `tools/bet_grid.py` | `research/engine_room/bet_grid.csv` |
 | **slice_scan** | L3 scan | E1 | market x fav_side x bet x slice | 1318 |  |  |  | 0 | `tools/slice_scan.py` | `research/engine_room/slice_scan.csv` |
 | **mm_model_scorecard** | L4 market-maker copy | both | fuel x slice | 6 |  |  |  | 0 | `tools/mm_model.py` | `research/engine_room/mm_model_scorecard.csv` |
 | **mm_anchor_scorecard** | L4 market-maker copy | both | fuel x slice | 6 |  |  |  | 0 | `tools/mm_anchor.py` | `research/engine_room/mm_anchor_scorecard.csv` |

@@ -89,6 +89,7 @@ AAA diesel number and find gaps vs. Kalshi's odds. Demo money only until a strat
 | **Gaps + direction** ⭐ | `research/2026-11-26_gaps-and-direction.md` | 13 ranked gaps in our understanding and the one direction. Update statuses in place. |
 | **Question log** ⭐ | `research/QUESTION_LOG.md` (reading copy: Google Sheet "Kalshi – Question Log", id `1gEA0uReDapkYyfzYarXi94Pc4pswj73gE34-WYssDc8`, tab Questions, newest row on top) | The `test` command. Dated quick questions + answers, the trial count, the baselines, the vault date. Answer tool: `tools/ask.py`. |
 | **Market scorecard** ⭐ | `tools/market_scorecard.py` → `research/engine_room/market_scorecard.csv` | The six markets on one ruler: events, favorite edge vs its noise, cost, crowd miss, taker vs maker, depth. Ranks which markets can be tested now. |
+| **Bet grid** ⭐ | `tools/bet_grid.py` → `research/engine_room/bet_grid.csv` (`lab.bet_grid`), `bet_grid_summary.json`, `bet_grid_highlights.csv` | Every simple bet: market × YES/NO × price cut × time slot × busy line, with noise per cell and a luck check (1,000 replays). Superset of the favorite ledgers. Sheet tab "Big grid" in the Question Log holds the highlights. |
 | **Method review** | `research/2026-11-27_method-review.md` | Outside guidance (Kalshi papers, Becker's repo, backtest-overfitting) + the build ladder + the three tracks (A structure, B information, C path). |
 | **Truckstop test (L3)** ⭐ | `tools/truckstop_test.py` → `research/engine_room/l3_truckstop_scorecard.csv` | One row per day: truckstop move vs what the crowd missed. Refreshed hourly by `truckstops.yml`. Verdict at 10 scored days; PASS needs 20+. |
 | **Spine** ⭐⭐⭐ | `tools/spine.py` → `data/lake/master/SPINE.md` | **Read before touching any table.** How every research table connects (keys: market → event → time slot → line), layers L0–L4, the two engines (E1 settle, E2 intraday), join checks, known issues. Re-run after any rebuild. All of it is queryable in the database: `tools/warehouse.py`, schema `lab`. |
@@ -174,7 +175,7 @@ the most edge. Simple counts on raw Kalshi data come before deep plays. Build la
 | 1 | **Lock the canvas:** 3 builder bugs fixed, master versioned, spine checks run after every rebuild | ✅ 11/28 |
 | 2 | **Market scorecard:** six markets on one ruler (`market_scorecard.csv`) | ✅ v1 11/28. Depth and trade tape only cover the two daily markets |
 | 3 | **Guard rails:** trial count, baselines, vault (events settling after 2026-11-27), question log + `test` command | ✅ 11/28 |
-| 4 | **Track A (structure = the crowd's habits):** favorites, long shots, Yes vs No, taker vs maker | ◐ first look-backs Q001–Q003 |
+| 4 | **Track A (structure = the crowd's habits):** favorites, long shots, Yes vs No, taker vs maker | ◐ Q001–Q004. Bet grid: losers beyond luck (YES overpriced in gas, long shots); winners not. One candidate: gas daily NO-favorite at 10 PM–close |
 | 5 | **Track B (information = know AAA sooner):** truckstop scorecard (first read ~Dec 6), free data fill (state AAA history, more posted-price chains, older trade tape) | ◐ running |
 | 6 | **Track C (path = intraday price route, engine E2):** `paths` table, market-maker copy graded here | ⬜ after 30+ days of recorded order book |
 
@@ -185,7 +186,7 @@ the most edge. Simple counts on raw Kalshi data come before deep plays. Build la
 **Still true:** deep scan found no stored parameter that predicts the 10 AM miss; the market-maker copy is 6–16 points
 off per line. **Parked:** limit-order favorites (M28) · evening overshoot in a rising trend (M36).
 
-**Waiting on Dan (11/28):** (1) record all six but test on gas daily, gas weekly, diesel daily, vs "all six equally" · (2) Becker's gas trades by GitHub job, or extend our own trade pull · (3) "clean it" = hide 6 replaced sheet tabs · (4) "go" = paper test; candidates after Q001: diesel daily favorites 75c+, skip gas Yes-favorites (gas No-favorites are only about +1 with each event counted once).
+**Waiting on Dan (11/28):** (1) record all six but test on gas daily, gas weekly, diesel daily, vs "all six equally" · (2) Becker's gas trades by GitHub job, or extend our own trade pull · (3) "clean it" = hide 6 replaced sheet tabs · (4) "go" = forward test on vault days; best candidate after Q004: gas daily NO-favorite at 10 PM–close (then diesel daily favorites 75c+).
 
 **Older open items:** rockets & feathers (G9) · exact AAA post time (G2) · 10 AM futures history (W1) · engine gaps in `nautilus/README.md`. Legacy scripts named in SPINE history: new work reads the master.
 
