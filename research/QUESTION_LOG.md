@@ -2,7 +2,7 @@
 
 Home of the `test` command. One question, one short answer, date and time stamped, newest first.
 This is NOT a strategy test. It is Dan probing the data. A finding here is a **look-back**: it becomes a lead only
-after it also holds on new days. Dan's reading copy: Google Sheet "Kalshi – Question Log" (same rows).
+after it also holds on new days. Dan's reading copy: Google Doc "Kalshi – Question Log" (id `1EEV2tB46gER45faQd7LeBnCR_Kjn9BheiexqaPaXYus`, same entries, newest on top).
 
 **How an answer is made:** `python3 tools/ask.py` on `data/lake/master/slices.csv.gz` (the 3 busiest lines of each
 event at each time slot). The event is the sample. Cost = ask + taker fee. Noise = 2 standard errors across events.
