@@ -186,7 +186,7 @@ the most edge. Simple counts on raw Kalshi data come before deep plays. Build la
 **Still true:** deep scan found no stored parameter that predicts the 10 AM miss; the market-maker copy is 6–16 points
 off per line. **Parked:** limit-order favorites (M28) · evening overshoot in a rising trend (M36).
 
-**Waiting on Dan (11/28):** (1) record all six but test on gas daily, gas weekly, diesel daily, vs "all six equally" · (2) Becker's gas trades by GitHub job, or extend our own trade pull · (3) "clean it" = hide 6 replaced sheet tabs · (4) "go" = forward test on vault days; best candidate after Q004: gas daily NO-favorite at 10 PM–close (then diesel daily favorites 75c+).
+**Waiting on Dan (11/28):** (1) record all six but test on gas daily, gas weekly, diesel daily, vs "all six equally" · (2) Becker's gas trades by GitHub job, or extend our own trade pull · (3) "clean it" = hide 6 replaced sheet tabs · (4) Crowd-habit leans (Q001–Q005, e.g. gas NO-favorite at 10 PM) are **not the strategy** (Dan, 11/28, 2:52 AM): we bet on our own AAA forecast (fundamentals) and size up when the price gap is big. The leans stay as clues to a missing input and as a baseline our forecast must beat.
 
 **Older open items:** rockets & feathers (G9) · exact AAA post time (G2) · 10 AM futures history (W1) · engine gaps in `nautilus/README.md`. Legacy scripts named in SPINE history: new work reads the master.
 
