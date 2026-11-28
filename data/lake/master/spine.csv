@@ -1,6 +1,6 @@
 table,layer,engine,grain,built_by,file,what,rows,columns,status,duplicate_keys,from,to,events
 inputs_daily,L0 inputs,both,date,tools/backtest_master.py,data/lake/master/inputs_daily.csv,"outside inputs per day, already lagged to be safe",2890,75,ok,0.0,2019-01-01,2026-11-29,
-aaa_daily,L0 inputs,both,date x fuel,tools/backtest_master.py,data/lake/master/aaa_daily.csv,"the AAA answer per day, reconciled",1558,4,ok,0.0,2022-11-28,2026-11-27,
+aaa_daily,L0 inputs,both,date x fuel,tools/backtest_master.py,data/lake/master/aaa_daily.csv,"the AAA answer per day, reconciled",1559,4,ok,0.0,2022-11-28,2026-11-28,
 backtest_master,L1 master,both,event x snapshot x snapshot_et,tools/backtest_master.py,data/lake/master/backtest_master.csv.gz,"one row per event x time slot: crowd center, range, 3 busy lines, ~75 inputs",12790,179,ok,0.0,2023-09-18,2026-11-27,581.0
 ladder_snapshots,L1 master,E2 (and shape layer),event x snapshot x snapshot_et x floor_strike,tools/backtest_master.py,data/lake/master/ladder_snapshots.csv.gz,every line's bid / ask at every time slot,146477,11,ok,0.0,,,581.0
 slices,L2 slices + L3 ratios,E1,event x snapshot x snapshot_et x line_rank,tools/slice_scan.py,data/lake/master/slices.csv.gz,"favorite side, cost, outcome box, returns, our 11 ratios",23631,52,ok,0.0,2023-09-25,2026-11-27,542.0

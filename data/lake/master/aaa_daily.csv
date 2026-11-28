@@ -710,6 +710,7 @@ date,fuel,value,source
 2026-11-25,diesel,5.7645,kalshi_settlement
 2026-11-26,diesel,5.7246,kalshi_settlement
 2026-11-27,diesel,5.7048,kalshi_settlement
+2026-11-28,diesel,5.6664,live_recorder
 2023-09-18,gas,3.88,kalshi_settlement
 2023-09-19,gas,3.881,kalshi_settlement
 2023-09-20,gas,3.875,kalshi_settlement
@@ -912,15 +913,15 @@ date,fuel,value,source
 2024-11-30,gas,3.057,wayback_current
 2024-12-01,gas,3.051,wayback_week_ago
 2024-12-02,gas,3.047,kalshi_weekly_settlement
-2024-12-03,gas,3.037,wayback_yesterday
+2024-12-03,gas,3.037,wayback_week_ago
 2024-12-04,gas,3.033,wayback_current
 2024-12-05,gas,3.032,wayback_current
 2024-12-06,gas,3.026,wayback_current
-2024-12-07,gas,3.02,wayback_yesterday
+2024-12-07,gas,3.02,wayback_week_ago
 2024-12-08,gas,3.018,wayback_current
 2024-12-09,gas,3.018,wayback_yesterday
 2024-12-10,gas,3.011,wayback_current
-2024-12-12,gas,3.026,wayback_yesterday
+2024-12-12,gas,3.026,wayback_week_ago
 2024-12-13,gas,3.026,wayback_current
 2024-12-14,gas,3.023,wayback_current
 2024-12-15,gas,3.023,wayback_current

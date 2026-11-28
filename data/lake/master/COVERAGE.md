@@ -1,6 +1,6 @@
 # Backtest master: coverage and vetting
 
-Built by `tools/backtest_master.py` on 2026-11-28 08:59 UTC. Rules: see the docstring of that file.
+Built by `tools/backtest_master.py` on 2026-11-28 09:10 UTC. Rules: see the docstring of that file.
 
 ## Market canvas (Kalshi ladders)
 
@@ -69,15 +69,15 @@ Settlement: every series settles on AAA's national average for ONE date (rule te
 |   2023 |                    0 |                35 |
 |   2024 |                  175 |               194 |
 |   2025 |                  275 |               294 |
-|   2026 |                  260 |               324 |
+|   2026 |                  261 |               324 |
 
-Source used per day: {"wayback_current": 627, "kalshi_settlement": 389, "wayback_week_ago": 300, "wayback_yesterday": 189, "kalshi_weekly_settlement": 42, "kalshi_monthly_settlement": 10, "db:aaa_site": 1}
+Source used per day: {"wayback_current": 627, "kalshi_settlement": 389, "wayback_week_ago": 303, "wayback_yesterday": 186, "kalshi_weekly_settlement": 42, "kalshi_monthly_settlement": 10, "db:aaa_site": 1, "live_recorder": 1}
 
 ## Inputs (engine canvas)
 
 | input                            | kind    |   rows | first      | last       |   usable_after_days |
 |:---------------------------------|:--------|-------:|:-----------|:-----------|--------------------:|
-| aaa_diesel                       | daily   |    711 | 2022-11-28 | 2026-11-27 |                   0 |
+| aaa_diesel                       | daily   |    712 | 2022-11-28 | 2026-11-28 |                   0 |
 | aaa_gas                          | daily   |    847 | 2023-09-18 | 2026-11-27 |                   0 |
 | brent_spot                       | daily   |   9137 | 1987-05-20 | 2026-11-24 |                   1 |
 | fut_brent                        | daily   |   9346 | 1987-05-20 | 2026-11-27 |                   1 |
@@ -188,4 +188,4 @@ Source used per day: {"wayback_current": 627, "kalshi_settlement": 389, "wayback
 - **diesel daily vs old panel (115 shared days):** settle values differ on 0 days; 10 AM crowd center: median gap 0.00c, 0 days over 0.5c
 - **gas daily vs old panel (187 shared days):** settle values differ on 0 days; 10 AM crowd center: median gap 0.00c, 0 days over 0.5c
 - **Kalshi settle value vs reconciled AAA:** 581 of 581 events have an AAA print for that date; 1 disagree by more than 0.05c
-- **AAA sources that disagree (>0.2c) on the same day:** 1 fuel-days out of 1558
+- **AAA sources that disagree (>0.2c) on the same day:** 1 fuel-days out of 1559

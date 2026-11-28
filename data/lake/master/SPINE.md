@@ -1,6 +1,6 @@
 # The spine: how every research table connects
 
-Built by `tools/spine.py` on 2026-11-28 08:59 UTC. Re-run after any table is rebuilt. Read this before adding a table.
+Built by `tools/spine.py` on 2026-11-28 09:11 UTC. Re-run after any table is rebuilt. Read this before adding a table.
 
 **Master version: `m20261128-0345b9a1`** (built 2026-11-28 06:16 UTC; `data/lake/master/VERSION.json`). Every result names the version it read.
 
@@ -17,7 +17,7 @@ Built by `tools/spine.py` on 2026-11-28 08:59 UTC. Re-run after any table is reb
 | Table | Layer | Engine | One row is | Rows | Events | From | To | Duplicate keys | Built by | File |
 |---|---|---|---|---|---|---|---|---|---|---|
 | **inputs_daily** | L0 inputs | both | date | 2890 |  | 2019-01-01 | 2026-11-29 | 0 | `tools/backtest_master.py` | `data/lake/master/inputs_daily.csv` |
-| **aaa_daily** | L0 inputs | both | date x fuel | 1558 |  | 2022-11-28 | 2026-11-27 | 0 | `tools/backtest_master.py` | `data/lake/master/aaa_daily.csv` |
+| **aaa_daily** | L0 inputs | both | date x fuel | 1559 |  | 2022-11-28 | 2026-11-28 | 0 | `tools/backtest_master.py` | `data/lake/master/aaa_daily.csv` |
 | **backtest_master** | L1 master | both | event x snapshot x snapshot_et | 12790 | 581 | 2023-09-18 | 2026-11-27 | 0 | `tools/backtest_master.py` | `data/lake/master/backtest_master.csv.gz` |
 | **ladder_snapshots** | L1 master | E2 (and shape layer) | event x snapshot x snapshot_et x floor_strike | 146477 | 581 |  |  | 0 | `tools/backtest_master.py` | `data/lake/master/ladder_snapshots.csv.gz` |
 | **slices** | L2 slices + L3 ratios | E1 | event x snapshot x snapshot_et x line_rank | 23631 | 542 | 2023-09-25 | 2026-11-27 | 0 | `tools/slice_scan.py` | `data/lake/master/slices.csv.gz` |
