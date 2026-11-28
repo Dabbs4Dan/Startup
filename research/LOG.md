@@ -4,6 +4,12 @@ Moved out of CLAUDE.md on 2026-11-25 so new sessions load fast. **Add new entrie
 
 Template:
 ```
+### 2026-11-28 (3:47 AM) · Chat 7 · Question log: data insights only, additive (Dan)
+
+- **Decided (Dan):** the question log holds true data insights and is additive only. Nothing is written off, off limits or hard-stopped this early; Claude must not take one note and set it in stone. Cut anything limiting or prescriptive, and the thin-sample rows.
+- **Did:** removed P04 (75-85c rule), P11 (edge size needed), P13 (limit orders), and the thin ones P08 (state blend, 13 days), P14 (truckstops, 2 days), P15 (bet size, 3 days). Rewrote the 13 kept rows as observations with sample sizes (no HOLDS / not proven / parked wording). Results of the removed rows stay in `master.csv`. New working rule in CLAUDE.md §0 ("Insights are additive, not verdicts"); §6 "Parked" now reads "On the shelf for now (not ruled out)".
+- **Next (proposed):** build the 2-3 day futures delay (P09) into our AAA forecast and score it against the crowd at the open (P20).
+
 ### 2026-11-28 (3:43 AM) · Chat 7 · P16 and P21 back in the question log, re-run
 
 - **Did:** Dan asked to put P16 and P21 back. Re-ran `tools/deep_scan.py`, `tools/mm_model.py`, `tools/mm_anchor.py` on current data. Entries added to `QUESTION_LOG.md` and the Sheet. Master row M81.

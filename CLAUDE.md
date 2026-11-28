@@ -12,7 +12,7 @@
 1. `git pull` the `kalshi-twins` branch. Read this file. Then read **§6 (Now)**: it holds the one live direction.
 2. Read `research/takeaways/master.csv` (what is true now) and the top 3 entries of `research/LOG.md` (what just happened).
 3. Check feeds: bottom of `data/warehouse_catalog.md` (OK / STALE).
-4. Tell Dan which chat number you are and what you will do. Don't re-open settled questions (§3b, master.csv).
+4. Tell Dan which chat number you are and what you will do. Don't re-argue the north star (§3b). Findings in master.csv are dated observations, not closed doors.
 
 **Ending a session (always, without being asked):**
 1. Add a `research/LOG.md` entry at the top. Title starts with the chat number: `### 2026-11-26 (2:10 AM) · Chat 6 · title`.
@@ -26,6 +26,7 @@
 - **Write the test before running it.** One LOG line first: the question, the one number that decides it, the days held out. Then run. We have ~115 days and have tested dozens of cuts; a lucky "winner" is expected (the favorites edge went +8% → +3.3% not proven this way).
 - **A result counts only with** day-clustered ranges, costs included, and a check on days the rule never saw. Otherwise label it "hint".
 - **Check the thing before building on it (added 2026-11-27).** For any market or data source, first read its own rule text and write its fact card (`data/lake/master/COVERAGE.md` → Contract cards). In every plan, split what you rely on into **verified** (say how) and **assumed**. Tell Dan the assumed ones up front; chase any oddity the same day (Chat 6 built the master before checking that weekly and monthly settle like daily; they do, but that was luck).
+- **Insights are additive, not verdicts (Dan, 2026-11-28).** This early, nothing is written off, parked for good, or off limits because of one test. Write a finding as a dated observation with its sample size ("on 43 gas nights we saw X"), never as "X does not work". Re-test freely when data grows or the angle changes. (§2 market criteria and §3b are Dan's choices, not findings.)
 - **Quick questions are light (Dan, 2026-11-28).** A plain question about data we already hold ("what % of favorites over 75c win?") is answered with `tools/ask.py`, logged in `research/QUESTION_LOG.md` and mirrored to the Google Sheet "Kalshi – Question Log" (Sheet only: Dan, 2026-11-28). No LOG plan needed. It is a look-back, not a strategy test; the trial count and the vault live at the top of that file.
 - **Data flow is one-way:** recorders/pulls → raw files + DBs → warehouse views → Engine Room scorecards → takeaways → Sheets. Sheets and CSV exports are read-only copies; never treat them as a source.
 
@@ -185,7 +186,7 @@ the most edge. Simple counts on raw Kalshi data come before deep plays. Build la
 **Becker's public data set:** what it holds and how we could use it → method review + `master.csv` M74.
 
 **Still true:** deep scan found no stored parameter that predicts the 10 AM miss; the market-maker copy is 6–16 points
-off per line. **Parked:** limit-order favorites (M28) · evening overshoot in a rising trend (M36).
+off per line. **On the shelf for now (not ruled out):** limit-order favorites (M28) · evening overshoot in a rising trend (M36).
 
 **Waiting on Dan (11/28):** (1) record all six but test on gas daily, gas weekly, diesel daily, vs "all six equally" · (2) ✅ Becker by GitHub job (Dan, 11/28): `becker.yml` → `data/lake/becker/` · (3) "clean it" = hide 6 replaced sheet tabs · (4) Strategy shape (Dan, 11/28): **our AAA forecast picks the bet; crowd leans check it; size grows with the gap after spread + fee, capped.** Leans (Q001–Q005, e.g. gas NO-favorite at 10 PM) are not traded alone: each one tells a story about a trend or information the crowd misreads, so explain it and build it into the forecast.
 
