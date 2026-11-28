@@ -8,12 +8,22 @@ after it also holds on new days. Dan's reading copy: Google Sheet "Kalshi – Qu
 event at each time slot). The event is the sample. Cost = ask + taker fee. Noise = 2 standard errors across events.
 
 **Guard rails (kept here, nowhere else):**
-- **Trial count:** about 3,300 cuts were run before this log (deep scan 1,980 + slice scan 1,328). Each question adds 1; the bet grid (Q004) added its 2,424 readable cells. **Count now: 5,910.**
+- **Trial count:** about 3,300 cuts were run before this log (deep scan 1,980 + slice scan 1,328). Each question adds 1; the bet grid (Q004) added its 2,424 readable cells. **Count now: 5,950.**
 - **Baselines any idea must beat:** (1) the crowd's own price, (2) "no change", (3) "skip the long shots".
 - **Vault:** events that settle after 2026-11-27 have never been looked at. Only they can turn a look-back into a lead.
 - **Read of a result:** "edge beyond noise" = bigger than its noise band; "inside noise" = luck not ruled out; under 30 events = too few.
 
 ---
+
+### Q009 · 2026-11-28 03:15 AM ET · Hourly futures: can we get them, and does Q008 hold hour by hour?
+- **Asked by Dan:** "why do we have futures once a day? How do they see many rises a day?" and "how can we backtest or retrieve the intraday futures?"
+- **Data answer:** we were never limited to the days we recorded. The free hourly history existed; our pull was blocked by a bug (browser-like user agent). Fixed 11/28: hourly gas (RBOB) and diesel (HO) futures since Jul 8 2024, 5-minute bars since Sep 18 2026, refreshed daily (`data/lake/history/yahoo_*`).
+- **Same hours:** the futures move in the same hours as a crowd rise does not tell right from wrong. Gas daily rises: futures up in those hours -8.2 (noise 10.0), futures down -5.2 (noise 10.9).
+- **Yesterday's futures, checked with this second source (previous trading day, 2 PM to 2 PM):** gas daily holds and is stronger. Rises after futures rose (67 days): crowd up 0.40c, truth 0.60c, with the rise +1.6. Rises after futures did not rise (64 days): crowd up 0.36c, truth 0.21c, with -19.9 (noise 9.4), against +14.2. Drops after futures fell (70 days): with the drop +11.3 (noise 6.9).
+- **Diesel daily does NOT hold with this source:** rises after futures rose -11.3 (noise 15.4, 24 days), after futures did not rise -9.1 (noise 11.3, 29 days). Q008's diesel split is unproven.
+- **Worst gas case:** yesterday's futures not up but today's futures up so far (19 days): with the rise -31.6 (noise 19.8). Reads as the crowd chasing a same-day jump that has not reached the pumps yet. Small sample.
+- **Catch:** look-back; about 40 more cuts; groups of 8 to 70 days. Front-month futures roll once a month, which can add a false jump on roll days.
+- **Data:** `python3 tools/swing_hourly.py`. Master m20261128-0345b9a1.
 
 ### Q008 · 2026-11-28 03:02 AM ET · Why are the big rises wrong? What was happening on those days?
 - **Asked by Dan:** "Yes why rises" (follow-up to Q007).

@@ -102,7 +102,7 @@ AAA diesel number and find gaps vs. Kalshi's odds. Demo money only until a strat
 | **Strategy engine** | `nautilus/` (read `nautilus/README.md`) | NautilusTrader **2.0.0rc9, locked**. Same strategy code → backtest → Kalshi demo → live. Strategy IDs = sheet tab **Strategies** (S00 = replay check, no orders). |
 | DIY scheduler | `.github/workflows/live_recorder.yml` (relay step) | ⚠️ GitHub ignores `schedule:` off `main`. Each recorder shift starts the next, then runs `nautilus.yml` + daily backfill if none in 20h. Pause: commit `data/live/STOP`. |
 | **Live recorder** | `tools/live_recorder.py` → `data/live/<feed>/YYYY-MM-DD.csv` | Free GitHub shifts, every 5 min: Kalshi diesel+gas strikes, order book (15 min), AAA national + flip log (15 min), HO/Brent/WTI/RBOB/natgas (TradingView, ~10 min delayed). Map to Inputs Map rows: `research/2026-11-25_live-recorders.md` + sheet column N. |
-| **Warehouse** ⭐ | `tools/warehouse.py` (DuckDB) + `data/lake/history/` (`tools/history_pull.py`, `warehouse.yml`) | ONE query layer over every source (diesel + gas SQLite, live CSVs, history CSVs, Engine Room files). Unified views: `aaa_daily`, `state_prices`, `ladder`, `trades`, `futures_bars`, `spot_daily`, `eia_weekly`, `orderbook`, `truckstops`, each with `era` (history / since_live). Catalog → `data/warehouse_catalog.csv` → sheet tab **Warehouse**. Notes: `research/2026-11-25_warehouse.md`. |
+| **Warehouse** ⭐ | `tools/warehouse.py` (DuckDB) + `data/lake/history/` (`tools/history_pull.py`, `warehouse.yml`) | ONE query layer over every source (diesel + gas SQLite, live CSVs, history CSVs, Engine Room files). Unified views: `aaa_daily`, `state_prices`, `ladder`, `trades`, `futures_bars`, `spot_daily`, `eia_weekly`, `orderbook`, `truckstops`, each with `era` (history / since_live). Catalog → `data/warehouse_catalog.csv` → sheet tab **Warehouse**. Hourly futures (RBOB, HO, Brent, WTI, natgas) since Jul 2024 + 5-min bars: `data/lake/history/yahoo_*` (landed 11/28). Notes: `research/2026-11-25_warehouse.md`. |
 
 ### Older database views (`data/schema.sql`; new work reads the master)
 
@@ -188,7 +188,7 @@ off per line. **Parked:** limit-order favorites (M28) · evening overshoot in a 
 
 **Waiting on Dan (11/28):** (1) record all six but test on gas daily, gas weekly, diesel daily, vs "all six equally" · (2) Becker's gas trades by GitHub job, or extend our own trade pull · (3) "clean it" = hide 6 replaced sheet tabs · (4) Strategy shape (Dan, 11/28): **our AAA forecast picks the bet; crowd leans check it; size grows with the gap after spread + fee, capped.** Leans (Q001–Q005, e.g. gas NO-favorite at 10 PM) are not traded alone: each one tells a story about a trend or information the crowd misreads, so explain it and build it into the forecast.
 
-**Older open items:** rockets & feathers (G9) · exact AAA post time (G2) · 10 AM futures history (W1) · engine gaps in `nautilus/README.md`. Legacy scripts named in SPINE history: new work reads the master.
+**Older open items:** rockets & feathers (G9) · exact AAA post time (G2) · engine gaps in `nautilus/README.md`. Legacy scripts named in SPINE history: new work reads the master.
 
 ---
 

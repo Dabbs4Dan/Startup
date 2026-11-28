@@ -17,6 +17,11 @@ Template:
 - **The numbers that decide it:** (1) data: how many cells have 30+ events, and the smallest edge each can tell from luck. (2) luck check: 500 replays where the price paid is the true chance; compare how many cells look like winners by luck with how many we found. (3) a cell is a **lead** only with 30+ events, its own luck chance under 1%, and the same sign in the early and late halves.
 - **Days held out:** none are clean (both earlier scans used the late 40%). Proof only on vault days (events settling after 2026-11-27).
 
+### 2026-11-28 (03:15 AM) · Chat 7 · Swings, futures backing, hourly futures fixed (Q006–Q009)
+- **Did:** Q006 morning vs evening re-run. Q007 big-swing cohort (`tools/swing_cohort.py`, `lab.swing_cohort`, 2,237 swings). Q008 why rises are wrong (`tools/swing_why.py`). Fixed the hourly futures pull in `history_pull.py` (plain user agent); 165 `yahoo_*` files landed (hourly since Jul 2024). Q009 hourly re-test (`tools/swing_hourly.py`).
+- **Learned:** crowd sharpens all day in both daily markets; favorites lose in the morning in gas only. Betting with a big rise lost in every market; nothing follows through after a swing. Gas daily: a rise is right when futures rose the previous day, wrong when they did not (two sources agree: -14.9 and -19.9). Diesel's version did not survive the second source. Futures moves in the same hours explain nothing.
+- **Next:** Dan's call on turning "gas rise with no futures backing" into one dated rule with dollars; roll-day check on the futures series.
+
 ### 2026-11-28 (2:54 AM) · Chat 7 · Decision: forecast picks the bet, leans check it
 - **Decided (Dan):** the forecast of tomorrow's AAA (fundamentals) picks the bet. Crowd leans check it. Bet size grows with the gap between forecast and price after spread and fee, with a cap. A lean is not traded on its own; it tells a story about a trend or information the crowd misreads, so we explain it and fold it into the forecast.
 - **Why not "fundamentals only":** every edge is price vs true chance; the late-night gas lean may itself be a fundamental (gas fell on 62% of days, crowd under-adjusts late). A wide bid/ask spread is a cost, not a reason to bet more.
