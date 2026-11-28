@@ -4,6 +4,14 @@ Moved out of CLAUDE.md on 2026-11-25 so new sessions load fast. **Add new entrie
 
 Template:
 ```
+### 2026-11-28 (3:43 AM) · Chat 7 · P16 and P21 back in the question log, re-run
+
+- **Did:** Dan asked to put P16 and P21 back. Re-ran `tools/deep_scan.py`, `tools/mm_model.py`, `tools/mm_anchor.py` on current data. Entries added to `QUESTION_LOG.md` and the Sheet. Master row M81.
+- **Learned:** Deep scan: gas still 0 of 37 inputs predict the direction of the 10 AM miss; diesel 1 of 38 passes (yesterday's 10 AM miss, rank link +0.35 / +0.33 held out). The all-inputs model still makes the crowd's guess worse. Market-maker copy: lines 10.5-16.5 points off vs a 2-3 point spread, 4-11% inside the bid-ask.
+- **Oddity chased:** diesel scan has 99 days, was 114. Cause: `tools/panel.py` now builds the 10 AM crowd guess only from lines with a real two-sided quote, so 18 days with 0-2 live lines at 10 AM have no guess. Verified in `panel_daily` (am10_active_lines 0-2 on all 18).
+- **Decided (Dan):** P16 was worded too strongly. It now reads "not with the inputs we hold today" and gets re-run whenever a new input lands.
+- **Next (proposed):** trim 6 reference-style rows from the question log (P03, P18, P19, P08, P14, P04) if Dan agrees.
+
 ### 2026-11-28 (3:40 AM) · Chat 7 · Earlier answers re-tested, 4 dropped from the question log
 
 - **Did:** Dan asked to drop P02, P10, P16, P21 from the question log and re-test the rest. Re-ran the 18 kept earlier answers on master m20261128-0345b9a1 with `tools/retest_earlier.py`; each log entry now has Plain meaning / Then / Re-test / Verdict / Catch. Sheet "Kalshi – Question Log" matches (18 P rows). Trial count 5,950 → 6,010.

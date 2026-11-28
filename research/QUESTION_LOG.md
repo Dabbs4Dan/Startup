@@ -8,7 +8,7 @@ after it also holds on new days. Dan's reading copy: Google Sheet "Kalshi – Qu
 event at each time slot). The event is the sample. Cost = ask + taker fee. Noise = 2 standard errors across events.
 
 **Guard rails (kept here, nowhere else):**
-- **Trial count:** about 3,300 cuts were run before this log (deep scan 1,980 + slice scan 1,328). Each question adds 1; the bet grid (Q004) added its 2,424 readable cells. **Count now: 6,010.**
+- **Trial count:** about 3,300 cuts were run before this log (deep scan 1,980 + slice scan 1,328). Each question adds 1; the bet grid (Q004) added its 2,424 readable cells. The 11/28 re-run of the deep scan (about 2,010 cuts on a changed day set) is counted again. **Count now: 8,020.**
 - **Baselines any idea must beat:** (1) the crowd's own price, (2) "no change", (3) "skip the long shots".
 - **Vault:** events that settle after 2026-11-27 have never been looked at. Only they can turn a look-back into a lead.
 - **Read of a result:** "edge beyond noise" = bigger than its noise band; "inside noise" = luck not ruled out; under 30 events = too few.
@@ -107,7 +107,7 @@ event at each time slot). The event is the sample. Cost = ask + taker fee. Noise
 ## Earlier answers from Chats 1-6, re-tested (Chat 7, 2026-11-28)
 
 Answered questions from before this log existed that steer research and direction. Each keeps the time it was first found, so it sits after the live questions; each was re-run on the current master (m20261128-0345b9a1) at 03:32 AM ET on 2026-11-28 with `tools/retest_earlier.py` unless noted. The re-runs added about 60 cuts to the trial count.
-Removed by Dan on 2026-11-28 (no re-test, not in this log; still in `master.csv`): crowd vs our forecast (M10), simple forecasts vs Kalshi (M15), nothing predicts the 10 AM miss (M35), market-maker copy (M54).
+Removed by Dan on 2026-11-28 (not in this log; still in `master.csv`): crowd vs our forecast (M10) and simple forecasts vs Kalshi (M15); P20 covers both. P16 and P21 were removed, then put back by Dan at 03:43 AM ET and re-run with `tools/deep_scan.py` and `tools/mm_anchor.py`.
 
 ### P22 · first found 2026-11-27 05:30 PM, Chat 6 · Is the crowd's range too wide or too narrow?
 - **Plain meaning:** The crowd gives a best guess plus a range around it. If the range is sized right, the real number should land inside about 68% of the time.
@@ -116,6 +116,14 @@ Removed by Dan on 2026-11-28 (no re-test, not in this log; still in `master.csv`
 - **Verdict:** HOLDS for the two daily markets. NOT confirmed for weekly and monthly.
 - **Catch / what it means:** The old one-line weekly gas markets make the range unreliable there, so the weekly and monthly numbers need their own check. Costs are not in this; Q005 found the bigger error is where the ladder sits, not how wide it is.
 - **Data:** M51; tools/retest_earlier.py
+
+### P21 · first found 2026-11-27 05:20 PM, Chat 6 · Can we copy the market maker's prices yet?
+- **Plain meaning:** The market maker sets a price for every line on the ladder. Our north star is to rebuild those prices from inputs alone. This is the scoreboard for how close our copy is.
+- **Then:** Center of the ladder explained 63-84% on days never seen. Each line 6-16 points off, while the bid-ask gap is only 2-4 points.
+- **Re-test (2026-11-28):** Each line is off by 16.3 points (gas daily), 11.8 (gas weekly), 10.5 (gas monthly), 16.5 (diesel daily), 11.3 (diesel weekly). The bid-ask gap is 2-3 points. Only 4-11% of our lines land inside the real bid-ask. Using no model at all is 22.4, 19.0, 13.5, 25.8, 19.3 points off, so the copy helps but not nearly enough. Center explained on the last 40% of days: 60-85% (gas monthly 35%).
+- **Verdict:** HOLDS: not close enough in any market.
+- **Catch / what it means:** The goal is a line miss inside the bid-ask gap (2-3 points). On half-cent ladders a half-cent center miss moves a line about 15 points, so the center has to get much tighter. Diesel weekly got worse (6.1 to 11.3) because the fixed master now scores 1,503 lines there, up from 614.
+- **Data:** M48, M53, M54; tools/mm_model.py, tools/mm_anchor.py
 
 ### P20 · first found 2026-11-27 05:15 PM, Chat 6 · What does the crowd know at the 8 AM open that we do not?
 - **Plain meaning:** At the open nobody has traded yet today, so the crowd's first guess shows what it already knows. We compare its miss with the miss of simple forecasts built from what we hold.
@@ -148,6 +156,14 @@ Removed by Dan on 2026-11-28 (no re-test, not in this log; still in `master.csv`
 - **Verdict:** HOLDS in gas. NOT confirmed in diesel.
 - **Catch / what it means:** Same days as the first finding, so this is a re-count, not new proof. Q005, Q007 and Q008 point the same way from other angles.
 - **Data:** M36; tools/retest_earlier.py
+
+### P16 · first found 2026-11-26 03:45 AM, Chat 6 · Does anything we hold today predict which way the 10 AM crowd is wrong?
+- **Plain meaning:** Before betting at 10 AM we want a signal that says the crowd is too high or too low. We tested every input we store, one at a time, with strict rules: it must work on the early days, then on later days it never saw, then in the other fuel.
+- **Then:** About 1,980 tests on 114 diesel and 216 gas days: 0 of 38 inputs worked. The only reliable results were losers (long shots at 3-25c lose about 70%).
+- **Re-test (2026-11-28):** About 2,010 tests on 99 diesel and 218 gas days. Gas: 0 of 37 inputs predict the direction. Diesel: 1 of 38 passes, yesterday's 10 AM miss. When the crowd guessed too low yesterday it tended to guess too low again today (link strength 0.35 on early days, 0.33 on later days; gas leans the same way at 0.22 but does not pass). How big the miss will be is predictable in gas (9 inputs), but the crowd's own range already shows it. Our all-inputs model still makes the crowd's guess worse: diesel 0.41c becomes 0.79c, gas 0.60c becomes 0.71c, and its bets lose or break even.
+- **Verdict:** CHANGED a little: one input now passes in diesel. Still no tradable signal.
+- **Catch / what it means:** This answer means 'not with the inputs we hold today', not 'never'. Re-run it every time a new input lands (truckstops, station prices, the 2-3 day futures delay). One pass out of about 2,000 tests can still be luck, though it fits P01 (the diesel crowd under-follows the trend). Diesel has 15 fewer days than the first scan because days with stale 10 AM quotes are now left out.
+- **Data:** M35, M81; tools/deep_scan.py
 
 ### P15 · first found 2026-11-26 03:00 AM, Chat 6 · How big can one bet be?
 - **Plain meaning:** How many dollars are sitting at the best price, ready to be bought, before our own order would push the price.
