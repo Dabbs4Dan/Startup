@@ -1,6 +1,6 @@
 # The spine: how every research table connects
 
-Built by `tools/spine.py` on 2026-11-28 06:20 UTC. Re-run after any table is rebuilt. Read this before adding a table.
+Built by `tools/spine.py` on 2026-11-28 06:32 UTC. Re-run after any table is rebuilt. Read this before adding a table.
 
 **Master version: `m20261128-0345b9a1`** (built 2026-11-28 06:16 UTC; `data/lake/master/VERSION.json`). Every result names the version it read.
 
