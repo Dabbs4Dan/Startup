@@ -9,7 +9,8 @@
  },
  "errors_sample": [
   "HTTP Error 400: Bad Request",
-  "HTTP Error 400: Bad Request"
+  "HTTP Error 400: Bad Request",
+  "The read operation timed out"
  ],
  "store_keys": [
   "address",
