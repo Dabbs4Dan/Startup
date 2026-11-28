@@ -8,12 +8,22 @@ after it also holds on new days. Dan's reading copy: Google Sheet "Kalshi – Qu
 event at each time slot). The event is the sample. Cost = ask + taker fee. Noise = 2 standard errors across events.
 
 **Guard rails (kept here, nowhere else):**
-- **Trial count:** about 3,300 cuts were run before this log (deep scan 1,980 + slice scan 1,328). Each question adds 1; the bet grid (Q004) added its 2,424 readable cells. **Count now: 5,743.**
+- **Trial count:** about 3,300 cuts were run before this log (deep scan 1,980 + slice scan 1,328). Each question adds 1; the bet grid (Q004) added its 2,424 readable cells. **Count now: 5,757.**
 - **Baselines any idea must beat:** (1) the crowd's own price, (2) "no change", (3) "skip the long shots".
 - **Vault:** events that settle after 2026-11-27 have never been looked at. Only they can turn a look-back into a lead.
 - **Read of a result:** "edge beyond noise" = bigger than its noise band; "inside noise" = luck not ruled out; under 30 events = too few.
 
 ---
+
+### Q006 · 2026-11-28 02:56 AM ET · Is betting in the morning less accurate or less profitable than in the evening? (re-run of an earlier finding)
+- **Asked by Dan:** "There was a test we saw that betting in morning was less profitable or accurate than evening? I'd like to also recreate that just for the sake of logging - or perhaps now the results will be different."
+- **Answer:** accuracy: yes, in both daily markets the crowd gets sharper all day. Profit: yes in gas, no in diesel.
+- **Accuracy (median crowd miss, cents):** gas daily: open 0.42, 10 AM 0.34, noon 0.35, 3 PM 0.27, 6 PM 0.21, 10 PM 0.20, close 0.19. Diesel daily: open 0.30, 10 AM 0.37, noon 0.30, 3 PM 0.28, 6 PM 0.24, 10 PM 0.23, close 0.19.
+- **Profit ($100 a day on every favorite priced 50c+, per day):** gas daily: open -$4.38, 10 AM -$2.90, noon -$2.35, 3 PM -$3.04, 6 PM +$1.09, 10 PM +$1.25, close +$1.33. Diesel daily: open +$5.75, 10 AM +$3.98, noon +$2.46, 3 PM +$5.23, 6 PM +$7.90, 10 PM +$5.72, close -$1.15.
+- **Edge in points (noise about 3 at every slot):** gas daily -3.1, -1.9, -1.7, -1.9, +1.1, +0.9, +1.1. Diesel daily +4.4, +3.2, +2.4, +3.6, +6.0, +4.6, -0.6.
+- **Same or different from before:** same shape. Earlier notes said 0.3-0.55c at 10 AM (M10); now 0.34-0.37c. One difference: the close miss is 0.19c here against 0.12-0.13c in M57, which used a different center measure. Not chased yet.
+- **Catch:** look-back. In gas no single slot is beyond its noise; the morning-to-evening swing of about 4 points is the finding. Diesel is 66-101 events from one falling stretch.
+- **Data:** `tools/ask.py --min 50 --slot <slot>` and the crowd center in `slices.csv.gz`. Master m20261128-0345b9a1.
 
 ### Q005 · 2026-11-28 02:47 AM ET · Gas daily NO-favorite late evening: what are we buying, why does it win, and what would it have paid?
 - **Asked by Dan:** "when a no trend is No, what are we buying here? ... WHY is that favorable? ... Is a surface level edge just an opportunity to buy on the best intraday spread change? Is it to buy on signals that display certainty on confidence bounds?"
