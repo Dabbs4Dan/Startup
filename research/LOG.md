@@ -17,6 +17,11 @@ Template:
 - **The numbers that decide it:** (1) data: how many cells have 30+ events, and the smallest edge each can tell from luck. (2) luck check: 500 replays where the price paid is the true chance; compare how many cells look like winners by luck with how many we found. (3) a cell is a **lead** only with 30+ events, its own luck chance under 1%, and the same sign in the early and late halves.
 - **Days held out:** none are clean (both earlier scans used the late 40%). Proof only on vault days (events settling after 2026-11-27).
 
+### 2026-11-28 (2:54 AM) · Chat 7 · Decision: forecast picks the bet, leans check it
+- **Decided (Dan):** the forecast of tomorrow's AAA (fundamentals) picks the bet. Crowd leans check it. Bet size grows with the gap between forecast and price after spread and fee, with a cap. A lean is not traded on its own; it tells a story about a trend or information the crowd misreads, so we explain it and fold it into the forecast.
+- **Why not "fundamentals only":** every edge is price vs true chance; the late-night gas lean may itself be a fundamental (gas fell on 62% of days, crowd under-adjusts late). A wide bid/ask spread is a cost, not a reason to bet more.
+- **Next:** explain the late-evening gas lean (which input the crowd misreads), and make the forecast beat the crowd (today 0.6c vs 0.3c, M55).
+
 ### 2026-11-28 (2:45 AM) · Chat 7 · RESULT: the full bet grid + luck check (Q004)
 - **Did:** `tools/bet_grid.py` -> `bet_grid.csv` (10,748 cells), `bet_grid_summary.json`, `bet_grid_highlights.csv`; registered as `lab.bet_grid` and in the spine; rebuilt by the workflow. Caught and fixed a tie bug in the luck check before reading it (cells where every event won were scored 1-in-1,000 when the true chance was about 1 in 10). Sheet "Kalshi – Question Log": Q004 row + tab "Big grid".
 - **Learned (data):** 2,424 of 10,748 cells have 30+ events; 233 can see a 3-point edge; median noise of a readable cell is 6.1 points; diesel weekly and monthly have zero readable cells. Gas daily ladders are Mar-Nov 2026 in practice.

@@ -146,6 +146,7 @@ BY_CHAT = [
     (7, "Data", "Enough data? Map yes, proof no", "The full bet grid has 10,748 cells; 2,424 have 30+ events and only 233 can tell a 3-point edge from luck. A typical readable cell only sees edges above about 6 points. Diesel weekly and monthly: zero readable cells.", "23% readable / 2% sharp", "Current", ""),
     (7, "Results", "Bet grid: losers are real, winners are not proven", "1,000 replays of a fair market: 276 losing cells vs 52 by luck (2 replays in 1,000 match), 77 winning cells vs 44 by luck (131 in 1,000 match). Buying YES is overpriced in gas at almost every price; long shots lose everywhere.", "losers 276 vs 52 / winners 77 vs 44", "Current", ""),
     (7, "Results", "Candidate: gas daily NO-favorite late evening", "Late in the evening the crowd ladder sits about 0.05c (10 PM) to 0.10c (close) too high; with lines half a cent apart that is worth 5 to 9 points. $100 a night on NO-favorites at 10 PM: 200 nights, 85.5% winning nights, +$1,592, about +$8 a night (noise 5). November negative. Look-back; no size data for late quotes.", "NO at 10 PM-close", "Open", ""),
+    (7, "Strategy", "Forecast picks, leans check, gap sizes", "Our AAA forecast picks the bet. Crowd leans check it and point to a trend or information the crowd misreads. Bet size grows with the gap between forecast and price after spread and fee, capped. Leans are not traded alone.", "forecast vs price, net of costs", "Current", ""),
 ]
 
 # (section, item, meaning, sketch, source_chats, status)
@@ -228,6 +229,7 @@ MASTER = [
     ("Data", "Enough data? Map yes, proof no", "Bet grid: 10,748 cells, 2,424 with 30+ events, 233 that can tell a 3-point edge from luck; median noise 6 points. Diesel weekly and monthly have zero readable cells. Gas daily ladders are Mar-Nov 2026 in practice. More fine cuts are pointless until more events exist.", "23% readable / 2% sharp", "7", "Current"),
     ("Results", "Bet grid: losers are real, winners are not proven", "1,000 replays of a fair market: 276 losing cells vs 52 by luck; 77 winning cells vs 44 by luck (13% of replays match). Buying YES is overpriced in gas at almost every price (daily -5 to -17, weekly -8 to -25); long shots lose in all three testable markets.", "losers 276 vs 52 / winners 77 vs 44", "7", "Current"),
     ("Results", "Candidate: gas daily NO-favorite late evening", "Why: late in the evening the crowd ladder sits 0.05c (10 PM) to 0.10c (close) too high, a level error, not spread or width. $100 a night on NO-favorites at 10 PM: 200 nights, 85.5% winning nights, +$1,592, about +$8 a night (noise 5); avg win +$21, avg loss -$69; November -$137. Same lean as M64; look-back; no late-night size data.", "NO at 10 PM-close", "7", "Open"),
+    ("Strategy", "Forecast picks, leans check, gap sizes", "Dan, 11/28: our AAA forecast picks the bet; crowd leans check it and point to a trend or information the crowd misreads; size grows with the gap between forecast and price after spread and fee, capped. Leans are not traded alone. A wide bid/ask spread is a cost, not a reason to bet more.", "forecast vs price, net of costs", "7", "Current"),
 ]
 
 
