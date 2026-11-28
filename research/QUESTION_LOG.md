@@ -8,7 +8,7 @@ after it also holds on new days. Dan's reading copy: Google Sheet "Kalshi – Qu
 event at each time slot). The event is the sample. Cost = ask + taker fee. Noise = 2 standard errors across events.
 
 **Guard rails (kept here, nowhere else):**
-- **Trial count:** about 3,300 cuts were run before this log (deep scan 1,980 + slice scan 1,328). Each question adds 1; the bet grid (Q004) added its 2,424 readable cells. **Count now: 5,950.**
+- **Trial count:** about 3,300 cuts were run before this log (deep scan 1,980 + slice scan 1,328). Each question adds 1; the bet grid (Q004) added its 2,424 readable cells. **Count now: 6,010.**
 - **Baselines any idea must beat:** (1) the crowd's own price, (2) "no change", (3) "skip the long shots".
 - **Vault:** events that settle after 2026-11-27 have never been looked at. Only they can turn a look-back into a lead.
 - **Read of a result:** "edge beyond noise" = bigger than its noise band; "inside noise" = luck not ruled out; under 30 events = too few.
@@ -104,31 +104,151 @@ event at each time slot). The event is the sample. Cost = ask + taker fee. Noise
 
 ---
 
-## Earlier answers, backfilled from Chats 1-6 (added 2026-11-28, Chat 7)
+## Earlier answers from Chats 1-6, re-tested (Chat 7, 2026-11-28)
 
-Answered questions from before this log existed that steer research and direction (Dan, 11/28: include the substantial ones, stamped with when they were first found, so they sit after the live questions). Pulled from `research/takeaways/master.csv`, `research/LOG.md` and the earlier chats. Not new tests, so the trial count is unchanged. Newest first. "Since / catch" says whether the Q-numbered questions changed the picture.
+Answered questions from before this log existed that steer research and direction. Each keeps the time it was first found, so it sits after the live questions; each was re-run on the current master (m20261128-0345b9a1) at 03:32 AM ET on 2026-11-28 with `tools/retest_earlier.py` unless noted. The re-runs added about 60 cuts to the trial count.
+Removed by Dan on 2026-11-28 (no re-test, not in this log; still in `master.csv`): crowd vs our forecast (M10), simple forecasts vs Kalshi (M15), nothing predicts the 10 AM miss (M35), market-maker copy (M54).
 
-| # | First found (ET) | Question | Answer | Numbers | Since / catch | Source |
-|---|---|---|---|---|---|---|
-| P22 | 2026-11-27 05:30 PM, Chat 6 | Is the crowd's range too wide or too narrow? | Too wide. The crowd is less sure than it should be. | The final AAA number lands inside the crowd's own range 78-88% of the time, where a well-sized range would give 68%. | A hint only. Costs are not in it. Q005 found the bigger error is where the ladder sits (level), not how wide it is. | M51 |
-| P21 | 2026-11-27 05:20 PM, Chat 6 | Can we copy the market maker's prices yet? | Not closely enough. We get the center of the ladder mostly right but each line is still far off. | Center explained: 63-84% on days never seen. Each line: 6-16 points off, while the bid-ask gap is only 2-4 points. | Open. On half-cent ladders, a half-cent center miss moves a line about 15 points, so the center has to get much tighter. | M48, M53, M54 |
-| P20 | 2026-11-27 05:15 PM, Chat 6 | What does the crowd know at 8 AM that we do not? | Something worth about half our miss, and we have not found it in any history we own. | At the open the crowd is within 0.25-0.4c. Best of our 4 suspects (yesterday's move, last 7 moves, weekday, wholesale): 0.40-0.44c. | Open. By midnight the crowd explains 98-99% of the next AAA move, which looks like a live station-price feed that has no free history. | M55, M56, M57 |
-| P19 | 2026-11-27 03:45 PM, Chat 6 | What exactly decides who wins, and when can you trade? | Every one of the 6 markets pays on AAA's national average for one date. The daily market opens 8 AM ET the day before and closes 11:59 PM. AAA posts the answer around 3:30 AM. | Checked against outside AAA prints: 530 of 531 events identical. Weekly pays on Monday's number, monthly on the last day of the month. Lines are half a cent apart in the daily markets. | Still true. The app's '10 PM' label is not the open. | M43; contract cards in COVERAGE.md |
-| P18 | 2026-11-26 06:45 PM, Chat 6 | How far back does our data really go? | Diesel only since Aug 2026. Gas goes back to 2023 but with holes. | Diesel: 116 daily, 16 weekly, 3 monthly events. Gas weekly: 139 events since Oct 2023, but a real ladder only from 2026 (45 events). Gas daily did not run in 2025. | Still true. It is why 3 of the 6 markets cannot be tested yet (Q004). | M40, M45 |
-| P17 | 2026-11-26 03:45 AM, Chat 6 | Does the evening crowd go too far after a strong run-up? | Yes, as a candidate. Buying NO at 9-11 PM after the strongest 5-day rises paid well in gas. | Gas: +28% per $ over 63 days (range +17% to +39%); the last 40% of days still +20%. Diesel: same direction on 13 days. | Found by a follow-up test, so not proof. Q005, Q007 and Q008 point the same way from three other angles. | M36 |
-| P16 | 2026-11-26 03:45 AM, Chat 6 | Does anything we store predict which way the 10 AM crowd is wrong? | No. Nothing did. | About 1,980 tests on 114 diesel and 216 gas days: 0 of 38 inputs worked. The only reliable results were losers: long shots at 3-25c lose about 70%. | Still true for the 10 AM miss. Q008 found something for a different moment: big rises with no futures behind them. | M35 |
-| P15 | 2026-11-26 03:00 AM, Chat 6 | How big can one bet be? | About $1,000. Bigger bets move the price. | $1K fits at the shown price 96% of the time, $5K about half the time, $10K 17%. The whole diesel market trades about $35K a day. | One afternoon of order book only. Gas depth is not recorded yet. | M34 |
-| P14 | 2026-11-26 02:15 AM, Chat 6 | Do truckstop prices move before AAA does? | Not answered yet. This is the main live test. | Day 1 (Nov 25): Love's cut prices at about 15% of its stores around 5 PM ET, and the crowd did not react. 2 days scored so far. | First read at 10 scored days (about Dec 6). A pass needs 20+. | M30, M31 |
-| P13 | 2026-11-26 01:40 AM, Chat 5 | Does posting limit orders on favorites work? | It was the first result with a range above zero, but it is parked. | Diesel: +6.2% per $, range +1.4% to +10.4%. | It lost in October, gas does not confirm it, and fills are not guaranteed. Q003 found takers beating makers on our trade record, which cuts against it. | M28, Q003 |
-| P12 | 2026-11-26 01:00 AM, Chat 5 | Which time span has the most to win? | Daily. Weekly is second. Monthly is not worth it yet. | Knowing the 10 PM price at 10 AM would be worth +70-79% per $. | That is a ceiling with perfect foresight. Selling before the end means paying the spread twice, which was never taken off. | M03 |
-| P11 | 2026-11-26 (no time logged), Chat 5 | How big an edge do we need, and how long to prove it? | Aim for 8-10% per bet. Under 3% is not worth the effort. | 8-10% can be proven in about 4-5 months. At 75-80c, one loss wipes out about 3-4 wins. | Still the target. Pro sports bettors make 3-7% long term, so 8-10% is the top of what is realistic. | M17, M18 |
-| P10 | 2026-11-26 12:45 AM, Chat 5 | Do our simple forecasts beat Kalshi at any time span? | No. The market beat our simple models on daily, weekly and monthly markets. | Our signal does beat 'no change' by about 24% at one week (data since 1994), but traders already price it in. | Still true. It is why the forecast needs a new input, not more math on the same inputs. | M15, M16 |
-| P09 | 2026-11-26 12:20 AM, Chat 5 | Has anyone done this before, and is it realistic? | Yes in other small markets, and one public bot already models AAA. That bot shows no measured edge. | The public bot won 58% of the time where prices implied 60%. It found pump prices trail futures by 4-7 days and close the gap at about 2c a day. | Useful warning: its streak-only model showed a fake 40-point edge that vanished once wholesale prices were added. | M08, M25 |
-| P08 | 2026-11-25 11:50 PM, Chat 4 | Can we rebuild AAA's national number from the state prices? | Almost. A fitted blend of the 51 states lands close, but not yet inside the goal. | Fitted weights miss by 0.14-0.37c. Goal: 0.10c. | Open. Free state history is thin, so this firms up slowly. | M09 |
-| P07 | 2026-11-25 06:20 PM, Chat 3 | Is the diesel favorites edge real? | Not proven. The first count said +8 per $100. The stricter test said +3.3% with a range that includes zero, and only November made money. | Strict test range: -1.6% to +7.7%. By month: Aug up, Sep down, Oct down, Nov up a lot. | Q001 (each day counted once): +2.6 points, just beyond its noise, on one falling stretch. Still a look-back. | M12, Q001 |
-| P06 | 2026-11-25 04:50 PM, Chat 2 | Does the same favorite rule work in gas? | No. Gas is about 13 times busier and priced close to fair. Cheap 'price goes up' YES bets lose in gas in every window tested. | Gas favorites: -2.5 per $100. Gas YES at 83.5c or less: -18 to -30 per $100. | Still true and now wider: Q004 shows YES overpriced in gas at almost every price. | M13, Q004 |
-| P05 | 2026-11-25 (no time logged), Chat 4 | Are there crowd moves that nothing we track explains? | Yes, 184 of them, bunched around noon and 6 PM. | 184 hours where the crowd moved and none of our inputs did. | Open. Q009 showed futures in the same hours do not explain crowd rises either, so the missing input is something else. | M11 |
-| P04 | 2026-11-25 03:00 AM, Chat 1 | Did the 75-85c favorite rule survive days it had never seen? | No. It worked while prices slid slowly and broke when prices climbed fast. | Earlier days: 90% wins, +11.8%. Unseen days (Aug to mid Sep, a fast rise): 81% wins, +0.9%. One bet a day went from +9% to -21%. | Lesson kept: the multi-week trend decides which rules work. Yesterday's direction alone does not. | M14 |
-| P03 | 2026-11-25 12:20 AM, Chat 1 | Who makes the AAA number, and can we get their data? | A data company called OPIS builds it from 9,000+ truckstops. Their method is not published and their data is paid. We use free stand-ins: truckstop chain websites and wholesale futures. | Love's (624 stores) and TA (120) are recorded hourly since Nov 25. | Still true. Paid OPIS data may count as insider information under Kalshi's rules, so check before ever buying it. | M20, M22 |
-| P02 | 2026-11-24 11:55 PM, Chat 1 | How sharp is the crowd compared with our own forecast? | The crowd is about twice as good as us, and it gets sharper all day. | Crowd miss: 0.3-0.55c at 10 AM, 0.1-0.17c by the close. Our formula: 0.6-0.7c. Re-run in Q006: 0.34-0.37c at 10 AM, 0.19c at the close. | Still true. This is the bar our forecast has to clear. | M10, M55, Q006 |
-| P01 | 2026-11-24 11:55 PM, Chat 1 | Does the morning crowd lean too hard on yesterday's price move? | Yes, a little. But it is not a trade by itself. | Crowd at 10 AM = today's AAA + 0.89 x yesterday's move. The truth was 0.73 x. By the close the crowd is at 0.77 x. | Fitted on 51 days. A momentum-only forecast failed after big wholesale moves. Q007-Q009 found the same habit in bigger form: the crowd chases rises. | M12, M15, M35 |
+### P22 · first found 2026-11-27 05:30 PM, Chat 6 · Is the crowd's range too wide or too narrow?
+- **Plain meaning:** The crowd gives a best guess plus a range around it. If the range is sized right, the real number should land inside about 68% of the time.
+- **Then:** In all 6 markets the answer landed inside the crowd's range 78-88% of the time, so the range looked too wide.
+- **Re-test (2026-11-28):** Daily markets at 10 AM: inside 81% (diesel, 83 days) and 78% (gas, 179 days); 77-86% at every time slot. Longer markets do not match: gas weekly 21%, diesel weekly 53%, gas monthly 55%.
+- **Verdict:** HOLDS for the two daily markets. NOT confirmed for weekly and monthly.
+- **Catch / what it means:** The old one-line weekly gas markets make the range unreliable there, so the weekly and monthly numbers need their own check. Costs are not in this; Q005 found the bigger error is where the ladder sits, not how wide it is.
+- **Data:** M51; tools/retest_earlier.py
+
+### P20 · first found 2026-11-27 05:15 PM, Chat 6 · What does the crowd know at the 8 AM open that we do not?
+- **Plain meaning:** At the open nobody has traded yet today, so the crowd's first guess shows what it already knows. We compare its miss with the miss of simple forecasts built from what we hold.
+- **Then:** Crowd within 0.25-0.4c at the open; best of our 4 suspects 0.40-0.44c.
+- **Re-test (2026-11-28):** Last 40% of days, never used for fitting. Diesel (24 days): crowd 0.17c; ours 0.99c with yesterday's move, 0.83c adding futures. Gas (80 days): crowd 0.26c; ours 0.67c, 0.58c adding futures. 'No change' is 2.42c and 1.44c. Adding weekday or longer trends made ours worse.
+- **Verdict:** HOLDS, and the gap is wider than before.
+- **Catch / what it means:** This is also the measure of how sharp the crowd is against us. The missing input is still not found in any history we own.
+- **Data:** M55, M56, M57; tools/retest_earlier.py
+
+### P19 · first found 2026-11-27 03:45 PM, Chat 6 · What exactly decides who wins, and when can you trade?
+- **Plain meaning:** The rule that pays every bet, and the hours the market is open.
+- **Then:** All 6 markets pay on AAA's national average for one date; 530 of 531 events matched outside AAA prints.
+- **Re-test (2026-11-28):** 580 of 581 events match the AAA number to a tenth of a cent. Gas daily closed at 11:59 PM ET on 247 of 267 events. Diesel daily closed at 11:59 PM in November (41 events) and 1:59 AM before that (76 events). AAA posted around 3:30 AM on the two nights we recorded.
+- **Verdict:** SAME.
+- **Catch / what it means:** Diesel's close time moved from 1:59 AM to 11:59 PM during the fall, so 'the close' is not the same clock time across the sample.
+- **Data:** M43; SPINE.md
+
+### P18 · first found 2026-11-26 06:45 PM, Chat 6 · How far back does our data really go?
+- **Plain meaning:** How many separate market days we have to test on. Each day counts once, however many prices it had.
+- **Then:** Diesel 116 daily, 16 weekly, 3 monthly; gas weekly 139 (real ladder only from 2026), monthly 34.
+- **Re-test (2026-11-28):** Diesel daily 117 events (110 with busy lines), weekly 16, monthly 3. Gas daily 269 (253), weekly 140 (128), monthly 34 (33). Gas daily ladders are Mar-Nov 2026 in practice (245 of 253).
+- **Verdict:** SAME.
+- **Catch / what it means:** Three of the six markets still cannot be tested (Q004). Hourly futures now reach back to July 2024 (Q009), which is longer than the Kalshi history itself.
+- **Data:** M40, M45; master
+
+### P17 · first found 2026-11-26 03:45 AM, Chat 6 · Does the evening crowd go too far after a strong run-up?
+- **Plain meaning:** After pump prices have climbed for several days, the evening crowd prices in more climbing than actually comes. So betting NO ('it will not be above this line') at night pays more than its price says.
+- **Then:** Gas: buying NO at 9-11 PM after the strongest 5-day rises made +28 per $100 over 63 days. Diesel same direction on 13 days.
+- **Re-test (2026-11-28):** Gas daily, NO at 10 PM priced 25-97c. After the top fifth of 5-day rises (6.0c or more): +25.7 per $100 (noise 20.4, 43 days); first half +20.5, second half +30.6. After any 5-day rise: +23.4 (noise 13.5, 87 days). After a flat or falling 5 days: -7.5 (126 days). Diesel top fifth: +9.3 (noise 38.7, 18 days); first half +21.8, second half -3.1.
+- **Verdict:** HOLDS in gas. NOT confirmed in diesel.
+- **Catch / what it means:** Same days as the first finding, so this is a re-count, not new proof. Q005, Q007 and Q008 point the same way from other angles.
+- **Data:** M36; tools/retest_earlier.py
+
+### P15 · first found 2026-11-26 03:00 AM, Chat 6 · How big can one bet be?
+- **Plain meaning:** How many dollars are sitting at the best price, ready to be bought, before our own order would push the price.
+- **Then:** $1K fit at the shown price 96% of the time, $5K about half, $10K 17% (one afternoon).
+- **Re-test (2026-11-28):** 3 days of the diesel order book, favorite side priced 60-97c, best price only. $1K fits 66% of the time overall: 78% from 10 AM to 6 PM, 39% from 10 PM to midnight, 29% from 8 to 10 AM. $5K fits 1-2%. $10K never.
+- **Verdict:** CHANGED: smaller than first thought, and much thinner early and late.
+- **Catch / what it means:** I count only the dollars at the single best price; the first read may have counted the next prices too. Gas has no order book recorded yet.
+- **Data:** M34; tools/retest_earlier.py
+
+### P14 · first found 2026-11-26 02:15 AM, Chat 6 · Do truckstop prices move before AAA does?
+- **Plain meaning:** Truckstops post prices all day. If they move before the national number does, we would know tomorrow's answer early.
+- **Then:** Day 1: Love's cut prices at about 15% of stores around 5 PM and the crowd did not react.
+- **Re-test (2026-11-28):** Still 2 days scored, 2 waiting on AAA. Nov 25: truckstops -1.0c, AAA -4.0c. Nov 26: truckstops -1.9c, AAA -2.0c.
+- **Verdict:** OPEN. Nothing to conclude from 2 days.
+- **Catch / what it means:** First read at 10 scored days (about Dec 6); a pass needs 20+.
+- **Data:** M30, M31; l3_truckstop_scorecard.csv
+
+### P13 · first found 2026-11-26 01:40 AM, Chat 5 · Does posting limit orders on favorites work?
+- **Plain meaning:** A limit order waits at your price until someone takes it. The question was whether waiting on the favorite side beats buying it outright.
+- **Then:** Diesel +6.2 per $100 (range +1.4 to +10.4); lost in October; gas did not confirm.
+- **Re-test (2026-11-28):** Trade record, before fees. Diesel makers who ended up holding favorites at 60-97c: +6.6 per $100 (noise 4.6, 61 days; October -4.2). Gas: -1.8 (noise 8.1, 31 days). New: takers who simply bought those same favorites did better: diesel +14.0, gas +4.5.
+- **Verdict:** HOLDS as counted, but the meaning changed.
+- **Catch / what it means:** It was the favorite side doing well in a falling stretch, not the limit order. Buying outright beat waiting. Stays parked.
+- **Data:** M28, Q003; tools/retest_earlier.py
+
+### P12 · first found 2026-11-26 01:00 AM, Chat 5 · Which time span has the most to win?
+- **Plain meaning:** If you could see the 10 PM price at 10 AM, how much could you make? It is a ceiling: the most any forecast could ever earn in that market.
+- **Then:** Daily: +70-79 per $100. Weekly second. Monthly not worth it.
+- **Re-test (2026-11-28):** Perfect foresight, 10 AM to 10 PM. Daily: +68.7 per $100 before costs, +42.3 after paying the ask, selling at the bid and both fees. Weekly: +26.3, then +8.4. Monthly: +16.7, then +3.1.
+- **Verdict:** HOLDS: daily has the most room. Costs remove about 40% of it.
+- **Catch / what it means:** A ceiling is not a forecast. It says where a good forecast would pay most, which is the daily markets.
+- **Data:** M03; tools/retest_earlier.py
+
+### P11 · first found 2026-11-26 (no time logged), Chat 5 · How big an edge do we need, and how long to prove it?
+- **Plain meaning:** A small edge takes many bets before it can be told apart from luck. This sets the target worth chasing.
+- **Then:** Aim for 8-10% per bet (provable in 4-5 months); under 3% is not worth it.
+- **Re-test (2026-11-28):** Bets needed to tell the edge from luck: 8% needs about 120 by the textbook math and about 56 using the real day-to-day swing of a diesel favorite bet. 3% needs about 860 and about 400.
+- **Verdict:** HOLDS.
+- **Catch / what it means:** At one bet a day, 8% takes 2 to 4 months and 3% takes more than a year. Most of the look-back edges in this log are 3 to 8 points.
+- **Data:** M17, M18; tools/retest_earlier.py
+
+### P09 · first found 2026-11-26 12:20 AM, Chat 5 · How fast do wholesale price moves reach the pump?
+- **Plain meaning:** Wholesale futures move first and pump prices follow. A public Kalshi bot measured the delay; we checked it on our own data.
+- **Then:** The public bot found pump prices trail futures by 4-7 days and close the gap at about 2c a day. Its own live record showed no edge (58% wins where prices implied 60%).
+- **Re-test (2026-11-28):** Our data since Jan 2025. For each 1c futures move, the pump price has moved 0.07c after 1 day, 0.23c after 3, 0.46c after 7 and 0.66c after 14 (diesel; gas is nearly the same: 0.05, 0.21, 0.45, 0.66). The biggest single-day effect comes 2 to 3 days later. The same-day effect is about zero.
+- **Verdict:** HOLDS, and sharper.
+- **Catch / what it means:** This is a fundamental input for the forecast and it explains Q009: today's futures say nothing about tomorrow's AAA, while moves from 2-3 days ago are still arriving.
+- **Data:** M08, M25; tools/retest_earlier.py
+
+### P08 · first found 2026-11-25 11:50 PM, Chat 4 · Can we rebuild AAA's national number from the state prices?
+- **Plain meaning:** AAA's national price is a blend of the 51 state prices with weights nobody publishes. If we can copy the blend, we can track the number ourselves.
+- **Then:** Fitted weights missed by 0.14-0.37c against a goal of 0.10c.
+- **Re-test (2026-11-28):** No new data since. The fitted blend misses by 0.36c on the 13 days where all 51 states are known; 31% of days are inside the goal.
+- **Verdict:** OPEN, unchanged.
+- **Catch / what it means:** Free state history is thin, so this firms up slowly.
+- **Data:** M09; algo_scorecard L2.1
+
+### P07 · first found 2026-11-25 06:20 PM, Chat 3 · Is the diesel favorites edge real?
+- **Plain meaning:** The favorite is the side priced above 50c. The claim was that diesel favorites win more often than their price says.
+- **Then:** First count +8 per $100; the stricter test +3.3 with a range of -1.6 to +7.7. Only November made money.
+- **Re-test (2026-11-28):** Favorites priced 60-97c at 10 AM, each day once: +1.5 per $100 (noise 7.1, 73 days). By month: Aug +8.9, Sep -9.7, Oct -9.5, Nov +15.7. Falling trend +4.4 points (37 days); rising trend -3.2 (33 days).
+- **Verdict:** HOLDS: not proven. It is a falling-market effect.
+- **Catch / what it means:** Q001 counted all time slots and got +2.6 points for favorites at 75c+; this 10 AM count is smaller and well inside its noise.
+- **Data:** M12, Q001; tools/retest_earlier.py
+
+### P06 · first found 2026-11-25 04:50 PM, Chat 2 · Does the same favorite rule work in gas?
+- **Plain meaning:** Gas pays on the same kind of AAA number, so it is a second place to check any diesel idea.
+- **Then:** Gas favorites -2.5 per $100. Gas YES at 83.5c or less lost 18-30 per $100 in every window.
+- **Re-test (2026-11-28):** Gas daily favorites 60-97c at 10 AM: -0.8 per $100 (noise 4.8, 169 days). Gas daily YES-favorites at 83.5c or less: -18.7 per $100 at 10 AM (noise 16.5, 76 days), -13.7 across all slots (noise 8.4, 217 days). Gas weekly: -27.3 (noise 16.0, 59 days).
+- **Verdict:** HOLDS.
+- **Catch / what it means:** Q004 widened it: YES is overpriced in gas at almost every price.
+- **Data:** M13, Q004; tools/retest_earlier.py
+
+### P05 · first found 2026-11-25 (no time logged), Chat 4 · Are there crowd moves that nothing we track explains?
+- **Plain meaning:** Times when the Kalshi prices jumped but none of our inputs moved. Each one hints at information the crowd has and we lack.
+- **Then:** 184 hours where the crowd moved and nothing we tracked did, bunched around noon and 6 PM.
+- **Re-test (2026-11-28):** 478 big crowd moves in the two daily markets, now checked against hourly futures. Futures moved the same way in the same hours on only 50% of them in diesel (120 moves) and 42% in gas (358 moves). Most happen between noon and 6 PM.
+- **Verdict:** HOLDS: about half of big moves have no futures move behind them.
+- **Catch / what it means:** Futures were the obvious suspect and they do not explain it (Q009). The next suspects are station prices and truckstop repricing.
+- **Data:** M11, Q007, Q009; swing_hourly.py
+
+### P04 · first found 2026-11-25 03:00 AM, Chat 1 · Did the 75-85c favorite rule survive days it had never seen?
+- **Plain meaning:** An early rule said: buy the favorite when it costs 75-85c. We then tried it on older days it was not built from.
+- **Then:** Days it was built on: 90% wins, +11.8%. Unseen days in a fast rise: 81% wins, +0.9%.
+- **Re-test (2026-11-28):** At 10 AM, each day once: 35 days, 84.3% wins, +2.7 points (noise 11.9). Falling trend +9.3 (20 days); rising trend -11.5 (12 days). By month per $100: Sep -10.4, Oct -11.5, Nov +24.4.
+- **Verdict:** HOLDS: it depends on the trend, so it is not a rule.
+- **Catch / what it means:** Only 35 days carry a 75-85c favorite at 10 AM. The lesson stands: the multi-week trend decides which simple rules work.
+- **Data:** M14; tools/retest_earlier.py
+
+### P03 · first found 2026-11-25 12:20 AM, Chat 1 · Who makes the AAA number, and can we get their data?
+- **Plain meaning:** AAA does not compute its own price. Knowing who does tells us which raw inputs matter.
+- **Then:** A data company, OPIS, builds it from 9,000+ truckstops. Method unpublished, data paid.
+- **Re-test (2026-11-28):** A fact, so nothing to re-run. Our free stand-in is recording: Love's and TA truckstop prices, 4 days so far.
+- **Verdict:** SAME.
+- **Catch / what it means:** Paid OPIS data may count as insider information under Kalshi's rules; check before ever buying it.
+- **Data:** M20, M22
+
+### P01 · first found 2026-11-24 11:55 PM, Chat 1 · Does the morning crowd lean too hard on yesterday's price move?
+- **Plain meaning:** If AAA fell 2c yesterday, how much more fall does the crowd expect tomorrow, and how much really comes?
+- **Then:** Crowd at 10 AM expected 0.89 of yesterday's move to repeat; the truth was 0.73 (51 diesel days).
+- **Re-test (2026-11-28):** Diesel at 10 AM (87 days): crowd 0.84, truth 0.91. Gas at 10 AM (180 days): crowd 0.79, truth 0.73.
+- **Verdict:** CHANGED. In diesel the crowd no longer over-follows; it slightly under-follows. In gas it over-follows a little.
+- **Catch / what it means:** Not an edge by itself. The bigger crowd habit is in Q007-Q009: chasing rises that futures do not back.
+- **Data:** M12, M15, M35; tools/retest_earlier.py
