@@ -1,7 +1,7 @@
 {
  "all_stores": 734,
  "grid_cells": 151,
- "stores_with_prices": 624,
+ "stores_with_prices": 599,
  "body_used": {
   "lat": 0,
   "lng": 0,
@@ -9,7 +9,10 @@
  },
  "errors_sample": [
   "HTTP Error 400: Bad Request",
-  "HTTP Error 400: Bad Request"
+  "HTTP Error 400: Bad Request",
+  "HTTP Error 500: Internal Server Error",
+  "HTTP Error 500: Internal Server Error",
+  "HTTP Error 500: Internal Server Error"
  ],
  "store_keys": [
   "address",
