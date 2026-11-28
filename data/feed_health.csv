@@ -1,11 +1,11 @@
 feed,last row (UTC),expected every (min),minutes since,status
-"Kalshi strikes, 5-min (live recorder)",2026-11-25 20:51,15,37.0,OK
-"Kalshi order book, 15-min (live recorder)",2026-11-25 20:51,30,37.0,OK
-"AAA national, 15-min (live recorder)",2026-11-25 20:51,30,37.0,OK
-"Futures quotes, 5-min (live recorder)",2026-11-25 20:51,15,37.0,OK
-"Love's truckstops, hourly (Chat 4)",2026-11-25 20:31,90,57.0,OK
-"TA truckstops, hourly (Chat 4)",2026-11-25 20:31,90,57.0,OK
-Kalshi trades + 1-min candles (daily job),2026-11-25 21:19,2160,10.0,OK
-Kalshi hourly candles + settlements (daily job),2026-11-25 17:00,2160,269.0,OK
-AAA state prices (daily job),2026-11-25 12:00,2160,569.0,OK
-EIA spot prices (warehouse job),2026-11-24 20:00,5760,1529.0,OK
+"Kalshi strikes, 5-min (live recorder)",2026-11-28 04:55,15,245.0,OK (market closed overnight)
+"Kalshi order book, 15-min (live recorder)",2026-11-28 04:45,30,255.0,OK (market closed overnight)
+"AAA national, 15-min (live recorder)",2026-11-28 08:00,30,60.0,OK
+"Futures quotes, 5-min (live recorder)",2026-11-28 08:00,15,60.0,OK
+"Love's truckstops, hourly (Chat 4)",2026-11-28 07:53,90,68.0,OK
+"TA truckstops, hourly (Chat 4)",2026-11-28 07:53,90,68.0,OK
+Kalshi trades + 1-min candles (daily job),2026-11-27 17:15,2160,946.0,OK
+Kalshi hourly candles + settlements (daily job),2026-11-27 18:00,2160,901.0,OK
+AAA state prices (daily job),2026-11-27 12:00,2160,1261.0,OK
+EIA spot prices (warehouse job),2026-11-24 20:00,5760,5101.0,OK

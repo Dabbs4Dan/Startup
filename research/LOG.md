@@ -4,6 +4,15 @@ Moved out of CLAUDE.md on 2026-11-25 so new sessions load fast. **Add new entrie
 
 Template:
 ```
+### 2026-11-28 (4:02 AM) · Chat 7 · State gas markets sized up; pipeline audit (3 fixes)
+
+- **Asked (Dan):** "States", and: is all the live data working, pulling in, and layered into the systems going forward?
+- **States, verified from rule text and raw files:** each state market pays on AAA's average regular gas price for that state. 50 ladder series ran Aug 24 to Nov 14 2026: 2,629 events on 82 days, same build as national gas daily. Median 18K contracts per event (national gas 334K, diesel daily 50K); two-sided quotes about 60% of hours; spread 10-25c. Replaced Nov 11-15 by 50 "change" markets (5 buckets, thin, still running). Settle values = free AAA state prices (all 50 states on 31 days). **Assumed, not checked:** fees are the same; hourly candle quotes there are tradable in size.
+- **Audit, verified with `gh run list` and the last rows of each feed:** live recorder, truckstops, backfill, gas backfill, warehouse, nautilus all ran in the last 24h; relay alive.
+- **Found and fixed:** (1) `warehouse.yml` last step failed quietly since 11/25 ("cannot pull with rebase: unstaged changes", caused by `data/feed_health.csv` never being added): catalog, feed health and the Internet Archive AAA rows never landed. Fixed, and the step now fails loudly. (2) The vault was not enforced anywhere in code. Now `VAULT_AFTER` in `tools/backtest_master.py` holds back later events in `data/lake/master/vault/`; `deep_scan.py` has the same cutoff. Master version unchanged (m20261128-0345b9a1), spine checks pass. (3) `kalshi_history.yml` was only started by hand; the relay now starts it daily, so the master refreshes itself. (4) Feed health said STALE for Kalshi feeds overnight; it now says "OK (market closed overnight)".
+- **Still open (not fixed):** gas order book is not recorded (diesel only); the live 5-minute Kalshi feed is not read by the master (hourly candles are; it is for Track C); older tools (deep scan, panel) still read the old diesel database, so two generations of tools exist; the AAA prints after 11/27 are visible in `aaa_daily.csv` (inputs), so a forecast fit must apply the same cutoff by hand.
+- **Next (proposed):** add the state ladders to the master as a second look at the gas crowd habits (Q004, Q005, P17); record the gas order book.
+
 ### 2026-11-28 (3:47 AM) · Chat 7 · Question log: data insights only, additive (Dan)
 
 - **Decided (Dan):** the question log holds true data insights and is additive only. Nothing is written off, off limits or hard-stopped this early; Claude must not take one note and set it in stone. Cut anything limiting or prescriptive, and the thin-sample rows.

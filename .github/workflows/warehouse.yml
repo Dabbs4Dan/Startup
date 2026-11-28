@@ -54,6 +54,10 @@ jobs:
       - name: Commit
         if: always()
         run: |
-          git add data/lake data/warehouse_catalog.csv data/warehouse_catalog.md
+          # 2026-11-28 fix: feed_health.csv was written but never added, so the pull refused ("unstaged changes") and
+          # nothing from this step was pushed since 11/25 (catalog, feed health, Internet Archive AAA rows). Now it fails loudly.
+          git add data/lake data/warehouse_catalog.csv data/warehouse_catalog.md data/feed_health.csv
           git diff --cached --quiet || git commit -m "warehouse: history + catalog $(date -u +%Y-%m-%dT%H:%MZ)"
-          for i in 1 2 3 4; do git pull --rebase -X theirs origin kalshi-twins && git push origin HEAD:kalshi-twins && break; sleep 15; done
+          git stash -u -q || true
+          ok=0; for i in 1 2 3 4; do git pull --rebase -X theirs origin kalshi-twins && git push origin HEAD:kalshi-twins && ok=1 && break; sleep 15; done
+          [ "$ok" = 1 ] || { echo "::error::warehouse results were NOT pushed"; exit 1; }

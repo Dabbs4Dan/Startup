@@ -301,6 +301,9 @@ def _live_extras(con):
     con.execute("CREATE VIEW feed_health AS SELECT feed, last_row_utc, expect_every_min, "
                 "round(date_diff('second', last_row_utc, now()::TIMESTAMP) / 60.0) AS minutes_since, "
                 "CASE WHEN last_row_utc IS NULL THEN 'NO DATA' "
+                # Kalshi daily markets are closed 11:59 PM - 8 AM ET: quiet then is normal, not a dead feed (fixed 2026-11-28)
+                "WHEN feed LIKE 'Kalshi%(live recorder)' AND hour(timezone('America/New_York', now())) < 9 "
+                "AND date_diff('second', last_row_utc, now()::TIMESTAMP) / 3600.0 <= 10 THEN 'OK (market closed overnight)' "
                 "WHEN date_diff('second', last_row_utc, now()::TIMESTAMP) / 60.0 <= expect_every_min * 2 + 75 THEN 'OK' ELSE 'STALE' END AS status "
                 "FROM (" + " UNION ALL ".join(parts) + ")")
 

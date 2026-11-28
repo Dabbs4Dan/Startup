@@ -407,6 +407,9 @@ def contract_cards(aaa):
 
 
 # ------------------------------------------------------------------ main
+VAULT_AFTER = "2026-11-27"      # events settling after this date are never-looked-at days (research/QUESTION_LOG.md, guard rails)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     aaa, conf, aaa_all = aaa_daily()
@@ -452,6 +455,19 @@ def main():
         for c in cols:
             if c in df:
                 df[c] = pd.to_datetime(df[c].astype(str), format="mixed").dt.strftime("%Y-%m-%d %H:%M:%S")
+    # Vault (2026-11-28): events that settle after VAULT_AFTER are held back in data/lake/master/vault/ so no test can
+    # read them by accident. Every tool reads the files below, so the hold-out is enforced here, in one place.
+    # To open the vault: move VAULT_AFTER forward on purpose and say so in research/LOG.md.
+    in_vault = pd.to_datetime(mst.settle_date) > pd.Timestamp(VAULT_AFTER)
+    vault_events = set(mst.loc[in_vault, "event"])
+    (OUT / "vault").mkdir(exist_ok=True)
+    mst[in_vault].round(5).to_csv(OUT / "vault" / "backtest_master_vault.csv.gz", index=False)
+    lines[lines.event.isin(vault_events)].round(4).to_csv(OUT / "vault" / "ladder_snapshots_vault.csv.gz", index=False)
+    json.dump({"vault_after": VAULT_AFTER, "events_held_back": len(vault_events),
+               "last_settle_held": str(pd.to_datetime(mst.loc[in_vault, "settle_date"]).max().date()) if len(vault_events) else None},
+              open(OUT / "vault" / "VAULT.json", "w"), indent=1)
+    log(f"vault: {len(vault_events)} events settling after {VAULT_AFTER} held back")
+    mst, lines = mst[~in_vault].reset_index(drop=True), lines[~lines.event.isin(vault_events)].reset_index(drop=True)
     mst.round(5).to_csv(OUT / "backtest_master.csv.gz", index=False)
     (OUT / "backtest_master.csv").unlink(missing_ok=True)          # old uncompressed name (before 2026-11-26 evening)
     lines.round(4).to_csv(OUT / "ladder_snapshots.csv.gz", index=False)

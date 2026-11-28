@@ -23,6 +23,7 @@ OUT = ROOT / "research" / "backtests" / "deep_scan"
 DBS = {"diesel": ROOT / "data" / "kalshi_twins.db", "gas": ROOT / "data" / "gas" / "kalshi_gas.db"}
 BANDS = [(0.03, 0.25), (0.25, 0.45), (0.45, 0.60), (0.60, 0.75), (0.75, 0.85), (0.85, 0.97)]
 SPLIT, FDR, MIN_DAYS, EDGE_BAR = 0.60, 0.10, 12, 0.05
+VAULT_AFTER = "2026-11-27"
 BASE = ["weekend", "momentum_yday", "aaa_chg_3d", "aaa_chg_5d", "aaa_chg_7d", "aaa_chg_10d", "aaa_chg_20d", "streak_days",
         "ho_chg_1d", "ho_chg_3d", "ho_chg_5d", "ho_chg_4d_fit", "brent_last_close", "crude_slice", "refining_slice",
         "delivery_slice", "delivery_gap_vs_090", "am10_crowd_sigma_c", "am10_active_lines", "am10_total_volume",
@@ -56,6 +57,7 @@ def load(product):
         if c not in ("event_date", "bet_day", "weekday", "holiday", "holiday_week", "regime", "am10_time", "close_time",
                      "ho_last_close_date", "am10_goldilocks_bet", "close_goldilocks_bet"):
             p[c] = pd.to_numeric(p[c], errors="coerce")
+    p = p[p.event_date.astype(str) <= VAULT_AFTER]          # vault: later days are never-looked-at (see backtest_master.py)
     p = p[p.am10_crowd_forecast.notna() & p.aaa_settled.notna()].reset_index(drop=True)
     # derived parameters, all known at 10 AM on the bet day
     p["crowd_exp_change_c"] = (p.am10_crowd_forecast - p.aaa_known) * 100
