@@ -1,6 +1,6 @@
 # The spine: how every research table connects
 
-Built by `tools/spine.py` on 2026-11-28 09:11 UTC. Re-run after any table is rebuilt. Read this before adding a table.
+Built by `tools/spine.py` on 2026-11-28 09:22 UTC. Re-run after any table is rebuilt. Read this before adding a table.
 
 **Master version: `m20261128-0345b9a1`** (built 2026-11-28 06:16 UTC; `data/lake/master/VERSION.json`). Every result names the version it read.
 
@@ -26,6 +26,8 @@ Built by `tools/spine.py` on 2026-11-28 09:11 UTC. Re-run after any table is reb
 | **market_scorecard** | L2 roll-up | E1 | market | 6 |  |  |  | 0 | `tools/market_scorecard.py` | `research/engine_room/market_scorecard.csv` |
 | **bet_grid** | L3 scan | E1 | market x side x price_cut x slot x line | 10748 |  |  |  | 0 | `tools/bet_grid.py` | `research/engine_room/bet_grid.csv` |
 | **swing_cohort** | L2 for E2 (first piece of paths) | E2 | event x floor_strike x snapshot_et | 2237 | 374 |  |  | 0 | `tools/swing_cohort.py` | `research/engine_room/swing_cohort.csv` |
+| **aaa_moves** | L2 roll-up (the answer itself) | E1 | fuel x date | 1558 |  | 2022-11-28 | 2026-11-27 | 0 | `tools/aaa_moves.py` | `research/engine_room/aaa_moves.csv` |
+| **open_gap_ratio** | L3 ratio (first hand-built) | both | event x snapshot_date | 2109 | 493 | 2023-09-18 | 2026-11-27 | 0 | `tools/open_gap_ratio.py` | `research/engine_room/open_gap_ratio.csv` |
 | **slice_scan** | L3 scan | E1 | market x fav_side x bet x slice | 1318 |  |  |  | 0 | `tools/slice_scan.py` | `research/engine_room/slice_scan.csv` |
 | **mm_model_scorecard** | L4 market-maker copy | both | fuel x slice | 6 |  |  |  | 0 | `tools/mm_model.py` | `research/engine_room/mm_model_scorecard.csv` |
 | **mm_anchor_scorecard** | L4 market-maker copy | both | fuel x slice | 6 |  |  |  | 0 | `tools/mm_anchor.py` | `research/engine_room/mm_anchor_scorecard.csv` |

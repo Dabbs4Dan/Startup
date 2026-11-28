@@ -4,6 +4,22 @@ Moved out of CLAUDE.md on 2026-11-25 so new sessions load fast. **Add new entrie
 
 Template:
 ```
+### 2026-11-28 (4:23 AM) · Chat 7 · RESULT: AAA change table + open gap ratio (Q010, Q011)
+
+- **Did:** `tools/aaa_moves.py` (1,558 fuel-days, 1,378 changes, fixed percent bands; windows table for weekly / monthly; 196 summary rows) and `tools/open_gap_ratio.py` (Dan's first hand-built ratio; 2,109 market-days, 1,006 with a ratio; 64 summary rows). Both in the warehouse (`lab.aaa_moves`, `lab.open_gap_ratio`), the spine, and the daily rebuild. Sheet tab "AAA moves". Trial count 8,020 → 8,280.
+- **Saw (look-back):** drops are common and small, rises rarer and bigger (0.5%+ days: diesel 59 rises vs 7 drops; gas 69 vs 43). A 0.5%+ rise was followed by another rise on 100% of diesel and 97% of gas days. Weekly rhythm in all three years (diesel Tuesday number up 81%, Monday down 80%; gas weekend numbers down about 80%, Monday nearly flat). Friday fell → weekend fell 95-97%. Crowd nearly exact after drops, too high after huge gas rises, furthest off on the first day of a jump. Gas YES at 10 AM on Sat-Mon numbers -52.9 per $100 (noise 14.5, 77 days) vs -9.5 Tue-Fri. Ratio: about 0.8 in daily markets, near 0 in weekly / monthly; link to the 10 AM miss 0.05.
+- **Checked:** the weekday pattern holds in each of 2024, 2025, 2026 separately (not an Internet Archive date artifact) and on Kalshi-settled days for gas. **Assumed:** the 10 AM slot stands in for "the open" (at 8 AM only about half the days have two-sided quotes).
+- **Oddity noted, not chased:** the biggest diesel rises all sit in Mar 3-10 2026 (+12 to +15c a day), before diesel markets existed on Kalshi; the cause is not in our notes.
+- **Next (proposed):** combine: band heading in × weekday × the ratio, as inputs to the AAA forecast (the carry and the weekly rhythm are forecast inputs, not bets).
+
+### 2026-11-28 (4:18 AM) · Chat 7 · PLAN: AAA change table (Dan)
+
+- **Question (Dan):** across the whole set, how does AAA change day to day and over the weekend, sorted into size bands by percent, so the biggest moves can be isolated later; and how did the crowd and the 3 busy lines do in each band, in all 6 markets.
+- **What gets built:** `tools/aaa_moves.py` → `research/engine_room/aaa_moves.csv` (one row per fuel x day, all AAA history), `aaa_moves_windows.csv` (weekly and monthly events), `aaa_moves_summary.csv` (the grouped views). A look-back table, not a strategy test.
+- **Bands (fixed before looking at results):** by percent change of the daily number: flat under 0.05%, small 0.05-0.2%, medium 0.2-0.5%, big 0.5-1%, huge 1%+; each split into rise and drop. Windows (weekly, monthly): 0.25 / 1 / 2.5 / 5%.
+- **Two ways of grouping, kept apart:** by the change heading in (known before the market opens: usable) and by the change that came (hindsight: shows where the crowd is weakest, not a bet).
+- **Days held out:** the vault (settle after 2026-11-27). The event is the sample; noise = 2 standard errors across days; cost = ask + fee.
+
 ### 2026-11-28 (4:02 AM) · Chat 7 · State gas markets sized up; pipeline audit (3 fixes)
 
 - **Asked (Dan):** "States", and: is all the live data working, pulling in, and layered into the systems going forward?
