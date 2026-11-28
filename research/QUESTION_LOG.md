@@ -8,12 +8,23 @@ after it also holds on new days. Dan's reading copy: Google Sheet "Kalshi – Qu
 event at each time slot). The event is the sample. Cost = ask + taker fee. Noise = 2 standard errors across events.
 
 **Guard rails (kept here, nowhere else):**
-- **Trial count:** about 3,300 cuts were run before this log (deep scan 1,980 + slice scan 1,328). Each question adds 1; the bet grid (Q004) added its 2,424 readable cells. **Count now: 5,757.**
+- **Trial count:** about 3,300 cuts were run before this log (deep scan 1,980 + slice scan 1,328). Each question adds 1; the bet grid (Q004) added its 2,424 readable cells. **Count now: 5,840.**
 - **Baselines any idea must beat:** (1) the crowd's own price, (2) "no change", (3) "skip the long shots".
 - **Vault:** events that settle after 2026-11-27 have never been looked at. Only they can turn a look-back into a lead.
 - **Read of a result:** "edge beyond noise" = bigger than its noise band; "inside noise" = luck not ruled out; under 30 events = too few.
 
 ---
+
+### Q007 · 2026-11-28 02:59 AM ET · The biggest intraday price swings on the busy lines: is there a pattern?
+- **Asked by Dan:** "look into instances in the biggest spread swing across the 6 topics and 3 most liquid markets whether yes no fav not favorite, analyze a cohort of just the biggest spread swings intraday and identify some sort of trend or pattern." Read as: the biggest price moves of a line between two time slots.
+- **Cohort:** a busy line's YES price moving 15+ points between neighboring time slots, spread 10c or less at both ends. 2,237 swings: gas daily 707 (190 of 251 days had one), gas weekly 670, gas monthly 338, diesel daily 235 (76 of 109 days), diesel weekly 219, diesel monthly 68.
+- **Pattern 1, after a big swing YES is left too high, whichever way it moved.** Gas daily, bets priced 50-95c: buying YES on calm lines -3.6; after a big rise -7.1; after a big drop -18.0 (noise 12.6, 58 events). Buying NO: calm +1.1; after a rise +3.5; after a drop +5.1 (noise 5.9, 124 events). The crowd does not drop far enough on down news and goes a bit too far on up news.
+- **Pattern 2, big rises are the wrong ones.** Betting with a big rise lost in every market: gas daily -7.9 (noise 6.6), gas weekly -15.0 (9.5), gas monthly -16.4 (13.2), diesel daily -9.1 (9.3). Betting with a big drop: gas daily +4.5, gas weekly +3.5, gas monthly +4.5, diesel daily +1.7 (all inside noise). Worst case: a big rise during a rising 10-day trend in gas daily, -17.8 (noise 9.8, 55 events).
+- **Pattern 3, time of day.** Midday swings were right (gas daily noon to 3 PM +5.8, 3 PM to 6 PM +6.8; diesel daily noon to 3 PM +13.5, noise 7.7, 21 events). The last two hours were wrong: 10 PM to close swings were about 80% upward, and betting against them made +15 points in gas daily (33 nights) and +11 in diesel daily (15 nights). Small samples.
+- **Pattern 4, no follow-through.** After a big swing the price moved only about 1 more point in the same direction by the next slot. There is nothing to chase.
+- **Pattern 5, diesel.** Diesel's favorite edge sits on calm lines (buying YES 50-95c on calm lines +6.7, noise 5.1, 76 events) and is gone after a swing.
+- **Catch:** look-back; about 80 cuts were read here; most single cells are inside their noise. What repeats across markets is the direction (rises overshoot, drops fall short). Quotes carry no size.
+- **Data:** `python3 tools/swing_cohort.py` -> `research/engine_room/swing_cohort.csv` (`lab.swing_cohort`). Master m20261128-0345b9a1.
 
 ### Q006 · 2026-11-28 02:56 AM ET · Is betting in the morning less accurate or less profitable than in the evening? (re-run of an earlier finding)
 - **Asked by Dan:** "There was a test we saw that betting in morning was less profitable or accurate than evening? I'd like to also recreate that just for the sake of logging - or perhaps now the results will be different."
