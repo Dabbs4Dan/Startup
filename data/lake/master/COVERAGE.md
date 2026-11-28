@@ -1,6 +1,6 @@
 # Backtest master: coverage and vetting
 
-Built by `tools/backtest_master.py` on 2026-11-27 21:15 UTC. Rules: see the docstring of that file.
+Built by `tools/backtest_master.py` on 2026-11-28 06:16 UTC. Rules: see the docstring of that file.
 
 ## Market canvas (Kalshi ladders)
 
@@ -8,11 +8,11 @@ Built by `tools/backtest_master.py` on 2026-11-27 21:15 UTC. Rules: see the docs
 |:------------|:-------|:----------|---------:|----------:|------------:|:---------------|:--------------|--------------------------:|:------------------|
 | KXDIESELD   | diesel | daily     |      117 |      2611 |         816 | 2026-08-03     | 2026-11-27    |                      1173 |                   |
 | KXDIESELW   | diesel | weekly    |       16 |       436 |         577 | 2026-08-09     | 2026-11-23    |                       196 |                   |
-| KXDIESELMON | diesel | monthly   |        3 |        77 |         457 | 2026-08-31     | 2026-10-31    |                        21 |                   |
+| KXDIESELMON | diesel | monthly   |        3 |        77 |         455 | 2026-08-31     | 2026-10-31    |                        21 |                   |
 | KXDIESELM   | diesel | monthly   |        0 |           |             |                |               |                           | no usable markets |
-| KXAAAGASD   | gas    | daily     |      271 |      4432 |        1856 | 2023-09-18     | 2026-11-27    |                      3238 |                   |
-| KXAAAGASW   | gas    | weekly    |      140 |      1111 |        4505 | 2023-10-09     | 2026-11-23    |                       853 |                   |
-| KXAAAGASM   | gas    | monthly   |       34 |       485 |        4685 | 2023-12-31     | 2026-10-31    |                       417 |                   |
+| KXAAAGASD   | gas    | daily     |      271 |      4432 |        1790 | 2023-09-18     | 2026-11-27    |                      3238 |                   |
+| KXAAAGASW   | gas    | weekly    |      140 |      1111 |        4469 | 2023-10-09     | 2026-11-23    |                       853 |                   |
+| KXAAAGASM   | gas    | monthly   |       34 |       485 |        4683 | 2023-12-31     | 2026-10-31    |                       417 |                   |
 
 ## Contract cards: is each market the same thing? (rebuilt from raw files every run)
 
@@ -39,27 +39,27 @@ Settlement: every series settles on AAA's national average for ONE date (rule te
 
 | fuel   | days_out   |   events |   rows |   crowd_range_c |   crowd_expected_move_c |   actual_move_c |   crowd_miss_c |
 |:-------|:-----------|---------:|-------:|----------------:|------------------------:|----------------:|---------------:|
-| diesel | 1          |      134 |    134 |            0.99 |                    1.2  |            1.57 |           0.36 |
+| diesel | 1          |      134 |    134 |            0.99 |                    1.2  |            1.57 |           0.37 |
 | diesel | 2-3        |       19 |     37 |            3.64 |                    3.4  |            3.47 |           0.98 |
 | diesel | 4-7        |       19 |     73 |            6.48 |                    5.15 |            7    |           3.87 |
 | diesel | 8-14       |        3 |     21 |           20.79 |                    7.39 |            2.38 |          17    |
-| diesel | 15+        |        3 |     47 |           39.02 |                   15.43 |           18.38 |          10.69 |
-| gas    | 1          |      397 |    397 |            0.71 |                    1.01 |            0.8  |           0.36 |
+| diesel | 15+        |        3 |     46 |           39.02 |                   15.43 |           19.68 |          10.69 |
+| gas    | 1          |      341 |    341 |            0.66 |                    1.01 |            0.7  |           0.33 |
 | gas    | 2-3        |      165 |    309 |            1.68 |                    1.78 |            1.13 |           0.79 |
-| gas    | 4-7        |      162 |    497 |            4.02 |                    3.42 |            2.4  |           2.37 |
+| gas    | 4-7        |      162 |    481 |            3.97 |                    3.36 |            2.3  |           2.32 |
 | gas    | 8-14       |       32 |    206 |            6.17 |                    3.05 |            4.5  |           3.99 |
-| gas    | 15+        |       34 |    440 |            9.96 |                    4.54 |            6.75 |           5.75 |
+| gas    | 15+        |       34 |    440 |            9.96 |                    4.55 |            6.75 |           5.78 |
 
 ## Master table by fuel and time slice
 
 | fuel   | horizon   |   events |   snapshots | first_settle   | last_settle   | has_center   | has_3_liquid   | has_aaa_known   | has_main_future   |
 |:-------|:----------|---------:|------------:|:---------------|:--------------|:-------------|:---------------|:----------------|:------------------|
 | diesel | daily     |      117 |         816 | 2026-08-03     | 2026-11-27    | 80%          | 56%            | 100%            | 100%              |
-| diesel | monthly   |        3 |         457 | 2026-08-31     | 2026-10-31    | 69%          | 60%            | 100%            | 100%              |
+| diesel | monthly   |        3 |         455 | 2026-08-31     | 2026-10-31    | 69%          | 60%            | 100%            | 100%              |
 | diesel | weekly    |       16 |         577 | 2026-08-09     | 2026-11-23    | 84%          | 73%            | 100%            | 100%              |
-| gas    | daily     |      271 |        1856 | 2023-09-18     | 2026-11-27    | 85%          | 69%            | 99%             | 100%              |
-| gas    | monthly   |       34 |        4685 | 2023-12-31     | 2026-10-31    | 79%          | 68%            | 95%             | 100%              |
-| gas    | weekly    |      140 |        4505 | 2023-10-09     | 2026-11-23    | 31%          | 25%            | 98%             | 100%              |
+| gas    | daily     |      271 |        1790 | 2023-09-18     | 2026-11-27    | 87%          | 70%            | 99%             | 100%              |
+| gas    | monthly   |       34 |        4683 | 2023-12-31     | 2026-10-31    | 79%          | 68%            | 95%             | 100%              |
+| gas    | weekly    |      140 |        4469 | 2023-10-09     | 2026-11-23    | 31%          | 25%            | 98%             | 100%              |
 
 ## AAA national history (reconciled)
 
@@ -80,11 +80,11 @@ Source used per day: {"wayback_current": 627, "kalshi_settlement": 389, "wayback
 | aaa_diesel                       | daily   |    711 | 2022-11-28 | 2026-11-27 |                   0 |
 | aaa_gas                          | daily   |    847 | 2023-09-18 | 2026-11-27 |                   0 |
 | brent_spot                       | daily   |   9137 | 1987-05-20 | 2026-11-24 |                   1 |
-| fut_brent                        | daily   |   9372 | 1987-05-20 | 2026-11-27 |                   1 |
-| fut_ho                           | daily   |  10712 | 1980-01-02 | 2026-11-27 |                   1 |
-| fut_natgas                       | daily   |    269 | 2000-09-01 | 2026-11-27 |                   1 |
-| fut_rbob                         | daily   |   5456 | 2000-11-01 | 2026-11-27 |                   1 |
-| fut_wti                          | daily   |   9627 | 1986-01-02 | 2026-11-27 |                   1 |
+| fut_brent                        | daily   |   9346 | 1987-05-20 | 2026-11-27 |                   1 |
+| fut_ho                           | daily   |  11163 | 1980-01-02 | 2026-11-27 |                   1 |
+| fut_natgas                       | daily   |   6592 | 2000-08-30 | 2026-11-27 |                   1 |
+| fut_rbob                         | daily   |   6728 | 2000-11-01 | 2026-11-27 |                   1 |
+| fut_wti                          | daily   |   9931 | 1986-01-02 | 2026-11-27 |                   1 |
 | gasoline_spot_gulf               | daily   |   9247 | 1986-06-02 | 2026-11-24 |                   1 |
 | gasoline_spot_la_rbob            | daily   |   5655 | 2003-03-17 | 2026-11-24 |                   1 |
 | gasoline_spot_nyh                | daily   |   9186 | 1986-06-02 | 2026-11-24 |                   1 |
@@ -156,6 +156,7 @@ Source used per day: {"wayback_current": 627, "kalshi_settlement": 389, "wayback
 
 |                                         | filled   |
 |:----------------------------------------|:---------|
+| distillate_stocks_padd3_kbbl            | 14%      |
 | distillate_stocks_padd3_kbbl_chg_1w_pct | 14%      |
 | distillate_stocks_padd4_kbbl            | 14%      |
 | distillate_stocks_padd4_kbbl_chg_1w_pct | 14%      |
@@ -180,12 +181,11 @@ Source used per day: {"wayback_current": 627, "kalshi_settlement": 389, "wayback
 | ulsd_spot_la_carb                       | 14%      |
 | ulsd_spot_nyh                           | 14%      |
 | weekly_distillate_demand_kbd            | 14%      |
-| weekly_distillate_exports_kbd           | 14%      |
 
 ## Checks
 
 - **Kalshi quotes never newer than the snapshot:** PASS (built from candles ending at or before each snapshot)
 - **diesel daily vs old panel (115 shared days):** settle values differ on 0 days; 10 AM crowd center: median gap 0.00c, 0 days over 0.5c
-- **gas daily vs old panel (243 shared days):** settle values differ on 0 days; 10 AM crowd center: median gap 0.00c, 0 days over 0.5c
+- **gas daily vs old panel (187 shared days):** settle values differ on 0 days; 10 AM crowd center: median gap 0.00c, 0 days over 0.5c
 - **Kalshi settle value vs reconciled AAA:** 581 of 581 events have an AAA print for that date; 1 disagree by more than 0.05c
 - **AAA sources that disagree (>0.2c) on the same day:** 1 fuel-days out of 1558

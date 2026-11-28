@@ -20,6 +20,7 @@ T = [  # name, path, layer, grain (key columns), built by, engine, what it is
     ("slices", M / "slices.csv.gz", "L2 slices + L3 ratios", ["event", "snapshot", "snapshot_et", "line_rank"], "tools/slice_scan.py", "E1", "favorite side, cost, outcome box, returns, our 11 ratios"),
     ("favorite_ledger", E / "favorite_ledger.csv", "L2 roll-up", ["market", "favorite", "price_band"], "tools/slice_scan.py", "E1", "plain count of the 4 boxes by price band, win % vs break-even"),
     ("favorite_ledger_by_time_and_line", E / "favorite_ledger_by_time_and_line.csv", "L2 roll-up", ["market", "favorite", "cut", "value"], "tools/slice_scan.py", "E1", "same count by time slot and by busy-line rank"),
+    ("market_scorecard", E / "market_scorecard.csv", "L2 roll-up", ["market"], "tools/market_scorecard.py", "E1", "the six markets on one ruler: events, favorite edge vs noise, cost, crowd miss, taker vs maker, depth"),
     ("slice_scan", E / "slice_scan.csv", "L3 scan", ["market", "fav_side", "bet", "slice"], "tools/slice_scan.py", "E1", "every slice tested early vs late, false-winner filter"),
     ("mm_model_scorecard", E / "mm_model_scorecard.csv", "L4 market-maker copy", ["fuel", "slice"], "tools/mm_model.py", "both", "how well we copy center / range / shape / cost"),
     ("mm_anchor_scorecard", E / "mm_anchor_scorecard.csv", "L4 market-maker copy", ["fuel", "slice"], "tools/mm_anchor.py", "both", "copy built from big outside data + 2 dials; line price gap"),
@@ -59,7 +60,7 @@ def main():
         else:
             d = pd.read_csv(path, low_memory=False)
             if "snapshot_et" in d:
-                d["snapshot_et"] = pd.to_datetime(d.snapshot_et, format="mixed")   # the builder writes two text styles; compare as times
+                d["snapshot_et"] = pd.to_datetime(d.snapshot_et, format="mixed")   # compare as times (one text style since master m20261128)
             tabs[name] = d
             r.update({"rows": len(d), "columns": d.shape[1], "status": "ok"})
             if grain and all(g in d for g in grain):
@@ -102,18 +103,23 @@ def main():
     if m is not None:
         hr = {"10am": 10, "noon": 12, "3pm": 15, "6pm": 18, "10pm": 22}
         c = m[m.snapshot.isin(hr)]
-        chk("clock-mark rows whose label matches the real hour (misses = the 2 days a year clocks change; known builder bug)", (c.snapshot_et.dt.hour == c.snapshot.map(hr)).sum(), len(c))
-        chk("master rows that are a distinct moment (misses = the open landing on a clock mark, counted twice downstream)", len(m) - m.duplicated(["event", "snapshot_et"]).sum(), len(m))
+        chk("clock-mark rows whose label matches the real hour (fixed in the builder 2026-11-28; must be 100%)", (c.snapshot_et.dt.hour == c.snapshot.map(hr)).sum(), len(c))
+        chk("master rows that are a distinct moment (fixed in the builder 2026-11-28; must be 100%)", len(m) - m.duplicated(["event", "snapshot_et"]).sum(), len(m))
     if sl is not None:
         led = tabs.get("favorite_ledger")
         if led is not None:
             a = led[(led.market == "ALL SIX") & (led.price_band == "all")].instances.sum()
             chk("ledger instance count equals slice rows", min(a, len(sl)), max(a, len(sl)))
+    import json
+    ver = json.load(open(M / "VERSION.json")) if (M / "VERSION.json").exists() else {"version": "unversioned", "built_utc": ""}
+    if m is not None:
+        chk("time columns are written in one text style", int(pd.read_csv(M / "backtest_master.csv.gz", usecols=["snapshot_et"]).snapshot_et.str.len().nunique() == 1), 1)
     s = pd.DataFrame(rows)
     s.to_csv(M / "spine.csv", index=False)
     c = pd.DataFrame(checks)
     L = ["# The spine: how every research table connects", "",
          f"Built by `tools/spine.py` on {pd.Timestamp.utcnow():%Y-%m-%d %H:%M} UTC. Re-run after any table is rebuilt. Read this before adding a table.", "",
+         f"**Master version: `{ver['version']}`** (built {ver['built_utc']} UTC; `data/lake/master/VERSION.json`). Every result names the version it read.", "",
          "**One set of keys:** market → event → time slot (`snapshot_et`) → line (`strike`). Days join to inputs by `asof_date`.", "",
          "**Layers:** L0 inputs → L1 master → L2 slices (4 outcome boxes) → L3 our ratios + scan → L4 market-maker copy → takeaways (`research/takeaways/master.csv`).", "",
          "**Two engines (every test says which one it is):**",
@@ -131,12 +137,18 @@ def main():
           "- A new test writes its plan in `research/LOG.md` first, names the table and engine it reads, and lands its verdict in `research/takeaways/master.csv`.",
           "- Roll-ups (ledger, scan) are rebuilt from `slices`; never edited by hand.",
           "- **Database vs sheet:** these files are the database (query them through `tools/warehouse.py`, schema `lab`). Google Sheets tabs are read-only copies for Dan's phone; nothing is ever built or tested in a sheet.",
-          "", "## Known issues (fix in the builder, then re-run everything downstream)", "",
-          "- `snapshot_et` is written in two text styles; compare it as a time, not as text.",
-          "- On the two days a year clocks change, the five clock marks sit one hour early (60 of 11,747 rows).",
-          "- When a market opens exactly on a clock mark, that moment appears twice (open + the mark): 108 master rows, 133 slice rows (0.6%)."]
+          "- **Rebuild order:** `backtest_master.py` -> `slice_scan.py` -> `market_scorecard.py` -> `spine.py`. The spine exits with an error if a join check is under 100% (the one known AAA mismatch aside).",
+          "- **Quick questions** (the `test` command) are answered with `tools/ask.py` and logged in `research/QUESTION_LOG.md`.",
+          "", "## Known issues", "",
+          "- Fixed 2026-11-28 (master m20261128): two text styles for time columns; clock marks one hour early on clock-change days; an open on a clock mark counted twice.",
+          "- 1 of 581 events settles 0.1c or more away from the AAA print for that day (unchanged).",
+          "- Trade tape is short (diesel from 2026-09-27, gas from 2026-10-27) and order-book depth exists for diesel daily only: the scorecard's taker / maker and depth cells are blank elsewhere."]
     (M / "SPINE.md").write_text("\n".join(L) + "\n")
     print("\n".join(L[14:]))
+    bad = c[(c.pct < 100) & ~c.check.str.startswith("of those, settle value equals")]
+    if len(bad):
+        print("SPINE FAIL:", "; ".join(bad.check))
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

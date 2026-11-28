@@ -1,0 +1,16 @@
+{
+ "version": "m20261128-0345b9a1",
+ "built_utc": "2026-11-28 06:16",
+ "sha256": "0345b9a10fc4400aa04e0d45af8b7a830f8448dcb4bddd2d2985d626dadd39bb",
+ "previous": "unversioned (before 2026-11-28)",
+ "master_rows": 12790,
+ "ladder_rows": 146477,
+ "events": 581,
+ "columns": 179,
+ "last_settle_date": "2026-11-27",
+ "builder_fixes": [
+  "2026-11-28: one text style for time columns",
+  "2026-11-28: clock marks stay on the wall clock on clock-change days",
+  "2026-11-28: an open that lands on a clock mark is one row (also_mark names the mark)"
+ ]
+}

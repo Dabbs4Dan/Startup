@@ -26,6 +26,7 @@
 - **Write the test before running it.** One LOG line first: the question, the one number that decides it, the days held out. Then run. We have ~115 days and have tested dozens of cuts; a lucky "winner" is expected (the favorites edge went +8% → +3.3% not proven this way).
 - **A result counts only with** day-clustered ranges, costs included, and a check on days the rule never saw. Otherwise label it "hint".
 - **Check the thing before building on it (added 2026-11-27).** For any market or data source, first read its own rule text and write its fact card (`data/lake/master/COVERAGE.md` → Contract cards). In every plan, split what you rely on into **verified** (say how) and **assumed**. Tell Dan the assumed ones up front; chase any oddity the same day (Chat 6 built the master before checking that weekly and monthly settle like daily; they do, but that was luck).
+- **Quick questions are light (Dan, 2026-11-28).** A plain question about data we already hold ("what % of favorites over 75c win?") is answered with `tools/ask.py`, logged in `research/QUESTION_LOG.md` and mirrored to the Google Sheet "Kalshi – Question Log". No LOG plan needed. It is a look-back, not a strategy test; the trial count and the vault live at the top of that file.
 - **Data flow is one-way:** recorders/pulls → raw files + DBs → warehouse views → Engine Room scorecards → takeaways → Sheets. Sheets and CSV exports are read-only copies; never treat them as a source.
 
 ```
@@ -86,9 +87,12 @@ AAA diesel number and find gaps vs. Kalshi's odds. Demo money only until a strat
 | **Takeaways** ⭐ | `research/takeaways/` (`master.csv` = what is true now, `by_chat.csv` = each chat's closing table) | Same as Build Board sheet tabs "Takeaways – master / by chat". Update both at the end of a chat. |
 | This brain | `CLAUDE.md` | §0 = how to work, §6 = what's next. The dated log is `research/LOG.md`. |
 | **Gaps + direction** ⭐ | `research/2026-11-26_gaps-and-direction.md` | 13 ranked gaps in our understanding and the one direction. Update statuses in place. |
+| **Question log** ⭐ | `research/QUESTION_LOG.md` (reading copy: Google Sheet "Kalshi – Question Log", id `SHEET_ID_HERE`) | The `test` command. Dated quick questions + answers, the trial count, the baselines, the vault date. Answer tool: `tools/ask.py`. |
+| **Market scorecard** ⭐ | `tools/market_scorecard.py` → `research/engine_room/market_scorecard.csv` | The six markets on one ruler: events, favorite edge vs its noise, cost, crowd miss, taker vs maker, depth. Ranks which markets can be tested now. |
+| **Method review** | `research/2026-11-27_method-review.md` | Outside guidance (Kalshi papers, Becker's repo, backtest-overfitting) + the build ladder + the three tracks (A structure, B information, C path). |
 | **Truckstop test (L3)** ⭐ | `tools/truckstop_test.py` → `research/engine_room/l3_truckstop_scorecard.csv` | One row per day: truckstop move vs what the crowd missed. Refreshed hourly by `truckstops.yml`. Verdict at 10 scored days; PASS needs 20+. |
 | **Spine** ⭐⭐⭐ | `tools/spine.py` → `data/lake/master/SPINE.md` | **Read before touching any table.** How every research table connects (keys: market → event → time slot → line), layers L0–L4, the two engines (E1 settle, E2 intraday), join checks, known issues. Re-run after any rebuild. All of it is queryable in the database: `tools/warehouse.py`, schema `lab`. |
-| **Backtest master** ⭐⭐ | `tools/backtest_master.py` → `data/lake/master/` (`backtest_master.csv.gz`, `ladder_snapshots.csv.gz`, `inputs_daily.csv`, `aaa_daily.csv`, `COVERAGE.md`) | **The one table every backtest reads.** Both fuels × daily / weekly / monthly × 7 time slots, 3 busiest lines, crowd center, ~75 as-of-safe inputs, regime + holiday labels. `COVERAGE.md` = how far back, what was vetted, and the contract cards for the 6 markets. RULEBOOK = the tool's docstring. |
+| **Backtest master** ⭐⭐ | `tools/backtest_master.py` → `data/lake/master/` (`backtest_master.csv.gz`, `ladder_snapshots.csv.gz`, `inputs_daily.csv`, `aaa_daily.csv`, `COVERAGE.md`) | **The one table every backtest reads.** Versioned: `VERSION.json` (quote the version in every result; `m20261128-…` = first version, 3 builder bugs fixed). Both fuels × daily / weekly / monthly × 7 time slots, 3 busiest lines, crowd center, ~75 as-of-safe inputs, regime + holiday labels. `COVERAGE.md` = how far back, what was vetted, and the contract cards for the 6 markets. RULEBOOK = the tool's docstring. |
 | **Kalshi full history** | `tools/pull_kalshi_history.py` → `data/lake/kalshi/<SERIES>/` | Every settled market + hourly candles from Kalshi's live AND historical tiers. `_series_discovered.csv` lists all 289 fuel-like series; related ones are pulled raw and join the master only after vetting. |
 | **Deep scan** ⭐ | `tools/deep_scan.py` → `research/backtests/deep_scan/`, write-up `research/2026-11-26_deep-scan.md` | Every stored parameter × price band × side × hour, diesel + gas, with false-discovery filter + holdout + cross-product check. Re-run when a new parameter is added to `panel_daily`. |
 | **Market-maker equation** | `tools/mm_model.py` → `research/engine_room/mm_model_scorecard.csv`, `mm_model_coefficients.csv` | The equation we solve backwards, 6 markets, 4 layers (center, width, shape, cost). v1: center 66–76% (gas monthly 19–28%); width only gas weekly. **`tools/mm_anchor.py`** (`mm_anchor_scorecard.csv`): engine fit on outside data, Kalshi sets 2 dials; lines still 6–16 pts off vs 2–4 spread; crowd beats our engine at the open (missing input). Extends L0.1. |
@@ -165,31 +169,40 @@ Strikes are $0.005 apart. Market opens 8:00 AM ET the day before (API open_time;
 
 ---
 
-## 6. Now: the direction (updated 2026-11-27, Chat 6)
+## 6. Now: the direction (updated 2026-11-28, Chat 7)
 
-**Stage: raw data collection (Dan, 2026-11-26).** Build the biggest clean canvas first, test later.
-Scope: **gas and diesel × daily, weekly, monthly**, every input we can break the Kalshi / AAA / OPIS-style pricing
-down into. This reopens gas and the weekly/monthly ladders (paused the night before) for data collection.
+**Stage: still raw data + simple questions first (Dan, 2026-11-28).** We are still finding which of the 6 markets has
+the most edge. Simple counts on raw Kalshi data come before deep plays. Build ladder (method review, approved rungs 1-3):
 
-| Order | Step | Status |
+| Rung | Step | Status |
 |---|---|---|
-| 1 | **Backtest master**: one table for both fuels and all three time slices (`data/lake/master/`) | ✅ v1 built 11/26; see `COVERAGE.md` |
-| 2 | **Fill what is still missing, free sources only (Dan, 11/27: no buying for now)**. Order: (a) state AAA history (Kalshi state markets Aug–Nov 2026 + Internet Archive) · (b) more public posted-price chains beside Love's/TA, terms read first · (c) futures curve (landing since 11/27) · (d) older trade tape, AAA before mid-2023. Top suspect for what the daily crowd sees = a live station-price average (M56–M57); GasBuddy bans scraping, OPIS is paid, so our own live feed is the free route | ◐ |
-| 3 | **Dan's build order (11/27):** L2 slices (4 boxes: favorite Yes/No × won/lost, by price band) ✅ → L3 own ratios ✅ v1 → L4 market-maker copy ◐ → our own formula vs theirs, by market × time slot × busy line. Two engines: E1 settle ✅ tables built; **E2 intraday price path = next, after the tracking datasets are solid** (`paths` table planned in SPINE.md) | ◐ |
-| 4 | Live side keeps running by itself: truckstop scorecard (first read ~Dec 6), order-book depth (G1) | ◐ |
+| 1 | **Lock the canvas:** 3 builder bugs fixed, master versioned, spine checks run after every rebuild | ✅ 11/28 |
+| 2 | **Market scorecard:** six markets on one ruler (`market_scorecard.csv`) | ✅ v1 11/28. Depth and trade tape only cover the two daily markets |
+| 3 | **Guard rails:** trial count, baselines, vault (events settling after 2026-11-27), question log + `test` command | ✅ 11/28 |
+| 4 | **Track A (structure = the crowd's habits):** favorites, long shots, Yes vs No, taker vs maker | ◐ first look-backs Q001–Q003 |
+| 5 | **Track B (information = know AAA sooner):** truckstop scorecard (first read ~Dec 6), free data fill (state AAA history, more posted-price chains, older trade tape) | ◐ running |
+| 6 | **Track C (path = intraday price route, engine E2):** `paths` table, market-maker copy graded here | ⬜ after 30+ days of recorded order book |
 
-**Still true:** no edge is proven. Deep scan (11/26): no stored parameter predicts the direction of the 10 AM miss
-(0 of 38); the all-parameter model makes forecasts worse. Gaps list: `research/2026-11-26_gaps-and-direction.md`.
+**Where it stands (scorecard, master m20261128):** diesel daily is the only market where favorites beat their price
+(+2.9 points, noise 2.1, 110 events, one falling stretch). Gas is priced about fair; gas Yes-favorites lose. Takers
+beat makers in both daily markets on our short tape (the opposite of Kalshi overall). No edge is proven; all of this
+is look-back on days already scanned.
 
-**Parked findings (not being worked):** limit-order favorites, +6.2% per $ in diesel (`master.csv` M28) · evening
-crowd overshoots a rising trend, gas +28% per $ on 63 days (M36; needs a forward test in the next rising stretch).
+**Becker's public data set** (`Jon-Becker/prediction-market-analysis`): all Kalshi markets + trades, Jun 2021–Nov 2025,
+same fields we already pull (no order book, no quotes). Its host is blocked from the Claude sandbox; a GitHub job
+could fetch it. It ends before diesel existed, so its use is gas trade tape 2023–2025 and the all-Kalshi baseline.
 
-**Rules for the next tests:** read the master, follow its RULEBOOK, write the test in the LOG first, cluster weekly
-and monthly results by event, and keep the false-discovery filter + holdout from `tools/deep_scan.py`.
+**Still true:** deep scan found no stored parameter that predicts the 10 AM miss; the market-maker copy is 6–16 points
+off per line. **Parked:** limit-order favorites (M28) · evening overshoot in a rising trend (M36).
 
-**Older open items:** rockets & feathers lag (G9) · exact AAA post time (G2) · 10 AM futures history (W1). Older backtest scripts (`backtest_horizons*.py`, `edge_check.py`, `favorite_test.py`, `sim_favorites.py`, `signal_scan.py`) are legacy: new work reads the master.
+**Waiting on Dan (11/28):** (1) "record all six, test on the top three" (gas daily, gas weekly, diesel daily) vs
+"all six equally" · (2) pull Becker's gas trades with a GitHub job, or extend our own Kalshi trade pull · (3) "clean
+it" = hide 6 replaced sheet tabs · (4) "go" = paper test; note Q001 shows gas No-favorites are only +0.9 once each
+event counts once, so the stronger candidates are "diesel daily favorites 75c+" and "skip gas Yes-favorites".
 
-**Waiting on Dan (11/27):** "clean it" = hide 6 replaced sheet tabs + merge overlapping lists (audit in SPINE.md) · "go" = demo paper test of gas No-favorites at 60–80¢ (M63).
+**Older open items:** rockets & feathers (G9) · exact AAA post time (G2) · 10 AM futures history (W1) · 3 known
+engine gaps in `nautilus/README.md`. Legacy scripts (`backtest_horizons*.py`, `edge_check.py`, `favorite_test.py`,
+`sim_favorites.py`, `signal_scan.py`): new work reads the master.
 
 ---
 

@@ -204,10 +204,34 @@ def ledger(s):
     return pd.DataFrame(rows)
 
 
+def ledger_by_time_and_line(s):
+    """Same plain count, cut by the 7 time slots and by busy-line rank (added to the tool 2026-11-28; was hand-built in Chat 6)."""
+    rows = []
+
+    def edge(d):
+        return round((d.fav_won.mean() - d.fav_cost.mean()) * 100, 1) if len(d) else np.nan
+    for mk in ["ALL SIX"] + sorted(s.market.unique()):
+        gm = s if mk == "ALL SIX" else s[s.market == mk]
+        for side in ("yes", "no"):
+            gs = gm[gm.fav_side == side]
+            for cut, col, vals in (("time slot", "snapshot", ["open", "10am", "noon", "3pm", "6pm", "10pm", "close"]), ("line rank", "line_rank", [1, 2, 3])):
+                for v in vals:
+                    g = gs[gs[col] == v]
+                    if g.empty:
+                        continue
+                    n, w = len(g), int(g.fav_won.sum())
+                    rows.append({"market": mk, "favorite": side.capitalize(), "cut": cut, "value": v, "instances": n, "events": g.event.nunique(),
+                                 "favorite_won": w, "favorite_lost": n - w, "win_pct": round(w / n * 100, 1), "break_even_pct": round(g.fav_cost.mean() * 100, 1),
+                                 "edge_pts": edge(g), "early_events": g[g.block == "fit"].event.nunique(), "edge_early_pts": edge(g[g.block == "fit"]),
+                                 "late_events": g[g.block == "holdout"].event.nunique(), "edge_late_pts": edge(g[g.block == "holdout"])})
+    return pd.DataFrame(rows)
+
+
 def main():
     s = build()
     led = ledger(s)
     led.to_csv(OUT / "favorite_ledger.csv", index=False)
+    ledger_by_time_and_line(s).to_csv(OUT / "favorite_ledger_by_time_and_line.csv", index=False)
     pd.set_option("display.width", 250)
     print(led.to_string(index=False))
     s.to_csv(MASTER / "slices.csv.gz", index=False, compression="gzip")

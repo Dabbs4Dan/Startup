@@ -4,6 +4,7 @@
 RULEBOOK (every backtest reads these tables; change the rules here, nowhere else)
   Unit        one row = (fuel, horizon, event, snapshot). fuel: diesel | gas. horizon: daily | weekly | monthly.
   Event       one Kalshi ladder that settles on AAA's national average for one date (the date in the event ticker).
+  Version     data/lake/master/VERSION.json names the build (changes only when the content changes). Quote it in every result.
   Snapshots   (Dan, 2026-11-26: open and close always; Claude picks the in-between marks from the research)
               open   = the first hour the ladder has quotes
               10am   = our bet time; 8-10 AM carries ~36% of the day's dollars
@@ -296,11 +297,16 @@ def ladders():
                                                 event_volume=("volume", "sum"), tier=("tier", "first"))
         for ev, g in c.groupby("event_ticker"):
             e = ev_meta.loc[ev]
-            days = pd.date_range(e.open_ts.tz_convert(ET).normalize(), e.close_ts.tz_convert(ET).normalize(), freq="D")
+            # clock marks are built on the wall clock, then given the time zone, so they stay at 10 AM / noon / ... on the
+            # two days a year the clocks change (fixed 2026-11-28; before, they sat one hour early on those days)
+            days = pd.date_range(e.open_ts.tz_convert(ET).tz_localize(None).normalize(), e.close_ts.tz_convert(ET).tz_localize(None).normalize(), freq="D")
             g = g.sort_values("end")
-            times = [(dd + pd.Timedelta(hours=h), lab) for dd in days for h, lab in SNAP_MARKS.items()]
+            times = [((dd + pd.Timedelta(hours=h)).tz_localize(ET), lab) for dd in days for h, lab in SNAP_MARKS.items()]
             first = g.end.iloc[0].tz_convert(ET)
-            times = [(first, "open")] + [(t, lab) for t, lab in times if first <= t < e.close_ts.tz_convert(ET)] + [(e.close_ts.tz_convert(ET), "close")]
+            # an open that lands exactly on a clock mark is ONE moment: keep the "open" row, note the mark in also_mark
+            # (fixed 2026-11-28; before, that moment was written twice and counted twice downstream)
+            also = {t: lab for t, lab in times if t == first}
+            times = [(first, "open")] + [(t, lab) for t, lab in times if first < t < e.close_ts.tz_convert(ET)] + [(e.close_ts.tz_convert(ET), "close")]
             n_ev += 1
             for t, label in times:
                 w = g[(g.end <= t) & (g.end > t - pd.Timedelta(hours=12 if label == "close" else 6))]
@@ -329,7 +335,8 @@ def ladders():
                         fav = {"fav_side": side, "fav_strike": k, "fav_cost": round(float(cost), 4),
                                "fav_won": int((e.settle_value > k) == (side == "YES"))}
                 row = {"fuel": fuel, "horizon": hz, "series": series, "event": ev, "settle_date": e.settle_date.date(),
-                       "snapshot": label, "snapshot_et": t.tz_localize(None), "snapshot_date": t.date(), "snapshot_hour": t.hour,
+                       "snapshot": label, "also_mark": also.get(t, "") if label == "open" else "",
+                       "snapshot_et": t.tz_localize(None), "snapshot_date": t.date(), "snapshot_hour": t.hour,
                        "asof_date": (t - pd.Timedelta(days=1)).date() if t.hour < AAA_POSTED_BY_HOUR else t.date(),
                        "days_to_settle": (e.settle_date.date() - t.date()).days,
                        "hours_to_close": round((e.close_ts - t).total_seconds() / 3600, 1), "tier": e.tier,
@@ -440,9 +447,15 @@ def main():
     mst["weekday"], mst["month"] = dts.dt.day_name().str[:3], dts.dt.month
     mst["settle_month"] = pd.to_datetime(mst.settle_date).dt.strftime("%Y-%m")
     mst = mst.dropna(axis=1, how="all")
+    # one text style for every time column (fixed 2026-11-28; before, two styles were written and text joins missed)
+    for df, cols in ((mst, ("snapshot_et", "open_et", "close_et")), (lines, ("snapshot_et",))):
+        for c in cols:
+            if c in df:
+                df[c] = pd.to_datetime(df[c].astype(str), format="mixed").dt.strftime("%Y-%m-%d %H:%M:%S")
     mst.round(5).to_csv(OUT / "backtest_master.csv.gz", index=False)
     (OUT / "backtest_master.csv").unlink(missing_ok=True)          # old uncompressed name (before 2026-11-26 evening)
     lines.round(4).to_csv(OUT / "ladder_snapshots.csv.gz", index=False)
+    stamp_version(mst, lines)
 
     # ---------------- vetting ----------------
     checks = []
@@ -501,6 +514,25 @@ def main():
     log(f"master: {len(mst)} snapshot rows x {mst.shape[1]} columns; ladder lines: {len(lines)} rows; inputs: {len(imeta)} ({(imeta.rows > 0).sum()} with data)")
     for a, b in checks:
         log(f"check - {a}: {b}")
+
+
+def stamp_version(mst, lines):
+    """Version stamp: every result downstream names the master it read. The version only changes when the content does."""
+    import hashlib
+    sha = hashlib.sha256(mst.round(5).to_csv(index=False).encode() + lines.round(4).to_csv(index=False).encode()).hexdigest()
+    f = OUT / "VERSION.json"
+    old = json.load(open(f)) if f.exists() else {}
+    if old.get("sha256") == sha:
+        log(f"master version unchanged: {old.get('version')}")
+        return
+    now = pd.Timestamp.utcnow()
+    v = {"version": f"m{now:%Y%m%d}-{sha[:8]}", "built_utc": f"{now:%Y-%m-%d %H:%M}", "sha256": sha, "previous": old.get("version", "unversioned (before 2026-11-28)"),
+         "master_rows": int(len(mst)), "ladder_rows": int(len(lines)), "events": int(mst.event.nunique()), "columns": int(mst.shape[1]),
+         "last_settle_date": str(pd.to_datetime(mst.settle_date).max().date()),
+         "builder_fixes": ["2026-11-28: one text style for time columns", "2026-11-28: clock marks stay on the wall clock on clock-change days",
+                           "2026-11-28: an open that lands on a clock mark is one row (also_mark names the mark)"]}
+    json.dump(v, open(f, "w"), indent=1)
+    log(f"master version: {v['version']}")
 
 
 if __name__ == "__main__":
