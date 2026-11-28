@@ -8,12 +8,21 @@ after it also holds on new days. Dan's reading copy: Google Sheet "Kalshi – Qu
 event at each time slot). The event is the sample. Cost = ask + taker fee. Noise = 2 standard errors across events.
 
 **Guard rails (kept here, nowhere else):**
-- **Trial count:** about 3,300 cuts were run before this log (deep scan 1,980 + slice scan 1,328). Each question adds 1; the bet grid (Q004) added its 2,424 readable cells. **Count now: 5,728.**
+- **Trial count:** about 3,300 cuts were run before this log (deep scan 1,980 + slice scan 1,328). Each question adds 1; the bet grid (Q004) added its 2,424 readable cells. **Count now: 5,743.**
 - **Baselines any idea must beat:** (1) the crowd's own price, (2) "no change", (3) "skip the long shots".
 - **Vault:** events that settle after 2026-11-27 have never been looked at. Only they can turn a look-back into a lead.
 - **Read of a result:** "edge beyond noise" = bigger than its noise band; "inside noise" = luck not ruled out; under 30 events = too few.
 
 ---
+
+### Q005 · 2026-11-28 03:05 AM ET · Gas daily NO-favorite late evening: what are we buying, why does it win, and what would it have paid?
+- **Asked by Dan:** "when a no trend is No, what are we buying here? ... WHY is that favorable? ... Is a surface level edge just an opportunity to buy on the best intraday spread change? Is it to buy on signals that display certainty on confidence bounds?"
+- **What is bought:** one NO contract on a line such as "gas above $4.370 tomorrow?". Example, Oct 10 2026 at 10 PM: today's AAA $4.3718, crowd center $4.3674, NO cost 86c (86.8c with fee), AAA came in at $4.3669, NO paid $1. It is one side bought outright and held to the morning, not a spread.
+- **Why it wins (level, not spread, not width):** late in the evening the crowd's whole ladder sits a little too high: +0.05c at 10 PM (2 standard errors), +0.10c at the close (4 standard errors), nothing at 3 PM. Lines are half a cent apart and the crowd's range is about 0.45c, so a tenth of a cent is worth about 9 points on the nearest lines. NO-favorites win more than priced and YES-favorites lose more than priced: that is a shifted level, not a wrong width. Spreads are not better at night (3.2 points vs 2.7 at 6 PM).
+- **Where the lean comes from:** when the crowd moved down between 3 PM and the close it was still 0.14c too high (84 days); when it moved up it ended 0.09c too high (100 days). Gas fell on 62% of days. The same lines' NO price drops about 2c between 10 PM and the close (82.6c to 80.7c) while NO wins 90%.
+- **In dollars ($100 a night, NO-favorites priced 50-97c, 2026):** 10 PM: 200 nights, won 85.5% of nights, +$1,592 total, +$7.96 a night (noise 5.03), average win +$21, average loss -$69, worst night -$100, deepest dip -$347, November -$137. 6 PM: +$4.79 a night (noise 5.77, inside noise). Close: +$10.96 a night (upper bound; the last second cannot be traded). The same rule on YES at 10 PM lost $960.
+- **Catch:** look-back on scanned days; no size data for late quotes; one loss wipes out about 3 wins; one season only (Mar-Nov 2026).
+- **Data:** `slices.csv.gz` + `ladder_snapshots.csv.gz`, gas daily 2026. Master m20261128-0345b9a1.
 
 ### Q004 · 2026-11-28 02:50 AM ET · The big grid: every YES / NO price, every time slot, 3 busiest lines, all 6 markets. Do we even have the data for it?
 - **Asked by Dan:** "How can we test all of the % of yes no and across all times of the open market across the 6 things we're trading, within the 3 highest liquidity market options?" and "do we have enough DATA to really test this?"
